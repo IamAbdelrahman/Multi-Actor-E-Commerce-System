@@ -64,27 +64,25 @@ export default class UserManager {
       console.error("Please, re-enter a valid data!");
       return ;
     }
-    const data = StorageManager.Load("users");
-    const users = data?.users || [];
+    const users = StorageManager.LoadSection("users") || [];
     users.push(user);
-    StorageManager.Save("users", users);
+    StorageManager.SaveSection("users", users);
   }
-
+  
   static GetUser(id) {
-    const users = StorageManager.Load("users") || [];
+    const users = StorageManager.LoadSection("users") || [];
     return users.find(user => user.id === id);
   }
 
   static UpdateUser(id, name, email) {
-    var data = StorageManager.Load("users");
-    var users = data?.users || [];
-    users = users.map(user => user.id === id ? new user(id, name, email) : user);
+    var users = StorageManager.LoadSection("users") || [];
+    users = users.map(user => user.id === id ? new User(id, name, email) : user);
+    StorageManager.SaveSection("users", users);
   }
 
   static DeleteUser(id) {
-    const data = StorageManager.Load("users");
-    var users = data?.users || [];
+    var users = StorageManager.LoadSection("users") || [];
     users = users.filter(user => user.id !== id);
-    StorageManager.Save("users", users);
+    StorageManager.SaveSection("users", users);
   }
 }
