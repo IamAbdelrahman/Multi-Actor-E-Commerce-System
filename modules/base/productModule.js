@@ -130,18 +130,18 @@ export default class ProductManager{
       console.error("Invalid product data. Please Enter valid data!");
       return;
     }
-    const products = StorageManager.Load("products") || [];
+    const products = StorageManager.LoadSection("products") || [];
     products.push(product);
-    StorageManager.Save("products", products);
+    StorageManager.SaveSection("products", products);
   }
 
   static GetProductById(id) {
-    const products = StorageManager.Load("products") || [];
+    const products = StorageManager.LoadSection("products") || [];
     return products.find(p => p.id === id);
   }
 
   static UpdateProduct(id, updatedData) {
-    let products = StorageManager.Load("products") || [];
+    let products = StorageManager.LoadSection("products") || [];
     products = products.map(product => {
       if (product.id === id) {
         return { ...product, ...updatedData };
@@ -149,12 +149,12 @@ export default class ProductManager{
       return product;
     });
 
-    StorageManager.Save("products", products);
+    StorageManager.SaveSection("products", products);
   }
 
   static DeleteProduct(id) {
-    let products = StorageManager.Load("products") || [];
+    let products = StorageManager.LoadSection("products") || [];
     products = products.filter(p => p.id !== id);
-    StorageManager.Save("products", products);
+    StorageManager.SaveSection("products", products);
   }
 }
