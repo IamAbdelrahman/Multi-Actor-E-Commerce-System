@@ -57,7 +57,7 @@ class User {
 }
 
 
-export default class UserManager {
+export class UserManager {
   static CreateUser(id, name, email) {
     const user = new User(id, name, email);
     if (user.name == null || user.email == null || user.id == 0) {
