@@ -38,6 +38,9 @@
             password = document.getElementById("password").value;
             role = document.getElementById("role").value;
 
+            let users = StorageManager.LoadSection("users") || [];
+
+
             //Validations
             if (name == "" && password == "" && email == "") {
                 alert("Please Enter Name , Email , Password");
@@ -66,6 +69,10 @@
                 alert("Please enter a valid email address like that example@gmail.com");
                 return false;
             }
+            else if (users.some(u => u.email === email)) {
+                alert("Email Already Registered!");
+                return false;
+            }
             else if (!validatePass(password)) {
                 alert("Password must be at least 8 characters long and contain uppercase or lowercase, a number, and a special character");
                 return false;
@@ -77,7 +84,6 @@
 
 
             let user = { name, email, password, role };
-            let users = StorageManager.LoadSection("users") || [];
 
             //In our project work with only one Admin Static
             const Admin = {
@@ -93,10 +99,7 @@
                 users.push(Admin);
             }
 
-            if (users.some(u => u.email === email)) {
-                alert("Email already registered!");
-                return;
-            }
+
 
             //Push user to users Section
             users.push(user);
