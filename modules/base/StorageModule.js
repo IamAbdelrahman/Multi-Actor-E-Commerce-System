@@ -1,4 +1,4 @@
-export class StorageManager {
+export default class StorageManager {
   static SaveSection(section, value) {
     const data = StorageManager.Load("data") || {};
     data[section] = value;
@@ -9,7 +9,7 @@ export class StorageManager {
     const data = StorageManager.Load("data") || {};
     return data[section] || [];
   }
-  
+
   static Save(key, data) {
     localStorage.setItem(key, JSON.stringify(data));
   }
