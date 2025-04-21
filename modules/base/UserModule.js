@@ -1,4 +1,4 @@
-import {StorageManager} from './StorageModule.js'
+import { StorageManager } from './StorageModule.js'
 
 class User {
   constructor(id, name, email) {
@@ -62,13 +62,13 @@ export class UserManager {
     const user = new User(id, name, email);
     if (user.name == null || user.email == null || user.id == 0) {
       console.error("Please, re-enter a valid data!");
-      return ;
+      return;
     }
     const users = StorageManager.LoadSection("users") || [];
     users.push(user);
     StorageManager.SaveSection("users", users);
   }
-  
+
   static GetUser(id) {
     const users = StorageManager.LoadSection("users") || [];
     return users.find(user => user.id === id);
@@ -86,3 +86,4 @@ export class UserManager {
     StorageManager.SaveSection("users", users);
   }
 }
+
