@@ -1,6 +1,6 @@
 import {StorageManager} from './StorageModule.js'
 import {UserManager} from './UserModule.js'
-
+var ID = 0;
 export default function showSection(section) {
   const content = document.getElementById("adminContent");
   switch (section) {
@@ -40,7 +40,7 @@ export default function showSection(section) {
       var body = document.querySelector("tbody");
       for (let i = 0; i < usersList.length; i++) {
         const user = usersList[i];
-        
+        ID = i + 1;
         body.appendChild(createRow(user.id, user.name, user.email, user.password, user.role));
       }
       
@@ -79,7 +79,7 @@ function createRow(id, name, email, password, role) {
   tr.appendChild(td);
 
   td = createCell();    // Delete
-  td.appendChild(createDeleteIcon());
+  td.appendChild(createDeleteIcon(id));
   tr.appendChild(td);
   return tr;
 }
@@ -89,15 +89,19 @@ function createCell() {
   return cell;
 }
 
-function createDeleteIcon() {
+function createDeleteIcon(id) {
   const icon = document.createElement("i");
   icon.classList.add("bi", "bi-trash", "text-danger", "fs-5", "ms-2", "cursor-pointer");
-  icon.addEventListener("click", deleteRow);
-
+  icon.addEventListener("click", function(){
+    var tr = this.parentElement.parentElement;
+    (confirm("Do you want to delete this user?")) ? tr.remove() : "undefined";
+    UserManager.DeleteUser(id);
+  });
   return icon;
 }
-function deleteRow() {
-  var tr = this.parentElement.parentElement;
-  (confirm("Do you want to delete this user?")) ? tr.remove() : "undefined";
-  return;
-}
+// function deleteRow(id) {
+//   var tr = this.parentElement.parentElement;
+//   (confirm("Do you want to delete this user?")) ? tr.remove() : "undefined";
+//   UserManager.DeleteUser(id);
+//   return;
+// }
