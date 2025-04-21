@@ -1,4 +1,4 @@
-export default class StorageManager {
+export class StorageManager {
   static SaveSection(section, value) {
     const data = StorageManager.Load("data") || {};
     data[section] = value;
