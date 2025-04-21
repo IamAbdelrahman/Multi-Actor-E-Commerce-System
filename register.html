@@ -39,7 +39,7 @@
             role = document.getElementById("role").value;
 
             //Validations
-            if (name == "" || password == "" || email == "") {
+            if (name == "" && password == "" && email == "") {
                 alert("Please Enter Name , Email , Password");
                 return false;
             }
