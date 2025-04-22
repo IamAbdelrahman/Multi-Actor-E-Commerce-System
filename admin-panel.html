@@ -9,8 +9,25 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
   <script type="module">
-    import showSection from './modules/base/AdminModule.js';
+    import showSection from './modules/base/UserModule.js';
+    import StorageManager from './modules/base/StorageModule.js'
+    function StoreJSON() {
+      /*- NOTE: Use the below line at the top of your module/script */
+      // import {StorageManager} from './modules/base/StorageModule.js'
+      if (!localStorage.getItem("data")) {
+        fetch('./data/data.json')
+          .then(response => response.json())
+          .then(data => {
+            StorageManager.Save('data', data);
+            console.log("JSON data loaded to localStorage for the first time.");
+          })
+          .catch(err => console.error("Failed to load JSON:", err));
+      } else {
+        console.log("Data already in localStorage. Skipping JSON fetch.");
+      }
+    }
 
+    StoreJSON();
     window.addEventListener('load', () => {
       const users = document.getElementById("users");
       const products = document.getElementById("products");
@@ -23,83 +40,7 @@
       orders.addEventListener('click', () => showSection("orders"));
     });
 
-    let json = {
-  "users": [
-    {
-      "id": 1,
-      "name": "Hagar Yusuf",
-      "email": ".com",
-      "password": "hashedpassword1",
-      "role": "customer"
-    },
-    {
-      "id": 2,
-      "name": "Rawan Emad",
-      "email": "rawan@gmail.com",
-      "password": "hashedpassword2",
-      "role": "seller"
-    },
-    {
-      "id": 3,
-      "name": "Rawan Emad",
-      "email": "rawan@gmail.com",
-      "password": "hashedpassword2",
-      "role": "customer"
-    },
-    {
-      "id": 4,
-      "name": "Admin User",
-      "email": "admin@gmail.com",
-      "password": "admin123",
-      "role": "admin"
-    }
-  ],
 
-  "products": [
-    {
-      "id": 101,
-      "name": "Wireless Headphones",
-      "description": "High quality wireless headphones with noise cancellation.",
-      "price": 799.99,
-      "stock": 15,
-      "category": "Electronics",
-      "sellerId": 2,
-      "image": "images/headphones.jpg"
-    },
-    {
-      "id": 102,
-      "name": "Running Shoes",
-      "description": "Comfortable running shoes for all terrains.",
-      "price": 499.50,
-      "stock": 25,
-      "category": "Footwear",
-      "sellerId": 2,
-      "image": "images/shoes.jpg"
-    }
-  ],
-
-  "orders": [
-    {
-      "id": 1001,
-      "userId": 1,
-      "products": [
-        {
-          "productId": 101,
-          "quantity": 1
-        },
-        {
-          "productId": 102,
-          "quantity": 2
-        }
-      ],
-      "totalAmount": 1798.99,
-      "status": "processing",
-      "orderDate": "2025-04-19"
-    }
-  ]
-}
-
-localStorage.setItem("data", JSON.stringify(json));
   </script>
 
 
