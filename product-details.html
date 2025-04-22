@@ -1,1 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>product details</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .product-image {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .product-image:hover {
+            transform: scale(1.02);
+        }
+        .thumbnail {
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-radius: 5px;
+        }
+        .thumbnail:hover, .thumbnail.active {
+            border-color: #6c757d;
+        }
+        .benefit-icon {
+            font-size: 1.5rem;
+            color: #28a745;
+            margin-right: 10px;
+        }
+        .quantity-input {
+            width: 60px;
+            text-align: center;
+        }
+        .breadcrumb {
+            background-color: transparent;
+            padding: 0;
+        }
+        .rating {
+            color: #ffc107;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation (simplified for this example) -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Tea Haven</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
+    <!-- Main Content -->
+    <div class="container my-5">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Green Teas</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Jasmine Pearl</li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <!-- Product Images -->
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <img id="mainImage" src="UP/1.jpg" alt="Premium Jasmine Pearl Green Tea" class="img-fluid product-image">
+                </div>
+                <div class="row g-2">
+                    <div class="col-3">
+                        <img src="UP/2.jpg" alt="Tea closeup" class="img-fluid thumbnail active" onclick="changeImage(this)">
+                    </div>
+                    <div class="col-3">
+                        <img src="UP/3.jpg" alt="Tea packaging" class="img-fluid thumbnail" onclick="changeImage(this)">
+                    </div>
+                    <div class="col-3">
+                        <img src="UP/4.jpg" alt="Brewed tea" class="img-fluid thumbnail" onclick="changeImage(this)">
+                    </div>
+                    <div class="col-3">
+                        <img src="UP/5.jpg" alt="Tea garden" class="img-fluid thumbnail" onclick="changeImage(this)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Details -->
+            <div class="col-md-6">
+                <h1>Premium Jasmine Pearl Green Tea</h1>
+                <div class="mb-2">
+                    <span class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </span>
+                    <span class="ms-2">4.5 (128 reviews)</span>
+                </div>
+                <h3 class="text-success">$14.99</h3>
+                <p class="text-muted">SKU: TEA-JP-50G</p>
+                
+                <div class="mb-4">
+                    <p>Hand-rolled jasmine pearls unfurl gracefully in hot water, releasing a delicate floral aroma and sweet, smooth flavor. Our premium green tea is scented seven times with fresh jasmine blossoms for an exquisite taste experience.</p>
+                </div>
+
+                <!-- Product Options -->
+                <div class="mb-4">
+                    <label class="form-label"><strong>Size:</strong></label>
+                    <div class="btn-group" role="group">
+                        <input type="radio" class="btn-check" name="size" id="size50g" autocomplete="off" checked>
+                        <label class="btn btn-outline-secondary" for="size50g">50g</label>
+                        
+                    </div>
+                </div>
+
+                <!-- Quantity and Add to Cart -->
+                <div class="row mb-4">
+                    <div class="col-md-3 mb-2 mb-md-0">
+                        <label class="form-label"><strong>Quantity:</strong></label>
+                        <div class="input-group">
+                            <button class="btn btn-outline-secondary" type="button" id="decrement">-</button>
+                            <input type="text" class="form-control quantity-input" value="1" id="quantity">
+                            <button class="btn btn-outline-secondary" type="button" id="increment">+</button>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <button class="btn btn-success btn-lg w-100" style="height: 100%;">
+                            <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Benefits -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-leaf benefit-icon"></i>Tea Benefits</h5>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i> Rich in antioxidants</li>
+                            <li><i class="fas fa-check text-success me-2"></i> Calming and relaxing</li>
+                            <li><i class="fas fa-check text-success me-2"></i> May support metabolism</li>
+                            <li><i class="fas fa-check text-success me-2"></i> Naturally low in caffeine</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Share Buttons -->
+                <div>
+                    <span class="me-2"><strong>Share:</strong></span>
+                    <button class="btn btn-sm btn-outline-primary me-2"><i class="fab fa-facebook-f"></i></button>
+                    <button class="btn btn-sm btn-outline-info me-2"><i class="fab fa-twitter"></i></button>
+                    <button class="btn btn-sm btn-outline-danger me-2"><i class="fab fa-pinterest"></i></button>
+                    <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-envelope"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Description Tabs -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <ul class="nav nav-tabs" id="productTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button">Description</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" type="button">Details</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="brewing-tab" data-bs-toggle="tab" data-bs-target="#brewing" type="button">Brewing Guide</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button">Reviews</button>
+                    </li>
+                </ul>
+                <div class="tab-content p-3 border border-top-0 rounded-bottom" id="productTabsContent">
+                    <div class="tab-pane fade show active" id="description" role="tabpanel">
+                        <h4>About Our Jasmine Pearl Tea</h4>
+                        <p>Our Jasmine Pearl Green Tea is a masterpiece of tea craftsmanship. Each pearl is carefully hand-rolled by skilled artisans in the Fujian province of China, using only the finest spring-picked green tea leaves.</p>
+                        <p>The tea undergoes a traditional scenting process where it's layered with fresh jasmine blossoms seven times over several weeks. This labor-intensive method ensures the tea absorbs the maximum amount of jasmine fragrance without artificial flavors.</p>
+                        <p>When brewed, the pearls slowly unfurl, releasing a sweet floral aroma and producing a light golden liquor with a smooth, slightly sweet taste and lingering floral finish.</p>
+                    </div>
+                    <div class="tab-pane fade" id="details" role="tabpanel">
+                        <h4>Product Details</h4>
+                        <ul>
+                            <li><strong>Origin:</strong> Fujian Province, China</li>
+                            <li><strong>Type:</strong> Green Tea</li>
+                            <li><strong>Caffeine Level:</strong> Low (approx. 20mg per cup)</li>
+                            <li><strong>Ingredients:</strong> Green tea, jasmine blossoms</li>
+                            <li><strong>Steeping Time:</strong> 2-3 minutes</li>
+                            <li><strong>Water Temperature:</strong> 175°F (80°C)</li>
+                            <li><strong>Shelf Life:</strong> 18 months when stored properly</li>
+                            <li><strong>Storage:</strong> Keep in cool, dry place away from light and strong odors</li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="brewing" role="tabpanel">
+                        <h4>How to Brew Jasmine Pearl Tea</h4>
+                        <ol>
+                            <li>Use 3-5 pearls per 8oz cup (adjust to taste)</li>
+                            <li>Heat fresh water to 175°F (80°C) - just before boiling</li>
+                            <li>Pour water over pearls and steep for 2-3 minutes</li>
+                            <li>Watch as the pearls gracefully unfurl</li>
+                            <li>Strain and enjoy - pearls can be resteeped 2-3 times</li>
+                        </ol>
+                        <p><strong>Tip:</strong> For best results, use a glass teapot or cup to appreciate the beautiful unfurling of the pearls.</p>
+                    </div>
+                    <div class="tab-pane fade" id="reviews" role="tabpanel">
+                        <h4>Customer Reviews</h4>
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <strong>Sarah J.</strong>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                <small class="text-muted">March 15, 2023</small>
+                            </div>
+                            <p class="mt-2">The most amazing jasmine tea I've ever tasted. The aroma is intoxicating and the flavor is so smooth. Worth every penny!</p>
+                        </div>
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <strong>Michael T.</strong>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                </div>
+                                <small class="text-muted">February 28, 2023</small>
+                            </div>
+                            <p class="mt-2">Beautiful to watch the pearls unfurl. The jasmine flavor is present but not overpowering. My new favorite afternoon tea.</p>
+                        </div>
+                        <button class="btn btn-outline-primary">Write a Review</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Products -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <h3 class="mb-4">You May Also Like</h3>
+                <div class="row">
+                    <div class="col-md-3 col-6 mb-4">
+                        <div class="card h-100">
+                            <img src="UP/1.jpg" class="card-img-top" alt="Matcha Green Tea">
+                            <div class="card-body">
+                                <h5 class="card-title">Ceremonial Matcha</h5>
+                                <p class="card-text text-success">$24.99</p>
+                                <a href="#" class="btn btn-sm btn-outline-primary">View</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-4">
+                        <div class="card h-100">
+                            <img src="UP/2.jpg" class="card-img-top" alt="Milk Oolong Tea">
+                            <div class="card-body">
+                                <h5 class="card-title">Milk Oolong</h5>
+                                <p class="card-text text-success">$18.99</p>
+                                <a href="#" class="btn btn-sm btn-outline-primary">View</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-4">
+                        <div class="card h-100">
+                            <img src="UP/1.jpg" class="card-img-top" alt="Chamomile Tea">
+                            <div class="card-body">
+                                <h5 class="card-title">Organic Chamomile</h5>
+                                <p class="card-text text-success">$12.99</p>
+                                <a href="#" class="btn btn-sm btn-outline-primary">View</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-4">
+                        <div class="card h-100">
+                            <img src="UP/1.jpg" class="card-img-top" alt="Earl Grey Tea">
+                            <div class="card-body">
+                                <h5 class="card-title">Earl Grey Supreme</h5>
+                                <p class="card-text text-success">$16.99</p>
+                                <a href="#" class="btn btn-sm btn-outline-primary">View</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5>Tea Haven</h5>
+                    <p>Premium teas sourced from the finest gardens around the world.</p>
+                </div>
+                <div class="col-md-2 mb-3">
+                    <h5>Shop</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-decoration-none">Green Teas</a></li>
+                        <li><a href="#" class="text-decoration-none">Black Teas</a></li>
+                        <li><a href="#" class="text-decoration-none">Herbal Teas</a></li>
+                        <li><a href="#" class="text-decoration-none">Tea Accessories</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-3">
+                    <h5>Help</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-decoration-none">Contact Us</a></li>
+                        <li><a href="#" class="text-decoration-none">Shipping</a></li>
+                        <li><a href="#" class="text-decoration-none">Returns</a></li>
+                        <li><a href="#" class="text-decoration-none">FAQs</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Newsletter</h5>
+                    <p>Subscribe for exclusive offers and tea tips.</p>
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Your email">
+                        <button class="btn btn-success" type="button">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 Tea Haven. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Change main image when thumbnail is clicked
+        function changeImage(element) {
+            const mainImage = document.getElementById('mainImage');
+            mainImage.src = element.src;
+            
+            // Update active thumbnail
+            document.querySelectorAll('.thumbnail').forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+            element.classList.add('active');
+        }
+
+        // Quantity increment/decrement
+        document.getElementById('increment').addEventListener('click', function() {
+            const quantityInput = document.getElementById('quantity');
+            quantityInput.value = parseInt(quantityInput.value) + 1;
+        });
+
+        document.getElementById('decrement').addEventListener('click', function() {
+            const quantityInput = document.getElementById('quantity');
+            if (parseInt(quantityInput.value) > 1) {
+                quantityInput.value = parseInt(quantityInput.value) - 1;
+            }
+        });
+    </script>
+</body>
+</html>
