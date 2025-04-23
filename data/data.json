@@ -3,9 +3,16 @@
     {
       "id": 1,
       "name": "Hagar Yusuf",
-      "email": ".com",
+      "email": "hagar@example.com",
       "password": "hashedpassword1",
-      "role": "customer"
+      "role": "customer",
+      "address": {
+        "street": "123 Main St",
+        "city": "Cairo",
+        "state": "Cairo",
+        "zip": "12345"
+      },
+      "phone": "+201234567890"
     },
     {
       "id": 2,
@@ -16,9 +23,9 @@
     },
     {
       "id": 3,
-      "name": "Rawan Emad",
-      "email": "rawan@gmail.com",
-      "password": "hashedpassword2",
+      "name": "Omar Nabil",
+      "email": "omar@gmail.com",
+      "password": "hashedpassword3",
       "role": "customer"
     },
     {
@@ -37,8 +44,8 @@
       "description": "High quality wireless headphones with noise cancellation.",
       "price": 799.99,
       "stock": 15,
+      "quantity": 1,
       "category": "Electronics",
-      "sellerId": 2,
       "image": "images/headphones.jpg"
     },
     {
@@ -47,9 +54,19 @@
       "description": "Comfortable running shoes for all terrains.",
       "price": 499.50,
       "stock": 25,
+      "quantity": 1,
       "category": "Footwear",
-      "sellerId": 2,
       "image": "images/shoes.jpg"
+    },
+    {
+      "id": 103,
+      "name": "Smartwatch",
+      "description": "Multifunctional smartwatch with heart rate monitor.",
+      "price": 999.00,
+      "stock": 12,
+      "quantity": 1,
+      "category": "Electronics",
+      "image": "images/smartwatch.jpg"
     }
   ],
 
@@ -71,6 +88,20 @@
       "status": "processing",
       "orderDate": "2025-04-19"
     }
+  ],
+
+  "categories": [
+    {
+      "id": 1,
+      "name": "Electronics",
+      "description": "Devices and gadgets",
+      "products": [101, 103]
+    },
+    {
+      "id": 2,
+      "name": "Footwear",
+      "description": "Shoes and sandals",
+      "products": [102]
+    }
   ]
 }
-
