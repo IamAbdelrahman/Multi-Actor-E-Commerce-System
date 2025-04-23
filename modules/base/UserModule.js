@@ -1,12 +1,15 @@
-import StorageManager  from './StorageModule.js'
+import StorageManager from './StorageModule.js'
 
 class User {
-  constructor(id, name, email) {
+  constructor(id, name, email, password, role) {
     this.ID = id;
     this.Name = name;
     this.Email = email;
-  }
+    this.Pass = password;
+    this.Role = role;
 
+  }
+  //////////////////////
   set ID(id) {
     if (typeof id === 'number' && id > 0) {
       this.id = id;
@@ -20,12 +23,12 @@ class User {
     return this.id;
   }
 
-  set Name(value) {
-    if (User.isNameValid(value)) {
-      this.name = value.trim();
+  set Name(name) {
+    if (User.validateName(name)) {
+      this.name = name.trim();
     } else {
-      console.error("Invalid name: must be a string with at least 3 characters.");
-      this.name = null;
+      alert("Name must be at least 3 to maximum 15 characters long and contain only letters");
+      return false;
     }
   }
 
@@ -33,12 +36,13 @@ class User {
     return this.name;
   }
 
-  set Email(value) {
-    if (User.isEmailValid(value)) {
-      this.email = value.toLowerCase();
+  set Email(email) {
+    if (User.validateEmail(email)) {
+      this.email = email.toLowerCase();
     } else {
-      console.error("Invalid email format.");
-      this.email = null;
+      alert("Please enter a valid email address like that example@gmail.com");
+      return false;
+
     }
   }
 
@@ -46,23 +50,60 @@ class User {
     return this.email;
   }
 
-  static isNameValid(value) {
-    return value.match(/^[a-zA-Z]{3,9}$/);
+  set Pass(password) {
+    if (User.validatePass(password)) {
+      this.password = password.trim();
+    } else {
+      alert("Password must be at least 8 characters long and contain uppercase or lowercase, a number, and a special character");
+      return false;
+
+    }
   }
 
-  static isEmailValid(value) {
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return value.match(emailPattern);
+  get Pass() {
+    return this.password;
+  }
+
+  set Role(role) {
+    if (role === "customer" || role === "seller") {
+      this.role = role;
+    } else {
+      console.error("Invalid role: must be 'customer' or 'seller'.");
+      this.role = null;
+    }
+  }
+
+  get Role() {
+    return this.role;
+  }
+
+
+
+  static validateName(name) {
+
+    return /^[A-Za-z\s]{3,15}$/.test(name);
+  }
+  static validateEmail(email) {
+    return /^[a-zA-Z]+[0-9]*@[a-zA-Z]+\.[a-zA-Z]{2,}$/.test(email);
+  }
+  static validatePass(password) {
+    let passPattern = /^(?=.*[!@#$%^&*])(?=.*\d)(?=.*[a-zA-Z]).{8,}$/;
+    return passPattern.test(password);
   }
 }
 
 
-export class UserManager {
-  static CreateUser(id, name, email) {
-    const user = new User(id, name, email);
-    if (user.name == null || user.email == null || user.id == 0) {
-      console.error("Please, re-enter a valid data!");
-      return;
+export default class UserManager {
+  static CreateUser(id, name, email, password, role) {
+    const user = new User(id, name, email, password, role);
+    if (name == "" && password == "" && email == "") {
+      alert("Please Enter Name , Email , Password");
+      return false;
+    }
+
+    else {
+      alert("Successfully Registeration!");
+
     }
     const users = StorageManager.LoadSection("users") || [];
     users.push(user);
@@ -73,6 +114,16 @@ export class UserManager {
     const users = StorageManager.LoadSection("users") || [];
     return users.find(user => user.id === id);
   }
+
+  //Newwwwwwwwwww For Make ID for each user
+  static GenerateNextID() {
+    const users = StorageManager.LoadSection("users") || [];
+    if (users.length === 0) return 1;
+
+    const ids = users.map(user => user.id);
+    return Math.max(...ids) + 1;
+  }
+
 
   static UpdateUser(id, name, email) {
     var users = StorageManager.LoadSection("users") || [];
