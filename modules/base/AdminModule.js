@@ -1,4 +1,4 @@
-import {StorageManager} from './StorageModule.js'
+import StorageManager from './StorageModule.js'
 import {UserManager} from './UserModule.js'
 var ID = 0;
 export default function showSection(section) {
