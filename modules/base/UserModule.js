@@ -100,25 +100,7 @@ export default class UserManager {
       alert("Please Enter Name , Email , Password");
       return false;
     }
-    // else if (name == "") {
-    //   alert("Please Enter Name");
-    //   return false;
-    // }
-    // else if (email == "") {
-    //   alert("Please Enter Email");
-    //   return false;
-    // }
-    // else if (password == "") {
-    //   alert("Please Enter Password");
-    //   return false;
-    // }
-    // else if (name == "" || password == "" || email == "") {
-    //   alert("Please enter name , email , password");
-    // }
-    // else if (users.some(u => u.email === email)) {
-    //   alert("Email Already Registered!");
-    //   return false;
-    // }
+
     else {
       alert("Successfully Registeration!");
 
