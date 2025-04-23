@@ -9,9 +9,10 @@ export class Validate {
   }
 
   static isPasswordValid(value) {
-    return typeof value === 'string' && value.trim().length >= 6;
+    let passPattern = /^(?=.*[!@#$%^&*])(?=.*\d)(?=.*[a-zA-Z]).{8,}$/;
+    return passPattern.test(value);
   }
-
+  
   static isRoleValid(value) {
     const validRoles = ["admin", "seller", "customer"];
     return validRoles.includes(value.toLowerCase());
@@ -32,7 +33,6 @@ export class Validate {
     );
   }
 
-  // ✅ PRODUCT VALIDATION
   static isProductIdValid(value) {
     return typeof value === 'number' && value > 0;
   }
@@ -65,7 +65,6 @@ export class Validate {
     return typeof value === 'string' && value.match(/\.(jpeg|jpg|gif|png|webp)$/i);
   }
 
-  // ✅ ORDER VALIDATION
   static isOrderIdValid(value) {
     return typeof value === 'number' && value > 0;
   }
@@ -92,6 +91,6 @@ export class Validate {
   }
 
   static isOrderDateValid(value) {
-    return !isNaN(Date.parse(value)); // Valid ISO date string
+    return !isNaN(Date.parse(value)); 
   }
 }
