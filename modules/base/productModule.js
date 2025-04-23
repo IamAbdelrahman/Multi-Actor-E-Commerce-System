@@ -1,3 +1,5 @@
+import Validate  from './ValidateModule.js'; 
+
 class Product {
   constructor(id, name, description, price, stock, category, image, quantity = 1) {
     this.ID = id;
@@ -11,58 +13,98 @@ class Product {
   }
 
   set ID(id) {
-    this.id = typeof id === 'number' && id > 0 ? id : 0;
+    this.id = Validate.isProductIdValid(id) ? id : 0;
   }
   get ID() {
     return this.id;
   }
 
   set Name(value) {
-    this.name = typeof value === 'string' && value.trim().length >= 3 ? value.trim() : null;
+    if (Validate.isProductNameValid(value)) {
+      this.name = value.trim();
+    } else {
+      alert("Invalid product name: must be at least 3 characters.");
+      this.name = null;
+    }
   }
   get Name() {
     return this.name;
   }
 
   set Description(value) {
-    this.description = typeof value === 'string' && value.trim().length >= 15 ? value.trim() : null;
+    if (Validate.isDescriptionValid(value)) {
+      this.description = value.trim();
+    } else {
+      alert("Invalid description: must be at least 15 characters.");
+      this.description = null;
+    }
   }
   get Description() {
     return this.description;
   }
 
   set Price(value) {
-    this.price = typeof value === 'number' && value >= 0 ? value : 0;
+    if (Validate.isPriceValid(value)) {
+      this.price = value;
+    } else {
+      alert("Invalid price: must be a non-negative number.");
+      this.price = 0;
+    }
   }
   get Price() {
     return this.price;
   }
 
   set Stock(value) {
-    this.stock = Number.isInteger(value) && value >= 0 ? value : 0;
+    if (Validate.isStockValid(value)) {
+      this.stock = value;
+    } else {
+      alert("Invalid stock: must be a non-negative integer.");
+      this.stock = 0;
+    }
   }
   get Stock() {
     return this.stock;
   }
 
   set Category(value) {
-    this.category = typeof value === 'string' && value.trim().length >= 3 ? value.trim().toLowerCase() : null;
+    if (Validate.isCategoryValid(value)) {
+      this.category = value.trim().toLowerCase();
+    } else {
+      alert("Invalid category: must be at least 3 characters.");
+      this.category = null;
+    }
   }
   get Category() {
     return this.category;
   }
 
+
   set Image(value) {
-    this.image = typeof value === 'string' && value.match(/\.(jpeg|jpg|gif|png|webp)$/i) ? value : '';
+    if (Validate.isImageValid(value)) {
+      this.image = value;
+    } else {
+      console.error("Invalid image: must be a valid image URL.");
+      this.image = '';
+    }
   }
+
   get Image() {
     return this.image;
   }
 
   set Quantity(value) {
-    this.quantity = Number.isInteger(value) && value > 0 ? value : 1;
+    if (Validate.isQuantityValid(value)) {
+      this.quantity = value;
+    } else {
+      console.error("Invalid quantity: must be a positive integer.");
+      this.quantity = 1;
+    }
   }
+
   get Quantity() {
     return this.quantity;
   }
 }
+
+export default Product;
