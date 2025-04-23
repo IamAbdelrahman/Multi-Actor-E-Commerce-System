@@ -1,4 +1,4 @@
-import { StorageManager } from './StorageModule.js'
+import StorageManager  from './StorageModule.js'
 
 class User {
   constructor(id, name, email) {
