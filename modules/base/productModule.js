@@ -122,7 +122,7 @@ class Product {
   }
 }
 
-export default class ProductManager{
+export class ProductManager{
   static CreateProduct(...args) {
     const product = new Product(...args);
 
