@@ -1,5 +1,5 @@
-import StorageManager from './StorageModule.js';
-import Validate from './ValidationModule.js'; 
+import StorageManager from './StorageModule.js'
+import Validate from './ValidationModule.js';
 
 class User {
   constructor(id, name, email, password, role) {
@@ -8,10 +8,16 @@ class User {
     this.Email = email;
     this.Pass = password;
     this.Role = role;
+
   }
 
   set ID(id) {
-    this.id = typeof id === 'number' && id > 0 ? id : 0;
+    if (Validate.isUserIdValid(id)) {
+      this.id = id;
+    } else {
+      console.error("Invalid ID: must be a positive number.");
+      this.id = 0;
+    }
   }
 
   get ID() {
@@ -22,7 +28,8 @@ class User {
     if (Validate.isNameValid(name)) {
       this.name = name.trim();
     } else {
-      alert("Name must be 3–30 characters long and contain only letters or spaces.");
+      alert("Name must be at least 3 to maximum 15 characters long and contain only letters");
+      return false;
     }
   }
 
@@ -34,7 +41,9 @@ class User {
     if (Validate.isEmailValid(email)) {
       this.email = email.toLowerCase();
     } else {
-      alert("Please enter a valid email address (example@gmail.com).");
+      alert("Please enter a valid email address like that example@gmail.com");
+      return false;
+
     }
   }
 
@@ -46,7 +55,9 @@ class User {
     if (Validate.isPasswordValid(password)) {
       this.password = password.trim();
     } else {
-      alert("Password must be at least 6 characters and include a number and special character.");
+      alert("Password must be at least 8 characters long and contain uppercase or lowercase, a number, and a special character");
+      return false;
+
     }
   }
 
@@ -56,9 +67,9 @@ class User {
 
   set Role(role) {
     if (Validate.isRoleValid(role)) {
-      this.role = role;
+      this.role = role.toLowerCase();
     } else {
-      alert("Invalid role: must be 'customer', 'seller', or 'admin'.");
+      console.error("Invalid role: must be 'customer' or 'seller'.");
       this.role = null;
     }
   }
@@ -66,23 +77,63 @@ class User {
   get Role() {
     return this.role;
   }
+
+
+
+
 }
+
 
 export default class UserManager {
   static CreateUser(id, name, email, password, role) {
-    if (!name || !email || !password) {
-      alert("Please enter Name, Email, and Password.");
+    //I make here to check empty because user may froget to enter 
+    if (name.trim() === "" && password.trim() === "" && email.trim() === "") {
+      alert("Please Enter Name , Email , Password");
+      return false;
+    }
+    else if (name.trim() == "") {
+      alert("Please Enter Name");
+      return false;
+    }
+    else if (email.trim() === "") {
+      alert("Please Enter Email");
+      return false;
+    }
+    else if (password.trim() === "") {
+      alert("Please Enter Password");
+      return false;
+    }
+    else if (name.trim() === "" || password.trim() === "" || email.trim() === "") {
+      alert("Please enter name , email , password");
+    }
+
+    const users = StorageManager.LoadSection("users") || [];
+
+    //Here i make to prevent duplicate email or password
+    const userEnterEmail = users.some(user => user.email.toLowerCase() === email.toLowerCase());
+    if (userEnterEmail) {
+      alert("Email is already registered. Please enter a different email.");
+      return false;
+    }
+    const userEnterPass = users.some(user => user.password === password.trim());
+    if (userEnterPass) {
+      alert("Password is already registered. Please enter a different password.");
       return false;
     }
 
     const user = new User(id, name, email, password, role);
 
-    const users = StorageManager.LoadSection("users") || [];
+    //After check empty i make to check validation 
+    if (!user.Name || !user.Email || !user.Pass || !user.Role) {
+      alert("Registration failed. Please ensure all fields are valid.");
+      return false;
+    }
+    //She will storage if all correct
     users.push(user);
     StorageManager.SaveSection("users", users);
-
-    alert("Successfully registered!");
+    alert("Successfully Registered!");
     return true;
+
   }
 
   static GetUser(id) {
@@ -90,22 +141,24 @@ export default class UserManager {
     return users.find(user => user.id === id);
   }
 
+  //Newwwwwwwwwww For Make ID for each user
   static GenerateNextID() {
     const users = StorageManager.LoadSection("users") || [];
-    return users.length === 0 ? 1 : Math.max(...users.map(user => user.id)) + 1;
+    const ids = users.map(user => user.id);
+    return Math.max(...ids) + 1;
   }
 
+
   static UpdateUser(id, name, email) {
-    let users = StorageManager.LoadSection("users") || [];
-    users = users.map(user =>
-      user.id === id ? new User(id, name, email, user.password, user.role) : user
-    );
+    var users = StorageManager.LoadSection("users") || [];
+    users = users.map(user => user.id === id ? new User(id, name, email) : user);
     StorageManager.SaveSection("users", users);
   }
 
   static DeleteUser(id) {
-    let users = StorageManager.LoadSection("users") || [];
+    var users = StorageManager.LoadSection("users") || [];
     users = users.filter(user => user.id !== id);
     StorageManager.SaveSection("users", users);
   }
 }
+

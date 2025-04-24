@@ -1,20 +1,22 @@
+// validation
 export default class Validate {
   static isNameValid(value) {
-    return typeof value === 'string' && /^[a-zA-Z\s]{3,30}$/.test(value);
+    return typeof value === 'string' && /^[A-Za-z\s]{3,15}$/.test(value);
   }
 
   static isEmailValid(value) {
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    const emailPattern = /^[a-zA-Z]+[0-9]*@[a-zA-Z]+\.[a-zA-Z]{2,}$/;
     return typeof value === 'string' && emailPattern.test(value);
   }
 
   static isPasswordValid(value) {
     let passPattern = /^(?=.*[!@#$%^&*])(?=.*\d)(?=.*[a-zA-Z]).{8,}$/;
-    return passPattern.test(value);
+    return typeof value === 'string' && passPattern.test(value);
   }
-  
+
   static isRoleValid(value) {
-    const validRoles = ["admin", "seller", "customer"];
+    const validRoles = ["seller", "customer"];
     return validRoles.includes(value.toLowerCase());
   }
 
@@ -91,6 +93,6 @@ export default class Validate {
   }
 
   static isOrderDateValid(value) {
-    return !isNaN(Date.parse(value)); 
+    return !isNaN(Date.parse(value));
   }
 }

@@ -1,1 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+
+<body>
+    <h1>Login</h1>
+    <form onsubmit="Login(event)">
+        <label for="email">Email:</label>
+        <input type="text" id="email" placeholder="Enter your email"><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" placeholder="Enter your password"><br><br>
+
+        <input type="submit" value="Login">
+    </form>
+
+    <script type="module">
+        import StorageManager from './modules/base/StorageModule.js';
+
+        window.Login = function (event) {
+            event.preventDefault();
+
+            const email = document.getElementById("email").value.trim().toLowerCase();
+            const password = document.getElementById("password").value;
+
+            const users = StorageManager.LoadSection("users") || [];
+
+            const foundUser = users.find(user => user.email === email && user.password === password);
+
+            if (foundUser) {
+                alert(`Welcome back, ${foundUser.name}! You are logged in as ${foundUser.role}.`);
+            } else {
+                alert("Invalid email or password. Please try again.");
+            }
+        }
+    </script>
+</body>
+
+</html>
