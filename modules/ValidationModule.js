@@ -1,4 +1,4 @@
-
+// validation
 export default class Validate {
   static isNameValid(value) {
     return typeof value === 'string' && /^[A-Za-z\s]{3,15}$/.test(value);
