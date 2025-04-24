@@ -76,3 +76,11 @@ a,.cursor-pointer{
   border: 1ps solid rgb(217, 241, 240,0.612);
   background-color: rgba(217, 241, 240, 0.612);
 }
+.rounded-pill {
+  transition: all 0.3s ease;
+}
+
+.rounded-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
