@@ -11,7 +11,7 @@ export default class Validate {
   }
 
   static isPasswordValid(value) {
-    let passPattern = /^(?=.*[!@#$%^&*])(?=.*\d)(?=.*[a-zA-Z]).{8,}$/;
+    let passPattern = /^(?=.*[_()!@#$%^&*])(?=.*\d)(?=.*[a-zA-Z]).{8,}$/;
     return typeof value === 'string' && passPattern.test(value);
   }
 
