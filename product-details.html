@@ -1,83 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>product details</title>
-    
+    <title>Product Details - Electronics Store</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/home.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .product-image {
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
         }
+
         .product-image:hover {
             transform: scale(1.02);
         }
+
         .thumbnail {
             cursor: pointer;
             border: 2px solid transparent;
             border-radius: 5px;
         }
-        .thumbnail:hover, .thumbnail.active {
+
+        .thumbnail:hover,
+        .thumbnail.active {
             border-color: #6c757d;
         }
+
         .benefit-icon {
             font-size: 1.5rem;
-            color: #28a745;
+            color: #ffc107;
             margin-right: 10px;
         }
+
         .quantity-input {
             width: 60px;
             text-align: center;
         }
+
         .breadcrumb {
             background-color: transparent;
             padding: 0;
         }
+
         .rating {
             color: #ffc107;
         }
+
+        .btn-yellow {
+            background-color: #ffc107;
+            border-color: #ffc107;
+            color: #212529;
+        }
+
+        .btn-yellow:hover {
+            background-color: #e0a800;
+            border-color: #d39e00;
+            color: #212529;
+        }
+
+        .highlight-bg {
+            background-color: rgba(255, 193, 7, 0.1);
+        }
+
+        .nav-tabs .nav-link.active {
+            color: #ffc107;
+            font-weight: bold;
+        }
     </style>
 </head>
+
 <body>
-    <!-- Navigation (simplified for this example) -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!------------------------------------ NavBar Start ------------------------------------>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary p-3">
         <div class="container">
-            <a class="navbar-brand" href="#">Tea Haven</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <a class="navbar-brand fw-bold text-light fs-4" href="home.html">
+                <i class="bi bi-lightning-fill"></i> Electronics Store
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Shop</a>
+
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item px-2">
+                        <a class="nav-link text-light special-hover" href="home.html">HOME</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
+                    <li class="nav-item px-2">
+                        <a class="nav-link text-light special-hover" href="about.html">ABOUT</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
+                    <li class="nav-item px-2">
+                        <a class="nav-link active border-bottom border-warning special-hover" href="catalog.html">SHOP</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-light special-hover" href="#" role="button"
+                            data-bs-toggle="dropdown">
+                            CATEGORIES
+                        </a>
+                        <ul class="dropdown-menu bg-secondary">
+                            <li>
+                                <a class="dropdown-item text-light" href="#">Smartphones</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-light" href="#">Laptops</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-light" href="#">Headphones</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-light" href="#">Tablets</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-light" href="#">Accessories</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item px-2">
+                        <a class="nav-link text-light special-hover" href="#">CONTACT</a>
                     </li>
                 </ul>
+
+                <div class="d-flex gap-4 fs-5 icons">
+                    <a href="login.html" class="text-light"><i class="bi bi-person-circle"></i></a>
+                    <a href="#" class="text-light"><i class="bi bi-cart" onclick="toggleCart()"></i></a>
+                    <a href="#" class="text-light heart-toggle"><i class="bi bi-heart"></i></a>
+                </div>
             </div>
         </div>
     </nav>
+    <!-- -------------------------------------Cart Slider------------------------------- -->
+    <div id="overlay"></div>
+    <div id="cartSlider">
+        <div class="d-flex flex-column h-100">
+            <div class="cart-header d-flex justify-content-between align-items-center">
+                <h4 class="mb-0"><i class="bi bi-cart3"></i> Your Cart</h4>
+                <button class="btn btn-close" onclick="toggleCart()"></button>
+            </div>
+            <div class="cart-body flex-grow-1 overflow-auto">
+                <div id="cartItems"></div>
+            </div>
+            <div class="cart-footer mt-auto">
+                <div class="d-flex justify-content-between mb-3">
+                    <h5>Total:</h5>
+                    <h5 id="cartTotal">$0.00</h5>
+                </div>
+                <button class="btn btn-yellow w-100 rounded-pill mb-2">
+                    <i class="bi bi-credit-card"></i> Checkout
+                </button>
+                <button class="btn btn-outline-secondary w-100 rounded-pill" onclick="toggleCart()">
+                    <i class="bi bi-arrow-left"></i> Continue Shopping
+                </button>
+            </div>
+        </div>
+    </div>
+    <!------------------------------------ NavBar End ------------------------------------>
 
     <!-- Main Content -->
     <div class="container my-5">
         <!-- Breadcrumb -->
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Green Teas</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Jasmine Pearl</li>
+                <li class="breadcrumb-item"><a href="home.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="catalog.html">Smartphones</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Galaxy S23 Ultra</li>
             </ol>
         </nav>
 
@@ -85,27 +177,29 @@
             <!-- Product Images -->
             <div class="col-md-6">
                 <div class="mb-3">
-                    <img id="mainImage" src="UP/1.jpg" alt="Premium Jasmine Pearl Green Tea" class="img-fluid product-image">
+                    <img id="mainImage" src="https://via.placeholder.com/600x600?text=Galaxy+S23+Ultra" alt="Samsung Galaxy S23 Ultra"
+                        class="img-fluid product-image">
                 </div>
                 <div class="row g-2">
                     <div class="col-3">
-                        <img src="UP/2.jpg" alt="Tea closeup" class="img-fluid thumbnail active" onclick="changeImage(this)">
+                        <img src="https://via.placeholder.com/150x150?text=Front+View" alt="Front view" class="img-fluid thumbnail active"
+                            onclick="changeImage(this)">
                     </div>
                     <div class="col-3">
-                        <img src="UP/3.jpg" alt="Tea packaging" class="img-fluid thumbnail" onclick="changeImage(this)">
+                        <img src="https://via.placeholder.com/150x150?text=Back+View" alt="Back view" class="img-fluid thumbnail" onclick="changeImage(this)">
                     </div>
                     <div class="col-3">
-                        <img src="UP/4.jpg" alt="Brewed tea" class="img-fluid thumbnail" onclick="changeImage(this)">
+                        <img src="https://via.placeholder.com/150x150?text=Side+View" alt="Side view" class="img-fluid thumbnail" onclick="changeImage(this)">
                     </div>
                     <div class="col-3">
-                        <img src="UP/5.jpg" alt="Tea garden" class="img-fluid thumbnail" onclick="changeImage(this)">
+                        <img src="https://via.placeholder.com/150x150?text=Accessories" alt="With accessories" class="img-fluid thumbnail" onclick="changeImage(this)">
                     </div>
                 </div>
             </div>
 
             <!-- Product Details -->
             <div class="col-md-6">
-                <h1>Premium Jasmine Pearl Green Tea</h1>
+                <h1>Samsung Galaxy S23 Ultra</h1>
                 <div class="mb-2">
                     <span class="rating">
                         <i class="fas fa-star"></i>
@@ -114,22 +208,37 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star-half-alt"></i>
                     </span>
-                    <span class="ms-2">4.5 (128 reviews)</span>
+                    <span class="ms-2">4.7 (428 reviews)</span>
                 </div>
-                <h3 class="text-success">$14.99</h3>
-                <p class="text-muted">SKU: TEA-JP-50G</p>
-                
+                <h3 class="text-success">$1,199.99</h3>
+                <p class="text-muted">SKU: SAM-S23U-256GB</p>
+
                 <div class="mb-4">
-                    <p>Hand-rolled jasmine pearls unfurl gracefully in hot water, releasing a delicate floral aroma and sweet, smooth flavor. Our premium green tea is scented seven times with fresh jasmine blossoms for an exquisite taste experience.</p>
+                    <p>The Samsung Galaxy S23 Ultra features a stunning 6.8-inch Dynamic AMOLED display, 200MP camera system, and the fastest Snapdragon processor yet. With built-in S Pen and all-day battery life, it's the ultimate smartphone for power users.</p>
                 </div>
 
                 <!-- Product Options -->
                 <div class="mb-4">
-                    <label class="form-label"><strong>Size:</strong></label>
+                    <label class="form-label"><strong>Color:</strong></label>
                     <div class="btn-group" role="group">
-                        <input type="radio" class="btn-check" name="size" id="size50g" autocomplete="off" checked>
-                        <label class="btn btn-outline-secondary" for="size50g">50g</label>
-                        
+                        <input type="radio" class="btn-check" name="color" id="colorPhantom" autocomplete="off" checked>
+                        <label class="btn btn-outline-secondary" for="colorPhantom">Phantom Black</label>
+                        <input type="radio" class="btn-check" name="color" id="colorGreen" autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="colorGreen">Green</label>
+                        <input type="radio" class="btn-check" name="color" id="colorLavender" autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="colorLavender">Lavender</label>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label"><strong>Storage:</strong></label>
+                    <div class="btn-group" role="group">
+                        <input type="radio" class="btn-check" name="storage" id="storage256" autocomplete="off" checked>
+                        <label class="btn btn-outline-secondary" for="storage256">256GB</label>
+                        <input type="radio" class="btn-check" name="storage" id="storage512" autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="storage512">512GB</label>
+                        <input type="radio" class="btn-check" name="storage" id="storage1tb" autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="storage1tb">1TB</label>
                     </div>
                 </div>
 
@@ -144,21 +253,22 @@
                         </div>
                     </div>
                     <div class="col-md-9">
-                        <button class="btn btn-success btn-lg w-100" style="height: 100%;">
+                        <button class="btn btn-yellow btn-lg w-100" style="height: 100%;">
                             <i class="fas fa-shopping-cart me-2"></i> Add to Cart
                         </button>
                     </div>
                 </div>
 
                 <!-- Benefits -->
-                <div class="card mb-4">
+                <div class="card mb-4 highlight-bg">
                     <div class="card-body">
-                        <h5 class="card-title"><i class="fas fa-leaf benefit-icon"></i>Tea Benefits</h5>
+                        <h5 class="card-title"><i class="fas fa-bolt benefit-icon"></i>Key Features</h5>
                         <ul class="list-unstyled">
-                            <li><i class="fas fa-check text-success me-2"></i> Rich in antioxidants</li>
-                            <li><i class="fas fa-check text-success me-2"></i> Calming and relaxing</li>
-                            <li><i class="fas fa-check text-success me-2"></i> May support metabolism</li>
-                            <li><i class="fas fa-check text-success me-2"></i> Naturally low in caffeine</li>
+                            <li><i class="fas fa-check text-warning me-2"></i> 200MP Adaptive Pixel Sensor</li>
+                            <li><i class="fas fa-check text-warning me-2"></i> Built-in S Pen with 2.8ms latency</li>
+                            <li><i class="fas fa-check text-warning me-2"></i> Snapdragon 8 Gen 2 for Galaxy</li>
+                            <li><i class="fas fa-check text-warning me-2"></i> 5000mAh all-day battery</li>
+                            <li><i class="fas fa-check text-warning me-2"></i> IP68 water and dust resistance</li>
                         </ul>
                     </div>
                 </div>
@@ -179,55 +289,106 @@
             <div class="col-12">
                 <ul class="nav nav-tabs" id="productTabs" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button">Description</button>
+                        <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
+                            data-bs-target="#description" type="button">Description</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" type="button">Details</button>
+                        <button class="nav-link" id="specs-tab" data-bs-toggle="tab" data-bs-target="#specs"
+                            type="button">Specifications</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="brewing-tab" data-bs-toggle="tab" data-bs-target="#brewing" type="button">Brewing Guide</button>
+                        <button class="nav-link" id="features-tab" data-bs-toggle="tab" data-bs-target="#features"
+                            type="button">Features</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button">Reviews</button>
+                        <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews"
+                            type="button">Reviews</button>
                     </li>
                 </ul>
                 <div class="tab-content p-3 border border-top-0 rounded-bottom" id="productTabsContent">
                     <div class="tab-pane fade show active" id="description" role="tabpanel">
-                        <h4>About Our Jasmine Pearl Tea</h4>
-                        <p>Our Jasmine Pearl Green Tea is a masterpiece of tea craftsmanship. Each pearl is carefully hand-rolled by skilled artisans in the Fujian province of China, using only the finest spring-picked green tea leaves.</p>
-                        <p>The tea undergoes a traditional scenting process where it's layered with fresh jasmine blossoms seven times over several weeks. This labor-intensive method ensures the tea absorbs the maximum amount of jasmine fragrance without artificial flavors.</p>
-                        <p>When brewed, the pearls slowly unfurl, releasing a sweet floral aroma and producing a light golden liquor with a smooth, slightly sweet taste and lingering floral finish.</p>
+                        <h4>About the Galaxy S23 Ultra</h4>
+                        <p>The Samsung Galaxy S23 Ultra is the pinnacle of smartphone technology, combining professional-grade camera capabilities with desktop-level performance. The 6.8-inch Dynamic AMOLED 2X display with 120Hz refresh rate delivers stunning visuals, while the new 200MP camera sensor captures incredible detail in any light.</p>
+                        <p>With the built-in S Pen, you get the precision of a pen on your phone, perfect for note-taking, photo editing, or creative work. The Snapdragon 8 Gen 2 for Galaxy processor is optimized specifically for this device, delivering unmatched speed and efficiency.</p>
+                        <p>Designed with premium materials and military-grade durability, the S23 Ultra is as tough as it is beautiful, featuring Gorilla Glass Victus 2 front and back with an armored aluminum frame.</p>
                     </div>
-                    <div class="tab-pane fade" id="details" role="tabpanel">
-                        <h4>Product Details</h4>
-                        <ul>
-                            <li><strong>Origin:</strong> Fujian Province, China</li>
-                            <li><strong>Type:</strong> Green Tea</li>
-                            <li><strong>Caffeine Level:</strong> Low (approx. 20mg per cup)</li>
-                            <li><strong>Ingredients:</strong> Green tea, jasmine blossoms</li>
-                            <li><strong>Steeping Time:</strong> 2-3 minutes</li>
-                            <li><strong>Water Temperature:</strong> 175°F (80°C)</li>
-                            <li><strong>Shelf Life:</strong> 18 months when stored properly</li>
-                            <li><strong>Storage:</strong> Keep in cool, dry place away from light and strong odors</li>
+                    <div class="tab-pane fade" id="specs" role="tabpanel">
+                        <h4>Technical Specifications</h4>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Display:</strong> 6.8" Dynamic AMOLED 2X, 3088×1440, 120Hz</li>
+                            <li class="list-group-item"><strong>Processor:</strong> Snapdragon 8 Gen 2 for Galaxy</li>
+                            <li class="list-group-item"><strong>RAM:</strong> 12GB LPDDR5X</li>
+                            <li class="list-group-item"><strong>Storage:</strong> 256GB/512GB/1TB UFS 4.0</li>
+                            <li class="list-group-item"><strong>Rear Cameras:</strong> 200MP wide + 12MP ultra-wide + 10MP telephoto (3x) + 10MP telephoto (10x)</li>
+                            <li class="list-group-item"><strong>Front Camera:</strong> 12MP</li>
+                            <li class="list-group-item"><strong>Battery:</strong> 5000mAh, 45W wired charging, 15W wireless</li>
+                            <li class="list-group-item"><strong>OS:</strong> Android 13 with One UI 5.1</li>
+                            <li class="list-group-item"><strong>Dimensions:</strong> 163.4 x 78.1 x 8.9 mm, 234g</li>
                         </ul>
                     </div>
-                    <div class="tab-pane fade" id="brewing" role="tabpanel">
-                        <h4>How to Brew Jasmine Pearl Tea</h4>
-                        <ol>
-                            <li>Use 3-5 pearls per 8oz cup (adjust to taste)</li>
-                            <li>Heat fresh water to 175°F (80°C) - just before boiling</li>
-                            <li>Pour water over pearls and steep for 2-3 minutes</li>
-                            <li>Watch as the pearls gracefully unfurl</li>
-                            <li>Strain and enjoy - pearls can be resteeped 2-3 times</li>
-                        </ol>
-                        <p><strong>Tip:</strong> For best results, use a glass teapot or cup to appreciate the beautiful unfurling of the pearls.</p>
+                    <div class="tab-pane fade" id="features" role="tabpanel">
+                        <h4>Key Features</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card mb-3 highlight-bg">
+                                    <div class="card-body">
+                                        <h5><i class="fas fa-camera text-warning me-2"></i>Camera System</h5>
+                                        <ul>
+                                            <li>200MP Adaptive Pixel Sensor</li>
+                                            <li>100x Space Zoom with enhanced stabilization</li>
+                                            <li>8K video recording at 30fps</li>
+                                            <li>Nightography for stunning low-light photos</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card mb-3 highlight-bg">
+                                    <div class="card-body">
+                                        <h5><i class="fas fa-microchip text-warning me-2"></i>Performance</h5>
+                                        <ul>
+                                            <li>Custom Snapdragon 8 Gen 2 for Galaxy</li>
+                                            <li>Vapor Chamber cooling system</li>
+                                            <li>12GB LPDDR5X RAM</li>
+                                            <li>UFS 4.0 storage (up to 1TB)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card mb-3 highlight-bg">
+                                    <div class="card-body">
+                                        <h5><i class="fas fa-mobile-alt text-warning me-2"></i>Display</h5>
+                                        <ul>
+                                            <li>6.8" Dynamic AMOLED 2X</li>
+                                            <li>120Hz adaptive refresh rate</li>
+                                            <li>1750 nits peak brightness</li>
+                                            <li>Vision Booster for outdoor visibility</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card mb-3 highlight-bg">
+                                    <div class="card-body">
+                                        <h5><i class="fas fa-battery-full text-warning me-2"></i>Battery</h5>
+                                        <ul>
+                                            <li>5000mAh intelligent battery</li>
+                                            <li>45W Super Fast Charging 2.0</li>
+                                            <li>15W Wireless Fast Charging</li>
+                                            <li>Wireless PowerShare</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="reviews" role="tabpanel">
                         <h4>Customer Reviews</h4>
                         <div class="mb-4">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <strong>Sarah J.</strong>
+                                    <strong>Alex T.</strong>
                                     <div class="rating">
                                         <i class="fas fa-star"></i>
                                         <i class="fas fa-star"></i>
@@ -238,12 +399,12 @@
                                 </div>
                                 <small class="text-muted">March 15, 2023</small>
                             </div>
-                            <p class="mt-2">The most amazing jasmine tea I've ever tasted. The aroma is intoxicating and the flavor is so smooth. Worth every penny!</p>
+                            <p class="mt-2">The camera on this phone is absolutely incredible. The 200MP sensor captures details I've never seen before in a smartphone. Battery life easily lasts me all day with heavy use.</p>
                         </div>
                         <div class="mb-4">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <strong>Michael T.</strong>
+                                    <strong>Sarah K.</strong>
                                     <div class="rating">
                                         <i class="fas fa-star"></i>
                                         <i class="fas fa-star"></i>
@@ -254,9 +415,9 @@
                                 </div>
                                 <small class="text-muted">February 28, 2023</small>
                             </div>
-                            <p class="mt-2">Beautiful to watch the pearls unfurl. The jasmine flavor is present but not overpowering. My new favorite afternoon tea.</p>
+                            <p class="mt-2">As a digital artist, the S Pen integration is game-changing. The low latency makes it feel like I'm drawing on paper. The screen is massive and beautiful - perfect for my work.</p>
                         </div>
-                        <button class="btn btn-outline-primary">Write a Review</button>
+                        <button class="btn btn-yellow">Write a Review</button>
                     </div>
                 </div>
             </div>
@@ -269,40 +430,40 @@
                 <div class="row">
                     <div class="col-md-3 col-6 mb-4">
                         <div class="card h-100">
-                            <img src="UP/1.jpg" class="card-img-top" alt="Matcha Green Tea">
+                            <img src="https://via.placeholder.com/300x300?text=Galaxy+Watch+5" class="card-img-top" alt="Galaxy Watch 5">
                             <div class="card-body">
-                                <h5 class="card-title">Ceremonial Matcha</h5>
-                                <p class="card-text text-success">$24.99</p>
+                                <h5 class="card-title">Galaxy Watch 5 Pro</h5>
+                                <p class="card-text text-success">$349.99</p>
                                 <a href="#" class="btn btn-sm btn-outline-primary">View</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3 col-6 mb-4">
                         <div class="card h-100">
-                            <img src="UP/2.jpg" class="card-img-top" alt="Milk Oolong Tea">
+                            <img src="https://via.placeholder.com/300x300?text=Galaxy+Buds+2" class="card-img-top" alt="Galaxy Buds 2">
                             <div class="card-body">
-                                <h5 class="card-title">Milk Oolong</h5>
-                                <p class="card-text text-success">$18.99</p>
+                                <h5 class="card-title">Galaxy Buds 2 Pro</h5>
+                                <p class="card-text text-success">$229.99</p>
                                 <a href="#" class="btn btn-sm btn-outline-primary">View</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3 col-6 mb-4">
                         <div class="card h-100">
-                            <img src="UP/1.jpg" class="card-img-top" alt="Chamomile Tea">
+                            <img src="https://via.placeholder.com/300x300?text=Galaxy+Tab+S8" class="card-img-top" alt="Galaxy Tab S8">
                             <div class="card-body">
-                                <h5 class="card-title">Organic Chamomile</h5>
-                                <p class="card-text text-success">$12.99</p>
+                                <h5 class="card-title">Galaxy Tab S8 Ultra</h5>
+                                <p class="card-text text-success">$1,099.99</p>
                                 <a href="#" class="btn btn-sm btn-outline-primary">View</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3 col-6 mb-4">
                         <div class="card h-100">
-                            <img src="UP/1.jpg" class="card-img-top" alt="Earl Grey Tea">
+                            <img src="https://via.placeholder.com/300x300?text=45W+Charger" class="card-img-top" alt="45W Charger">
                             <div class="card-body">
-                                <h5 class="card-title">Earl Grey Supreme</h5>
-                                <p class="card-text text-success">$16.99</p>
+                                <h5 class="card-title">45W Fast Charger</h5>
+                                <p class="card-text text-success">$49.99</p>
                                 <a href="#" class="btn btn-sm btn-outline-primary">View</a>
                             </div>
                         </div>
@@ -313,68 +474,56 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-light py-4 mt-5">
+    <footer class="bg-dark text-white py-4 mt-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-4 mb-3">
-                    <h5>Tea Haven</h5>
-                    <p>Premium teas sourced from the finest gardens around the world.</p>
+                    <h5>Electronics Store</h5>
+                    <p>Premium electronics and accessories from top brands.</p>
+                    <div class="social-icons">
+                        <a href="#" class="text-warning me-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-warning me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-warning me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-warning"><i class="fab fa-youtube"></i></a>
+                    </div>
                 </div>
                 <div class="col-md-2 mb-3">
                     <h5>Shop</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-decoration-none">Green Teas</a></li>
-                        <li><a href="#" class="text-decoration-none">Black Teas</a></li>
-                        <li><a href="#" class="text-decoration-none">Herbal Teas</a></li>
-                        <li><a href="#" class="text-decoration-none">Tea Accessories</a></li>
+                        <li><a href="#" class="text-decoration-none text-white-50">Smartphones</a></li>
+                        <li><a href="#" class="text-decoration-none text-white-50">Laptops</a></li>
+                        <li><a href="#" class="text-decoration-none text-white-50">Tablets</a></li>
+                        <li><a href="#" class="text-decoration-none text-white-50">Accessories</a></li>
                     </ul>
                 </div>
                 <div class="col-md-2 mb-3">
-                    <h5>Help</h5>
+                    <h5>Support</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-decoration-none">Contact Us</a></li>
-                        <li><a href="#" class="text-decoration-none">Shipping</a></li>
-                        <li><a href="#" class="text-decoration-none">Returns</a></li>
-                        <li><a href="#" class="text-decoration-none">FAQs</a></li>
+                        <li><a href="#" class="text-decoration-none text-white-50">Contact Us</a></li>
+                        <li><a href="#" class="text-decoration-none text-white-50">Shipping</a></li>
+                        <li><a href="#" class="text-decoration-none text-white-50">Returns</a></li>
+                        <li><a href="#" class="text-decoration-none text-white-50">FAQs</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4 mb-3">
                     <h5>Newsletter</h5>
-                    <p>Subscribe for exclusive offers and tea tips.</p>
+                    <p>Subscribe for exclusive offers and tech news.</p>
                     <div class="input-group">
                         <input type="email" class="form-control" placeholder="Your email">
-                        <button class="btn btn-success" type="button">Subscribe</button>
+                        <button class="btn btn-warning" type="button">Subscribe</button>
                     </div>
                 </div>
             </div>
-            <hr>
+            <hr class="my-4 bg-secondary">
             <div class="text-center">
-                <p class="mb-0">&copy; 2023 Tea Haven. All rights reserved.</p>
+                <p class="mb-0 text-white-50">&copy; ITI Electronics Store. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <!-- Bootstrap JS and Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="module">
-    import StorageManager from './modules/base/StorageModule.js'
-    function StoreJSON() {
-      /*- NOTE: Use the below line at the top of your module/script */
-      // import {StorageManager} from './modules/base/StorageModule.js'
-      if (!localStorage.getItem("data")) {
-        fetch('./data/data.json')
-          .then(response => response.json())
-          .then(data => {
-            StorageManager.Save('data', data);
-            console.log("JSON data loaded to localStorage for the first time.");
-          })
-          .catch(err => console.error("Failed to load JSON:", err));
-      } else {
-        console.log("Data already in localStorage. Skipping JSON fetch.");
-      }
-    }
-
-    StoreJSON();
+    <script>
         // Change main image when thumbnail is clicked
         function changeImage(element) {
             const mainImage = document.getElementById('mainImage');
@@ -399,6 +548,21 @@
                 quantityInput.value = parseInt(quantityInput.value) - 1;
             }
         });
+
+        // Cart slider toggle
+        function toggleCart() {
+            const cartSlider = document.getElementById('cartSlider');
+            const overlay = document.getElementById('overlay');
+            
+            if (cartSlider.classList.contains('show')) {
+                cartSlider.classList.remove('show');
+                overlay.classList.remove('show');
+            } else {
+                cartSlider.classList.add('show');
+                overlay.classList.add('show');
+            }
+        }
     </script>
 </body>
+
 </html>
