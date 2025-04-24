@@ -26,6 +26,85 @@ body {
   border: none !important;
 }
 /* ---------------------------------- NavBar End ---------------------------------- */
+ /************************************* CART slider*********************** */
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: none;
+}
+
+#overlay.show {
+  display: block;
+}
+
+#cartSlider {
+  position: fixed;
+  top: 0;
+  right: -600px;
+  width: 600px;
+  height: 100%;
+  background-color: white;
+  z-index: 1100;
+  transition: right 0.6s ease;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.cart-footer {
+  padding: 15px;
+  border-top: 1px solid #dee2e6;
+  background-color: white;
+}
+
+#cartSlider.show {
+  right: 0;
+}
+
+.cart-header {
+  color: #ffc107;
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+
+.btn-yellow {
+  background-color: #ffc107;
+  border-color: #ffc107;
+  color: #212529;
+}
+
+.btn-yellow:hover {
+  background-color: #e0a800;
+  border-color: #d39e00;
+  color: #212529;
+}
+
+.navbar {
+  z-index: 1000;
+}
+
+#cartSlider {
+  z-index: 1100;
+}
+
+#overlay {
+  z-index: 1050;
+}
+      
+/************************************* CART slider*********************** */
 /* ---------------------------------- SlideBar Start ---------------------------------- */
 .slider button {
   border-radius: 20px;
