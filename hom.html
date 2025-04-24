@@ -128,8 +128,8 @@
     </div>
 
     <script type="module">
-        import StorageManager from './modules/base/StorageModule.js';
-        import UserManager from './modules/base/UserModule.js';
+        import StorageManager from './modules/StorageModule.js'
+        import UserManager from './modules/UserModule.js';
 
         // Show and hide modal
         const modal = document.getElementById("registerModal");
@@ -218,7 +218,7 @@
             const LoginUser = users.find(user => user.email === email && user.password === password);
 
             if (LoginUser) {
-                alert(`Welcome back, ${LoginUser.name}! You are logged in as ${LoginUser.role}.`);
+                // alert(`Welcome back, ${LoginUser.name}! You are logged in as ${LoginUser.role}.`);
 
                 switch (LoginUser.role) {
                     case "customer":
