@@ -6,12 +6,7 @@
       "email": "hagar@example.com",
       "password": "hashedpassword1",
       "role": "customer",
-      "address": {
-        "street": "123 Main St",
-        "city": "Cairo",
-        "state": "Cairo",
-        "zip": "12345"
-      },
+      "city": "Cairo",
       "phone": "+201234567890"
     },
     {
@@ -20,12 +15,7 @@
       "email": "admin@gmail.com",
       "password": "admin123",
       "role": "admin",
-      "address": {
-        "street": "123 Main St",
-        "city": "Cairo",
-        "state": "Cairo",
-        "zip": "12345"
-      },
+      "city": "Tanta",
       "phone": "+201234567890"
     }
   ],
@@ -39,7 +29,8 @@
       "stock": 15,
       "quantity": 1,
       "category": "Electronics",
-      "image": "images/headphones.jpg"
+      "image": "images/headphones.jpg",
+      "numberofClicks": 0
     },
     {
       "id": 102,
@@ -96,5 +87,6 @@
       "description": "Shoes and sandals",
       "products": [102]
     }
-  ]
+  ],
+  "cart":[]
 }
