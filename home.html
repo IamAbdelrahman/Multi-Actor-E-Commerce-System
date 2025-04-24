@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
 
-<<<<<<< HEAD
+    
     <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
@@ -10,6 +14,10 @@
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
       rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
     <link rel="stylesheet" href="css/home.css" />
   </head>
@@ -20,179 +28,355 @@
         <a class="navbar-brand fw-bold text-light fs-4" href="home.html">
           <i class="bi bi-lightning-fill"></i> Elctronics Store
         </a>
-=======
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Home</title>
->>>>>>> bec9586a11fd77623831835cd21d081406322822
 
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
-</head>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#mainNavbar"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-<body>
-  <!------------------------------------ NavBar Start ------------------------------------>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-secondary p-3">
-    <div class="container">
-      <a class="navbar-brand fw-bold text-light fs-4" href="home.html">
-        <i class="bi bi-lightning-fill"></i> Elctronics Store
-      </a>
+        <div class="collapse navbar-collapse" id="mainNavbar">
+          <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+            <li class="nav-item px-2">
+              <a
+                class="nav-link active border-bottom border-warning special-hover"
+                href="home.html"
+                >HOME</a
+              >
+            </li>
+            <li class="nav-item px-2">
+              <a class="nav-link text-light special-hover" href="about.html"
+                >ABOUT</a
+              >
+            </li>
+            <li class="nav-item px-2">
+              <a class="nav-link text-light special-hover" href="catalog.html"
+                >SHOP</a
+              >
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle text-light special-hover"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+              >
+                CATEGORIES
+              </a>
+              <ul class="dropdown-menu bg-secondary">
+                <li>
+                  <a class="dropdown-item text-light" href="#">Mobiles</a>
+                </li>
+                <li>
+                  <a class="dropdown-item text-light" href="#">Laptops</a>
+                </li>
+                <li>
+                  <a class="dropdown-item text-light" href="#">HeadPhones</a>
+                </li>
+                <li>
+                  <a class="dropdown-item text-light" href="#">Tablets</a>
+                </li>
+                <li>
+                  <a class="dropdown-item text-light" href="#">Accessories</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item px-2">
+              <a class="nav-link text-light special-hover" href="#">CONTACT</a>
+            </li>
+          </ul>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
-        <span class="navbar-toggler-icon"></span>
+          <div class="d-flex gap-4 fs-5 icons">
+            <a id="Register-Icon" class="text-light"
+              ><i class="bi bi-person-circle"></i
+            ></a>
+            <a href="#" class="text-light"><i class="bi bi-cart"></i></a>
+            <a href="#" class="text-light heart-toggle"
+              ><i class="bi bi-heart"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!------------------------------------ NavBar Start ------------------------------------>
+
+    <!------------------------------------ Slider Start ------------------------------------>
+    <!-- Carousel -->
+    <div id="myCarousel" class="carousel slide py-4" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button
+          type="button"
+          data-bs-target="#myCarousel"
+          data-bs-slide-to="0"
+          class="active"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#myCarousel"
+          data-bs-slide-to="1"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#myCarousel"
+          data-bs-slide-to="2"
+        ></button>
+      </div>
+
+      <div class="container">
+        <div class="carousel-inner py-4 slider">
+          <div class="carousel-item active">
+            <div class="row align-items-center">
+              <div
+                class="col-12 col-md-6 text-dark text-center text-md-start py-5"
+              >
+                <h3 class="h1 pb-3">SHOP HEADPHONES & ACCESSORIES</h3>
+                <p class="fs-5 pb-3 w-100 w-md-75 mx-auto mx-md-0">
+                  Shop laptops, desktops, monitors, tablets, PC gaming, hard
+                  drives, and accessories.
+                </p>
+                <button class="p-3 fs-6">View more</button>
+              </div>
+              <div class="col-md-6 d-none d-md-block text-center">
+                <img
+                  src="assets/images/headphone.png"
+                  alt="headphones images"
+                  class="img-fluid carousel-img"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="carousel-item">
+            <div class="row align-items-center">
+              <div
+                class="col-12 col-md-6 text-dark text-center text-md-start py-5"
+              >
+                <h3 class="h1 pb-3">SHOP HEADPHONES & ACCESSORIES</h3>
+                <p class="fs-5 pb-3 w-100 w-md-75 mx-auto mx-md-0">
+                  Shop laptops, desktops, monitors, tablets, PC gaming, hard
+                  drives, and accessories.
+                </p>
+                <button class="p-3 fs-6">View more</button>
+              </div>
+              <div class="col-md-6 d-none d-md-block text-center">
+                <img
+                  src="assets/images/headphone.png"
+                  alt="headphones images"
+                  class="img-fluid carousel-img"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="carousel-item">
+            <div class="row align-items-center">
+              <div
+                class="col-12 col-md-6 text-dark text-center text-md-start py-5"
+              >
+                <h3 class="h1 pb-3">SHOP HEADPHONES & ACCESSORIES</h3>
+                <p class="fs-5 pb-3 w-100 w-md-75 mx-auto mx-md-0">
+                  Shop laptops, desktops, monitors, tablets, PC gaming, hard
+                  drives, and accessories.
+                </p>
+                <button class="p-3 fs-6">View more</button>
+              </div>
+              <div class="col-md-6 d-none d-md-block text-center">
+                <img
+                  src="assets/images/headphone.png"
+                  alt="headphones images"
+                  class="img-fluid carousel-img"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#myCarousel"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon"></span>
+        <span class="visually-hidden bg-black">Previous</span>
       </button>
-
-      <div class="collapse navbar-collapse" id="mainNavbar">
-        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-          <li class="nav-item px-2">
-            <a class="nav-link active border-bottom border-warning special-hover" href="home.html">HOME</a>
-          </li>
-          <li class="nav-item px-2">
-            <a class="nav-link text-light special-hover" href="about.html">ABOUT</a>
-          </li>
-          <li class="nav-item px-2">
-            <a class="nav-link text-light special-hover" href="catalog.html">SHOP</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-light special-hover" href="#" role="button"
-              data-bs-toggle="dropdown">
-              CATEGORIES
-            </a>
-            <ul class="dropdown-menu bg-secondary">
-              <li>
-                <a class="dropdown-item text-light" href="#">Mobiles</a>
-              </li>
-              <li>
-                <a class="dropdown-item text-light" href="#">Laptops</a>
-              </li>
-              <li>
-                <a class="dropdown-item text-light" href="#">HeadPhones</a>
-              </li>
-              <li>
-                <a class="dropdown-item text-light" href="#">Tablets</a>
-              </li>
-              <li>
-                <a class="dropdown-item text-light" href="#">Accessories</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item px-2">
-            <a class="nav-link text-light special-hover" href="#">CONTACT</a>
-          </li>
-        </ul>
-
-        <div class="d-flex gap-4 fs-5 icons">
-          <a href="login.html" class="text-light"><i class="bi bi-person-circle"></i></a>
-          <a href="#" class="text-light"><i class="bi bi-cart" onclick="toggleCart()"></i></a>
-          <a href="#" class="text-light heart-toggle"><i class="bi bi-heart"></i></a>
-        </div>
-      </div>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#myCarousel"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
-  </nav>
-  <!-- -------------------------------------Cart Slider------------------------------- -->
-  <div id="overlay"></div>
-  <div id="cartSlider">
-    <div class="d-flex flex-column h-100">
-      <div class="cart-header d-flex justify-content-between align-items-center">
-        <h4 class="mb-0"><i class="bi bi-cart3"></i> Your Cart</h4>
-        <button class="btn btn-close" onclick="toggleCart()"></button>
-      </div>
-      <div class="cart-body flex-grow-1 overflow-auto">
-        <div id="cartItems"></div>
-      </div>
-      <div class="cart-footer mt-auto">
-        <div class="d-flex justify-content-between mb-3">
-          <h5>Total:</h5>
-          <h5 id="cartTotal">$0.00</h5>
-        </div>
-        <button class="btn btn-yellow w-100 rounded-pill mb-2">
-          <i class="bi bi-credit-card"></i> Checkout
-        </button>
-        <button class="btn btn-outline-secondary w-100 rounded-pill" onclick="toggleCart()">
-          <i class="bi bi-arrow-left"></i> Continue Shopping
-        </button>
-      </div>
-    </div>
-  </div>
-  <!------------------------------------ NavBar Start ------------------------------------>
-
-  <!------------------------------------ Slider Start ------------------------------------>
-  <!-- Carousel -->
-  <div id="myCarousel" class="carousel slide py-4" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2"></button>
-    </div>
-
+    <!------------------------------------ Slider End ------------------------------------>
+    <!------------------------------------ Categories Start ------------------------------------>
     <div class="container">
-      <div class="carousel-inner py-4 slider">
-        <div class="carousel-item active">
+      <div class="categories m-4">
+          <h3 class="fs-1 fw-bold text-center py-3">Categories</h3>
           <div class="row align-items-center">
-            <div class="col-12 col-md-6 text-dark text-center text-md-start py-5">
-              <h3 class="h1 pb-3">SHOP HEADPHONES & ACCESSORIES</h3>
-              <p class="fs-5 pb-3 w-100 w-md-75 mx-auto mx-md-0">
-                Shop laptops, desktops, monitors, tablets, PC gaming, hard
-                drives, and accessories.
+            <div
+              class="col-12 col-md-4 text-dark text-center category text-md-start py-3 m-1"
+            >
+            <div class="d-flex justify-content-around">
+              <p>
+                <span>
+                  <i class="fa-solid fa-laptop"></i> 
+                </span>
+                laptops
               </p>
-              <button class="p-3 fs-6">View more</button>
+              <button>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
             </div>
-            <div class="col-md-6 d-none d-md-block text-center">
-              <img src="assets/images/headphone.png" alt="headphones images" class="img-fluid carousel-img" />
             </div>
+            <div
+              class="col-12 col-md-4 text-dark text-center category text-md-start py-3 m-1"
+            >
+            <div class="d-flex justify-content-around">
+              <p>
+                <span>
+                  <i class="fa-solid fa-laptop"></i> 
+                </span>
+                laptops
+              </p>
+              <button>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+            </div>
+            <div
+              class="col-12 col-md-4 text-dark text-center category text-md-start py-3 m-1"
+            >
+            <div class="d-flex justify-content-around">
+              <p>
+                <span>
+                  <i class="fa-solid fa-laptop"></i> 
+                </span>
+                laptops
+              </p>
+              <button>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+            </div>
+          </div>
+      </div>
+
+      <!------------------------------------ Categories End ------------------------------------>
+    </div>
+    <!------------------------------------ Register/Login Start ------------------------------------>
+    <div
+      id="registerModal"
+      class="d-none position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex align-items-center justify-content-center"
+    >
+      <div class="modal-content p-4 bg-white rounded-3" style="width: 500px">
+        <button
+          class="btn-close position-absolute top-0 end-0 p-2"
+          id="closePopup"
+        ></button>
+        <div id="signUpForm">
+          <h2 class="text-center">Sign Up</h2>
+          <form onsubmit="Save(event)">
+            <div class="mb-3">
+              <label for="name" class="form-label">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                placeholder="Name"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="text"
+                class="form-control"
+                id="email"
+                placeholder="Email"
+              />
+            </div>
+            <div class="mb-3 position-relative">
+              <label for="password" class="form-label">Password</label>
+              <div class="d-flex">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  placeholder="Password"
+                />
+                <img
+                  src="./eye-icons/eye-close.png"
+                  id="eyeIcon"
+                  class="position-absolute top-95 end-0"
+                  style="cursor: pointer; width: 30px; padding: 12px 5px 5px"
+                />
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="role" class="form-label">Role</label>
+              <select class="form-select" id="role">
+                <option value="customer">Customer</option>
+                <option value="seller">Seller</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-warning w-100">
+              Register
+            </button>
+          </form>
+          <div class="mb-3 text-center">
+            <p>
+              Already have an account? <a href="#" id="toggleToLogin">Log in</a>
+            </p>
           </div>
         </div>
 
-        <div class="carousel-item">
-          <div class="row align-items-center">
-            <div class="col-12 col-md-6 text-dark text-center text-md-start py-5">
-              <h3 class="h1 pb-3">SHOP HEADPHONES & ACCESSORIES</h3>
-              <p class="fs-5 pb-3 w-100 w-md-75 mx-auto mx-md-0">
-                Shop laptops, desktops, monitors, tablets, PC gaming, hard
-                drives, and accessories.
-              </p>
-              <button class="p-3 fs-6">View more</button>
+        <div id="loginForm" style="display: none">
+          <h2 class="text-center">Log In</h2>
+          <form onsubmit="Login(event)">
+            <div class="mb-3">
+              <label for="loginEmail" class="form-label">Email</label>
+              <input
+                type="text"
+                class="form-control"
+                id="loginEmail"
+                placeholder="Email"
+              />
             </div>
-            <div class="col-md-6 d-none d-md-block text-center">
-              <img src="assets/images/headphone.png" alt="headphones images" class="img-fluid carousel-img" />
+            <div class="mb-3 position-relative">
+              <label for="loginPassword" class="form-label">Password</label>
+              <div class="d-flex">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="loginPassword"
+                  placeholder="Password"
+                />
+                <img
+                  src="./eye-icons/eye-close.png"
+                  id="loginEyeIcon"
+                  class="position-absolute top-95 end-0"
+                  style="cursor: pointer; width: 30px; padding: 12px 5px 5px"
+                />
+              </div>
             </div>
-          </div>
-        </div>
-
-        <div class="carousel-item">
-          <div class="row align-items-center">
-            <div class="col-12 col-md-6 text-dark text-center text-md-start py-5">
-              <h3 class="h1 pb-3">SHOP HEADPHONES & ACCESSORIES</h3>
-              <p class="fs-5 pb-3 w-100 w-md-75 mx-auto mx-md-0">
-                Shop laptops, desktops, monitors, tablets, PC gaming, hard
-                drives, and accessories.
-              </p>
-              <button class="p-3 fs-6">View more</button>
-            </div>
-            <div class="col-md-6 d-none d-md-block text-center">
-              <img src="assets/images/headphone.png" alt="headphones images" class="img-fluid carousel-img" />
-            </div>
+            <button type="submit" class="btn btn-warning w-100">Log In</button>
+          </form>
+          <div class="mb-3 text-center">
+            <p>
+              Don't have an account? <a href="#" id="toggleToSignUp">Sign Up</a>
+            </p>
           </div>
         </div>
       </div>
     </div>
-
-    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon"></span>
-      <span class="visually-hidden bg-black">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-
-  <!------------------------------------ Slider End ------------------------------------>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/home.js"></script>
-</body>
-
+    <!------------------------------------ Register/Login Start ------------------------------------>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="js/home.js"></script>
+  </body>
 </html>
