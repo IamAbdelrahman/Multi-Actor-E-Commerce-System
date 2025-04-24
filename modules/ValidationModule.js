@@ -35,7 +35,6 @@ export default class Validate {
     );
   }
 
-  // ✅ PRODUCT VALIDATION
   static isProductIdValid(value) {
     return typeof value === 'number' && value > 0;
   }
@@ -68,7 +67,6 @@ export default class Validate {
     return typeof value === 'string' && value.match(/\.(jpeg|jpg|gif|png|webp)$/i);
   }
 
-  // ✅ ORDER VALIDATION
   static isOrderIdValid(value) {
     return typeof value === 'number' && value > 0;
   }
@@ -95,6 +93,6 @@ export default class Validate {
   }
 
   static isOrderDateValid(value) {
-    return !isNaN(Date.parse(value)); // Valid ISO date string
+    return !isNaN(Date.parse(value));
   }
 }

@@ -1,0 +1,63 @@
+body {
+  color: black;
+}
+/* ---------------------------------- NavBar start ---------------------------------- */
+.bi-lightning-fill {
+    color: #ffc107;
+  }
+.active {
+  border-bottom-color: #ffc107;
+  color: white;
+}
+.special-hover:hover {
+  border-bottom: 1px solid #ffc107;
+}
+.icons a i:hover {
+    color: #ffc107;
+}
+.navbar .dropdown-menu li a:hover {
+  background-color: transparent !important;
+  color: #ffc107 !important;
+}
+.navbar .dropdown-menu {
+  border: none !important;
+}
+.navbar .dropdown-menu .dropdown-item {
+  border: none !important;
+}
+/* ---------------------------------- NavBar End ---------------------------------- */
+/* ---------------------------------- SlideBar Start ---------------------------------- */
+.slider button {
+  border-radius: 20px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #ffc107;
+  color: black;
+  font-weight: 600;
+}
+
+.carousel-img {
+  max-width: 100%;
+  height: auto;
+  padding-left: 0;
+}
+  
+.carousel-control-prev, .carousel-control-next {
+  width: 5%;
+}
+  
+.carousel-control-prev-icon, .carousel-control-next-icon {
+  width: 100%;
+  height: 100%;
+  filter: grayscale(100%) brightness(70%);
+  background-color: transparent;
+}
+.carousel-control-prev-icon:hover,
+.carousel-control-next-icon:hover {
+  filter: grayscale(100%) brightness(20%);
+}
+
+.slider img{
+    width: 300px;
+}
+/* ---------------------------------- SlideBar End ---------------------------------- */

@@ -1,4 +1,13 @@
 {
+  "admin": {
+      "id": 0,
+      "name": "Abdelruhman Kamal",
+      "email": "abdokamal@gmail.com",
+      "password": "admin123",
+      "role": "admin",
+      "city": "Tanta",
+      "phone": "+201234567890"
+    },
   "users": [
     {
       "id": 1,
@@ -6,26 +15,7 @@
       "email": "hagar@example.com",
       "password": "hashedpassword1",
       "role": "customer",
-      "address": {
-        "street": "123 Main St",
-        "city": "Cairo",
-        "state": "Cairo",
-        "zip": "12345"
-      },
-      "phone": "+201234567890"
-    },
-    {
-      "id": 4,
-      "name": "Admin User",
-      "email": "admin@gmail.com",
-      "password": "admin123",
-      "role": "admin",
-      "address": {
-        "street": "123 Main St",
-        "city": "Cairo",
-        "state": "Cairo",
-        "zip": "12345"
-      },
+      "city": "Cairo",
       "phone": "+201234567890"
     }
   ],
@@ -39,7 +29,8 @@
       "stock": 15,
       "quantity": 1,
       "category": "Electronics",
-      "image": "images/headphones.jpg"
+      "image": "images/headphones.jpg",
+      "numberofClicks": 0
     },
     {
       "id": 102,
@@ -96,5 +87,6 @@
       "description": "Shoes and sandals",
       "products": [102]
     }
-  ]
+  ],
+  "cart":[]
 }
