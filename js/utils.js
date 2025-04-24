@@ -1,4 +1,4 @@
-import StorageManager from './storageManager.js';
+import StorageManager from '../modules/StorageModule.js';
 async function StoreJSON() {
   if (!localStorage.getItem("data")) {
     fetch('./data/data.json')
@@ -12,3 +12,4 @@ async function StoreJSON() {
     console.log("Data already in localStorage. Skipping JSON fetch.");
   }
 }
+await StoreJSON();  
