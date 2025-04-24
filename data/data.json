@@ -1,4 +1,13 @@
 {
+  "admin": {
+      "id": 0,
+      "name": "Abdelruhman Kamal",
+      "email": "abdokamal@gmail.com",
+      "password": "admin123",
+      "role": "admin",
+      "city": "Tanta",
+      "phone": "+201234567890"
+    },
   "users": [
     {
       "id": 1,
@@ -7,15 +16,6 @@
       "password": "hashedpassword1",
       "role": "customer",
       "city": "Cairo",
-      "phone": "+201234567890"
-    },
-    {
-      "id": 4,
-      "name": "Admin User",
-      "email": "admin@gmail.com",
-      "password": "admin123",
-      "role": "admin",
-      "city": "Tanta",
       "phone": "+201234567890"
     }
   ],
