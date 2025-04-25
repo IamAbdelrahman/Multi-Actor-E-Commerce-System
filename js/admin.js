@@ -1,48 +1,31 @@
+/******************************************************************************
+ * Copyright (C) 2024 by Abdelrahman Kamal - Admin Panel Page
+ *****************************************************************************/
+
+/*****************************************************************************
+ * FILE DESCRIPTION
+ * ----------------------------------------------------------------------------
+ *	@file admin.js
+ *	@brief This module contains all functionalities about the admin.
+ *
+ *	@details Single Admin account with a predefined email & password.
+    Can block or activate customers and sellers.
+    Has the exclusive ability to add new sellers.
+    Can add, edit, or remove any product.
+    Access to a dashboard displaying:
+    Number of customers
+    Sales statistics
+    Other key metrics
+    Can purchase products like a regular customer.
+ *****************************************************************************/
+
+/*- INCLUDES
+-----------------------------------------------------------------------*/
 import StorageManager from '../modules/StorageModule.js'
 import UserManager from '../modules/UserModule.js'
-function ShowUsers() {
-  const content = document.getElementById("adminContent");
-  const userTable = `
-      <div class="table-responsive">
-        <table class="table table-striped table-hover table-bordered table-sm align-middle text-center">
-          <thead class="table-dark">
-            <tr>
-              <th>ID</th>
-              <th>User</th>
-              <th>Email</th>
-              <th>Password</th>
-              <th>Role</th>
-              <th>City</th>
-              <th>Phone</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    `;
 
-  const viewUsersBtn = `
-      <button id=viewBtn class="btn btn-primary">
-        <i class="bi bi-people"></i> View Users
-      </button> `;
-
-
-  const addUserBtn = `
-  <button class="btn btn-success">
-    <i class="bi bi-person-plus"></i> Add User
-  </button> `;
-
-
-  content.innerHTML = "<h5>User Management</h5>" + viewUsersBtn + addUserBtn + "<hr>" + userTable;
-  const usersList = StorageManager.LoadSection("users") || [];
-  var body = document.querySelector("tbody");
-  for (let i = 0; i < usersList.length; i++) {
-    const user = usersList[i];
-    body.appendChild(createRow(user.id, user.name, user.email, user.password, user.role, user.city, user.phone));
-  }
-}
-
+/*- HELPER FUNCTIONS
+-----------------------------------------------------------------------*/
 function createRow(id, name, email, password, role, city, phone) {
   var tr = document.createElement("tr");
   var td = createCell();
@@ -95,6 +78,52 @@ function createDeleteIcon(id) {
   return icon;
 }
 
+/*- Manage Users
+-----------------------------------------------------------------------*/
+function ShowUsers() {
+  const content = document.getElementById("adminContent");
+  const userTable = `
+      <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered table-sm align-middle text-center">
+          <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>User</th>
+              <th>Email</th>
+              <th>Password</th>
+              <th>Role</th>
+              <th>City</th>
+              <th>Phone</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    `;
+
+  const viewUsersBtn = `
+      <button id=viewBtn class="btn btn-primary">
+        <i class="bi bi-people"></i> View Users
+      </button> `;
+
+
+  const addUserBtn = `
+  <button class="btn btn-success">
+    <i class="bi bi-person-plus"></i> Add User
+  </button> `;
+
+
+  content.innerHTML = "<h5>User Management</h5>" + viewUsersBtn + addUserBtn + "<hr>" + userTable;
+  const usersList = StorageManager.LoadSection("users") || [];
+  var body = document.querySelector("tbody");
+  for (let i = 0; i < usersList.length; i++) {
+    const user = usersList[i];
+    body.appendChild(createRow(user.id, user.name, user.email, user.password, user.role, user.city, user.phone));
+  }
+}
+
+
 function showProfile() {
   const profileContent = document.getElementById("adminContent");
   const profileInfo = `<div class="profile-card shadow-sm">
@@ -122,10 +151,10 @@ function showProfile() {
   const adminPhone = document.getElementById("adminPhone");
   const admin = StorageManager.LoadSection("admin");
   if (admin) {
-    adminName.innerText = "Name: " + admin.name;
-    adminRole.innerText = "Role: " + admin.role;
-    adminEmail.innerText = "Email: " + admin.email;
-    adminPhone.innerText = "Phone: " + admin.phone;
+    adminName.innerText =  admin.name;
+    adminRole.innerText = admin.role;
+    adminEmail.innerText = admin.email;
+    adminPhone.innerText = admin.phone;
   } else {
     alert("Admin data not found.");
   }
