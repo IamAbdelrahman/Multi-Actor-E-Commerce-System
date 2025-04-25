@@ -64,6 +64,7 @@ a,.cursor-pointer{
     width: 300px;
 }
 /* ---------------------------------- SlideBar End ---------------------------------- */
+/* ---------------------------------- Categories Start ---------------------------------- */
 .categories .category{
   border-radius: 30px;
   width: calc(90%/3);
@@ -84,3 +85,52 @@ a,.cursor-pointer{
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
+/* ---------------------------------- Categories End ---------------------------------- */
+/* ---------------------------------- Sales Start ---------------------------------- */
+.offer-box {
+  border-radius: 1rem;
+  padding: 2rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.offer-box:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+.offer-btn {
+  margin-top: 1rem;
+  font-weight: 500;
+}
+.toys-bg {
+  background-image: url(../images/accessories.png);
+  background-size:cover;
+  background-repeat: no-repeat;
+  color: white;
+}
+.discount-text {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+.offer-title {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.img-small {
+  max-width: 100px;
+}
+/* ---------------------------------- Sales End ---------------------------------- */
+/* ---------------------------------- Products Start ---------------------------------- */
+.btn-light:hover ,.btn-outline-dark:hover{
+  background-color: #ffc107;
+  color: #fff;
+  border-color: transparent;
+}
+.btn-outline-dark{
+  border-color: rgb(203, 202, 202);
+}
+.card-img-top{
+  transition: transform 0.3s ease;
+}
+.card-img-top:hover{
+  transform: scale(1.03);
+}
+/* ---------------------------------- Products End ---------------------------------- */
