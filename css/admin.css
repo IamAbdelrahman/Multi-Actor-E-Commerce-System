@@ -4,16 +4,6 @@
 
 /*- INITIAL STYLES
 -----------------------------------------------------------------------*/
-/* * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-} */
-
-body {
-font-family: 'Outfit', serif;
-}
-
 .wrapper {
   display: flex;
 }
