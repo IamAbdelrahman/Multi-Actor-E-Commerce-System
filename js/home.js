@@ -3,7 +3,11 @@ var myCarousel = new bootstrap.Carousel(document.querySelector('#myCarousel'), {
     interval: 3000, // 3 seconds
     ride: 'carousel'
 });
+
 // ------------------------------slider End------------------------------
+
+
+
 // ------------------------------Register/Login Start------------------------------
 import StorageManager from '../modules/StorageModule.js'
 import UserManager from '../modules/UserModule.js';
