@@ -18,91 +18,19 @@
 
 <body>
   <!------------------------------------ NavBar Start ------------------------------------>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-secondary p-3">
-    <div class="container">
-      <a class="navbar-brand fw-bold text-light fs-4" href="home.html">
-        <i class="bi bi-lightning-fill"></i> Electronics Store
-      </a>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+  <div id="navBar"></div>
+  <script>
+    fetch('navBar.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('navBar').innerHTML = data;
+      });
+  </script>
 
-      <div class="collapse navbar-collapse" id="mainNavbar">
-        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-          <li class="nav-item px-2">
-            <a class="nav-link active border-bottom border-warning special-hover" href="home.html">HOME</a>
-          </li>
-          <li class="nav-item px-2">
-            <a class="nav-link text-light special-hover" href="about.html">ABOUT</a>
-          </li>
-          <li class="nav-item px-2">
-            <a class="nav-link text-light special-hover" href="catalog.html">SHOP</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-light special-hover" href="#" role="button"
-              data-bs-toggle="dropdown">
-              CATEGORIES
-            </a>
-            <ul class="dropdown-menu bg-secondary">
-              <li>
-                <a class="dropdown-item text-light" href="#">Mobiles</a>
-              </li>
-              <li>
-                <a class="dropdown-item text-light" href="#">Laptops</a>
-              </li>
-              <li>
-                <a class="dropdown-item text-light" href="#">HeadPhones</a>
-              </li>
-              <li>
-                <a class="dropdown-item text-light" href="#">Tablets</a>
-              </li>
-              <li>
-                <a class="dropdown-item text-light" href="#">Accessories</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item px-2">
-            <a class="nav-link text-light special-hover" href="#">CONTACT</a>
-          </li>
-        </ul>
 
-        <div class="d-flex gap-4 fs-5 icons">
-          <a id="Register-Icon" class="text-light"><i class="bi bi-person-circle"></i></a>
-          <a href="#" class="text-light" onclick="toggleCart()"><i class="bi bi-cart" ></i></a>
-          <a href="#" class="text-light heart-toggle"><i class="bi bi-heart"></i></a>
-        </div>
-      </div>
-    </div>
-  </nav>
-  <!-- -------------------------------------Cart Slider------------------------------- -->
-    <div id="overlay"></div>
-    <div id="cartSlider">
-      <div class="d-flex flex-column h-100">
-        <div class="cart-header d-flex justify-content-between align-items-center">
-          <h4 class="mb-0"><i class="bi bi-cart3"></i> Your Cart</h4>
-          <button class="btn btn-close" onclick="toggleCart()"></button>
-        </div>
-        <div class="cart-body flex-grow-1 overflow-auto">
-          <div id="cartItems"></div>
-        </div>
-        <div class="cart-footer mt-auto">
-          <div class="d-flex justify-content-between mb-3">
-            <h5>Total:</h5>
-            <h5 id="cartTotal">$0.00</h5>
-          </div>
-          <button class="btn btn-yellow w-100 rounded-pill mb-2">
-            <i class="bi bi-credit-card"></i> Checkout
-          </button>
-          <button class="btn btn-outline-secondary w-100 rounded-pill" onclick="toggleCart()">
-            <i class="bi bi-arrow-left"></i> Continue Shopping
-          </button>
-        </div>
-      </div>
-    </div>
-    <!---------------------------------- Cart Slider End----------------------------->
-  
-    <!------------------------------------ NavBar End ------------------------------------>
+
+  <!------------------------------------ NavBar End ------------------------------------>
 
   <!------------------------------------ Slider Start ------------------------------------>
   <!-- Carousel -->
@@ -165,305 +93,299 @@
       </div>
     </div>
 
-      <button
-        class="carousel-control-prev"
-        type="button"
-        data-bs-target="#myCarousel"
-        data-bs-slide="prev"
-      >
-        <span class="carousel-control-prev-icon"></span>
-        <span class="visually-hidden bg-black">Previous</span>
-      </button>
-      <button
-        class="carousel-control-next"
-        type="button"
-        data-bs-target="#myCarousel"
-        data-bs-slide="next"
-      >
-        <span class="carousel-control-next-icon"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-    <!------------------------------------ Slider End ------------------------------------>
-    <!------------------------------------ Categories Start ------------------------------------>
-    <div class="container">
-      <div class="categories m-4">
-        <h3 class="fs-1 fw-bold text-center py-3">Categories</h3>
-        <div class="row gy-4 justify-content-center">
-          <div class="col-12 col-md-6 col-lg-4 cursor-pointer">
-            <div class="d-flex justify-content-between align-items-center p-4 rounded-pill bg-primary bg-opacity-25">
-              <div class="d-flex align-items-center gap-3">
-                <i class="fa-solid fa-mobile-screen-button fs-2"></i>
-                <div><strong>MOBILE</strong></div>
-              </div>
-              <div class="fs-4 rounded-circle p-2">
-                <i class="fa-solid fa-arrow-right"></i>
-              </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+      <span class="visually-hidden bg-black">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  <!------------------------------------ Slider End ------------------------------------>
+  <!------------------------------------ Categories Start ------------------------------------>
+  <div class="container">
+    <div class="categories m-4">
+      <h3 class="fs-1 fw-bold text-center py-3">Categories</h3>
+      <div class="row gy-4 justify-content-center">
+        <div class="col-12 col-md-6 col-lg-4 cursor-pointer">
+          <div class="d-flex justify-content-between align-items-center p-4 rounded-pill bg-primary bg-opacity-25">
+            <div class="d-flex align-items-center gap-3">
+              <i class="fa-solid fa-mobile-screen-button fs-2"></i>
+              <div><strong>MOBILE</strong></div>
             </div>
-          </div>
-          <div class="col-12 col-md-6 col-lg-4 cursor-pointer">
-            <div class="d-flex justify-content-between align-items-center p-4 rounded-pill bg-warning bg-opacity-25">
-              <div class="d-flex align-items-center gap-3">
-                <i class="fa-solid fa-laptop fs-2"></i>
-                <div><strong>LAPTOP</strong></div>
-              </div>
-              <div class="fs-4 rounded-circle p-2">
-                <i class="fa-solid fa-arrow-right"></i>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-md-6 col-lg-4 cursor-pointer">
-            <div class="d-flex justify-content-between align-items-center p-4 rounded-pill bg-success bg-opacity-25">
-              <div class="d-flex align-items-center gap-3">
-                <i class="fa-solid fa-headphones fs-2"></i>
-                <div><strong>HEADPHONE</strong></div>
-              </div>
-              <div class="fs-4 rounded-circle p-2">
-                <i class="fa-solid fa-arrow-right"></i>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-md-6 col-lg-4 cursor-pointer">
-            <div class="d-flex justify-content-between align-items-center p-4 rounded-pill bg-danger bg-opacity-25">
-              <div class="d-flex align-items-center gap-3">
-                <i class="fa-solid fa-tablet-screen-button fs-2"></i>
-                <div><strong>TABLET</strong></div>
-              </div>
-              <div class="fs-4 rounded-circle p-2">
-                <i class="fa-solid fa-arrow-right"></i>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-md-6 col-lg-4 cursor-pointer">
-            <div class="d-flex justify-content-between align-items-center p-4 rounded-pill bg-info bg-opacity-25">
-              <div class="d-flex align-items-center gap-3">
-                <i class="fa-solid fa-plug-circle-bolt fs-2"></i>
-                <div><strong>ACCESSORIES</strong></div>
-              </div>
-              <div class="fs-4 rounded-circle p-2">
-                <i class="fa-solid fa-arrow-right"></i>
-              </div>
+            <div class="fs-4 rounded-circle p-2">
+              <i class="fa-solid fa-arrow-right"></i>
             </div>
           </div>
         </div>
-    </div>
-
-      <!------------------------------------ Categories End ------------------------------------>
-      <!------------------------------------ Products Start ------------------------------------>
-      <div class="products my-5">
-        <div class="d-flex justify-content-between align-items-center my-5">
-          <h2 class="fw-bold">Featured Products</h2>
-          <a href="#" class="btn btn-outline-dark p-3 btn-outline-dark">View All Products
-            <i class="fa-solid fa-arrow-right"></i>
-          </a>
+        <div class="col-12 col-md-6 col-lg-4 cursor-pointer">
+          <div class="d-flex justify-content-between align-items-center p-4 rounded-pill bg-warning bg-opacity-25">
+            <div class="d-flex align-items-center gap-3">
+              <i class="fa-solid fa-laptop fs-2"></i>
+              <div><strong>LAPTOP</strong></div>
+            </div>
+            <div class="fs-4 rounded-circle p-2">
+              <i class="fa-solid fa-arrow-right"></i>
+            </div>
+          </div>
         </div>
-      
-        <div class="row g-4">
-
-          <div class="col-12 col-sm-6 col-lg-3">
-            <div class="card h-100 position-relative text-center p-3">
-              <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
-                <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-heart"></i></button>
-                <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
-              </div>
-      
-              <img src="images/headphone.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
-              <div class="card-body">
-                <h5 class="card-title fw-semibold">Title</h5>
-                <p class="text-muted small">Desctiption</p>
-              </div>
-              <div class="card-footer bg-white border-0">
-                <div class="d-flex justify-content-between align-items-center">
-                  <span class="fw-bold">$35.00</span>
-                  <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold">Add to cart</button>
-                </div>
-              </div>
+        <div class="col-12 col-md-6 col-lg-4 cursor-pointer">
+          <div class="d-flex justify-content-between align-items-center p-4 rounded-pill bg-success bg-opacity-25">
+            <div class="d-flex align-items-center gap-3">
+              <i class="fa-solid fa-headphones fs-2"></i>
+              <div><strong>HEADPHONE</strong></div>
+            </div>
+            <div class="fs-4 rounded-circle p-2">
+              <i class="fa-solid fa-arrow-right"></i>
             </div>
           </div>
-          <div class="col-12 col-sm-6 col-lg-3">
-            <div class="card h-100 position-relative text-center p-3">
-              <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
-                <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-heart"></i></button>
-                <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
-              </div>
-      
-              <img src="images/headphone.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
-              <div class="card-body">
-                <h5 class="card-title fw-semibold">Title</h5>
-                <p class="text-muted small">Desctiption</p>
-              </div>
-              <div class="card-footer bg-white border-0">
-                <div class="d-flex justify-content-between align-items-center">
-                  <span class="fw-bold">$35.00</span>
-                  <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold">Add to cart</button>
-                </div>
-              </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 cursor-pointer">
+          <div class="d-flex justify-content-between align-items-center p-4 rounded-pill bg-danger bg-opacity-25">
+            <div class="d-flex align-items-center gap-3">
+              <i class="fa-solid fa-tablet-screen-button fs-2"></i>
+              <div><strong>TABLET</strong></div>
+            </div>
+            <div class="fs-4 rounded-circle p-2">
+              <i class="fa-solid fa-arrow-right"></i>
             </div>
           </div>
-          <div class="col-12 col-sm-6 col-lg-3">
-            <div class="card h-100 position-relative text-center p-3">
-              <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
-                <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-heart"></i></button>
-                <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
-              </div>
-      
-              <img src="images/headphone.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
-              <div class="card-body">
-                <h5 class="card-title fw-semibold">Title</h5>
-                <p class="text-muted small">Desctiption</p>
-              </div>
-              <div class="card-footer bg-white border-0">
-                <div class="d-flex justify-content-between align-items-center">
-                  <span class="fw-bold">$35.00</span>
-                  <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold">Add to cart</button>
-                </div>
-              </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 cursor-pointer">
+          <div class="d-flex justify-content-between align-items-center p-4 rounded-pill bg-info bg-opacity-25">
+            <div class="d-flex align-items-center gap-3">
+              <i class="fa-solid fa-plug-circle-bolt fs-2"></i>
+              <div><strong>ACCESSORIES</strong></div>
             </div>
-          </div>
-          <div class="col-12 col-sm-6 col-lg-3">
-            <div class="card h-100 position-relative text-center p-3">
-              <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
-                <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-heart"></i></button>
-                <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
-              </div>
-      
-              <img src="images/headphone.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
-              <div class="card-body">
-                <h5 class="card-title fw-semibold">Title</h5>
-                <p class="text-muted small">Desctiption</p>
-              </div>
-              <div class="card-footer bg-white border-0">
-                <div class="d-flex justify-content-between align-items-center">
-                  <span class="fw-bold">$35.00</span>
-                  <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold">Add to cart</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-sm-6 col-lg-3">
-            <div class="card h-100 position-relative text-center p-3">
-              <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
-                <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-heart"></i></button>
-                <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
-              </div>
-      
-              <img src="images/headphone.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
-              <div class="card-body">
-                <h5 class="card-title fw-semibold">Title</h5>
-                <p class="text-muted small">Desctiption</p>
-              </div>
-              <div class="card-footer bg-white border-0">
-                <div class="d-flex justify-content-between align-items-center">
-                  <span class="fw-bold">$35.00</span>
-                  <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold">Add to cart</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-sm-6 col-lg-3">
-            <div class="card h-100 position-relative text-center p-3">
-              <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
-                <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-heart"></i></button>
-                <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
-              </div>
-      
-              <img src="images/headphone.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
-              <div class="card-body">
-                <h5 class="card-title fw-semibold">Title</h5>
-                <p class="text-muted small">Desctiption</p>
-              </div>
-              <div class="card-footer bg-white border-0">
-                <div class="d-flex justify-content-between align-items-center">
-                  <span class="fw-bold">$35.00</span>
-                  <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold">Add to cart</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-sm-6 col-lg-3">
-            <div class="card h-100 position-relative text-center p-3">
-              <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
-                <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-heart"></i></button>
-                <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
-              </div>
-      
-              <img src="images/headphone.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
-              <div class="card-body">
-                <h5 class="card-title fw-semibold">Title</h5>
-                <p class="text-muted small">Desctiption</p>
-              </div>
-              <div class="card-footer bg-white border-0">
-                <div class="d-flex justify-content-between align-items-center">
-                  <span class="fw-bold">$35.00</span>
-                  <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold">Add to cart</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-sm-6 col-lg-3">
-            <div class="card h-100 position-relative text-center p-3">
-              <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
-                <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-heart"></i></button>
-                <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
-              </div>
-      
-              <img src="images/headphone.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
-              <div class="card-body">
-                <h5 class="card-title fw-semibold">Title</h5>
-                <p class="text-muted small">Desctiption</p>
-              </div>
-              <div class="card-footer bg-white border-0">
-                <div class="d-flex justify-content-between align-items-center">
-                  <span class="fw-bold">$35.00</span>
-                  <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold">Add to cart</button>
-                </div>
-              </div>
+            <div class="fs-4 rounded-circle p-2">
+              <i class="fa-solid fa-arrow-right"></i>
             </div>
           </div>
         </div>
       </div>
-      <!------------------------------------ Products End ------------------------------------>
-      <!------------------------------------ Sales Start ------------------------------------>
-      <div class="sales my-4">
-        <div class="row g-4">
-          <div class="col-lg-6 col-12">
-            <div class="offer-box toys-bg d-flex flex-column justify-content-end h-100">
-              <div class="image"></div>
-              <div>
-                <div class="offer-title">New Accessories Collection</div>
-                <div class="discount-text">50 <span class="fs-4">%</span> OFF</div>
-                <a href="#" class="btn btn-light offer-btn fs-5">View Offer <i class="fa-solid fa-arrow-right ps-2"></i></a>
-              </div>
-            </div>
-          </div>
-      
-          <div class="col-lg-6 col-12">
-            <div class="d-flex flex-column h-100 gap-4">
-              <div class="offer-box d-flex justify-content-between align-items-center bg-primary bg-opacity-25">
-                <div>
-                  <div class="offer-title">New Phones Collection</div>
-                  <div class="discount-text">10 <span class="fs-4">%</span> OFF</div>
-                  <a href="#" class="btn btn-light offer-btn fs-5">View Offer <i class="fa-solid fa-arrow-right ps-2"></i></a>
-                </div>
-                <img src="images/phone.png" alt="Shoes" class="img-fluid img-small">
-              </div>
-      
-              <div class="offer-box d-flex justify-content-between align-items-center bg-warning bg-opacity-25">
-                <div>
-                  <div class="offer-title">New HeadPhones Collection</div>
-                  <div class="discount-text">12 <span class="fs-4">%</span> OFF</div>
-                  <a href="#" class="btn btn-light offer-btn fs-5">View Offer <i class="fa-solid fa-arrow-right ps-2"></i></a>
-                </div>
-                <img src="images/headphone.png" alt="Hat" class="img-fluid img-small">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!------------------------------------ Sales End ------------------------------------>
+          
     </div>
 
     <!------------------------------------ Categories End ------------------------------------>
+    <!------------------------------------ Products Start ------------------------------------>
+    <div class="products my-5">
+      <div class="d-flex justify-content-between align-items-center my-5">
+        <h2 class="fw-bold">Featured Products</h2>
+        <a href="#" class="btn btn-outline-dark p-3 btn-outline-dark">View All Products
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+
+      <div class="row g-4">
+
+        <div class="col-12 col-sm-6 col-lg-3">
+          <div class="card h-100 position-relative text-center p-3">
+            <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
+              <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-heart"></i></button>
+              <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
+            </div>
+
+            <img src="images/headphone.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
+            <div class="card-body">
+              <h5 class="card-title fw-semibold">Title</h5>
+              <p class="text-muted small">Desctiption</p>
+            </div>
+            <div class="card-footer bg-white border-0">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold">$35.00</span>
+                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold">Add to cart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+          <div class="card h-100 position-relative text-center p-3">
+            <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
+              <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-heart"></i></button>
+              <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
+            </div>
+
+            <img src="images/headphone.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
+            <div class="card-body">
+              <h5 class="card-title fw-semibold">Title</h5>
+              <p class="text-muted small">Desctiption</p>
+            </div>
+            <div class="card-footer bg-white border-0">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold">$35.00</span>
+                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold">Add to cart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+          <div class="card h-100 position-relative text-center p-3">
+            <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
+              <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-heart"></i></button>
+              <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
+            </div>
+
+            <img src="images/headphone.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
+            <div class="card-body">
+              <h5 class="card-title fw-semibold">Title</h5>
+              <p class="text-muted small">Desctiption</p>
+            </div>
+            <div class="card-footer bg-white border-0">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold">$35.00</span>
+                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold">Add to cart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+          <div class="card h-100 position-relative text-center p-3">
+            <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
+              <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-heart"></i></button>
+              <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
+            </div>
+
+            <img src="images/headphone.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
+            <div class="card-body">
+              <h5 class="card-title fw-semibold">Title</h5>
+              <p class="text-muted small">Desctiption</p>
+            </div>
+            <div class="card-footer bg-white border-0">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold">$35.00</span>
+                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold">Add to cart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+          <div class="card h-100 position-relative text-center p-3">
+            <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
+              <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-heart"></i></button>
+              <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
+            </div>
+
+            <img src="images/headphone.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
+            <div class="card-body">
+              <h5 class="card-title fw-semibold">Title</h5>
+              <p class="text-muted small">Desctiption</p>
+            </div>
+            <div class="card-footer bg-white border-0">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold">$35.00</span>
+                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold">Add to cart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+          <div class="card h-100 position-relative text-center p-3">
+            <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
+              <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-heart"></i></button>
+              <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
+            </div>
+
+            <img src="images/headphone.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
+            <div class="card-body">
+              <h5 class="card-title fw-semibold">Title</h5>
+              <p class="text-muted small">Desctiption</p>
+            </div>
+            <div class="card-footer bg-white border-0">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold">$35.00</span>
+                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold">Add to cart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+          <div class="card h-100 position-relative text-center p-3">
+            <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
+              <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-heart"></i></button>
+              <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
+            </div>
+
+            <img src="images/headphone.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
+            <div class="card-body">
+              <h5 class="card-title fw-semibold">Title</h5>
+              <p class="text-muted small">Desctiption</p>
+            </div>
+            <div class="card-footer bg-white border-0">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold">$35.00</span>
+                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold">Add to cart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+          <div class="card h-100 position-relative text-center p-3">
+            <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
+              <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-heart"></i></button>
+              <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
+            </div>
+
+            <img src="images/headphone.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
+            <div class="card-body">
+              <h5 class="card-title fw-semibold">Title</h5>
+              <p class="text-muted small">Desctiption</p>
+            </div>
+            <div class="card-footer bg-white border-0">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold">$35.00</span>
+                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold">Add to cart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!------------------------------------ Products End ------------------------------------>
+    <!------------------------------------ Sales Start ------------------------------------>
+    <div class="sales my-4">
+      <div class="row g-4">
+        <div class="col-lg-6 col-12">
+          <div class="offer-box toys-bg d-flex flex-column justify-content-end h-100">
+            <div class="image"></div>
+            <div>
+              <div class="offer-title">New Accessories Collection</div>
+              <div class="discount-text">50 <span class="fs-4">%</span> OFF</div>
+              <a href="#" class="btn btn-light offer-btn fs-5">View Offer <i
+                  class="fa-solid fa-arrow-right ps-2"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-12">
+          <div class="d-flex flex-column h-100 gap-4">
+            <div class="offer-box d-flex justify-content-between align-items-center bg-primary bg-opacity-25">
+              <div>
+                <div class="offer-title">New Phones Collection</div>
+                <div class="discount-text">10 <span class="fs-4">%</span> OFF</div>
+                <a href="#" class="btn btn-light offer-btn fs-5">View Offer <i
+                    class="fa-solid fa-arrow-right ps-2"></i></a>
+              </div>
+              <img src="images/phone.png" alt="Shoes" class="img-fluid img-small">
+            </div>
+
+            <div class="offer-box d-flex justify-content-between align-items-center bg-warning bg-opacity-25">
+              <div>
+                <div class="offer-title">New HeadPhones Collection</div>
+                <div class="discount-text">12 <span class="fs-4">%</span> OFF</div>
+                <a href="#" class="btn btn-light offer-btn fs-5">View Offer <i
+                    class="fa-solid fa-arrow-right ps-2"></i></a>
+              </div>
+              <img src="images/headphone.png" alt="Hat" class="img-fluid img-small">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!------------------------------------ Sales End ------------------------------------>
+  </div>
+
+  <!------------------------------------ Categories End ------------------------------------>
   </div>
   <!------------------------------------ Register/Login Start ------------------------------------>
   <div id="registerModal"
@@ -536,53 +458,19 @@
     </div>
   </div>
   <!------------------------------------ Register/Login Start ------------------------------------>
-  <!-- Footer -->
-  <footer class="footer-expand-lg footer-dark bg-secondary p-3 text-white py-4 mt-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 mb-3">
-                <h5>Electronics Store</h5>
-                <p>Premium electronics and accessories from top brands.</p>
-                <div class="social-icons">
-                    <a href="#" class="text-warning me-2"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="text-warning me-2"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="text-warning me-2"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="text-warning"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
-            <div class="col-md-2 mb-3">
-                <h5>Shop</h5>
-                <ul class="list-unstyled">
-                    <li><a href="#" class="text-decoration-none text-white-50">Smartphones</a></li>
-                    <li><a href="#" class="text-decoration-none text-white-50">Laptops</a></li>
-                    <li><a href="#" class="text-decoration-none text-white-50">Tablets</a></li>
-                    <li><a href="#" class="text-decoration-none text-white-50">Accessories</a></li>
-                </ul>
-            </div>
-            <div class="col-md-2 mb-3">
-                <h5>Support</h5>
-                <ul class="list-unstyled">
-                    <li><a href="#" class="text-decoration-none text-white-50">Contact Us</a></li>
-                    <li><a href="#" class="text-decoration-none text-white-50">Shipping</a></li>
-                    <li><a href="#" class="text-decoration-none text-white-50">Returns</a></li>
-                    <li><a href="#" class="text-decoration-none text-white-50">FAQs</a></li>
-                </ul>
-            </div>
-            <div class="col-md-4 mb-3">
-                <h5>Newsletter</h5>
-                <p>Subscribe for exclusive offers and tech news.</p>
-                <div class="input-group">
-                    <input type="email" class="form-control" placeholder="Your email">
-                    <button class="btn btn-warning" type="button">Subscribe</button>
-                </div>
-            </div>
-        </div>
-        <hr class="my-4 bg-secondary">
-        <div class="text-center">
-            <p class="mb-0 text-white-50">&copy; ITI Electronics Store. All rights reserved.</p>
-        </div>
-    </div>
-</footer>
+  <!------------------------------------ footer End ------------------------------------>
+  <div id="footer"></div>
+
+  <script>
+    fetch('footer.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('footer').innerHTML = data;
+      });
+  </script>
+  <!------------------------------------ footer End ------------------------------------>
+
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script type="module" src="js/home.js"></script>
   <script type="module" src="js/utils.js"></script>

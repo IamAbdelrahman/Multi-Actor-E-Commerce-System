@@ -1,0 +1,88 @@
+<!-- NavBar -->
+
+<!------------------------------------ NavBar Start ------------------------------------>
+<nav class="navbar navbar-expand-lg navbar-dark  p-3" style="background-color: #202529;">
+    <div class="container">
+        <a class="navbar-brand fw-bold text-light fs-4" href="home.html">
+            <i class="bi bi-lightning-fill"></i> Electronics Store
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                <li class="nav-item px-2">
+                    <a class="nav-link active border-bottom border-warning special-hover" href="home.html">HOME</a>
+                </li>
+                <li class="nav-item px-2">
+                    <a class="nav-link text-light special-hover" href="about.html">ABOUT</a>
+                </li>
+                <li class="nav-item px-2">
+                    <a class="nav-link text-light special-hover" href="catalog.html">SHOP</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light special-hover" href="#" role="button"
+                        data-bs-toggle="dropdown">
+                        CATEGORIES
+                    </a>
+                    <ul class="dropdown-menu bg-secondary">
+                        <li>
+                            <a class="dropdown-item text-light" href="#">Mobiles</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-light" href="#">Laptops</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-light" href="#">HeadPhones</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-light" href="#">Tablets</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-light" href="#">Accessories</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item px-2">
+                    <a class="nav-link text-light special-hover" href="#">CONTACT</a>
+                </li>
+            </ul>
+
+            <div class="d-flex gap-4 fs-5 icons">
+                <a id="Register-Icon" class="text-light"><i class="bi bi-person-circle"></i></a>
+                <a href="#" class="text-light" onclick="toggleCart()"><i class="bi bi-cart"></i></a>
+                <a href="#" class="text-light heart-toggle"><i class="bi bi-heart"></i></a>
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- -------------------------------------Cart Slider------------------------------- -->
+<div id="overlay"></div>
+<div id="cartSlider">
+    <div class="d-flex flex-column h-100">
+        <div class="cart-header d-flex justify-content-between align-items-center">
+            <h4 class="mb-0"><i class="bi bi-cart3"></i> Your Cart</h4>
+            <button class="btn btn-close" onclick="toggleCart()"></button>
+        </div>
+        <div class="cart-body flex-grow-1 overflow-auto">
+            <div id="cartItems"></div>
+        </div>
+        <div class="cart-footer mt-auto">
+            <div class="d-flex justify-content-between mb-3">
+                <h5>Total:</h5>
+                <h5 id="cartTotal">$0.00</h5>
+            </div>
+            <button class="btn btn-yellow w-100 rounded-pill mb-2">
+                <i class="bi bi-credit-card"></i> Checkout
+            </button>
+            <button class="btn btn-outline-secondary w-100 rounded-pill" onclick="toggleCart()">
+                <i class="bi bi-arrow-left"></i> Continue Shopping
+            </button>
+        </div>
+    </div>
+</div>
+<!---------------------------------- Cart Slider End----------------------------->
+
+<!------------------------------------ NavBar End ------------------------------------>
