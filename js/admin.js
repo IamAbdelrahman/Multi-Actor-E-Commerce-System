@@ -26,15 +26,6 @@ import UserManager from '../modules/UserModule.js'
 
 /*- SIDEBAR TOGGLER
 -----------------------------------------------------------------------*/
-const toggleBtn = document.querySelector(".toggle-btn");
-const toggler = document.querySelector("#icon");
-toggleBtn.addEventListener("click", function () {
-  document.querySelector("#sidebar").classList.toggle("expand");
-  toggler.classList.toggle("bxs-chevrons-right");
-  toggler.classList.toggle("bxs-chevrons-left");
-  
-});
-
 new Chart(document.getElementById("bar-chart-grouped"), {
   type: 'bar',
   data: {
@@ -59,104 +50,16 @@ new Chart(document.getElementById("bar-chart-grouped"), {
   }
 });
 
-/*- HELPER FUNCTIONS
+/*- Manage Users
 -----------------------------------------------------------------------*/
-// function createRow(id, name, email, password, role, city, phone) {
-//   var tr = document.createElement("tr");
-//   var td = createCell();
-//   td.textContent = id;
-//   tr.appendChild(td);
-
-//   var td = createCell();
-//   td.textContent = name;
-//   tr.appendChild(td);
-
-//   var td = createCell();
-//   td.textContent = email;
-//   tr.appendChild(td);
-
-//   var td = createCell();
-//   td.textContent = password;
-//   tr.appendChild(td);
-
-//   var td = createCell();
-//   td.textContent = role;
-//   tr.appendChild(td);
-
-//   var td = createCell();
-//   td.textContent = city;
-//   tr.appendChild(td);
-
-//   var td = createCell();
-//   td.textContent = phone;
-//   tr.appendChild(td);
-
-//   td = createCell();    // Delete
-//   td.appendChild(createDeleteIcon(id));
-//   tr.appendChild(td);
-//   return tr;
-// }
-
-// function createCell() {
-//   var cell = document.createElement("td");
-//   return cell;
-// }
-
-// function createDeleteIcon(id) {
-//   const icon = document.createElement("i");
-//   icon.classList.add("bi", "bi-trash", "text-danger", "fs-5", "ms-2", "cursor-pointer");
-//   icon.addEventListener("click", function () {
-//     var tr = this.parentElement.parentElement;
-//     (confirm("Do you want to delete this user?")) ? tr.remove() : "undefined";
-//     UserManager.DeleteUser(id);
-//   });
-//   return icon;
-// }
-
-// /*- Manage Users
-// -----------------------------------------------------------------------*/
-// function ShowUsers() {
-//   const content = document.getElementById("adminContent");
-//   const userTable = `
-//       <div class="table-responsive">
-//         <table class="table table-striped table-hover table-bordered table-sm align-middle text-center">
-//           <thead class="table-dark">
-//             <tr>
-//               <th>ID</th>
-//               <th>User</th>
-//               <th>Email</th>
-//               <th>Password</th>
-//               <th>Role</th>
-//               <th>City</th>
-//               <th>Phone</th>
-//               <th>Delete</th>
-//             </tr>
-//           </thead>
-//           <tbody></tbody>
-//         </table>
-//       </div>
-//     `;
-
-//   const viewUsersBtn = `
-//       <button id=viewBtn class="btn btn-primary">
-//         <i class="bi bi-people"></i> View Users
-//       </button> `;
-
-
-//   const addUserBtn = `
-//   <button class="btn btn-success">
-//     <i class="bi bi-person-plus"></i> Add User
-//   </button> `;
-
-
-//   content.innerHTML = "<h5>User Management</h5>" + viewUsersBtn + addUserBtn + "<hr>" + userTable;
-//   const usersList = StorageManager.LoadSection("users") || [];
-//   var body = document.querySelector("tbody");
-//   for (let i = 0; i < usersList.length; i++) {
-//     const user = usersList[i];
-//     body.appendChild(createRow(user.id, user.name, user.email, user.password, user.role, user.city, user.phone));
-//   }
-// }
+function ShowUsers() {
+  const usersList = StorageManager.LoadSection("users") || [];
+  var body = document.querySelector("tbody");
+  for (let i = 0; i < usersList.length; i++) {
+    const user = usersList[i];
+    body.appendChild(createRow(user.id, user.name, user.email, user.password, user.role, user.city, user.phone));
+  }
+}
 
 
 // function showProfile() {
@@ -242,19 +145,76 @@ new Chart(document.getElementById("bar-chart-grouped"), {
 //   });
 //   Btns.appendChild(logoutBtn);
 // }
-// window.addEventListener('load', () => {
-//   const profile = document.getElementById("profile");
-//   profile.addEventListener('click', () => showProfile());
-//   // const products = document.getElementById("products");
-//   // products.addEventListener('click', () => showSection("products"));
-//   // const orders = document.getElementById("orders");
-//   // orders.addEventListener('click', () => showSection("orders"));
-//   // const categories = document.getElementById("categories");
-//   // categories.addEventListener('click', () => showSection("categories"));
-//   const accounts = document.getElementById("accounts");
-//   accounts.addEventListener('click', () => ShowUsers());
-//   // Add other event listeners here
-// });
+
+/*- HELPER FUNCTIONS
+-----------------------------------------------------------------------*/
+function createRow(id, name, email, password, role, city, phone) {
+  var tr = document.createElement("tr");
+  var td = createCell();
+  td.textContent = id;
+  tr.appendChild(td);
+
+  var td = createCell();
+  td.textContent = name;
+  tr.appendChild(td);
+
+  var td = createCell();
+  td.textContent = email;
+  tr.appendChild(td);
+
+  var td = createCell();
+  td.textContent = password;
+  tr.appendChild(td);
+
+  var td = createCell();
+  td.textContent = role;
+  tr.appendChild(td);
+
+  var td = createCell();
+  td.textContent = city;
+  tr.appendChild(td);
+
+  var td = createCell();
+  td.textContent = phone;
+  tr.appendChild(td);
+
+  td = createCell();    // Delete
+  td.appendChild(createDeleteIcon(id));
+  tr.appendChild(td);
+  return tr;
+}
+
+function createCell() {
+  var cell = document.createElement("td");
+  return cell;
+}
+
+function createDeleteIcon(id) {
+  const icon = document.createElement("i");
+  icon.classList.add("bi", "bi-trash", "text-danger", "fs-5", "ms-2", "cursor-pointer");
+  icon.addEventListener("click", function () {
+    var tr = this.parentElement.parentElement;
+    (confirm("Do you want to delete this user?")) ? tr.remove() : "undefined";
+    UserManager.DeleteUser(id);
+  });
+  return icon;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  ShowUsers();
+  const toggleBtn = document.querySelector(".toggle-btn");
+  const toggler = document.querySelector("#icon");
+  toggleBtn.addEventListener("click", function () {
+  document.querySelector("#sidebar").classList.toggle("expand");
+  toggler.classList.toggle("bxs-chevrons-right");
+  toggler.classList.toggle("bxs-chevrons-left");
+  });
+});
+
+  // const profile = document.getElementById("profile");
+  // profile.addEventListener('click', () => showProfile());
+  // const accounts = document.getElementById("accounts");
+  // accounts.addEventListener('click', () => ShowUsers());
 
 // Delete user - View users - Reset password  - view products - add product - delete product - view orders - delete order 
 // if user cancel the orders - contacts us > submit to be display -  
