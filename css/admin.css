@@ -203,3 +203,44 @@ a.sidebar-link:hover {
   height: 40px;
   width: 40px;
 }
+
+/*- STYLING DASHBOARD CONTENT
+-----------------------------------------------------------------------*/
+.card {
+  background-color: #FFF;
+  transition: 4s;
+  cursor: pointer;
+  color: #000;
+  margin-bottom: 1rem;
+  border-color: rgba(231, 234, 243, 0.7);
+}
+
+.card h6{
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  margin-bottom: .25rem;
+}
+
+.card:hover {
+  background-color: #293b5f;
+  color: #FFF;
+  /* transform: translateY(-0.5rem); */
+}
+
+.table>thead tr{
+  color:#FFF;
+  text-align: left;
+}
+
+tr.highlighter th{
+  background-color: #293b5f;
+  color:#FFF;
+}
+
+.content {
+  flex: 11 auto;
+}
+
+footer {
+  background-color: #F5F5F5;
+}
