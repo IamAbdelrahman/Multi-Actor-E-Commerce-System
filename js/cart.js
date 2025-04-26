@@ -63,9 +63,12 @@ function removeFromCart(index) {
     renderCartItems();
 }
 
-document.querySelector('.bi-cart').addEventListener('click', function (e) {
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelector('.bi-cart')?.addEventListener('click', function (e) {
     e.preventDefault();
     toggleCart();
+  });
 });
+
 
 //-----------------------------------------Cart-Slider functions End
