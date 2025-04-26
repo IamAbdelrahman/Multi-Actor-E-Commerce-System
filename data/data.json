@@ -1,5 +1,6 @@
 {
-  "admin": {
+  "users": [
+    {
       "id": 0,
       "name": "Abdelruhman Kamal",
       "email": "abdokamal@gmail.com",
@@ -8,7 +9,7 @@
       "city": "Tanta",
       "phone": "+201234567890"
     },
-  "users": [
+
     {
       "id": 1,
       "name": "Hagar Yusuf",
@@ -16,6 +17,24 @@
       "password": "hashedpassword1",
       "role": "customer",
       "city": "Cairo",
+      "phone": "+201234567890"
+    },
+    {
+      "id": 1,
+      "name": "Hagar Yusuf",
+      "email": "hagar@example.com",
+      "password": "hashedpassword1",
+      "role": "customer",
+      "city": "Cairo",
+      "phone": "+201234567890"
+    },
+    {
+      "id": 2,
+      "name": "Rawan Emad",
+      "email": "raswan@example.com",
+      "password": "hashedpassword1",
+      "role": "seller",
+      "city": "Alexandria",
       "phone": "+201234567890"
     }
   ],
