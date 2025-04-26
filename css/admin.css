@@ -7,7 +7,9 @@
 .wrapper {
   display: flex;
 }
-
+.bi-lightning-fill {
+  color: #ffc107;
+}
 .main {
   display: flex;
   flex-direction: column;
