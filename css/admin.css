@@ -195,7 +195,7 @@ a.sidebar-link:hover {
   box-shadow: 0 0 2rem 0 rgba(33, 37, 41, .1);
 }
 
-.navbar-expand .navbar-collapse{
+.navbar-expand.navbar-collapse{
   min-width: 200px;
 }
 
@@ -243,4 +243,39 @@ tr.highlighter th{
 
 footer {
   background-color: #F5F5F5;
+  padding: 1rem .875rem;
+}
+
+@media(min-width: 768px){
+  .input-group-navbar .form-control:focus{
+    outline:none;
+    box-shadow: 0 0 0 0 rgba(255, 255, 255);
+    border: none;
+    background-color: #F5F5F5;
+  }
+
+  .input-group-navbar {
+    max-width: 320px;
+  }
+
+  .input-group-navbar .form-control{
+    color: #3e4455;
+    background-color: #F5F5F5;
+    height: calc(2.44375rem + 2px);
+  }
+
+  .input-group-navbar .btn{
+    color: #000;
+    background-color: #F5F5F5;
+    cursor: pointer;
+    z-index:1000;
+  }
+
+  .input-group-navbar .btn:active{
+    background-color: #F5F5F5;
+  }
+
+  .navbar-expand .navbar-nav .dropdown-menu{
+    box-shadow: 0.1rem 0.2rem rgba(0, 0, 0, 0.5);
+  }
 }
