@@ -15,7 +15,6 @@
       "blocked": false,
       "date": ""
     },
-
     {
       "id": 1,
       "name": "Hagar Yusuf",
@@ -31,7 +30,6 @@
       "blocked": false,
       "date": ""
     },
-
     {
       "id": 1,
       "name": "Hagar Yusuf",
@@ -47,7 +45,6 @@
       "blocked": false,
       "date": ""
     },
-    
     {
       "id": 2,
       "name": "Rawan Emad",
@@ -63,40 +60,100 @@
       "blocked": false,
       "date": ""
     }
-    
   ],
-
+  
   "products": [
     {
       "id": 101,
-      "name": "Wireless Headphones",
-      "description": "High quality wireless headphones with noise cancellation.",
+      "name": "Wireless Noise-Cancelling Headphones",
+      "description": "Premium over-ear headphones with 30-hour battery life and active noise cancellation.",
       "price": 799.99,
       "stock": 15,
-      "category": "Electronics",
+      "category": "Headphones",
       "image": "images/headphones.jpg"
     },
     {
       "id": 102,
-      "name": "Running Shoes",
-      "description": "Comfortable running shoes for all terrains.",
-      "price": 499.50,
-      "stock": 25,
-      "category": "Footwear",
-      "image": "images/shoes.jpg"
+      "name": "In-Ear Sports Earbuds",
+      "description": "Sweat-proof wireless earbuds with secure fit for workouts.",
+      "price": 299.50,
+      "stock": 30,
+      "category": "Headphones",
+      "image": "images/earbuds.jpg"
     },
     {
-      "id": 103,
-      "name": "Smartwatch",
-      "description": "Multifunctional smartwatch with heart rate monitor.",
-      "price": 999.00,
-      "stock": 12,
-      "quantity": 1,
-      "category": "Electronics",
-      "image": "images/smartwatch.jpg"
+      "id": 201,
+      "name": "Flagship Smartphone (128GB)",
+      "description": "6.5-inch AMOLED display, triple camera, 5G support.",
+      "price": 1299.00,
+      "stock": 20,
+      "category": "Mobiles",
+      "image": "images/smartphone.jpg"
+    },
+    {
+      "id": 202,
+      "name": "Budget Smartphone (64GB)",
+      "description": "Affordable 6.2-inch HD+ phone with long battery life.",
+      "price": 499.99,
+      "stock": 35,
+      "category": "Mobiles",
+      "image": "images/budget_phone.jpg"
+    },
+    {
+      "id": 301,
+      "name": "Ultra-Thin Laptop (13-inch)",
+      "description": "Lightweight laptop with 16GB RAM and 512GB SSD.",
+      "price": 1499.00,
+      "stock": 10,
+      "category": "Laptops",
+      "image": "images/laptop.jpg"
+    },
+    {
+      "id": 302,
+      "name": "Gaming Laptop (15-inch)",
+      "description": "High-performance laptop with RTX 3060 and 144Hz display.",
+      "price": 2199.99,
+      "stock": 8,
+      "category": "Laptops",
+      "image": "images/gaming_laptop.jpg"
+    },
+    {
+      "id": 401,
+      "name": "10-inch Tablet (64GB)",
+      "description": "Versatile tablet with stylus support and 10-hour battery.",
+      "price": 599.50,
+      "stock": 18,
+      "category": "Tablets",
+      "image": "images/tablet.jpg"
+    },
+    {
+      "id": 402,
+      "name": "Kids' Educational Tablet",
+      "description": "Durable tablet with parental controls and preloaded apps.",
+      "price": 349.99,
+      "stock": 25,
+      "category": "Tablets",
+      "image": "images/kids_tablet.jpg"
+    },
+    {
+      "id": 501,
+      "name": "Wireless Charging Pad",
+      "description": "Fast-charging Qi-compatible pad for phones and earbuds.",
+      "price": 89.99,
+      "stock": 40,
+      "category": "Accessories",
+      "image": "images/charger.jpg"
+    },
+    {
+      "id": 502,
+      "name": "Protective Phone Case",
+      "description": "Shockproof case with raised edges for screen protection.",
+      "price": 49.50,
+      "stock": 50,
+      "category": "Accessories",
+      "image": "images/phone_case.jpg"
     }
   ],
-
   "orders": [
     {
       "id": 1001,
@@ -122,22 +179,26 @@
       }
     }
   ],
-
   "categories": [
     {
       "id": 1,
       "name": "Electronics",
       "description": "Devices and gadgets",
-      "products": [101, 103]
+      "products": [
+        101,
+        103
+      ]
     },
     {
       "id": 2,
       "name": "Footwear",
       "description": "Shoes and sandals",
-      "products": [102]
+      "products": [
+        102
+      ]
     }
   ],
-  "cart":[
+  "cart": [
     {
       "userId": 1,
       "products": [
