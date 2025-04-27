@@ -1,4 +1,8 @@
 import Validate  from './ValidateModule.js'; 
+import StorageManager from './StorageModule.js';
+
+/*- PRODUCT MANAGER
+-----------------------------------------------------------------------*/
 
 class Product {
   constructor(id, name, description, price, stock, category, image, quantity = 1) {
@@ -9,7 +13,6 @@ class Product {
     this.Stock = stock;
     this.Category = category;
     this.Image = image;
-    this.Quantity = quantity;
   }
 
   set ID(id) {
@@ -116,13 +119,69 @@ export class ProductManager{
       return;
     }
     const products = StorageManager.Load("products") || [];
+    const existingProduct = products.find(p => p.ID === product.ID);
+    if (existingProduct) {
+      console.error("Product with this ID already exists.");
+      return;
+    }
+    const existingCategory = products.find(p => p.Category === product.Category);
+    if (!existingCategory) {
+      console.error("Category does not exist.");
+      return;
+    }
+    const existingImage = products.find(p => p.Image === product.Image);
+    if (!existingImage) {
+      console.error("Image does not exist.");
+      return;
+    }
+    const existingName = products.find(p => p.Name === product.Name);
+    if (!existingName) {
+      console.error("Product name does not exist.");
+      return;
+    }
+
+    const id = products.length > 0 ? products[products.length - 1].ID + 1 : 1;
+    product.ID = id;
     products.push(product);
-    StorageManager.Save("products", products);
+    StorageManager.SaveSection("products", products);
+  }
+
+  static GetAllProducts() {
+    return StorageManager.Load("products") || [];
   }
 
   static GetProductById(id) {
     const products = StorageManager.Load("products") || [];
     return products.find(p => p.id === id);
+  }
+
+  static GetProductsByCategory(category) {
+    const products = StorageManager.Load("products") || [];
+    return products.filter(p => p.Category === category);
+  }
+
+  static GetProductsByPriceRange(minPrice, maxPrice) {
+    const products = Product.GetAllProducts();
+    return products.filter(product => product.price >= minPrice && product.price <= maxPrice);
+  }
+
+  static GetProductByFilters(maxPrice = 0, category = '') {
+    category = category == 'all' ? '' : category;
+    const products = Product.GetAllProducts();
+    if (!maxPrice && !category) {
+        return products;
+    } else if (!maxPrice) {
+        return Product.GetProductsByCategory(category);
+    } else if (!category) {
+        return Product.GetProductsByPriceRange(0, maxPrice);
+    } else {
+        return products.filter(product => product.price <= maxPrice && product.category === category);
+    }
+  }
+
+  static GetProductsBySearch(product_name) {
+    const products = Product.GetAllProducts();
+    return products.filter(product => product.name.toLowerCase().includes(product_name.toLowerCase()));
   }
 
   static UpdateProduct(id, updatedData) {
@@ -134,12 +193,45 @@ export class ProductManager{
       return product;
     });
 
-    StorageManager.Save("products", products);
+    StorageManager.SaveSection("products", products);
   }
 
   static DeleteProduct(id) {
     let products = StorageManager.Load("products") || [];
     products = products.filter(p => p.id !== id);
-    StorageManager.Save("products", products);
+    StorageManager.SaveSection("products", products);
   }
+
+  static ChangeQuantity(productId, amount) {
+    const product = Product.GetProductById(productId);
+    if (!product) {
+        console.log(`Product with ID ${productId} not found.`);
+        return false;
+    }
+    product.stock = parseInt(product.stock) + parseInt(amount);
+    if (product.stock < 0) {
+        console.log('Cannot decrease quantity below zero.');
+        return false;
+    }
+    let products = Product.GetAllProducts();
+    products = products.map(p => p.id == productId ? product : p);
+    StorageManager.SaveSection('products', products);
+    return product;
+  }
+
+  static Categories() {
+    const products = Product.GetAllProducts();
+    return [...new Set(products.map(product => product.category))];
+  }
+
+  static categoriesList() {
+    return [
+        "Mobiles",
+        "Laptops",
+        "Headphones",
+        "Tablets",
+        "Accessories"
+    ];
+  }
+
 }
