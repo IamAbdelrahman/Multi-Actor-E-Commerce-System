@@ -6,7 +6,11 @@
       "email": "abdokamal@gmail.com",
       "password": "admin123",
       "role": "admin",
-      "city": "Tanta",
+      "Address": {
+        "city": "Cairo",
+        "street": "123 Main St",
+        "zipCode": "12345"
+      },
       "phone": "+201234567890"
     },
 
@@ -16,7 +20,11 @@
       "email": "hagar@example.com",
       "password": "hashedpassword1",
       "role": "customer",
-      "city": "Cairo",
+      "Address": {
+        "city": "Cairo",
+        "street": "123 Main St",
+        "zipCode": "12345"
+      },
       "phone": "+201234567890"
     },
     {
@@ -25,7 +33,11 @@
       "email": "hagar@example.com",
       "password": "hashedpassword1",
       "role": "customer",
-      "city": "Cairo",
+      "Address": {
+        "city": "Cairo",
+        "street": "123 Main St",
+        "zipCode": "12345"
+      },
       "phone": "+201234567890"
     },
     {
@@ -34,7 +46,11 @@
       "email": "raswan@example.com",
       "password": "hashedpassword1",
       "role": "seller",
-      "city": "Alexandria",
+      "Address": {
+        "city": "Cairo",
+        "street": "123 Main St",
+        "zipCode": "12345"
+      },
       "phone": "+201234567890"
     }
   ],
@@ -46,10 +62,8 @@
       "description": "High quality wireless headphones with noise cancellation.",
       "price": 799.99,
       "stock": 15,
-      "quantity": 1,
       "category": "Electronics",
-      "image": "images/headphones.jpg",
-      "numberofClicks": 0
+      "image": "images/headphones.jpg"
     },
     {
       "id": 102,
@@ -57,7 +71,6 @@
       "description": "Comfortable running shoes for all terrains.",
       "price": 499.50,
       "stock": 25,
-      "quantity": 1,
       "category": "Footwear",
       "image": "images/shoes.jpg"
     },
@@ -89,7 +102,13 @@
       ],
       "totalAmount": 1798.99,
       "status": "processing",
-      "orderDate": "2025-04-19"
+      "orderDate": "2025-04-19",
+      "PaymentMethod": "credit card",
+      "shippingAddress": {
+        "city": "Cairo",
+        "street": "123 Main St",
+        "zipCode": "12345"
+      }
     }
   ],
 
@@ -107,5 +126,30 @@
       "products": [102]
     }
   ],
-  "cart":[]
+  "cart":[
+    {
+      "userId": 1,
+      "products": [
+        {
+          "productId": 101,
+          "quantity": 1
+        },
+        {
+          "productId": 102,
+          "quantity": 2
+        }
+      ],
+      "totalAmount": 1798.99
+    },
+    {
+      "userId": 2,
+      "products": [
+        {
+          "productId": 103,
+          "quantity": 1
+        }
+      ],
+      "totalAmount": 999.00
+    }
+  ]
 }
