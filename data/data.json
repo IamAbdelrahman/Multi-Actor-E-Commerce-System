@@ -5,13 +5,15 @@
       "name": "Abdelruhman Kamal",
       "email": "abdokamal@gmail.com",
       "password": "admin123",
-      "role": "admin",
       "Address": {
         "city": "Cairo",
         "street": "123 Main St",
         "zipCode": "12345"
       },
-      "phone": "+201234567890"
+      "phone": "+201234567890",
+      "role": "admin",
+      "blocked": false,
+      "date": ""
     },
 
     {
@@ -25,34 +27,43 @@
         "street": "123 Main St",
         "zipCode": "12345"
       },
-      "phone": "+201234567890"
+      "phone": "+201234567890",
+      "blocked": false,
+      "date": ""
     },
+
     {
       "id": 1,
       "name": "Hagar Yusuf",
       "email": "hagar@example.com",
       "password": "hashedpassword1",
-      "role": "customer",
       "Address": {
         "city": "Cairo",
         "street": "123 Main St",
         "zipCode": "12345"
       },
-      "phone": "+201234567890"
+      "phone": "+201234567890",
+      "role": "customer",
+      "blocked": false,
+      "date": ""
     },
+    
     {
       "id": 2,
       "name": "Rawan Emad",
       "email": "raswan@example.com",
       "password": "hashedpassword1",
-      "role": "seller",
       "Address": {
         "city": "Cairo",
         "street": "123 Main St",
         "zipCode": "12345"
       },
-      "phone": "+201234567890"
+      "phone": "+201234567890",
+      "role": "seller",
+      "blocked": false,
+      "date": ""
     }
+    
   ],
 
   "products": [
