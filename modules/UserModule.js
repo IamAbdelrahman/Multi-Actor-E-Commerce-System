@@ -78,14 +78,44 @@ class User {
     return this.role;
   }
 
-
-
-
+  set Address(address) {
+    if (Validate.isAddressValid(address)) {
+      this.address = address;
+    } else {
+      console.error("Invalid address.");
+      this.address = null;
+    }
+  }
+  get Address() {
+    return this.address;
+  }
+  set Phone(phone) {
+    if (Validate.isPhoneValid(phone)) {
+      this.phone = phone;
+    } else {
+      console.error("Invalid phone number.");
+      this.phone = null;
+    }
+  }
+  get Phone() {
+    return this.phone;
+  }
+  // set Image(image) {
+  //   if (Validate.isImageValid(image)) {
+  //     this.image = image;
+  //   } else {
+  //     console.error("Invalid image URL.");
+  //     this.image = null;
+  //   }
+  // }
+  // get Image() {
+  //   return this.image;
+  // }
 }
 
 
 export default class UserManager {
-  static CreateUser(id, name, email, password, role) {
+  static CreateUser(id, name, email, password, role, address, phone) {
     //I make here to check empty because user may froget to enter 
     if (name.trim() === "" && password.trim() === "" && email.trim() === "") {
       alert("Please Enter Name , Email , Password");
@@ -105,6 +135,19 @@ export default class UserManager {
     }
     else if (name.trim() === "" || password.trim() === "" || email.trim() === "") {
       alert("Please enter name , email , password");
+      return false;
+    }
+    else if (role.trim() === "") {
+      alert("Please Enter Role");
+      return false;
+    }
+    else if (address.city.trim() === "" || address.street.trim() === "" || address.zip.trim() === "") {
+      alert("Please Enter a Valid Address");
+      return false;
+    }
+    else if (phone.trim() === "") {
+      alert("Please Enter Phone");
+      return false;
     }
 
     const users = StorageManager.LoadSection("users") || [];
@@ -141,7 +184,7 @@ export default class UserManager {
     return users.find(user => user.id === id);
   }
 
-  //Newwwwwwwwwww For Make ID for each user
+
   static GenerateNextID() {
     const users = StorageManager.LoadSection("users") || [];
     const ids = users.map(user => user.id);
@@ -149,9 +192,9 @@ export default class UserManager {
   }
 
 
-  static UpdateUser(id, name, email) {
+  static UpdateUser(id, name, email, password, role, address, phone) {
     var users = StorageManager.LoadSection("users") || [];
-    users = users.map(user => user.id === id ? new User(id, name, email) : user);
+    users = users.map(user => user.id === id ? new User(id, name, email, password, role, address, phone) : user);
     StorageManager.SaveSection("users", users);
   }
 
