@@ -56,10 +56,10 @@ const password = document.getElementById("password");
 eyeIcon.onclick = () => {
     if (password.type == "password") {
         password.type = "text";
-        eyeIcon.src = "./images/Others/eye-open.png";
+        eyeIcon.src = "./images/eye-open.png";
     } else {
         password.type = "password";
-        eyeIcon.src = "./images/Others/eye-close.png";
+        eyeIcon.src = "./images/eye-close.png";
     }
 };
 
@@ -68,10 +68,10 @@ const loginPassword = document.getElementById("loginPassword");
 loginEyeIcon.onclick = () => {
     if (loginPassword.type == "password") {
         loginPassword.type = "text";
-        loginEyeIcon.src = "./images/Others/eye-open.png";
+        loginEyeIcon.src = "./images/eye-open.png";
     } else {
         loginPassword.type = "password";
-        loginEyeIcon.src = "./images/Others/eye-close.png";
+        loginEyeIcon.src = "./images/eye-close.png";
     }
 };
 
@@ -102,11 +102,26 @@ window.Login = function (event) {
     const LoginUser = users.find(user => user.email === email && user.password === password);
 
     if (LoginUser) {
-        // alert(`Welcome back, ${LoginUser.name}! You are logged in as ${LoginUser.role}.`);
+        // alert(Welcome back, ${LoginUser.name}! You are logged in as ${LoginUser.role}.);
 
         switch (LoginUser.role) {
             case "customer":
-                window.location.href = "home.html";
+                sessionStorage.setItem('userLoggedIn', true);
+
+                // Hide the Register-Icon and show the user dropdown
+                document.getElementById("Register-Icon").classList.add("d-none");
+
+                // If there's a user dropdown, make it visible
+                const userDropdown = document.getElementById("userDropdown");
+                if (userDropdown) {
+                    userDropdown.classList.remove("d-none");
+                }
+                const modal = document.getElementById("registerModal");
+                if (modal) {
+                    modal.classList.add("d-none");
+                }
+
+                document.getElementById("homeContent");
                 break;
             case "admin":
                 window.location.href = "admin-panel.html";
