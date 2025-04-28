@@ -1,0 +1,35 @@
+.range-fill {
+    height: 6px;
+    background-color: #FFC107;
+    position: absolute;
+    z-index: 1;
+
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
+    position: absolute;
+    left: 0;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    background: #FFC107;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -6px;
+    position: relative;
+    z-index: 1;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+
+    height: 5px;
+    background: #e8e8e8;
+    border-radius: 3px;
+    border: none;
+}

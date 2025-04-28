@@ -106,7 +106,22 @@ window.Login = function (event) {
 
         switch (LoginUser.role) {
             case "customer":
-                window.location.href = "home.html";
+                sessionStorage.setItem('userLoggedIn', true);
+
+                // Hide the Register-Icon and show the user dropdown
+                document.getElementById("Register-Icon").classList.add("d-none");
+
+                // If there's a user dropdown, make it visible
+                const userDropdown = document.getElementById("userDropdown");
+                if (userDropdown) {
+                    userDropdown.classList.remove("d-none");
+                }
+                const modal = document.getElementById("registerModal");
+                if (modal) {
+                    modal.classList.add("d-none");
+                }
+
+                document.getElementById("homeContent");
                 break;
             case "admin":
                 window.location.href = "admin-panel.html";
