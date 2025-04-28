@@ -36,12 +36,36 @@ function toggleCart() {
   if (cartSlider.classList.contains("show")) {
     cartSlider.classList.remove("show");
     overlay.classList.remove("show");
-  } else {
+
+    document.removeEventListener("click", handleOutsideClick);
+  }
+  else {
     cartSlider.classList.add("show");
     overlay.classList.add("show");
     renderCartItems();
+
+    setTimeout(() => {
+      document.addEventListener("click", handleOutsideClick);
+    }, 0);
   }
 }
+
+// If click is outside both cart slider and overlay
+function handleOutsideClick(event) {
+const cartSlider = document.getElementById("cartSlider");
+const overlay = document.getElementById("overlay");
+
+if (
+cartSlider.classList.contains("show") &&
+!cartSlider.contains(event.target) 
+) {
+cartSlider.classList.remove("show");
+overlay.classList.remove("show");
+
+document.removeEventListener("click", handleOutsideClick);
+}
+}
+
 
 function renderCartItems() {
   const cartItemsContainer = document.getElementById("cartItems");
@@ -95,15 +119,117 @@ function updateQuantity(index, change) {
   updateCartCount();
 }
 
+// Add this CSS dynamically to ensure transitions work
+const style = document.createElement('style');
+style.textContent = `
+  .cart-item-remove {
+    transition: all 0.3s ease;
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  .cart-item-remove.removing {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  
+  .warning-message {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    background-color: #202529;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 1200;
+    animation: slideIn 0.3s ease, fadeOut 0.3s ease 2s forwards;
+    border-left: 4px solid #ffc107;
+  }
+  
+  @keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  
+  @keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+`;
+document.head.appendChild(style);
+
+// Modified removeFromCart function
 function removeFromCart(index) {
-  cartItems.splice(index, 1);
+  const item = cartItems[index];
+  
+  // Show warning message
+  const warning = document.createElement('div');
+  warning.className = 'warning-message';
+  warning.innerHTML = `<i class="bi bi-exclamation-triangle-fill text-warning me-2"></i> ${item.name} removed from cart`;
+  document.body.appendChild(warning);
+  
+  // Remove warning after animation
+  setTimeout(() => {
+    warning.remove();
+  }, 2300);
+  
+  // Animate removal
+  const cartItemElement = document.querySelectorAll('#cartItems > div')[index];
+  if (cartItemElement) {
+    cartItemElement.classList.add('removing');
+    setTimeout(() => {
+      cartItems.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+      updateCartCount();
+      renderCartItems();
+    }, 300); // Match this with CSS transition duration
+  } else {
+    cartItems.splice(index, 1);
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+    updateCartCount();
+    renderCartItems();
+  }
+}
+
+// Modified updateQuantity function
+function updateQuantity(index, change) {
+  const newQuantity = cartItems[index].quantity + change;
+  
+  if (newQuantity < 1) {
+    // Show warning when reducing to zero
+    const item = cartItems[index];
+    const warning = document.createElement('div');
+    warning.className = 'warning-message';
+    warning.innerHTML = `<i class="bi bi-exclamation-triangle-fill text-warning me-2"></i> ${item.name} removed from cart`;
+    document.body.appendChild(warning);
+    
+    setTimeout(() => {
+      warning.remove();
+    }, 2300);
+    
+    // Animate removal
+    const cartItemElement = document.querySelectorAll('#cartItems > div')[index];
+    if (cartItemElement) {
+      cartItemElement.classList.add('removing');
+      setTimeout(() => {
+        cartItems.splice(index, 1);
+        localStorage.setItem('cart', JSON.stringify(cartItems));
+        updateCartCount();
+        renderCartItems();
+      }, 300);
+    }
+    return;
+  }
+
+  cartItems[index].quantity = newQuantity;
   localStorage.setItem('cart', JSON.stringify(cartItems));
-  updateCartCount();
   renderCartItems();
+  updateCartCount();
 }
 
 // Initialize cart count on page load
-updateCartCount();
+// updateCartCount();//////////////////////////////////////////////////////
 
 // Add event listener for cart icon
 document.addEventListener('DOMContentLoaded', function () {
@@ -115,4 +241,4 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
-//-----------------------------------------Cart-Slider functions End
+//----------------------------------------- Cart-Slider functions End
