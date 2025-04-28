@@ -166,8 +166,8 @@ export default class UserManager {
       alert("Password is already registered. Please enter a different password.");
       return false;
     }
-    const id = users.length > 0 ? users[users.length - 1].id + 1 : 1;
-    const user = new User(id, name, email, password, role);
+    const _id = users.length > 0 ? users[users.length - 1].id + 1 : 1;
+    const user = new User(_id, name, email, password, role);
 
     //After check empty i make to check validation 
     if (!user.Name || !user.Email || !user.Pass || !user.Role) {
@@ -229,8 +229,8 @@ export class CustomerManager extends UserManager {
   }
   static CreateCustomer(id, name, email, password, address, phone) {
     const preCustomer = Customer.GetAllCustomers();
-    const id = preCustomer.length > 0 ? preCustomer[preCustomer.length - 1].id + 1 : 1;
-    const customer = new Customer(id, name, email, password, address, phone);
+    const _id = preCustomer.length > 0 ? preCustomer[preCustomer.length - 1].id + 1 : 1;
+    const customer = new Customer(_id, name, email, password, address, phone);
     preCustomer.push(customer);
     StorageManager.SaveSection('users', preCustomer);
     return customer;
@@ -303,8 +303,8 @@ export class SellerManager extends UserManager {
 
   static CreateSeller(id, name, email, password, address, phone) {
     const preSeller = Seller.GetAllSellers();
-    const id = preSeller.length > 0 ? preSeller[preSeller.length - 1].id + 1 : 1;
-    const seller = new Seller(id, name, email, password, address, phone);
+    const _id = preSeller.length > 0 ? preSeller[preSeller.length - 1].id + 1 : 1;
+    const seller = new Seller(_id, name, email, password, address, phone);
     preSeller.push(seller);
     StorageManager.SaveSection('users', preSeller);
     return seller;
