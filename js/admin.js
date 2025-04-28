@@ -96,12 +96,22 @@ window.addEventListener('load', () => {
   document.getElementById("orders-change").textContent = 
     `+${dashboardData.ordersChange}% Since Last Month`;
 });
+
 function ShowUsers() {
   const usersList = StorageManager.LoadSection("users") || [];
   var body = document.querySelector("tbody");
   for (let i = 0; i < usersList.length; i++) {
     const user = usersList[i];
-    body.appendChild(createRow(user.id, user.name, user.email, user.password, user.role, user.Address.city, user.phone));
+    body.appendChild(createRowForUsers(user.id, user.name, user.email, user.password, user.role, user.Address.city, user.phone));
+  }
+}
+
+function ShowProducts() {
+  const productList = StorageManager.LoadSection("products") || [];
+  var body = document.querySelector("tbody");
+  for (let i = 0; i < productList.length; i++) {
+    const product = productList[i];
+    body.appendChild(createRowForProducts(product.id, product.name, product.price, product.stock));
   }
 }
 
@@ -192,7 +202,7 @@ function ShowUsers() {
 
 /*- HELPER FUNCTIONS
 -----------------------------------------------------------------------*/
-function createRow(id, name, email, password, role, city, phone) {
+function createRowForUsers(id, name, email, password, role, city, phone) {
   var tr = document.createElement("tr");
   var td = createCell();
   td.textContent = id;
@@ -228,6 +238,34 @@ function createRow(id, name, email, password, role, city, phone) {
   return tr;
 }
 
+function createRowForProducts(id, name, price, stock, category) {
+  var tr = document.createElement("tr");
+  var td = createCell();
+  td.textContent = id;
+  tr.appendChild(td);
+
+  var td = createCell();
+  td.textContent = name;
+  tr.appendChild(td);
+
+  var td = createCell();
+  td.textContent = price;
+  tr.appendChild(td);
+
+  var td = createCell();
+  td.textContent = stock;
+  tr.appendChild(td);
+
+  var td = createCell();
+  td.textContent = category;
+  tr.appendChild(td);
+
+  td = createCell();    // Delete
+  td.appendChild(createDeleteIcon(id));
+  tr.appendChild(td);
+  return tr;
+}
+
 function createCell() {
   var cell = document.createElement("td");
   return cell;
@@ -245,7 +283,7 @@ function createDeleteIcon(id) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  ShowUsers();
+  // ShowUsers();
 
   const toggleBtn = document.querySelector(".toggle-btn");
   const toggler = document.querySelector("#icon");
@@ -262,16 +300,12 @@ document.addEventListener('DOMContentLoaded', function() {
     alert(`Number of customers: ${customerCount}`);
   });
 
-});
+  const product = document.getElementById("products");
+  product.addEventListener('click', () => {
+    const products = StorageManager.LoadSection("products") || [];
+    const productCount = products.length;
+    alert(`Number of products: ${productCount}`);
+    ShowProducts();
+  });
 
-  // const profile = document.getElementById("profile");
-  // profile.addEventListener('click', () => showProfile());
-  // const accounts = document.getElementById("accounts");
-  // accounts.addEventListener('click', () => ShowUsers());
-
-// Delete user - View users - Reset password  - view products - add product - delete product - view orders - delete order 
-// if user cancel the orders - contacts us > submit to be display -  
-// Analytics : Most popular product - most sold product - most viewed product - most added to cart - most ordered product -
-// Most sold product - Most viewed product - Most ordered prduct - 
-
-// Seller Dashbord: 
+}); 
