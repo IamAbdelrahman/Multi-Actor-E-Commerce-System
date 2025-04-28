@@ -88,32 +88,7 @@
                 document.getElementById('navBar').innerHTML = data;
             });
     </script>
-    <!-- -------------------------------------Cart Slider start------------------------------- -->
-    <div id="overlay"></div>
-    <div id="cartSlider">
-        <div class="d-flex flex-column h-100">
-            <div class="cart-header d-flex justify-content-between align-items-center">
-                <h4 class="mb-0"><i class="bi bi-cart3"></i> Your Cart</h4>
-                <button class="btn btn-close" onclick="toggleCart()"></button>
-            </div>
-            <div class="cart-body flex-grow-1 overflow-auto">
-                <div id="cartItems"></div>
-            </div>
-            <div class="cart-footer mt-auto">
-                <div class="d-flex justify-content-between mb-3">
-                    <h5>Total:</h5>
-                    <h5 id="cartTotal">$0.00</h5>
-                </div>
-                <button class="btn btn-yellow w-100 rounded-pill mb-2">
-                    <i class="bi bi-credit-card"></i> Checkout
-                </button>
-                <button class="btn btn-outline-secondary w-100 rounded-pill" onclick="toggleCart()">
-                    <i class="bi bi-arrow-left"></i> Continue Shopping
-                </button>
-            </div>
-        </div>
-    </div>
-    <!-- --------------------------------- Cart Slider end------------------------------- -->
+
     <!------------------------------------ NavBar End ------------------------------------>
 
     <!-- Main Content -->
@@ -259,8 +234,8 @@
                         <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
                             data-bs-target="#description" type="button">Description</button>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="specs-tab" data-bs-toggle="tab" data-bs-target="#specs"
+                    <li class="nav-item " role="presentation">
+                        <button class="nav-link " id="specs-tab" data-bs-toggle="tab" data-bs-target="#specs"
                             type="button">Specifications</button>
                     </li>
                     <li class="nav-item" role="presentation">
@@ -273,8 +248,8 @@
                     </li>
                 </ul>
                 <div class="tab-content p-3 border border-top-0 rounded-bottom" id="productTabsContent">
-                    <div class="tab-pane fade show active" id="description" role="tabpanel">
-                        <h4>About the Galaxy S23 Ultra</h4>
+                    <div class="tab-pane fade show active text-dark" id="description" role="tabpanel">
+                        <h4 class="text-warning">About the Galaxy S23 Ultra</h4>
                         <p>The Samsung Galaxy S23 Ultra is the pinnacle of smartphone technology, combining
                             professional-grade camera capabilities with desktop-level performance. The 6.8-inch Dynamic
                             AMOLED 2X display with 120Hz refresh rate delivers stunning visuals, while the new 200MP
@@ -286,8 +261,8 @@
                             it is beautiful, featuring Gorilla Glass Victus 2 front and back with an armored aluminum
                             frame.</p>
                     </div>
-                    <div class="tab-pane fade" id="specs" role="tabpanel">
-                        <h4>Technical Specifications</h4>
+                    <div class="tab-pane fade text-warning" id="specs" role="tabpanel">
+                        <h4 >Technical Specifications</h4>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><strong>Display:</strong> 6.8" Dynamic AMOLED 2X, 3088×1440,
                                 120Hz</li>
@@ -303,7 +278,7 @@
                             <li class="list-group-item"><strong>Dimensions:</strong> 163.4 x 78.1 x 8.9 mm, 234g</li>
                         </ul>
                     </div>
-                    <div class="tab-pane fade" id="features" role="tabpanel">
+                    <div class="tab-pane fade text-warning" id="features" role="tabpanel">
                         <h4>Key Features</h4>
                         <div class="row">
                             <div class="col-md-6">
@@ -360,7 +335,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="reviews" role="tabpanel">
+                    <div class="tab-pane fade text-warning" id="reviews" role="tabpanel">
                         <h4>Customer Reviews</h4>
                         <div class="mb-4">
                             <div class="d-flex justify-content-between">
@@ -457,7 +432,7 @@
             </div>
         </div>
     </div>
-
+<!---------------------- Footer -------------------------------------->
     <div id="footer"></div>
 
     <script>
@@ -467,7 +442,9 @@
                 document.getElementById('footer').innerHTML = data;
             });
     </script>
-    <script>
+
+<!---------------------- Footer End-------------------------------------->
+<script>
         // Quantity controls
         document.getElementById('increment').addEventListener('click', function () {
             const quantityInput = document.getElementById('quantity');

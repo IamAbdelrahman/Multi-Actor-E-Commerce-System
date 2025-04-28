@@ -102,11 +102,26 @@ window.Login = function (event) {
     const LoginUser = users.find(user => user.email === email && user.password === password);
 
     if (LoginUser) {
-        // alert(`Welcome back, ${LoginUser.name}! You are logged in as ${LoginUser.role}.`);
+        // alert(Welcome back, ${LoginUser.name}! You are logged in as ${LoginUser.role}.);
 
         switch (LoginUser.role) {
             case "customer":
-                window.location.href = "home.html";
+                sessionStorage.setItem('userLoggedIn', true);
+
+                // Hide the Register-Icon and show the user dropdown
+                document.getElementById("Register-Icon").classList.add("d-none");
+
+                // If there's a user dropdown, make it visible
+                const userDropdown = document.getElementById("userDropdown");
+                if (userDropdown) {
+                    userDropdown.classList.remove("d-none");
+                }
+                const modal = document.getElementById("registerModal");
+                if (modal) {
+                    modal.classList.add("d-none");
+                }
+
+                document.getElementById("homeContent");
                 break;
             case "admin":
                 window.location.href = "admin-panel.html";

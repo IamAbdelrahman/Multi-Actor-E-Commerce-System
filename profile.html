@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Profile</title>
+</head>
+
+<body>
+    <div id="profileForm">
+        <h2 class="text-center" style="color: #4E7CA3;">Update Profile</h2>
+        <form onsubmit="updateProfile(event)">
+            <div class="mb-3">
+                <label for="profileName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="profileName" placeholder="Name" />
+            </div>
+            <div class="mb-3">
+                <label for="profileEmail" class="form-label">Email</label>
+                <input type="email" class="form-control" id="profileEmail" placeholder="Email" />
+            </div>
+            <div class="mb-3">
+                <label for="profilePhone" class="form-label">Phone</label>
+                <input type="text" class="form-control" id="profilePhone" placeholder="Phone" />
+            </div>
+            <div class="mb-3">
+                <label for="profileCity" class="form-label">City</label>
+                <input type="text" class="form-control" id="profileCity" placeholder="City" />
+            </div>
+            <button type="submit" class="btn btn-warning w-100 fw-bold fs-5">Save Profile</button>
+        </form>
+    </div>
+    <script type="module" src="profile.js"></script>
+
+</body>
+
+</html>
