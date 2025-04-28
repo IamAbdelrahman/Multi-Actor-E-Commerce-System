@@ -50,14 +50,58 @@ new Chart(document.getElementById("bar-chart-grouped"), {
   }
 });
 
-/*- Manage Users
+/*- ADMIN DASHBOARD
 -----------------------------------------------------------------------*/
+// Simulated data (replace with real data from localStorage/API)
+const dashboardData = {
+  revenue: 89189,
+  revenueChange: 9.0,
+  visitors: 5243,
+  visitorsChange: 12.5,
+  orders: 1287,
+  ordersChange: 5.3
+};
+
+// Animate numbers counting up
+function animateValue(id, target, duration = 2000) {
+  const element = document.getElementById(id);
+  const start = 0;
+  const increment = target / (duration / 16); // 60fps
+
+  let current = start;
+  const timer = setInterval(() => {
+    current += increment;
+    if (current >= target) {
+      clearInterval(timer);
+      current = target;
+    }
+    element.textContent = 
+      id === "revenue" ? `$${Math.floor(current).toLocaleString()}` 
+      : Math.floor(current).toLocaleString();
+  }, 16);
+}
+
+// Update all cards on page load
+window.addEventListener('load', () => {
+  // Animate numbers
+  animateValue("revenue", dashboardData.revenue);
+  animateValue("visitors", dashboardData.visitors);
+  animateValue("orders", dashboardData.orders);
+
+  // Update percentage changes
+  document.getElementById("revenue-change").textContent = 
+    `+${dashboardData.revenueChange}% Since Last Month`;
+  document.getElementById("visitors-change").textContent = 
+    `+${dashboardData.visitorsChange}% Since Last Month`;
+  document.getElementById("orders-change").textContent = 
+    `+${dashboardData.ordersChange}% Since Last Month`;
+});
 function ShowUsers() {
   const usersList = StorageManager.LoadSection("users") || [];
   var body = document.querySelector("tbody");
   for (let i = 0; i < usersList.length; i++) {
     const user = usersList[i];
-    body.appendChild(createRow(user.id, user.name, user.email, user.password, user.role, user.city, user.phone));
+    body.appendChild(createRow(user.id, user.name, user.email, user.password, user.role, user.Address.city, user.phone));
   }
 }
 
@@ -202,6 +246,7 @@ function createDeleteIcon(id) {
 
 document.addEventListener('DOMContentLoaded', function() {
   ShowUsers();
+
   const toggleBtn = document.querySelector(".toggle-btn");
   const toggler = document.querySelector("#icon");
   toggleBtn.addEventListener("click", function () {
@@ -209,6 +254,14 @@ document.addEventListener('DOMContentLoaded', function() {
   toggler.classList.toggle("bxs-chevrons-right");
   toggler.classList.toggle("bxs-chevrons-left");
   });
+
+  const customers = document.getElementById("customers");
+  customers.addEventListener('click', () => {
+    const users = StorageManager.LoadSection("users") || [];
+    const customerCount = users.filter(user => user.role === "customer").length;
+    alert(`Number of customers: ${customerCount}`);
+  });
+
 });
 
   // const profile = document.getElementById("profile");
