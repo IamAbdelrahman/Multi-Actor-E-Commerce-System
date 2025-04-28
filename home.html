@@ -17,8 +17,6 @@
 </head>
 
 <body>
-  <!-- NavBar -->
-
 
   <!------------------------------------ NavBar Start ------------------------------------>
   <div id="navBar"></div>
@@ -34,13 +32,7 @@
 
   <!------------------------------------ Slider Start ------------------------------------>
   <!-- Carousel -->
-  <div id="myCarousel" class="carousel slide py-4" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2"></button>
-    </div>
-
+  <div id="myCarousel" class="carousel slide py-4" data-bs-ride="carousel" data-bs-wrap="true">
     <div class="container">
       <div class="carousel-inner py-4 slider">
         <div class="carousel-item active">
@@ -181,7 +173,6 @@
           </div>
         </div>
       </div>
-          
     </div>
 
     <!------------------------------------ Categories End ------------------------------------>
@@ -189,7 +180,7 @@
     <div class="products my-5">
       <div class="d-flex justify-content-between align-items-center my-5">
         <h2 class="fw-bold">Featured Products</h2>
-        <a href="#" class="btn btn-outline-dark p-3 btn-outline-dark">View All Products
+        <a href="catalog.html" class="btn btn-outline-dark p-3 btn-outline-dark">View All Products
           <i class="fa-solid fa-arrow-right"></i>
         </a>
       </div>
@@ -476,7 +467,7 @@
             <label for="password" class="form-label">Password</label>
             <div class="d-flex">
               <input type="password" class="form-control" id="password" placeholder="Password" />
-              <img src="./images/eye-close.png" id="eyeIcon" class="position-absolute top-95 end-0"
+              <img src="./images/Others/eye-close.png" id="eyeIcon" class="position-absolute top-95 end-0"
                 style="cursor: pointer; width: 30px; padding: 12px 5px 5px" />
             </div>
           </div>
@@ -510,7 +501,7 @@
             <label for="loginPassword" class="form-label">Password</label>
             <div class="d-flex">
               <input type="password" class="form-control" id="loginPassword" placeholder="Password" />
-              <img src="./images/eye-close.png" id="loginEyeIcon" class="position-absolute top-95 end-0"
+              <img src="./images/Others/eye-close.png" id="loginEyeIcon" class="position-absolute top-95 end-0"
                 style="cursor: pointer; width: 30px; padding: 12px 5px 5px" />
             </div>
           </div>
