@@ -1,0 +1,33 @@
+.payment-option {
+  border-radius: 0.75rem;
+  width: 100px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.payment-option:hover,
+.form-control:hover,
+.form-control:active,
+.form-control:focus {
+  border: 1px solid #ffc107 !important;
+  outline: none;
+}
+.form-control:focus{
+  box-shadow: 0 0 0 .1rem #ffc107; 
+}
+.btn-check:checked + .payment-option {
+    border: 1px solid #ffc107;
+    box-shadow: 0 .5rem 1rem rgba(255,193,7,0.5); 
+  }
+  .dotted-line {
+    border: 0;
+    border-top: 1px dotted #000; 
+    margin: 1rem 0; 
+  }
+  .col-lg-5 button:hover{
+    background-color:#ffc107 ;
+    color: white;
+    border-color: #ffc107;
+  }

@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/cart.js"></script>
-    
+
     <style>
         .product-image {
             border-radius: 10px;
@@ -80,65 +80,15 @@
 
 <body>
     <!------------------------------------ NavBar Start ------------------------------------>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary p-3">
-        <div class="container">
-            <a class="navbar-brand fw-bold text-light fs-4" href="home.html">
-                <i class="bi bi-lightning-fill"></i> Electronics Store
-            </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="mainNavbar">
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                    <li class="nav-item px-2">
-                        <a class="nav-link text-light special-hover" href="home.html">HOME</a>
-                    </li>
-                    <li class="nav-item px-2">
-                        <a class="nav-link text-light special-hover" href="about.html">ABOUT</a>
-                    </li>
-                    <li class="nav-item px-2">
-                        <a class="nav-link active border-bottom border-warning special-hover"
-                            href="catalog.html">SHOP</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-light special-hover" href="#" role="button"
-                            data-bs-toggle="dropdown">
-                            CATEGORIES
-                        </a>
-                        <ul class="dropdown-menu bg-secondary">
-                            <li>
-                                <a class="dropdown-item text-light" href="#">Smartphones</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item text-light" href="#">Laptops</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item text-light" href="#">Headphones</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item text-light" href="#">Tablets</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item text-light" href="#">Accessories</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item px-2">
-                        <a class="nav-link text-light special-hover" href="#">CONTACT</a>
-                    </li>
-                </ul>
-
-                <div class="d-flex gap-4 fs-5 icons">
-                    <a href="login.html" class="text-light"><i class="bi bi-person-circle"></i></a>
-                    <a href="#" class="text-light"><i class="bi bi-cart" onclick="toggleCart()"></i></a>
-                    <a href="#" class="text-light heart-toggle"><i class="bi bi-heart"></i></a>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <!-- -------------------------------------Cart Slider------------------------------- -->
+    <div id="navBar"></div>
+    <script>
+        fetch('navBar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navBar').innerHTML = data;
+            });
+    </script>
+    <!-- -------------------------------------Cart Slider start------------------------------- -->
     <div id="overlay"></div>
     <div id="cartSlider">
         <div class="d-flex flex-column h-100">
@@ -163,6 +113,7 @@
             </div>
         </div>
     </div>
+    <!-- --------------------------------- Cart Slider end------------------------------- -->
     <!------------------------------------ NavBar End ------------------------------------>
 
     <!-- Main Content -->
@@ -261,7 +212,12 @@
                         </div>
                     </div>
                     <div class="col-md-9">
-                        <button class="btn btn-yellow btn-lg w-100" style="height: 100%;">
+                        <button class="btn btn-yellow btn-lg w-100" style="height: 100%;" onclick="addToCart({
+                            id: 123, 
+                            name: 'Samsung Galaxy S23 Ultra', 
+                            price: 1199.99, 
+                            image: 'https://via.placeholder.com/600x600?text=Galaxy+S23+Ultra'
+                        }, parseInt(document.getElementById('quantity').value))">
                             <i class="fas fa-shopping-cart me-2"></i> Add to Cart
                         </button>
                     </div>
@@ -499,54 +455,38 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer-expand-lg footer-dark bg-secondary p-3 text-white py-4 mt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 mb-3">
-                    <h5>Electronics Store</h5>
-                    <p>Premium electronics and accessories from top brands.</p>
-                    <div class="social-icons">
-                        <a href="#" class="text-warning me-2"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-warning me-2"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-warning me-2"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-warning"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-                <div class="col-md-2 mb-3">
-                    <h5>Shop</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-decoration-none text-white-50">Smartphones</a></li>
-                        <li><a href="#" class="text-decoration-none text-white-50">Laptops</a></li>
-                        <li><a href="#" class="text-decoration-none text-white-50">Tablets</a></li>
-                        <li><a href="#" class="text-decoration-none text-white-50">Accessories</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-2 mb-3">
-                    <h5>Support</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-decoration-none text-white-50">Contact Us</a></li>
-                        <li><a href="#" class="text-decoration-none text-white-50">Shipping</a></li>
-                        <li><a href="#" class="text-decoration-none text-white-50">Returns</a></li>
-                        <li><a href="#" class="text-decoration-none text-white-50">FAQs</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <h5>Newsletter</h5>
-                    <p>Subscribe for exclusive offers and tech news.</p>
-                    <div class="input-group">
-                        <input type="email" class="form-control" placeholder="Your email">
-                        <button class="btn btn-warning" type="button">Subscribe</button>
-                    </div>
-                </div>
-            </div>
-            <hr class="my-4 bg-secondary">
-            <div class="text-center">
-                <p class="mb-0 text-white-50">&copy; ITI Electronics Store. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    <div id="footer"></div>
 
+    <script>
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer').innerHTML = data;
+            });
+    </script>
+    <script>
+        // Quantity controls
+        document.getElementById('increment').addEventListener('click', function () {
+            const quantityInput = document.getElementById('quantity');
+            quantityInput.value = parseInt(quantityInput.value) + 1;
+        });
+
+        document.getElementById('decrement').addEventListener('click', function () {
+            const quantityInput = document.getElementById('quantity');
+            if (parseInt(quantityInput.value) > 1) {
+                quantityInput.value = parseInt(quantityInput.value) - 1;
+            }
+        });
+
+        // Thumbnail image switcher
+        function changeImage(element) {
+            document.querySelectorAll('.thumbnail').forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+            element.classList.add('active');
+            document.getElementById('mainImage').src = element.src;
+        }
+    </script>
 </body>
 
 </html>

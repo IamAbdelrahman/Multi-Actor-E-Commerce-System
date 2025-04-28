@@ -17,8 +17,9 @@
 </head>
 
 <body>
-  <!------------------------------------ NavBar Start ------------------------------------>
+  <!-- NavBar -->
 
+  <!------------------------------------ NavBar Start ------------------------------------>
   <div id="navBar"></div>
   <script>
     fetch('navBar.html')
@@ -27,8 +28,6 @@
         document.getElementById('navBar').innerHTML = data;
       });
   </script>
-
-
 
   <!------------------------------------ NavBar End ------------------------------------>
 
@@ -51,10 +50,10 @@
                 Shop laptops, desktops, monitors, tablets, PC gaming, hard
                 drives, and accessories.
               </p>
-              <button class="p-3 fs-6">View more</button>
+              <a href="catalog.html"> <button class="p-3 fs-6">View more</button></a>
             </div>
             <div class="col-md-6 d-none d-md-block text-center">
-              <img src="/images/headphone.png" alt="headphones images" class="img-fluid carousel-img" />
+              <img src="/images/Laptops/2.png" alt="headphones images" class="img-fluid carousel-img" />
             </div>
           </div>
         </div>
@@ -67,10 +66,10 @@
                 Shop laptops, desktops, monitors, tablets, PC gaming, hard
                 drives, and accessories.
               </p>
-              <button class="p-3 fs-6">View more</button>
+              <a href="catalog.html"> <button class="p-3 fs-6">View more</button></a>
             </div>
             <div class="col-md-6 d-none d-md-block text-center">
-              <img src="/images/headphone.png" alt="headphones images" class="img-fluid carousel-img" />
+              <img src="/images/Mobiles/11.png" alt="headphones images" class="img-fluid carousel-img" />
             </div>
           </div>
         </div>
@@ -83,13 +82,30 @@
                 Shop laptops, desktops, monitors, tablets, PC gaming, hard
                 drives, and accessories.
               </p>
-              <button class="p-3 fs-6">View more</button>
+              <a href="catalog.html"> <button class="p-3 fs-6">View more</button></a>
             </div>
             <div class="col-md-6 d-none d-md-block text-center">
-              <img src="/images/headphone.png" alt="headphones images" class="img-fluid carousel-img" />
+              <img src="/images/Headphones/1.png" alt="headphones images" class="img-fluid carousel-img" />
             </div>
           </div>
         </div>
+
+        <div class="carousel-item">
+          <div class="row align-items-center">
+            <div class="col-12 col-md-6 text-dark text-center text-md-start py-5">
+              <h3 class="h1 pb-3">SHOP HEADPHONES & ACCESSORIES</h3>
+              <p class="fs-5 pb-3 w-100 w-md-75 mx-auto mx-md-0">
+                Shop laptops, desktops, monitors, tablets, PC gaming, hard
+                drives, and accessories.
+              </p>
+              <a href="catalog.html"> <button class="p-3 fs-6">View more</button></a>
+            </div>
+            <div class="col-md-6 d-none d-md-block text-center">
+              <img src="/images/Accessories/13.jpeg" alt="headphones images" class="img-fluid carousel-img" />
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -186,7 +202,7 @@
               <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
             </div>
 
-            <img src="images/headphone.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
+            <img src="/images/Headphones/10.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
             <div class="card-body">
               <h5 class="card-title fw-semibold">Title</h5>
               <p class="text-muted small">Desctiption</p>
@@ -194,7 +210,14 @@
             <div class="card-footer bg-white border-0">
               <div class="d-flex justify-content-between align-items-center">
                 <span class="fw-bold">$35.00</span>
-                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold">Add to cart</button>
+                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold" onclick="addToCart({
+            id: 101, 
+            name: 'Wireless Headphones', 
+            price: 799.99, 
+            image: 'images/headphones.jpg'
+        })">
+                  Add to cart
+                </button>
               </div>
             </div>
           </div>
@@ -206,7 +229,7 @@
               <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
             </div>
 
-            <img src="images/headphone.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
+            <img src="/images/Headphones/1.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
             <div class="card-body">
               <h5 class="card-title fw-semibold">Title</h5>
               <p class="text-muted small">Desctiption</p>
@@ -214,7 +237,14 @@
             <div class="card-footer bg-white border-0">
               <div class="d-flex justify-content-between align-items-center">
                 <span class="fw-bold">$35.00</span>
-                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold">Add to cart</button>
+                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold" onclick="addToCart({
+            id: 101, 
+            name: 'Wireless Headphones', 
+            price: 799.99, 
+            image: 'images/headphones.jpg'
+        })">
+                  Add to cart
+                </button>
               </div>
             </div>
           </div>
@@ -226,7 +256,7 @@
               <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
             </div>
 
-            <img src="images/headphone.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
+            <img src="/images/Headphones/2.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
             <div class="card-body">
               <h5 class="card-title fw-semibold">Title</h5>
               <p class="text-muted small">Desctiption</p>
@@ -234,7 +264,14 @@
             <div class="card-footer bg-white border-0">
               <div class="d-flex justify-content-between align-items-center">
                 <span class="fw-bold">$35.00</span>
-                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold">Add to cart</button>
+                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold" onclick="addToCart({
+            id: 101, 
+            name: 'Wireless Headphones', 
+            price: 799.99, 
+            image: 'images/headphones.jpg'
+        })">
+                  Add to cart
+                </button>
               </div>
             </div>
           </div>
@@ -246,7 +283,7 @@
               <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
             </div>
 
-            <img src="images/headphone.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
+            <img src="/images/Headphones/3.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
             <div class="card-body">
               <h5 class="card-title fw-semibold">Title</h5>
               <p class="text-muted small">Desctiption</p>
@@ -254,7 +291,14 @@
             <div class="card-footer bg-white border-0">
               <div class="d-flex justify-content-between align-items-center">
                 <span class="fw-bold">$35.00</span>
-                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold">Add to cart</button>
+                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold" onclick="addToCart({
+            id: 101, 
+            name: 'Wireless Headphones', 
+            price: 799.99, 
+            image: 'images/headphones.jpg'
+        })">
+                  Add to cart
+                </button>
               </div>
             </div>
           </div>
@@ -266,7 +310,7 @@
               <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
             </div>
 
-            <img src="images/headphone.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
+            <img src="/images/Headphones/4.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
             <div class="card-body">
               <h5 class="card-title fw-semibold">Title</h5>
               <p class="text-muted small">Desctiption</p>
@@ -274,7 +318,14 @@
             <div class="card-footer bg-white border-0">
               <div class="d-flex justify-content-between align-items-center">
                 <span class="fw-bold">$35.00</span>
-                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold">Add to cart</button>
+                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold" onclick="addToCart({
+            id: 101, 
+            name: 'Wireless Headphones', 
+            price: 799.99, 
+            image: 'images/headphones.jpg'
+        })">
+                  Add to cart
+                </button>
               </div>
             </div>
           </div>
@@ -286,7 +337,7 @@
               <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
             </div>
 
-            <img src="images/headphone.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
+            <img src="/images/Headphones/5.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
             <div class="card-body">
               <h5 class="card-title fw-semibold">Title</h5>
               <p class="text-muted small">Desctiption</p>
@@ -294,7 +345,14 @@
             <div class="card-footer bg-white border-0">
               <div class="d-flex justify-content-between align-items-center">
                 <span class="fw-bold">$35.00</span>
-                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold">Add to cart</button>
+                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold" onclick="addToCart({
+            id: 101, 
+            name: 'Wireless Headphones', 
+            price: 799.99, 
+            image: 'images/headphones.jpg'
+        })">
+                  Add to cart
+                </button>
               </div>
             </div>
           </div>
@@ -306,7 +364,7 @@
               <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
             </div>
 
-            <img src="images/headphone.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
+            <img src="/images/Headphones/6.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
             <div class="card-body">
               <h5 class="card-title fw-semibold">Title</h5>
               <p class="text-muted small">Desctiption</p>
@@ -314,7 +372,14 @@
             <div class="card-footer bg-white border-0">
               <div class="d-flex justify-content-between align-items-center">
                 <span class="fw-bold">$35.00</span>
-                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold">Add to cart</button>
+                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold" onclick="addToCart({
+            id: 101, 
+            name: 'Wireless Headphones', 
+            price: 799.99, 
+            image: '/images/Headphones/6.png'
+        })">
+                  Add to cart
+                </button>
               </div>
             </div>
           </div>
@@ -326,7 +391,7 @@
               <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
             </div>
 
-            <img src="images/headphone.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
+            <img src="/images/Headphones/7.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
             <div class="card-body">
               <h5 class="card-title fw-semibold">Title</h5>
               <p class="text-muted small">Desctiption</p>
@@ -334,7 +399,14 @@
             <div class="card-footer bg-white border-0">
               <div class="d-flex justify-content-between align-items-center">
                 <span class="fw-bold">$35.00</span>
-                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold">Add to cart</button>
+                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold" onclick="addToCart({
+            id: 101, 
+            name: 'Wireless Headphones', 
+            price: 799.99, 
+            image: 'images/headphones.jpg'
+        })">
+                  Add to cart
+                </button>
               </div>
             </div>
           </div>
@@ -351,7 +423,7 @@
             <div>
               <div class="offer-title">New Accessories Collection</div>
               <div class="discount-text">50 <span class="fs-4">%</span> OFF</div>
-              <a href="#" class="btn btn-light offer-btn fs-5">View Offer <i
+              <a href="catalog.html" class="btn btn-light offer-btn fs-5">View Offer <i
                   class="fa-solid fa-arrow-right ps-2"></i></a>
             </div>
           </div>
@@ -363,20 +435,20 @@
               <div>
                 <div class="offer-title">New Phones Collection</div>
                 <div class="discount-text">10 <span class="fs-4">%</span> OFF</div>
-                <a href="#" class="btn btn-light offer-btn fs-5">View Offer <i
+                <a href="catalog.html" class="btn btn-light offer-btn fs-5">View Offer <i
                     class="fa-solid fa-arrow-right ps-2"></i></a>
               </div>
-              <img src="images/phone.png" alt="Shoes" class="img-fluid img-small">
+              <img src="images/Mobiles/6.png" alt="Shoes" class="img-fluid img-small">
             </div>
 
             <div class="offer-box d-flex justify-content-between align-items-center bg-warning bg-opacity-25">
               <div>
                 <div class="offer-title">New HeadPhones Collection</div>
                 <div class="discount-text">12 <span class="fs-4">%</span> OFF</div>
-                <a href="#" class="btn btn-light offer-btn fs-5">View Offer <i
+                <a href="catalog.html" class="btn btn-light offer-btn fs-5">View Offer <i
                     class="fa-solid fa-arrow-right ps-2"></i></a>
               </div>
-              <img src="images/headphone.png" alt="Hat" class="img-fluid img-small">
+              <img src="images/Headphones/6.png" alt="Hat" class="img-fluid img-small">
             </div>
           </div>
         </div>
@@ -458,7 +530,8 @@
     </div>
   </div>
   <!------------------------------------ Register/Login Start ------------------------------------>
-  <!------------------------------------ footer End ------------------------------------>
+  <!-- Footer -->
+
   <div id="footer"></div>
 
   <script>
@@ -468,8 +541,6 @@
         document.getElementById('footer').innerHTML = data;
       });
   </script>
-  <!------------------------------------ footer End ------------------------------------>
-
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script type="module" src="js/home.js"></script>
