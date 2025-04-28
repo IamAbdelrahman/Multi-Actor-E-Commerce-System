@@ -1,74 +1,103 @@
-<!-- NavBar -->
+<!-- NavBar Start -->
+<nav
+  class="navbar navbar-expand-lg navbar-dark p-3"
+  style="background-color: #202529"
+>
+  <div class="container">
+    <a class="navbar-brand fw-bold text-light fs-4" href="home.html">
+      <i class="bi bi-lightning-fill"></i> Electronics Store
+    </a>
 
-<!------------------------------------ NavBar Start ------------------------------------>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#mainNavbar"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-<nav class="navbar navbar-expand-lg navbar-dark  p-3" style="background-color: #202529;">
-    <div class="container">
-        <a class="navbar-brand fw-bold text-light fs-4" href="home.html">
-            <i class="bi bi-lightning-fill"></i> Electronics Store
-        </a>
+    <div class="collapse navbar-collapse" id="mainNavbar">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+        <li class="nav-item px-2">
+          <a
+            class="nav-link active border-bottom border-warning special-hover"
+            href="home.html"
+            >HOME</a
+          >
+        </li>
+        <li class="nav-item px-2">
+          <a class="nav-link text-light special-hover" href="about.html"
+            >ABOUT</a
+          >
+        </li>
+        <li class="nav-item px-2">
+          <a class="nav-link text-light special-hover" href="catalog.html"
+            >SHOP</a
+          >
+        </li>
+        <li class="nav-item dropdown px-2">
+          <a
+            class="nav-link dropdown-toggle text-light special-hover"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+          >
+            CATEGORIES
+          </a>
+          <ul class="dropdown-menu bg-dark">
+            <li><a class="dropdown-item text-light" href="#">Mobiles</a></li>
+            <li><a class="dropdown-item text-light" href="#">Laptops</a></li>
+            <li><a class="dropdown-item text-light" href="#">HeadPhones</a></li>
+            <li><a class="dropdown-item text-light" href="#">Tablets</a></li>
+            <li>
+              <a class="dropdown-item text-light" href="#">Accessories</a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item px-2">
+          <a class="nav-link text-light special-hover" href="contact.html"
+            >CONTACT</a
+          >
+        </li>
+      </ul>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+      <div class="d-flex gap-4 fs-5 icons">
+        <a id="Register-Icon" class="text-light"
+          ><i class="bi bi-person-circle"></i
+        ></a>
 
-        <div class="collapse navbar-collapse" id="mainNavbar">
-            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                <li class="nav-item px-2">
-                    <a class="nav-link active border-bottom border-warning special-hover" href="home.html">HOME</a>
-                </li>
-                <li class="nav-item px-2">
-                    <a class="nav-link text-light special-hover" href="about.html">ABOUT</a>
-                </li>
-                <li class="nav-item px-2">
-                    <a class="nav-link text-light special-hover" href="catalog.html">SHOP</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-light special-hover" href="#" role="button"
-                        data-bs-toggle="dropdown">
-                        CATEGORIES
-                    </a>
-                    <ul class="dropdown-menu bg-secondary">
-                        <li>
-                            <a class="dropdown-item text-light" href="#">Mobiles</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item text-light" href="#">Laptops</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item text-light" href="#">HeadPhones</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item text-light" href="#">Tablets</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item text-light" href="#">Accessories</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item px-2">
-                    <a class="nav-link text-light special-hover" href="contact.html">CONTACT</a>
-                </li>
-            </ul>
-
-            <div class="d-flex gap-4 fs-5 icons">
-                <a id="Register-Icon" class="text-light"><i class="bi bi-person-circle"></i></a>
-                <a href="#" class="text-light" ><i class="bi bi-cart"onclick="toggleCart()"></i></a>
-                <a href="#" class="text-light heart-toggle"><i class="bi bi-heart"></i></a>
-            </div>
-            <div id="userDropdown" class="dropdown d-none">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    Customer Menu
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="account.html">Profile</a></li>
-                    <li><a class="dropdown-item" href="#" id="logout">Logout</a></li>
-                </ul>
-            </div>
+        <!-- Customer Menu (Fixed) -->
+        <div id="userDropdown" class="dropdown d-none">
+          <button
+            class="btn text-light border border-warning rounded-pill px-3"
+            type="button"
+            id="dropdownMenuButton"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Customer Menu
+          </button>
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="dropdownMenuButton"
+          >
+            <li><a class="dropdown-item" href="account.html">Profile</a></li>
+            <li><a class="dropdown-item" href="#" id="logout">Logout</a></li>
+          </ul>
         </div>
+
+        <a href="#" class="text-light" onclick="toggleCart()"
+          ><i class="bi bi-cart"></i
+        ></a>
+        <a href="#" class="text-light heart-toggle"
+          ><i class="bi bi-heart"></i
+        ></a>
+      </div>
     </div>
+  </div>
 </nav>
+
 <!-- -------------------------------------Cart Slider------------------------------- -->
 <div id="overlay"></div>
 <div id="cartSlider">

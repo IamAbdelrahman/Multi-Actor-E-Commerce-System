@@ -32,6 +32,17 @@ a,.cursor-pointer{
 #checkout:hover{
   color: white;
 }
+ #userDropdown .dropdown-menu,.dropdown-item {
+  background-color: #202529 !important; 
+  border: none !important;
+}
+#userDropdown .dropdown-menu .dropdown-item {
+  color: #ffffff !important; 
+}
+#userDropdown .dropdown-menu .dropdown-item:hover {
+  color: #ffc107 !important; 
+  background-color: transparent !important; 
+}
 /* ---------------------------------- NavBar End ---------------------------------- */
 /************************************* CART slider*********************** */
 #overlay {
