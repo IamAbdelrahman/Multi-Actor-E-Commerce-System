@@ -1,6 +1,8 @@
 import StorageManager from './StorageModule.js'
 import Validate from './ValidationModule.js';
 
+/*- USER MANAGER
+/* -------------------------------------------------------------------------------- */
 class User {
   constructor(id, name, email, password, role, address, phone) {
     this.ID = id;
@@ -164,8 +166,8 @@ export default class UserManager {
       alert("Password is already registered. Please enter a different password.");
       return false;
     }
-
-    const user = new User(id, name, email, password, role);
+    const _id = users.length > 0 ? users[users.length - 1].id + 1 : 1;
+    const user = new User(_id, name, email, password, role);
 
     //After check empty i make to check validation 
     if (!user.Name || !user.Email || !user.Pass || !user.Role) {
@@ -206,71 +208,148 @@ export default class UserManager {
   }
 }
 
+/*- CUSTOMER MANAGER
+/* -------------------------------------------------------------------------------- */
 class Customer extends User {
   constructor(id, name, email, password, address, phone) {
-      super(id, name, email, password, address, phone);
-      this.date = (new Date()).getDate() + '/' + ((new Date()).getMonth() + 1) + '/' + (new Date()).getFullYear();
-      this.blocked = false;
-      this.role = 'customer';
+    super(id, name, email, password, address, phone);
+    this.date = (new Date()).getDate() + '/' + ((new Date()).getMonth() + 1) + '/' + (new Date()).getFullYear();
+    this.blocked = false;
+    this.role = 'customer';
   }
 }
 export class CustomerManager extends UserManager {
-    static GetAllCustomers() {
-      const users = StorageManager.LoadSection("users") || [];
-      return users.filter(user => user.role === "customer");
-    }
-    static GetById(id) {
-        const customers = Customer.getAll();
-        return customers.find(customer => customer.id === id);
-    }
-    static CreateCustomer(id, name, email, password, address, phone) {
-        const preCustomer = Customer.getAll();
-        const id = preCustomer.length > 0 ? preCustomer[preCustomer.length - 1].id + 1 : 1;
-        const customer = new Customer(id, name, email, password, address, phone);
-        preCustomer.push(customer);
-        StorageManager.save('users', preCustomer);
-        return customer;
-    }
+  static GetAllCustomers() {
+    const users = StorageManager.LoadSection("users") || [];
+    return users.filter(user => user.role === "customer");
+  }
+  static GetById(id) {
+    const customers = Customer.GetAllCustomers();
+    return customers.find(customer => customer.id === id);
+  }
+  static CreateCustomer(id, name, email, password, address, phone) {
+    const preCustomer = Customer.GetAllCustomers();
+    const _id = preCustomer.length > 0 ? preCustomer[preCustomer.length - 1].id + 1 : 1;
+    const customer = new Customer(_id, name, email, password, address, phone);
+    preCustomer.push(customer);
+    StorageManager.SaveSection('users', preCustomer);
+    return customer;
+  }
 
-    static UpdateCustomer(customer) {
-        let customers = Customer.getAll();
-        //replace the existing customer with same id in the list
-        customers = customers.map(c => c.id === customer.id ? customer : c);
-        StorageManager.save('customers', customers);
-        return customer;
-    }
+  static UpdateCustomer(customer) {
+    let customers = Customer.GetAllCustomers();
+    customers = customers.map(c => c.id === customer.id ? customer : c);
+    StorageManager.SaveSection('users', customers);
+    return customer;
+  }
 
-    static delete(id) {
-        let customers = Customer.getAll();
-        //keeps all customers id except whoes provided as they are deleted
-        customers = customers.filter(customer => customer.id !== id);
-        StorageManager.save('customers', customers);
-        return true;
-    }
-    static block(id) {
-        const customer = Customer.getById(id);
-        customer.blocked = true;
-        Customer.update(customer);
-        return true;
-    }
-    static unblock(id) {
-        const customer = Customer.getById(id);
-        customer.blocked = false;
-        Customer.update(customer);
-        return true;
-    }
-    static getBlockedCustomer() {
-        const customers = Customer.getAll();
-        return customers.filter(customer => customer.blocked);
-    }
-    static getUnblockedCustomer() {
-        const customers = Customer.getAll();
-        return customers.filter(customer => !customer.blocked);
-    }
-    static totalCustomersNumber() {
-        const customers = Customer.getAll();
-        return customers.length;
-    }
+  static DeleteCustomer(id) {
+    let customers = Customer.GetAllCustomers();
+    customers = customers.filter(customer => customer.id !== id);
+    StorageManager.SaveSection('customers', customers);
+    return true;
+  }
 
+  static BlockCustomer(id) {
+    const customer = Customer.GetById(id);
+    customer.blocked = true;
+    Customer.UpdateCustomer(customer);
+    return true;
+  }
+
+  static UnblockCustomer(id) {
+    const customer = Customer.GetById(id);
+    customer.blocked = false;
+    Customer.UpdateCustomer(customer);
+    return true;
+  }
+
+  static GetBlockedCustomer() {
+    const customers = Customer.GetAllCustomers();
+    return customers.filter(customer => customer.blocked);
+  }
+
+  static GetUnblockedCustomer() {
+    const customers = Customer.GetAllCustomers();
+    return customers.filter(customer => !customer.blocked);
+  }
+
+  static GetCustomerCounts() {
+    const customers = Customer.GetAllCustomers();
+    return customers.length;
+  }
 }
 
+/*- SELLER MANAGER
+/* -------------------------------------------------------------------------------- */
+class Seller extends User {
+  constructor(id, name, email, password, address, phone) {
+    super(id, name, email, password, address, phone);
+    this.date = (new Date()).getDate() + '/' + ((new Date()).getMonth() + 1) + '/' + (new Date()).getFullYear();
+    this.blocked = false;
+    this.role = 'seller';
+  }
+}
+export class SellerManager extends UserManager {
+  static GetAllSellers() {
+    const users = StorageManager.LoadSection("users") || [];
+    return users.filter(user => user.role === "seller");
+  }
+
+  static GetById(id) {
+    const sellers = Seller.GetAllSellers();
+    return sellers.find(seller => seller.id === id);
+  }
+
+  static CreateSeller(id, name, email, password, address, phone) {
+    const preSeller = Seller.GetAllSellers();
+    const _id = preSeller.length > 0 ? preSeller[preSeller.length - 1].id + 1 : 1;
+    const seller = new Seller(_id, name, email, password, address, phone);
+    preSeller.push(seller);
+    StorageManager.SaveSection('users', preSeller);
+    return seller;
+  }
+
+  static UpdateSeller(seller) {
+    let sellers = Seller.GetAllSellers();
+    sellers = sellers.map(s => s.id === seller.id ? seller : s);
+    StorageManager.SaveSection('users', sellers);
+    return seller;
+  }
+
+  static DeleteSeller(id) {
+    let sellers = Seller.GetAllSellers();
+    sellers = sellers.filter(seller => seller.id !== id);
+    StorageManager.SaveSection('sellers', sellers);
+    return true;
+  }
+
+  static BlockSeller(id) {
+    const seller = Seller.GetById(id);
+    seller.blocked = true;
+    Seller.UpdateSeller(seller);
+    return true;
+  }
+
+  static ActivateSeller(id) {
+    const seller = Seller.GetById(id);
+    seller.blocked = false;
+    Seller.UpdateSeller(seller);
+    return true;
+  }
+
+  static GetBlockedSeller() {
+    const sellers = Seller.GetAllSellers();
+    return sellers.filter(seller => seller.blocked);
+  }
+
+  static GetActivatedSeller() {
+    const sellers = Seller.GetAllSellers();
+    return sellers.filter(seller => !seller.blocked);
+  }
+
+  static GetSellerCounts() {
+    const sellers = Seller.GetAllSellers();
+    return sellers.length;
+  }
+}
