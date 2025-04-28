@@ -40,7 +40,10 @@ a,.cursor-pointer{
   z-index: 1000;
   display: none;
 }
-
+.btn-outline-secondary:hover{
+  background-color: #ffc107;
+  border-color: #ffc107;
+}
 #overlay.show {
   display: block;
 }
@@ -92,9 +95,10 @@ a,.cursor-pointer{
 .btn-yellow:hover {
   background-color: #e0a800;
   border-color: #d39e00;
-  color: #212529;
 }
-
+a:hover{
+  color: #fff;
+}
 .navbar {
   z-index: 1000;
 }
@@ -181,7 +185,7 @@ a,.cursor-pointer{
   font-weight: 500;
 }
 .toys-bg {
-  background-image: url(../images/accessories.png);
+  background-image: url(../images/Others/accessories.png);
   background-size:cover;
   background-repeat: no-repeat;
   color: white;
