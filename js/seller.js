@@ -42,3 +42,4 @@ new Chart(document.getElementById("bar-chart-grouped"), {
     }
   }
 });
+
