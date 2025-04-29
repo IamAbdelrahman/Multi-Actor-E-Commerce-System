@@ -56,10 +56,10 @@ const password = document.getElementById("password");
 eyeIcon.onclick = () => {
     if (password.type == "password") {
         password.type = "text";
-        eyeIcon.src = "./images/eye-open.png";
+        eyeIcon.src = "./images/Others/eye-open.png";
     } else {
         password.type = "password";
-        eyeIcon.src = "./images/eye-close.png";
+        eyeIcon.src = "./images/Others/eye-close.png";
     }
 };
 
@@ -68,10 +68,10 @@ const loginPassword = document.getElementById("loginPassword");
 loginEyeIcon.onclick = () => {
     if (loginPassword.type == "password") {
         loginPassword.type = "text";
-        loginEyeIcon.src = "./images/eye-open.png";
+        loginEyeIcon.src = "./images/Others/eye-open.png";
     } else {
         loginPassword.type = "password";
-        loginEyeIcon.src = "./images/eye-close.png";
+        loginEyeIcon.src = "./images/Others/eye-close.png";
     }
 };
 
@@ -102,6 +102,7 @@ window.Login = function (event) {
     const LoginUser = users.find(user => user.email === email && user.password === password);
 
     if (LoginUser) {
+        //repair
         // alert(Welcome back, ${LoginUser.name}! You are logged in as ${LoginUser.role}.);
 
         switch (LoginUser.role) {
