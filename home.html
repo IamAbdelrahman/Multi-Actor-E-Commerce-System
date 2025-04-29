@@ -19,41 +19,41 @@
 
   <!------------------------------------ NavBar Start ------------------------------------>
   <div id="navBar"></div>
-    <script>
-        fetch('navBar.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('navBar').innerHTML = data;
-            });
-    </script>
-    <!-- -------------------------------------Cart Slider------------------------------- -->
-<div id="overlay"></div>
-<div id="cartSlider">
+  <script>
+    fetch('navBar.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('navBar').innerHTML = data;
+      });
+  </script>
+  <!-- -------------------------------------Cart Slider------------------------------- -->
+  <div id="overlay"></div>
+  <div id="cartSlider">
     <div class="d-flex flex-column h-100">
-        <div class="cart-header d-flex justify-content-between align-items-center">
-            <h4 class="mb-0"><i class="bi bi-cart3"></i> Your Cart</h4>
-            <button class="btn btn-close" onclick="toggleCart()"></button>
+      <div class="cart-header d-flex justify-content-between align-items-center">
+        <h4 class="mb-0"><i class="bi bi-cart3"></i> Your Cart</h4>
+        <button class="btn btn-close" onclick="toggleCart()"></button>
+      </div>
+      <div class="cart-body flex-grow-1 overflow-auto">
+        <div id="cartItems"></div>
+      </div>
+      <div class="cart-footer mt-auto">
+        <div class="d-flex justify-content-between mb-3">
+          <h5>Total:</h5>
+          <h5 id="cartTotal">$0.00</h5>
         </div>
-        <div class="cart-body flex-grow-1 overflow-auto">
-            <div id="cartItems"></div>
-        </div>
-        <div class="cart-footer mt-auto">
-            <div class="d-flex justify-content-between mb-3">
-                <h5>Total:</h5>
-                <h5 id="cartTotal">$0.00</h5>
-            </div>
-            <a href="checkout.html">
-                <button class="btn btn-yellow w-100 rounded-pill mb-2">
-                    <i class="bi bi-credit-card"></i> Checkout 
-                    </button>
-            </a>
-            <button class="btn btn-outline-secondary w-100 rounded-pill" onclick="toggleCart()">
-                <i class="bi bi-arrow-left"></i> Continue Shopping
-            </button>
-        </div>
+        <a href="checkout.html">
+          <button class="btn btn-yellow w-100 rounded-pill mb-2">
+            <i class="bi bi-credit-card"></i> Checkout
+          </button>
+        </a>
+        <button class="btn btn-outline-secondary w-100 rounded-pill" onclick="toggleCart()">
+          <i class="bi bi-arrow-left"></i> Continue Shopping
+        </button>
+      </div>
     </div>
-</div>
-<!---------------------------------- Cart Slider End----------------------------->
+  </div>
+  <!---------------------------------- Cart Slider End----------------------------->
 
   <!------------------------------------ NavBar End ------------------------------------>
 
@@ -236,7 +236,8 @@
             image: 'images/headphones.jpg'
         })">
                   Add to cart
-                </button> </div>
+                </button>
+              </div>
 
             </div>
           </div>
@@ -263,7 +264,8 @@
             image: 'images/headphones.jpg'
         })">
                   Add to cart
-                </button> </div>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -289,7 +291,8 @@
             image: 'images/headphones.jpg'
         })">
                   Add to cart
-                </button> </div>
+                </button>
+              </div>
 
             </div>
           </div>
@@ -316,7 +319,8 @@
             image: 'images/headphones.jpg'
         })">
                   Add to cart
-                </button> </div>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -342,7 +346,8 @@
             image: 'images/headphones.jpg'
         })">
                   Add to cart
-                </button> </div>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -368,7 +373,8 @@
             image: 'images/headphones.jpg'
         })">
                   Add to cart
-                </button> </div>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -394,7 +400,8 @@
             image: 'images/headphones.jpg'
         })">
                   Add to cart
-                </button> </div>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -420,7 +427,8 @@
             image: 'images/headphones.jpg'
         })">
                   Add to cart
-                </button> </div>
+                </button>
+              </div>
             </div>
           </div>
         </div>
