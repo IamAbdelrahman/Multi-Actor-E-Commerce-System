@@ -231,3 +231,8 @@ a,.cursor-pointer{
   transform: scale(1.03);
 }
 /* ---------------------------------- Products End ---------------------------------- */
+@media (min-width: 768px) {
+  .w-lg-75 {
+    width: 70% !important;
+  }
+}
