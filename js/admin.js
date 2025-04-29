@@ -97,7 +97,60 @@ window.addEventListener('load', () => {
     `+${dashboardData.ordersChange}% Since Last Month`;
 });
 
+function ShowHeaderUser() {
+  var head = document.querySelector("thead");
+  var tr = document.createElement("tr");
+  var th = document.createElement("th");
+  th.textContent = "ID";
+  tr.appendChild(th);
+  var th = document.createElement("th");
+  th.textContent = "Name";
+  tr.appendChild(th);
+  var th = document.createElement("th");
+  th.textContent = "Email";
+  tr.appendChild(th);
+  var th = document.createElement("th");
+  th.textContent = "Password";
+  tr.appendChild(th);
+  var th = document.createElement("th");
+  th.textContent = "Role";
+  tr.appendChild(th);
+  var th = document.createElement("th");
+  th.textContent = "City";
+  tr.appendChild(th);
+  var th = document.createElement("th");
+  th.textContent = "Phone";
+  tr.appendChild(th);
+
+  head.appendChild(tr);
+}
+
+function ShowHeaderProduct() {
+  var head = document.getElementById("thead");
+  var tr = document.createElement("tr");
+
+  var th = document.createElement("th");
+  th.textContent = "ID";
+  tr.appendChild(th);
+
+  var th = document.createElement("th");
+  th.textContent = "Name";
+  tr.appendChild(th);
+
+  var th = document.createElement("th");
+  th.textContent = "Price";
+  tr.appendChild(th);
+
+  var th = document.createElement("th");
+  th.textContent = "Stock";
+  tr.appendChild(th);
+
+  head.appendChild(tr);
+}
+
+
 function ShowUsers() {
+  ShowHeaderUser();
   const usersList = StorageManager.LoadSection("users") || [];
   var body = document.querySelector("tbody");
   for (let i = 0; i < usersList.length; i++) {
@@ -107,6 +160,7 @@ function ShowUsers() {
 }
 
 function ShowProducts() {
+  ShowHeaderProduct();
   const productList = StorageManager.LoadSection("products") || [];
   var body = document.querySelector("tbody");
   for (let i = 0; i < productList.length; i++) {
