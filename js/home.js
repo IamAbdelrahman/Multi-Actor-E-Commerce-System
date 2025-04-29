@@ -102,6 +102,7 @@ window.Login = function (event) {
     const LoginUser = users.find(user => user.email === email && user.password === password);
 
     if (LoginUser) {
+        //repair
         // alert(Welcome back, ${LoginUser.name}! You are logged in as ${LoginUser.role}.);
 
         switch (LoginUser.role) {
