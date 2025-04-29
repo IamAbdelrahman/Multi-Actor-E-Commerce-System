@@ -146,12 +146,12 @@ export class ProductManager{
     StorageManager.SaveSection("products", products);
   }
 
-  static GetAllProducts() {
-    return StorageManager.Load("products") || [];
-  }
+  // static GetAllProducts() {
+  //   return StorageManager.Load("products") || [];
+  // }
 
   static GetProductById(id) {
-    const products = StorageManager.Load("products") || [];
+    const products = StorageManager.LoadSection("products") || [];
     return products.find(p => p.id === id);
   }
 
