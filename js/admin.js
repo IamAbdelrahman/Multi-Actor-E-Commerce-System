@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (C) 2024 by Abdelrahman Kamal - Admin Panel Page
+ * Copyright (C) 2025 by Abdelrahman Kamal - Admin Panel Page
  *****************************************************************************/
 
 /*****************************************************************************
@@ -126,7 +126,7 @@ function ShowHeaderUser() {
 }
 
 function ShowHeaderProduct() {
-  var head = document.getElementById("thead");
+  var head = document.querySelector("thead");
   var tr = document.createElement("tr");
 
   var th = document.createElement("th");
