@@ -1,8 +1,10 @@
+
+
 // ------------------------------slider Start------------------------------
-var myCarousel = new bootstrap.Carousel(document.querySelector('#myCarousel'), {
-    interval: 3000, // 3 seconds
-    ride: 'carousel'
-});
+// var myCarousel = new bootstrap.Carousel(document.querySelector('#myCarousel'), {
+//     interval: 3000, // 3 seconds
+//     ride: 'carousel'
+// });
 
 // ------------------------------slider End------------------------------
 
@@ -107,21 +109,17 @@ window.Login = function (event) {
 
         switch (LoginUser.role) {
             case "customer":
-                sessionStorage.setItem('userLoggedIn', true);
-
-                // Hide the Register-Icon and show the user dropdown
+                sessionStorage.setItem('userLoggedIn', JSON.stringify(LoginUser));
                 document.getElementById("Register-Icon").classList.add("d-none");
-
-                // If there's a user dropdown, make it visible
                 const userDropdown = document.getElementById("userDropdown");
                 if (userDropdown) {
                     userDropdown.classList.remove("d-none");
                 }
+
                 const modal = document.getElementById("registerModal");
                 if (modal) {
                     modal.classList.add("d-none");
                 }
-
                 document.getElementById("homeContent");
                 break;
             case "admin":
@@ -138,3 +136,21 @@ window.Login = function (event) {
     }
 };
 // ------------------------------Register/Login End------------------------------
+
+window.addEventListener('DOMContentLoaded', () => {
+    const loggedInUser = JSON.parse(sessionStorage.getItem('userLoggedIn'));
+
+    if (loggedInUser && loggedInUser.role === 'customer') {
+        document.getElementById("Register-Icon")?.classList.add("d-none");
+        document.getElementById("userDropdown")?.classList.remove("d-none");
+    } else {
+        document.getElementById("Register-Icon")?.classList.remove("d-none");
+        document.getElementById("userDropdown")?.classList.add("d-none");
+    }
+});
+
+
+document.getElementById("logout")?.addEventListener("click", () => {
+    sessionStorage.removeItem("userLoggedIn");
+    location.reload();
+});

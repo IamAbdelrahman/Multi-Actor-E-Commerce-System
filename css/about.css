@@ -1,0 +1,54 @@
+.testimonial-section {
+    background: url('your-background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    padding: 100px 0;
+    color: #fff;
+  }
+
+  .carousel-item {
+    text-align: center;
+    color: #000;
+  }
+
+  .testimonial-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+  }
+
+  .carousel-indicators [data-bs-target] {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background-color: #ccc;
+  }
+
+  .carousel-indicators .active {
+    background-color: #fcb900;
+  }
+
+  .testimonial-name {
+    font-weight: 700;
+  }
+
+  .testimonial-role {
+    color: #666;
+  }
+  /* ---------------------------------- About Start ---------------------------------- */
+@media (min-width: 768px) {
+    .w-lg-75 {
+      width: 70% !important;
+    }
+  }
+  .Description{
+    background-image: url('../images/Others/aboutBackground.jpg');
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+  .Description .layer{
+    background-color: rgba(255, 255, 255, 0.251);
+  }
+  /* ---------------------------------- About End ---------------------------------- */

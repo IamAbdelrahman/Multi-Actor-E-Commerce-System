@@ -26,11 +26,10 @@ export default class Validate {
 
   static isAddressValid(address) {
     if (!address || typeof address !== 'object') return false;
-    const { street, city, state, zip } = address;
+    const { city, street, zip } = address;
     return (
-      typeof street === 'string' &&
       typeof city === 'string' &&
-      typeof state === 'string' &&
+      typeof street === 'string' &&
       /^\d{5}$/.test(zip)
     );
   }
