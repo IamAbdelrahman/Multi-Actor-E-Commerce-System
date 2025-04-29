@@ -18,7 +18,18 @@
 <body>
 
   <!------------------------------------ NavBar Start ------------------------------------>
-  <div id="navBar"></div>
+  <!-- <div id="navBar"></div>
+    <script>
+        fetch('navBar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navBar').innerHTML = data;
+            });
+    </script> -->
+
+    <!-- NavBar -->
+
+    <div id="navBar"></div>
     <script>
         fetch('navBar.html')
             .then(response => response.text())
@@ -26,6 +37,8 @@
                 document.getElementById('navBar').innerHTML = data;
             });
     </script>
+
+<!------------------------------------ NavBar End ------------------------------------>
     <!-- -------------------------------------Cart Slider------------------------------- -->
 <div id="overlay"></div>
 <div id="cartSlider">
