@@ -229,7 +229,7 @@ function updateQuantity(index, change) {
 }
 
 // Initialize cart count on page load
-updateCartCount();//////////////////////////////////////////////////////
+// updateCartCount();//////////////////////////////////////////////////////
 
 // Add event listener for cart icon
 document.addEventListener('DOMContentLoaded', function () {

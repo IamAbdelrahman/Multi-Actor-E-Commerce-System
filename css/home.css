@@ -4,6 +4,7 @@ body {
 a,.cursor-pointer{
   cursor: pointer;
 }
+
 /* ---------------------------------- NavBar start ---------------------------------- */
 .bi-lightning-fill {
     color: #ffc107;
@@ -27,6 +28,20 @@ a,.cursor-pointer{
 }
 .navbar .dropdown-menu .dropdown-item {
   border: none !important;
+}
+#checkout:hover{
+  color: white;
+}
+ #userDropdown .dropdown-menu,.dropdown-item {
+  background-color: #202529 !important; 
+  border: none !important;
+}
+#userDropdown .dropdown-menu .dropdown-item {
+  color: #ffffff !important; 
+}
+#userDropdown .dropdown-menu .dropdown-item:hover {
+  color: #ffc107 !important; 
+  background-color: transparent !important; 
 }
 /* ---------------------------------- NavBar End ---------------------------------- */
 /************************************* CART slider*********************** */
@@ -96,9 +111,7 @@ a,.cursor-pointer{
   background-color: #e0a800;
   border-color: #d39e00;
 }
-a:hover{
-  color: #fff;
-}
+
 .navbar {
   z-index: 1000;
 }
