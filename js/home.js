@@ -1,10 +1,10 @@
 
 
 // ------------------------------slider Start------------------------------
-var myCarousel = new bootstrap.Carousel(document.querySelector('#myCarousel'), {
-    interval: 3000, // 3 seconds
-    ride: 'carousel'
-});
+// var myCarousel = new bootstrap.Carousel(document.querySelector('#myCarousel'), {
+//     interval: 3000, // 3 seconds
+//     ride: 'carousel'
+// });
 
 // ------------------------------slider End------------------------------
 
@@ -31,7 +31,6 @@ if (!adminExists) {
     console.log("Static admin added.");
 }
 
-
 // Show and hide modal
 const modal = document.getElementById("registerModal");
 const icon = document.getElementById("Register-Icon");
@@ -46,7 +45,6 @@ document.getElementById('toggleToSignUp').onclick = function () {
     document.getElementById('loginForm').style.display = 'none';
     document.getElementById('signUpForm').style.display = 'block';
 };
-
 
 icon.onclick = () => modal.classList.remove('d-none');
 closeBtn.onclick = () => modal.classList.add('d-none');
