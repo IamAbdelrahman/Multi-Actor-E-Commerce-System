@@ -233,7 +233,7 @@ function updateQuantity(index, change) {
 
 // Add event listener for cart icon
 document.addEventListener('DOMContentLoaded', function () {
-  const cartIcon = document.querySelector('.bi-cart');
+  const cartIcon = document.getElementById('.bi-cart');
   if (cartIcon) {
     cartIcon.addEventListener('click', function (e) {
       e.preventDefault();
