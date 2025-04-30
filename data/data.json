@@ -324,7 +324,7 @@
       "price": 799.99,
       "stock": 15,
       "category": "Headphones",
-      "image": "/images/Headphones/1.jpg"
+      "image": "images/HeadPhones/1.png"
     },
     {
       "id": 102,
@@ -333,7 +333,7 @@
       "price": 299.50,
       "stock": 30,
       "category": "Headphones",
-      "image": "images/earbuds.jpg"
+      "image": "images/HeadPhones/2.png"
     },
     {
       "id": 201,
@@ -345,7 +345,7 @@
       "image": "images/smartphone.jpg"
     },
     {
-      "id": 202,
+      "id": 202,      
       "name": "Budget Smartphone (64GB)",
       "description": "Affordable 6.2-inch HD+ phone with long battery life.",
       "price": 499.99,
@@ -354,6 +354,14 @@
       "image": "images/budget_phone.jpg"
     },
     {
+      "id": 203,
+      "name": "Samsung Galaxy S23 Ultra (256GB)",
+      "description": "The Samsung Galaxy S23 Ultra features a stunning 6.8-inch Dynamic AMOLED display, 200MP camera system, and the fastest Snapdragon processor yet. With built-in S Pen and all-day battery life, it's the ultimate smartphone for power users.",
+      "price":  1199.99,
+      "stock": 35,
+      "category": "Mobiles",
+      "image": "images/Mobiles/s233.jpg"
+    },{
       "id": 301,
       "name": "Ultra-Thin Laptop (13-inch)",
       "description": "Lightweight laptop with 16GB RAM and 512GB SSD.",

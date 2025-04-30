@@ -23,6 +23,11 @@
 // -----------------------------------------------------------------------*/
 // import StorageManager from '../modules/StorageModule.js'
 // import UserManager from '../modules/UserModule.js'
+/*- INCLUDES
+-----------------------------------------------------------------------*/
+import StorageManager from '../modules/StorageModule.js'
+import UserManager from '../modules/UserModule.js'
+import ProductManager from '../modules/ProductModule.js'
 
 // /*- SIDEBAR TOGGLER
 // -----------------------------------------------------------------------*/
@@ -111,3 +116,38 @@
 //   toggler.classList.toggle("bxs-chevrons-right");
 //   toggler.classList.toggle("bxs-chevrons-left");
 //   });
+  const toggleBtn = document.querySelector(".toggle-btn");
+  const toggler = document.querySelector("#icon");
+  toggleBtn.addEventListener("click", function () {
+  document.querySelector("#sidebar").classList.toggle("expand");
+  toggler.classList.toggle("bxs-chevrons-right");
+  toggler.classList.toggle("bxs-chevrons-left");
+  });
+
+  const customers = document.getElementById("customers");
+  customers.addEventListener('click', () => {
+    const users = StorageManager.LoadSection("users") || [];
+    const customerCount = users.filter(user => user.role === "customer").length;
+    alert(`Number of customers: ${customerCount}`);
+  });
+
+});
+
+  // const profile = document.getElementById("profile");
+  // profile.addEventListener('click', () => showProfile());
+  // const accounts = document.getElementById("accounts");
+  // accounts.addEventListener('click', () => ShowUsers());
+
+// Delete user - View users - Reset password  - view products - add product - delete product - view orders - delete order 
+// if user cancel the orders - contacts us > submit to be display -  
+// Analytics : Most popular product - most sold product - most viewed product - most added to cart - most ordered product -
+// Most sold product - Most viewed product - Most ordered prduct - 
+
+// Seller Dashbord: 
+
+
+
+
+
+
+

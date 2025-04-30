@@ -39,36 +39,32 @@
                 <label for="profileName" class="form-label">Name *</label>
                 <input type="text" class="form-control" id="profileName" placeholder="Name" />
             </div>
+            <div class="mb-3">
+                <label for="profileEmail" class="form-label">Email address *</label>
+                <input type="email" class="form-control" id="profileEmail" required />
+            </div>
 
             <div class="mb-3">
                 <label for="profileStreet" class="form-label">Street address *</label>
-                <input type="text" class="form-control" id="profileCity" placeholder="House number and street name" />
+                <input type="text" class="form-control" id="profileStreet" placeholder="House number and street name" />
             </div>
+
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="city" class="form-label">Town / City *</label>
                     <input type="text" class="form-control" id="city" required />
                 </div>
                 <div class="col-md-6">
-                    <label for="state" class="form-label">State *</label>
-                    <input type="text" class="form-control" id="state" required />
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-6">
                     <label for="zip" class="form-label">ZIP Code *</label>
                     <input type="text" class="form-control" id="zip" required />
                 </div>
-                <div class="col-md-6">
-                    <label for="profilePhone" class="form-label">Phone *</label>
-                    <input type="tel" class="form-control" id="phone" required />
-                </div>
+
+            </div>
+            <div class="mb-3">
+                <label for="profilePhone" class="form-label">Phone *</label>
+                <input type="tel" class="form-control" id="phone" required />
             </div>
 
-            <div class="mb-3">
-                <label for="profileEmail" class="form-label">Email address *</label>
-                <input type="email" class="form-control" id="email" required />
-            </div>
 
             <button type="submit" class="btn btn-warning w-100 fw-bold fs-5">Save Profile</button>
         </form>
@@ -91,6 +87,7 @@
     <!-- Script JS -->
     <script type="module" src="js/home.js"></script>
     <script type="module" src="js/profile.js"></script>
+    <script src="js/checkLogin.js"></script>
 
     <script src="js/cart.js"></script>
 
