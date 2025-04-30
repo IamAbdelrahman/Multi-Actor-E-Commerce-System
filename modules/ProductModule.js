@@ -1,18 +1,17 @@
-import Validate  from './ValidateModule.js'; 
 import StorageManager from './StorageModule.js';
 
 /*- PRODUCT MANAGER
 -----------------------------------------------------------------------*/
 
 class Product {
-  constructor(id, name, description, price, stock, category, image, quantity = 1) {
-    this.ID = id;
+  constructor(name, description, price, stock, category, image, id = 0) {
     this.Name = name;
     this.Description = description;
     this.Price = price;
     this.Stock = stock;
     this.Category = category;
     this.Image = image;
+    this.ID = id;
   }
 
   set ID(id) {
@@ -110,45 +109,45 @@ class Product {
   }
 }
 
-export class ProductManager{
-  static CreateProduct(...args) {
-    const product = new Product(...args);
+export default class ProductManager{
+  static AddProduct(name, description, price, stock, category, image, id = 0) {
+    const product = new Product(name, description, price, stock, category, image, id = 0);
+    const products = StorageManager.LoadSection("products") || [];
+    // if (!product.Name || !product.Description || !product.Category || product.Price <= 0 || product.Stock <= 0) {
+    //   console.error("Invalid product data. Please Enter valid data!");
+    //   return;
+    // }
+    
+    // const existingProduct = products.find(p => p.ID === product.ID);
+    // if (existingProduct) {
+    //   console.error("Product with this ID already exists.");
+    //   return;
+    // }
+    // const existingCategory = products.find(p => p.Category === product.Category);
+    // if (!existingCategory) {
+    //   console.error("Category does not exist.");
+    //   return;
+    // }
+    // const existingImage = products.find(p => p.Image === product.Image);
+    // if (!existingImage) {
+    //   console.error("Image does not exist.");
+    //   return;
+    // }
+    // const existingName = products.find(p => p.Name === product.Name);
+    // if (!existingName) {
+    //   console.error("Product name does not exist.");
+    //   return;
+    // }
 
-    if (!product.ID || !product.Name || !product.Description || !product.Category || product.Price <= 0 || product.Stock <= 0) {
-      console.error("Invalid product data. Please Enter valid data!");
-      return;
-    }
-    const products = StorageManager.Load("products") || [];
-    const existingProduct = products.find(p => p.ID === product.ID);
-    if (existingProduct) {
-      console.error("Product with this ID already exists.");
-      return;
-    }
-    const existingCategory = products.find(p => p.Category === product.Category);
-    if (!existingCategory) {
-      console.error("Category does not exist.");
-      return;
-    }
-    const existingImage = products.find(p => p.Image === product.Image);
-    if (!existingImage) {
-      console.error("Image does not exist.");
-      return;
-    }
-    const existingName = products.find(p => p.Name === product.Name);
-    if (!existingName) {
-      console.error("Product name does not exist.");
-      return;
-    }
-
-    const id = products.length > 0 ? products[products.length - 1].ID + 1 : 1;
-    product.ID = id;
+    const _id = products.length > 0 ? products[products.length - 1].ID + 1 : 1;
+    product.ID = _id;
     products.push(product);
     StorageManager.SaveSection("products", products);
   }
 
-  // static GetAllProducts() {
-  //   return StorageManager.Load("products") || [];
-  // }
+  static GetAllProducts() {
+    return StorageManager.LoadSection("products") || [];
+  }
 
   static GetProductById(id) {
     const products = StorageManager.LoadSection("products") || [];
@@ -156,7 +155,7 @@ export class ProductManager{
   }
 
   static GetProductsByCategory(category) {
-    const products = StorageManager.Load("products") || [];
+    const products = StorageManager.LoadSection("products") || [];
     return products.filter(p => p.Category === category);
   }
 
@@ -197,7 +196,7 @@ export class ProductManager{
   }
 
   static DeleteProduct(id) {
-    let products = StorageManager.Load("products") || [];
+    let products = StorageManager.LoadSection("products") || [];
     products = products.filter(p => p.id !== id);
     StorageManager.SaveSection("products", products);
   }
