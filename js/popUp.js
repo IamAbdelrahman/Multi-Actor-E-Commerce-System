@@ -1,7 +1,7 @@
 //PopUp JS
 document.addEventListener("DOMContentLoaded", () => {
     // Load modal from external file
-    fetch('register-modal.html')
+    fetch('#')
         .then(response => response.text())
         .then(html => {
             document.getElementById('modalContainer').innerHTML = html;
