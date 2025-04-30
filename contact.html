@@ -7,12 +7,12 @@
     <title>Contact Us</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link rel="stylesheet" href="css/home.css" />
     <link rel="stylesheet" href="css/root.css" />
     <link rel="stylesheet" href="css/checkout.css" />
-    <script src="js/cart.js"></script>
 </head>
 
 <body class="bg-light">
@@ -75,78 +75,6 @@
         </div>
     </div>
 
-    <!------------------------------------ Register/Login Start ------------------------------------>
-    <div id="registerModal"
-        class="d-none position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex align-items-center justify-content-center">
-        <div class="modal-content p-4 bg-white rounded-3" style="width: 500px">
-            <button class="btn-close position-absolute top-0 end-0 p-2" id="closePopup"></button>
-            <div id="signUpForm">
-                <h2 class="text-center" style="color: #4E7CA3;">Create Account</h2>
-                <h5 class="text-center">To explore all features</h5>
-
-                <form onsubmit="Save(event)">
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" placeholder="Name" />
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="text" class="form-control" id="email" placeholder="Email" />
-                    </div>
-                    <div class="mb-3 position-relative">
-                        <label for="password" class="form-label">Password</label>
-                        <div class="d-flex">
-                            <input type="password" class="form-control" id="password" placeholder="Password" />
-                            <img src="./images/Others/eye-close.png" id="eyeIcon" class="position-absolute top-95 end-0"
-                                style="cursor: pointer; width: 30px; padding: 12px 5px 5px" />
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="role" class="form-label">Role</label>
-                        <select class="form-select" id="role">
-                            <option value="customer">Customer</option>
-                            <option value="seller">Seller</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-warning w-100 fw-bold fs-5">
-                        Sign Up
-                    </button>
-                </form>
-                <div class="mb-3 text-center m-4">
-                    <p>
-                        Already have an account? <a href="#" id="toggleToLogin">Log in</a>
-                    </p>
-                </div>
-            </div>
-
-            <div id="loginForm" style="display: none">
-                <h2 class="text-center" style="color: #4E7CA3;">Login Here</h2>
-                <h5 class="text-center">Welcome Back</h5>
-                <form onsubmit="Login (event)">
-                    <div class="mb-3">
-                        <label for="loginEmail" class="form-label">Email</label>
-                        <input type="text" class="form-control" id="loginEmail" placeholder="Email" />
-                    </div>
-                    <div class="mb-3 position-relative">
-                        <label for="loginPassword" class="form-label">Password</label>
-                        <div class="d-flex">
-                            <input type="password" class="form-control" id="loginPassword" placeholder="Password" />
-                            <img src="./images/Others/eye-close.png" id="loginEyeIcon"
-                                class="position-absolute top-95 end-0"
-                                style="cursor: pointer; width: 30px; padding: 12px 5px 5px" />
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-warning w-100 fw-bold fs-5">Log In</button>
-                </form>
-                <div class="mb-3 text-center p-3">
-                    <p>
-                        Don't have an account? <a href="#" id="toggleToSignUp">Sign Up</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!------------------------------------ Register/Login Start ------------------------------------>
 
 
 
@@ -198,8 +126,7 @@
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Script JS -->
     <script type="module" src="js/home.js"></script>
     <script src="js/cart.js"></script>
     <script type="module" src="js/utils.js"></script>
