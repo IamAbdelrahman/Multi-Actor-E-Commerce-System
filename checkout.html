@@ -43,7 +43,7 @@
           <form class="row g-3">
             <div class="col-md-12">
               <label for="name" class="form-label">Name*</label>
-              <input type="text" class="form-control" id="name" required />
+              <input type="text" class="form-control" id="checkout-name" required />
             </div>
             <div class="col-12">
               <label for="streetAddress" class="form-label"
@@ -52,30 +52,25 @@
               <input
                 type="text"
                 class="form-control mb-2"
-                id="streetAddress"
-                placeholder="House number and street name"
+                id="checkout-streetAddress"
                 required
               />
             </div>
             <div class="col-md-6">
               <label for="city" class="form-label">Town / City *</label>
-              <input type="text" class="form-control" id="city" required />
-            </div>
-            <div class="col-md-6">
-              <label for="state" class="form-label">State *</label>
-              <input type="text" class="form-control" id="state" required />
+              <input type="text" class="form-control" id="checkout-city" required />
             </div>
             <div class="col-md-6">
               <label for="zip" class="form-label">ZIP Code *</label>
-              <input type="text" class="form-control" id="zip" required />
+              <input type="number" class="form-control" id="checkout-zip" required />
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
               <label for="phone" class="form-label">Phone *</label>
-              <input type="tel" class="form-control" id="phone" required />
+              <input type="tel" class="form-control" id="checkout-phone" required />
             </div>
             <div class="col-12">
               <label for="email" class="form-label">Email address *</label>
-              <input type="email" class="form-control" id="email" required />
+              <input type="email" class="form-control" id="checkout-email" required />
             </div>
 
             <h5 class="mb-3 fw-semibold">2- Payment Method</h5>
@@ -128,41 +123,39 @@
           <div class="card p-4 my-4">
             <h5 class="my-4 fw-semibold">Your order</h5>
             <div class="row fw-bold mb-2">
-                <div class="col">Product</div>
-                <div class="col text-end">Subtotal</div>
+              <div class="col">Product</div>
+              <div class="col text-end">Subtotal</div>
+            </div>
+            <hr>
+        
+            <div class="row align-items-center mb-4">
+              <div class="col-auto">
+                <img
+                  src="images/headphone.png"
+                  alt="headphone image"
+                  class="img-fluid"
+                  style="max-width: 80px;"
+                >
               </div>
-              <hr>
-          
-              <div class="row align-items-center mb-4">
-                <div class="col-auto">
-                  <img
-                    src="images/headphone.png"
-                    alt="headphone image"
-                    class="img-fluid"
-                    style="max-width: 80px;"
-                  >
-                </div>
-                <div class="col text-end">
-                  $30.00
-                </div>
+              <div class="col text-end">
+                
               </div>
-              <hr class="dotted-line">
-          
-              <div class="row my-2 fw-semibold">
-                <div class="col">Subtotal</div>
-                <div class="col text-end">$30.00</div>
-              </div>
-              <hr class="dotted-line">
-              <div class="row fw-semibold mb-4">
-                <div class="col">Total</div>
-                <div class="col text-end">$30.00</div>
-              </div>
-
+            </div>
+            <hr class="dotted-line">
+        
+            <div class="row my-2 fw-semibold">
+              <div class="col">Subtotal</div>
+              <div class="col text-end"></div>
+            </div>
+            <hr class="dotted-line">
+            <div class="row fw-semibold mb-4">
+              <div class="col">Total</div>
+              <div class="col text-end" id="total-amount"></div>
+            </div>
+        
             <div class="text-center">
               <button class="btn btn-dark w-100" id="submit">Place order</button>
             </div>
-
-            
           </div>
         </div>
       </div>
