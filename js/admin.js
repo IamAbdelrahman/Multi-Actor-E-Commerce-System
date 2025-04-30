@@ -23,6 +23,8 @@
 -----------------------------------------------------------------------*/
 import StorageManager from '../modules/StorageModule.js'
 import UserManager from '../modules/UserModule.js'
+import SellerManager from '../modules/SellerModule.js';
+import CustomerManager from '../modules/CustomerModule.js';
 
 /*- SIDEBAR TOGGLER
 -----------------------------------------------------------------------*/
@@ -52,6 +54,29 @@ new Chart(document.getElementById("bar-chart-grouped"), {
 
 /*- ADMIN DASHBOARD
 -----------------------------------------------------------------------*/
+
+var table = `
+<div class="row">
+  <div class="col-12 col-md-7">
+    <h3 class="fw-bold fs-4 my-3">Users</h3>
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover align-middle text-center">
+        <thead>
+
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-5">
+    <h3 class="fw-bold fs-4 my-3">Reports Overview</h3>
+    <canvas id="bar-chart-grouped" width="800" height="450"></canvas>
+  </div>
+</div>
+`
 // Simulated data (replace with real data from localStorage/API)
 const dashboardData = {
   revenue: 89189,
@@ -171,8 +196,44 @@ function ShowProducts() {
 
 function ShowDashboard()
 {
+  const dashHeader = document.getElementById("dashHeader");
+  dashHeader.innerHTML = `
+              <div class="col-12 col-md-4">
+                <div class="card shadow">
+                  <div class="card-body py-4">
+                    <h3 class="fw-bold fs-4 mb-3">Welcome to Admin Dashboard</h3>
+                    <p>Use the sidebar to manage users, products, and orders.</p>
+                    <ul>
+                      <li>👥 Manage Users: view, add, or remove users.</li>
+                      <li>📦 Manage Products: create, update, delete inventory.</li>
+                      <li>🧾 Manage Orders: track, fulfill, or cancel orders.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            <div class="col-12 col-md-4">
+            <div class="card shadow">
+              <div class="card-body py-4">
+                <h5 class="mb-2 fw-bold">PROFILE</h5>
+                <p id = orders class="fw-bold mb02">
+                  <span id=adminName>Name: </span><br>
+                  <span id=adminRole>Role: </span><br>
+                  <span id=adminEmail>Email: </span><br>
+                  <span id=adminPhone>Phone: </span><br>
+                  <i class="bi bi-linkedin fs-4 me-3"></i>
+                  <i class="bi bi-twitter fs-4 me-3"></i>
+                  <i class="bi bi-facebook fs-4"></i>
+              </p>
+                <div class="mb-0">
+                  <span id = orders-change  class="bagde text-success me-2">+1</span>
+                  <span class="fw-bold">Since Last Month</span>
+                </div>
+              </div>
+            </div>
+          </div> `
+  
   const dashboardContent = document.getElementById("mainContent");
-  const dashboardInfo = dashboardContent.innerHTML = `
+  dashboardContent.innerHTML = `
           <div class="col-12 col-md-4">
             <div class="card shadow">
               <div class="card-body py-4">
@@ -236,49 +297,8 @@ function ShowDashboard()
                 </div>
               </div>
             </div>
-          </div>
-
-          <div class="col-12 col-md-4">
-            <div class="card shadow">
-              <div class="card-body py-4">
-                <h5 class="mb-2 fw-bold">PROFILE</h5>
-                <p id = orders class="fw-bold mb02">
-                  <span id=adminName>Name: </span><br>
-                  <span id=adminRole>Role: </span><br>
-                  <span id=adminEmail>Email: </span><br>
-                  <span id=adminPhone>Phone: </span><br>
-                  <i class="bi bi-linkedin fs-4 me-3"></i>
-                  <i class="bi bi-twitter fs-4 me-3"></i>
-                  <i class="bi bi-facebook fs-4"></i>
-              </p>
-                <div class="mb-0">
-                  <span id = orders-change  class="bagde text-success me-2">+1</span>
-                  <span class="fw-bold">Since Last Month</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        <div class="row">
-          <div class="col-12 col-md-7">
-            <h3 class="fw-bold fs-4 my-3">Users</h3>
-            <div class="table-responsive">
-              <table class="table table-striped table-bordered table-hover align-middle text-center">
-                <thead>
-
-                </thead>
-                <tbody>
-
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div class="col-12 col-md-5">
-            <h3 class="fw-bold fs-4 my-3">Reports Overview</h3>
-            <canvas id="bar-chart-grouped" width="800" height="450"></canvas>
-          </div>
-        </div>  `
+          </div> `
+  
   const adminName = document.getElementById("adminName");
   const adminRole = document.getElementById("adminRole");
   const adminEmail = document.getElementById("adminEmail");
@@ -294,27 +314,7 @@ function ShowDashboard()
   }
 
 }
-// function showProfile() {
 
-
-//   const Btns = document.createElement("div");
-//   Btns.classList.add("d-flex", "justify-content-between", "mt-3");
-//   profileContent.appendChild(Btns);
-//   const editBtn = document.createElement("button");
-//   editBtn.innerText = "Edit Profile";
-//   editBtn.classList.add("btn", "btn-primary");
-//   editBtn.addEventListener("click", function () {
-//     const newName = prompt("Enter new name:", adminName.innerText);
-//     const newRole = prompt("Enter new role:", adminRole.innerText);
-//     const newEmail = prompt("Enter new email:", adminEmail.innerText);
-//     const newPhone = prompt("Enter new phone:", adminPhone.innerText);
-//     if (newName && newRole && newEmail && newPhone) {
-//       StorageManager.SaveSection("admin", { name: newName, role: newRole, email: newEmail, phone: newPhone });
-//       showProfile();
-//     }
-//   });
-
-// }
 
 /*- HELPER FUNCTIONS
 -----------------------------------------------------------------------*/
@@ -399,21 +399,14 @@ function createDeleteIcon(id) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  // ShowUsers();
 
-  const toggleBtn = document.querySelector(".toggle-btn");
-  const toggler = document.querySelector("#icon");
-  toggleBtn.addEventListener("click", function () {
-  document.querySelector("#sidebar").classList.toggle("expand");
-  toggler.classList.toggle("bxs-chevrons-right");
-  toggler.classList.toggle("bxs-chevrons-left");
-  });
 
-  const customers = document.getElementById("customers");
+  ShowDashboard()
+
+
+  const customers = document.getElementById("users");
   customers.addEventListener('click', () => {
-    const users = StorageManager.LoadSection("users") || [];
-    const customerCount = users.filter(user => user.role === "customer").length;
-    alert(`Number of customers: ${customerCount}`);
+    ShowUsers();
   });
 
   const product = document.getElementById("products");
@@ -425,3 +418,30 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
 }); 
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Toggle the Sidebar
+  const toggleBtn = document.querySelector(".toggle-btn");
+  const toggler = document.querySelector("#icon");
+  toggleBtn.addEventListener("click", function () {
+  document.querySelector("#sidebar").classList.toggle("expand");
+  toggler.classList.toggle("bxs-chevrons-right");
+  toggler.classList.toggle("bxs-chevrons-left");
+  });
+
+  // Default landing page content
+  ShowDashboard();
+
+  // Attach event listeners to sidebar buttons
+  document.querySelectorAll('[data-section]').forEach(button => {
+    button.addEventListener('click', function () {
+      const section = this.dataset.section;
+      if (section === "customers") ShowCustomers();
+      else if (section === "sellers") ShowSellers();
+      else if (section === "products") ShowProducts();
+      else if (section === "orders") ShowProducts();
+      else if (section === "analytics") ShowAnalytics();
+      else ShowDashboard(); 
+    });
+  });
+});

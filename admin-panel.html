@@ -11,12 +11,12 @@
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet" href="css/admin.css" />
   <link rel="stylesheet" href="css/root.css" />
-
+  
+  <script type="module" src="js/admin.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
     crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script type="module" src="js/admin.js"></script>
 </head>
 
 <body>
@@ -38,39 +38,53 @@
       </div>
 
       <ul class="sidebar-nav">
-
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link">
-            <i id="customers" class="bx bxs-user-account"></i>
-            <span >Customers</span>
+          <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse" data-bs-target="#users"
+            aria-expanded="false" aria-controls="users">
+            <i class="bx bxs-user-account"></i>
+            <span>Users</span>
           </a>
-        </li>
+          <ul id="users" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+            <li class="sidebar-item">
+              <a href="#" class="sidebar-link">
+                <i data-section = "customers" class="bx bxs-user"></i>
+                <span>Customers</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="#" class="sidebar-link">
+                <i data-section = "sellers"  class="bx bxs-user-plus"></i>
+                <span>Sellers</span>
+              </a>
+            </li>
+          </ul>
+        </li> 
 
         <li class="sidebar-item">
           <a href="#" class="sidebar-link">
-            <i id="products" class='bx bx-shopping-bag'></i>
+            <i data-section = "products"  class='bx bx-shopping-bag'></i>
             <span>Products</span>
           </a>
         </li>
 
         <li class="sidebar-item">
           <a href="#" class="sidebar-link">
-            <i class='bx bxs-cart'></i>
+            <i data-section = "orders"  class='bx bxs-cart'></i>
             <span>Orders</span>
           </a>
         </li>
 
         <li class="sidebar-item">
           <a href="#" class="sidebar-link">
-            <i class='bx bx-stats'></i>
-            <span id="analytics">Analytics</span>
+            <i data-section = "analytics"  class='bx bx-stats'></i>
+            <span>Analytics</span>
           </a>
         </li>
       </ul>
 
       <div class="sidebar-footer">
         <a href="#" class="sidebar-link">
-          <i class="bx bxs-log-out"></i>
+          <i id = "logout" class="bx bxs-log-out"></i>
           <span>Logout</span>
         </a>
       </div>
@@ -118,7 +132,10 @@
       <main class="content px-3 py-4">
         <div class="container-fluid">
           <div class="mb-3">
-            <h3 class="fw-bold fs-4 mb-3">Admin Dashboard</h3>
+            <div class="row" id="dashHeader">
+              <!-- Header will be inserted here -->
+            </div>
+
             <div class="row" id="mainContent">
               <!-- Content will be inserted here -->
             </div>
