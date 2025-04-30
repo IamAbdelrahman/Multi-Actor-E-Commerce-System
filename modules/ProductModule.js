@@ -113,32 +113,32 @@ class Product {
 export class ProductManager{
   static AddProduct(name, description, price, stock, category, image, id = 0) {
     const product = new Product(name, description, price, stock, category, image, id = 0);
-
-    if (!product.Name || !product.Description || !product.Category || product.Price <= 0 || product.Stock <= 0) {
-      console.error("Invalid product data. Please Enter valid data!");
-      return;
-    }
     const products = StorageManager.LoadSection("products") || [];
-    const existingProduct = products.find(p => p.ID === product.ID);
-    if (existingProduct) {
-      console.error("Product with this ID already exists.");
-      return;
-    }
-    const existingCategory = products.find(p => p.Category === product.Category);
-    if (!existingCategory) {
-      console.error("Category does not exist.");
-      return;
-    }
-    const existingImage = products.find(p => p.Image === product.Image);
-    if (!existingImage) {
-      console.error("Image does not exist.");
-      return;
-    }
-    const existingName = products.find(p => p.Name === product.Name);
-    if (!existingName) {
-      console.error("Product name does not exist.");
-      return;
-    }
+    // if (!product.Name || !product.Description || !product.Category || product.Price <= 0 || product.Stock <= 0) {
+    //   console.error("Invalid product data. Please Enter valid data!");
+    //   return;
+    // }
+    
+    // const existingProduct = products.find(p => p.ID === product.ID);
+    // if (existingProduct) {
+    //   console.error("Product with this ID already exists.");
+    //   return;
+    // }
+    // const existingCategory = products.find(p => p.Category === product.Category);
+    // if (!existingCategory) {
+    //   console.error("Category does not exist.");
+    //   return;
+    // }
+    // const existingImage = products.find(p => p.Image === product.Image);
+    // if (!existingImage) {
+    //   console.error("Image does not exist.");
+    //   return;
+    // }
+    // const existingName = products.find(p => p.Name === product.Name);
+    // if (!existingName) {
+    //   console.error("Product name does not exist.");
+    //   return;
+    // }
 
     const _id = products.length > 0 ? products[products.length - 1].ID + 1 : 1;
     product.ID = _id;
@@ -156,7 +156,7 @@ export class ProductManager{
   }
 
   static GetProductsByCategory(category) {
-    const products = StorageManager.Load("products") || [];
+    const products = StorageManager.LoadSection("products") || [];
     return products.filter(p => p.Category === category);
   }
 
@@ -197,7 +197,7 @@ export class ProductManager{
   }
 
   static DeleteProduct(id) {
-    let products = StorageManager.Load("products") || [];
+    let products = StorageManager.LoadSection("products") || [];
     products = products.filter(p => p.id !== id);
     StorageManager.SaveSection("products", products);
   }
