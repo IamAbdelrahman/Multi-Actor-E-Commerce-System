@@ -1,5 +1,5 @@
 const modal = document.getElementById("Thing");
-const icon = document.getElementById("Thing-Icon");
+const Icon = document.getElementById("Thing-Icon");
 const closeBtn = document.getElementById("closepopup");
 
 
