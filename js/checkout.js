@@ -89,6 +89,10 @@ document.addEventListener("DOMContentLoaded", () => {
             alert(errors.join("\n"));
         } else {
 
+            if (!userCart || userCart.products.length === 0) {
+                alert("Your cart is empty. Please add items before placing any order.");
+                return;
+            }
             const newOrder = { 
                 id: GenerateNextID(),
                 id: userId+10,
