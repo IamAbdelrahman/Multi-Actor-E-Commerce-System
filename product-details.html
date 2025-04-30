@@ -150,10 +150,11 @@
                     <div class="col-md-9">
 
                         <button class="btn btn-yellow btn-lg w-100" style="height: 100%;" onclick="addToCart({
-                            id: 123, 
+                            id: 203, 
                             name: 'Samsung Galaxy S23 Ultra', 
-                            price: 1199.99, 
-                            image: 'images/Mobiles/s23ultra2.jpeg'
+                            price: 1199.99,
+                            stock: 35,
+                            image: 'images/Mobiles/s233.jpg'
                         }, parseInt(document.getElementById('quantity').value))">
 
                             <i class="fas fa-shopping-cart me-2"></i> Add to Cart
@@ -427,6 +428,7 @@
 
     <!-- Script JS -->
     <script type="module" src="js/home.js"></script>
+    <script src="js/checkLogin.js"></script>
     <script src="js/cart.js"></script>
 </body>
 
