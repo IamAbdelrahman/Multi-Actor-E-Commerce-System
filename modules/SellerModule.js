@@ -106,8 +106,7 @@ export default class SellerManager extends UserManager {
   static GetAllSellers() {
     const users = StorageManager.LoadSection("users") || [];
     const sellers = users.filter(user => user.role === "seller");
-    if (sellers)
-    {
+    if (sellers) {
       sellers.forEach(seller => {
         seller.blocked = seller.blocked || false;
       });
