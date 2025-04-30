@@ -2,14 +2,16 @@ import StorageManager from './StorageModule.js'
 import Validate from './ValidationModule.js';
 
 class User {
-  constructor(id, name, email, password, role) {
-    this.id = id;
+  constructor(id, name, email, password, role, address = { street: "", city: "", zipCode: "" }, phone = "") {
+    this.ID = id;
     this.Name = name;
     this.Email = email;
     this.Pass = password;
-    this.role = role;
-
+    this.Role = role;
+    this.Address = address;
+    this.phone = phone;
   }
+
   set ID(id) {
     if (Validate.isUserIdValid(id)) {
       this.id = id;
@@ -75,8 +77,6 @@ class User {
     return this.role;
   }
 
-
-
 }
 
 export default class UserManager {
@@ -87,7 +87,6 @@ export default class UserManager {
     name = name.trim();
     email = email.trim();
     password = password.trim();
-    // const { street = "", city = "", zipCode = "" } = address || {};
 
     // Input empty checks
     if (!name && !password && !email) {
@@ -151,11 +150,57 @@ export default class UserManager {
     return users.find(user => user.id === id);
   }
 
-  static UpdateUser(id, name, email) {
-    var users = StorageManager.LoadSection("users") || [];
-    users = users.map(user => user.id === id ? new User(id, name, email) : user);
+  static UpdateUser(id, name, email, street, city, zipCode, phone) {
+    let users = StorageManager.LoadSection("users") || [];
+    const address = { street, city, zipCode };
+
+    // Validation using Validate module
+    if (!Validate.isNameValid(name)) {
+      alert("Invalid name. It must be 3–15 letters only.");
+      return false;
+    }
+
+    const emailExists = users.some(user =>
+      user.email.toLowerCase() === email.toLowerCase() && user.id !== id
+    );
+    if (emailExists) {
+      alert("Email is already registered. Please enter a different email.");
+      return false;
+    }
+    if (!Validate.isEmailValid(email)) {
+      alert("Invalid email format. Use example@example.com");
+      return false;
+    }
+
+    if (!Validate.isStreetValid(street)) {
+      alert("Street cannot be empty.");
+      return false;
+    }
+
+    if (!Validate.isCityValid(city)) {
+      alert("City cannot have numbers.");
+      return false;
+    }
+    if (!Validate.isZipCodeValid(zipCode)) {
+      alert("ZIP code must be exactly 5 digits.");
+      return false;
+    }
+
+    users = users.map(user => {
+      if (user.id === id) {
+        user.name = name;
+        user.email = email;
+        user.Address = address;
+        user.phone = phone;
+      }
+      return user;
+    });
+
     StorageManager.SaveSection("users", users);
+    return true; // ✅ return success
   }
+
+
 
   static DeleteUser(id) {
     var users = StorageManager.LoadSection("users") || [];
