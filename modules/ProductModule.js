@@ -1,4 +1,3 @@
-import Validate  from './ValidateModule.js'; 
 import StorageManager from './StorageModule.js';
 
 /*- PRODUCT MANAGER
@@ -110,7 +109,7 @@ class Product {
   }
 }
 
-export class ProductManager{
+export default class ProductManager{
   static AddProduct(name, description, price, stock, category, image, id = 0) {
     const product = new Product(name, description, price, stock, category, image, id = 0);
     const products = StorageManager.LoadSection("products") || [];

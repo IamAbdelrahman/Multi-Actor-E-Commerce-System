@@ -99,7 +99,7 @@ class User {
   }
 }
 
-class UserManager {
+export default class UserManager {
 static AddUser(name, email, password, address, phone, role, id = 0) {
   const users = StorageManager.LoadSection("users") || [];
 
@@ -203,81 +203,6 @@ static AddUser(name, email, password, address, phone, role, id = 0) {
     var users = StorageManager.LoadSection("users") || [];
     users = users.filter(user => user.id !== id);
     StorageManager.SaveSection("users", users);
-  }
-}
-
-
-/*- SELLER MANAGER
-/* -------------------------------------------------------------------------------- */
-class Seller extends User {
-  constructor(id, name, email, password, address, phone) {
-    super(id, name, email, password, address, phone);
-    this.date = (new Date()).getDate() + '/' + ((new Date()).getMonth() + 1) + '/' + (new Date()).getFullYear();
-    this.blocked = false;
-    this.role = 'seller';
-  }
-}
-export class SellerManager extends UserManager {
-  static GetAllSellers() {
-    const users = StorageManager.LoadSection("users") || [];
-    return users.filter(user => user.role === "seller");
-  }
-
-  static GetById(id) {
-    const sellers = Seller.GetAllSellers();
-    return sellers.find(seller => seller.id === id);
-  }
-
-  static CreateSeller(id, name, email, password, address, phone) {
-    const preSeller = Seller.GetAllSellers();
-    const _id = preSeller.length > 0 ? preSeller[preSeller.length - 1].id + 1 : 1;
-    const seller = new Seller(_id, name, email, password, address, phone);
-    preSeller.push(seller);
-    StorageManager.SaveSection('users', preSeller);
-    return seller;
-  }
-
-  static UpdateSeller(seller) {
-    let sellers = Seller.GetAllSellers();
-    sellers = sellers.map(s => s.id === seller.id ? seller : s);
-    StorageManager.SaveSection('users', sellers);
-    return seller;
-  }
-
-  static DeleteSeller(id) {
-    let sellers = Seller.GetAllSellers();
-    sellers = sellers.filter(seller => seller.id !== id);
-    StorageManager.SaveSection('sellers', sellers);
-    return true;
-  }
-
-  static BlockSeller(id) {
-    const seller = Seller.GetById(id);
-    seller.blocked = true;
-    Seller.UpdateSeller(seller);
-    return true;
-  }
-
-  static ActivateSeller(id) {
-    const seller = Seller.GetById(id);
-    seller.blocked = false;
-    Seller.UpdateSeller(seller);
-    return true;
-  }
-
-  static GetBlockedSeller() {
-    const sellers = Seller.GetAllSellers();
-    return sellers.filter(seller => seller.blocked);
-  }
-
-  static GetActivatedSeller() {
-    const sellers = Seller.GetAllSellers();
-    return sellers.filter(seller => !seller.blocked);
-  }
-
-  static GetSellerCounts() {
-    const sellers = Seller.GetAllSellers();
-    return sellers.length;
   }
 }
 
