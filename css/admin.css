@@ -84,6 +84,36 @@ li {
 
 /*- SIDEBAR NAVIGATION LINKS
 -----------------------------------------------------------------------*/
+.ticker-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  white-space: nowrap;
+  background: linear-gradient(to right, black, black); 
+  border-bottom: 1px solid #dee2e6;
+}
+
+.ticker-text {
+  display: inline-block;
+  padding-left: 100%;
+  animation: scroll-left 20s linear infinite;
+  font-size: 24px;
+  font-weight: 600;
+  font-weight: bolder;
+  color: #ffc107;
+  letter-spacing: 0.5px;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 #sidebar:not(.expand) a.sidebar-link span{
   display: none;
 }
@@ -289,3 +319,11 @@ footer {
 .bi-twitter {
   color: #1da1f2;
 }
+
+tbody tr:hover {
+    transform: scale(1.05);    
+    border: 2px solid red;          
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.7s ease-in-out;           
+}
+

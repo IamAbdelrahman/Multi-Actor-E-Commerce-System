@@ -179,23 +179,23 @@ function ShowDashboard() {
                   </div>
                 </div>
               </div>
-            <div class="col-12 col-md-4">
-            <div class="card shadow">
-              <div class="card-body py-4">
-                  <h5 class="mb-2 fw-bold">PROFILE</h5>
-                  <p class="fw-bold mb02">
-                    <span id=adminName>Name: </span><br>
-                    <span id=adminRole>Role: </span><br>
-                    <span id=adminEmail>Email: </span><br>
-                    <span id=adminPhone>Phone: </span><br>
-                    <a href="www.linkedin.com"><i class="bi bi-linkedin fs-4 me-3"></i></a>
-                    <a href="www.facebook.com"><i class="bi bi-twitter fs-4 me-3"></i></a>
-                    <a href="www.twitter.com"><i class="bi bi-facebook fs-4 me-3"></i></a>
-                  </p>
+              <div class="col-12 col-md-4">
+                <div class="card shadow">
+                  <div class="card-body py-4">
+                      <h3 class="fw-bold fs-4 mb-3">Profile</h3>
+                      <p class="fw-bold mb02">
+                        <span id=adminName>Name: </span><br>
+                        <span id=adminRole>Role: </span><br>
+                        <span id=adminEmail>Email: </span><br>
+                        <span id=adminPhone>Phone: </span><br>
+                        <a href="www.linkedin.com"><i class="bi bi-linkedin fs-4 me-3"></i></a>
+                        <a href="www.facebook.com"><i class="bi bi-twitter fs-4 me-3"></i></a>
+                        <a href="www.twitter.com"><i class="bi bi-facebook fs-4 me-3"></i></a>
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </div> `
+              </div> `
   const adminName = document.getElementById("adminName");
   const adminRole = document.getElementById("adminRole");
   const adminEmail = document.getElementById("adminEmail");
@@ -356,23 +356,28 @@ function ShowAnalytics() {
 /*- HELPER FUNCTIONS
 -----------------------------------------------------------------------*/
 function createTable() {
-  var table = `
+  const table = `
+    <div class="container-fluid px-4 mt-4">
       <div class="row">
-        <div class="col-12 col-md-7">
-          <h3 class="fw-bold fs-4 my-3">Users</h3>
-          <div class="table-responsive">
+        <div class="col-12">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <input type="text" class="form-control w-25" placeholder="Search..." id="searchInput">
+          </div>
+
+          <div class="table-responsive shadow-sm rounded bg-white p-3">
             <table class="table table-striped table-bordered table-hover align-middle text-center">
-              <thead>
+              <thead class="table-dark">
 
               </thead>
               <tbody>
-
+            
               </tbody>
             </table>
           </div>
         </div>
       </div>
-            `
+    </div>
+  `;
   return table;
 }
 
@@ -418,7 +423,7 @@ function createCell() {
 
 function createDeleteIcon(id) {
   const icon = document.createElement("i");
-  icon.classList.add("bi", "bi-trash", "text-danger", "fs-5", "ms-2", "cursor-pointer");
+  icon.classList.add("bi", "bi-trash-fill", "text-danger", "fs-5", "ms-2", "cursor-pointer");
   icon.addEventListener("click", function () {
     var tr = this.parentElement.parentElement;
     (confirm("Do you want to delete this user?")) ? tr.remove() : "undefined";
