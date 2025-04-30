@@ -1,12 +1,3 @@
-// ------------------------------slider Start------------------------------
-var myCarousel = new bootstrap.Carousel(document.querySelector('#myCarousel'), {
-    interval: 3000, // 3 seconds
-    ride: 'carousel'
-});
-
-// ------------------------------slider End------------------------------
-
-
 
 // ------------------------------Register/Login Start------------------------------
 import StorageManager from '../modules/StorageModule.js'
@@ -81,14 +72,9 @@ window.Save = function (event) {
     let name = document.getElementById('name').value.trim();
     let email = document.getElementById('email').value.trim().toLowerCase();
     let password = document.getElementById("password").value;
-    let role = document.getElementById("role").value;
-
-
-
 
     // Add New Users with Incremental IDs
-    const newId = UserManager.GenerateNextID();
-    UserManager.CreateUser(newId, name, email, password, role);
+    UserManager.AddUser(name, email, password);
 }
 
 window.Login = function (event) {
@@ -107,21 +93,17 @@ window.Login = function (event) {
 
         switch (LoginUser.role) {
             case "customer":
-                sessionStorage.setItem('userLoggedIn', true);
-
-                // Hide the Register-Icon and show the user dropdown
+                sessionStorage.setItem('userLoggedIn', JSON.stringify(LoginUser));
                 document.getElementById("Register-Icon").classList.add("d-none");
-
-                // If there's a user dropdown, make it visible
                 const userDropdown = document.getElementById("userDropdown");
                 if (userDropdown) {
                     userDropdown.classList.remove("d-none");
                 }
+
                 const modal = document.getElementById("registerModal");
                 if (modal) {
                     modal.classList.add("d-none");
                 }
-
                 document.getElementById("homeContent");
                 break;
             case "admin":
@@ -138,3 +120,21 @@ window.Login = function (event) {
     }
 };
 // ------------------------------Register/Login End------------------------------
+
+window.addEventListener('DOMContentLoaded', () => {
+    const loggedInUser = JSON.parse(sessionStorage.getItem('userLoggedIn'));
+
+    if (loggedInUser && loggedInUser.role === 'customer') {
+        document.getElementById("Register-Icon")?.classList.add("d-none");
+        document.getElementById("userDropdown")?.classList.remove("d-none");
+    } else {
+        document.getElementById("Register-Icon")?.classList.remove("d-none");
+        document.getElementById("userDropdown")?.classList.add("d-none");
+    }
+});
+
+
+document.getElementById("logout")?.addEventListener("click", () => {
+    sessionStorage.removeItem("userLoggedIn");
+    location.reload();
+});
