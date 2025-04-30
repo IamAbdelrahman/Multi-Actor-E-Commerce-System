@@ -37,9 +37,7 @@ document.getElementById('toggleToSignUp').onclick = function () {
 
 icon.onclick = () => modal.classList.remove('d-none');
 closeBtn.onclick = () => modal.classList.add('d-none');
-window.onclick = (e) => {
-    if (e.target === modal) modal.classList.add('d-none');
-}
+
 
 // Password eyeIcon
 const eyeIcon = document.getElementById("eyeIcon");
@@ -95,6 +93,7 @@ window.Login = function (event) {
         switch (LoginUser.role) {
             case "customer":
                 sessionStorage.setItem('userLoggedIn', JSON.stringify(LoginUser));
+                location.reload();
                 document.getElementById("Register-Icon").classList.add("d-none");
                 const userDropdown = document.getElementById("userDropdown");
                 if (userDropdown) {
