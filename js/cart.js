@@ -83,7 +83,7 @@ function renderCartItems() {
     cartItem.className = "d-flex justify-content-between align-items-center mb-3 p-2 border-bottom";
     cartItem.innerHTML = `
             <div class="d-flex align-items-center gap-3">
-                <img src="${item.image}" alt="${item.name}" style="width: 60px; height: 60px; object-fit: cover;">
+                <img src="${item.image}" alt="${item.name}" style="width: 55px; height: 75px; object-fit: cover;">
                 <div>
                     <h6 class="mb-1">${item.name}</h6>
                     <p class="mb-1">$${item.price.toFixed(2)}</p>
