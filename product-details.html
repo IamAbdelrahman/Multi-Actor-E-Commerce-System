@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Details - Electronics Store</title>
 
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/home.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/cart.js"></script>
+    <link rel="stylesheet" href="css/checkout.css">
+    <link rel="stylesheet" href="css/home.css" />
 
     <style>
         .product-image {
@@ -44,11 +45,6 @@
         .quantity-input {
             width: 60px;
             text-align: center;
-        }
-
-        .breadcrumb {
-            background-color: transparent;
-            padding: 0;
         }
 
         .rating {
@@ -88,68 +84,34 @@
                 document.getElementById('navBar').innerHTML = data;
             });
     </script>
-    <!-- -------------------------------------Cart Slider start------------------------------- -->
-    <div id="overlay"></div>
-    <div id="cartSlider">
-        <div class="d-flex flex-column h-100">
-            <div class="cart-header d-flex justify-content-between align-items-center">
-                <h4 class="mb-0"><i class="bi bi-cart3"></i> Your Cart</h4>
-                <button class="btn btn-close" onclick="toggleCart()"></button>
-            </div>
-            <div class="cart-body flex-grow-1 overflow-auto">
-                <div id="cartItems"></div>
-            </div>
-            <div class="cart-footer mt-auto">
-                <div class="d-flex justify-content-between mb-3">
-                    <h5>Total:</h5>
-                    <h5 id="cartTotal">$0.00</h5>
-                </div>
-                <button class="btn btn-yellow w-100 rounded-pill mb-2">
-                    <i class="bi bi-credit-card"></i> Checkout
-                </button>
-                <button class="btn btn-outline-secondary w-100 rounded-pill" onclick="toggleCart()">
-                    <i class="bi bi-arrow-left"></i> Continue Shopping
-                </button>
-            </div>
-        </div>
-    </div>
-    <!-- --------------------------------- Cart Slider end------------------------------- -->
+
     <!------------------------------------ NavBar End ------------------------------------>
 
     <!-- Main Content -->
     <div class="container my-5">
-        <!-- Breadcrumb -->
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="home.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="catalog.html">Smartphones</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Galaxy S23 Ultra</li>
-            </ol>
-        </nav>
-
         <div class="row">
             <!-- Product Images -->
             <div class="col-md-6">
                 <div class="mb-3">
-                    <img id="mainImage" src="images/Mobiles/s23ultra4.webp"
-                        alt="Samsung Galaxy S23 Ultra" class="img-fluid product-image">
+                    <img id="mainImage" src="images/Mobiles/s23ultra4.webp" alt="Samsung Galaxy S23 Ultra"
+                        class="img-fluid product-image">
                 </div>
-                <div class="row g-2">                   
+                <div class="row g-2">
                     <div class="col-3">
-                        <img src="images/Mobiles/s234.jpg" alt="Side view"
-                            class="img-fluid thumbnail" onclick="changeImage(this)">
+                        <img src="images/Mobiles/s234.jpg" alt="Side view" class="img-fluid thumbnail"
+                            onclick="changeImage(this)">
                     </div>
                     <div class="col-3">
-                        <img src="images/Mobiles/s231.jpg" alt="Front view"
-                            class="img-fluid  thumbnail active" onclick="changeImage(this)">
+                        <img src="images/Mobiles/s231.jpg" alt="Front view" class="img-fluid  thumbnail active"
+                            onclick="changeImage(this)">
                     </div>
                     <div class="col-3">
-                        <img src="images/Mobiles/s233.jpg" alt="Back view"
-                            class="img-fluid thumbnail" onclick="changeImage(this)">
+                        <img src="images/Mobiles/s233.jpg" alt="Back view" class="img-fluid thumbnail"
+                            onclick="changeImage(this)">
                     </div>
                     <div class="col-3">
-                        <img src="images/Mobiles/s232.jpg" alt="With accessories"
-                            class="img-fluid thumbnail" onclick="changeImage(this)">
+                        <img src="images/Mobiles/s232.jpg" alt="With accessories" class="img-fluid thumbnail"
+                            onclick="changeImage(this)">
                     </div>
                 </div>
             </div>
@@ -168,37 +130,11 @@
                     <span class="ms-2">4.7 (428 reviews)</span>
                 </div>
                 <h3 class="text-success">$1,199.99</h3>
-                <p class="text-muted">SKU: SAM-S23U-256GB</p>
 
                 <div class="mb-4">
                     <p>The Samsung Galaxy S23 Ultra features a stunning 6.8-inch Dynamic AMOLED display, 200MP camera
                         system, and the fastest Snapdragon processor yet. With built-in S Pen and all-day battery life,
                         it's the ultimate smartphone for power users.</p>
-                </div>
-
-                <!-- Product Options -->
-                <div class="mb-4">
-                    <label class="form-label"><strong>Color:</strong></label>
-                    <div class="btn-group" role="group">
-                        <input type="radio" class="btn-check" name="color" id="colorPhantom" autocomplete="off" checked>
-                        <label class="btn btn-outline-secondary" for="colorPhantom">Phantom Black</label>
-                        <input type="radio" class="btn-check" name="color" id="colorGreen" autocomplete="off">
-                        <label class="btn btn-outline-secondary" for="colorGreen">Green</label>
-                        <input type="radio" class="btn-check" name="color" id="colorLavender" autocomplete="off">
-                        <label class="btn btn-outline-secondary" for="colorLavender">Lavender</label>
-                    </div>
-                </div>
-
-                <div class="mb-4">
-                    <label class="form-label"><strong>Storage:</strong></label>
-                    <div class="btn-group" role="group">
-                        <input type="radio" class="btn-check" name="storage" id="storage256" autocomplete="off" checked>
-                        <label class="btn btn-outline-secondary" for="storage256">256GB</label>
-                        <input type="radio" class="btn-check" name="storage" id="storage512" autocomplete="off">
-                        <label class="btn btn-outline-secondary" for="storage512">512GB</label>
-                        <input type="radio" class="btn-check" name="storage" id="storage1tb" autocomplete="off">
-                        <label class="btn btn-outline-secondary" for="storage1tb">1TB</label>
-                    </div>
                 </div>
 
                 <!-- Quantity and Add to Cart -->
@@ -220,8 +156,8 @@
                             image: 'images/Mobiles/s23ultra2.jpeg'
                         }, parseInt(document.getElementById('quantity').value))">
 
-                    <i class="fas fa-shopping-cart me-2"></i> Add to Cart
-                </button>
+                            <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                        </button>
 
                     </div>
                 </div>
@@ -259,8 +195,8 @@
                         <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
                             data-bs-target="#description" type="button">Description</button>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="specs-tab" data-bs-toggle="tab" data-bs-target="#specs"
+                    <li class="nav-item " role="presentation">
+                        <button class="nav-link " id="specs-tab" data-bs-toggle="tab" data-bs-target="#specs"
                             type="button">Specifications</button>
                     </li>
                     <li class="nav-item" role="presentation">
@@ -273,8 +209,8 @@
                     </li>
                 </ul>
                 <div class="tab-content p-3 border border-top-0 rounded-bottom" id="productTabsContent">
-                    <div class="tab-pane fade show active" id="description" role="tabpanel">
-                        <h4>About the Galaxy S23 Ultra</h4>
+                    <div class="tab-pane fade show active text-dark" id="description" role="tabpanel">
+                        <h4 class="text-warning">About the Galaxy S23 Ultra</h4>
                         <p>The Samsung Galaxy S23 Ultra is the pinnacle of smartphone technology, combining
                             professional-grade camera capabilities with desktop-level performance. The 6.8-inch Dynamic
                             AMOLED 2X display with 120Hz refresh rate delivers stunning visuals, while the new 200MP
@@ -286,7 +222,7 @@
                             it is beautiful, featuring Gorilla Glass Victus 2 front and back with an armored aluminum
                             frame.</p>
                     </div>
-                    <div class="tab-pane fade" id="specs" role="tabpanel">
+                    <div class="tab-pane fade text-warning" id="specs" role="tabpanel">
                         <h4>Technical Specifications</h4>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><strong>Display:</strong> 6.8" Dynamic AMOLED 2X, 3088×1440,
@@ -303,7 +239,7 @@
                             <li class="list-group-item"><strong>Dimensions:</strong> 163.4 x 78.1 x 8.9 mm, 234g</li>
                         </ul>
                     </div>
-                    <div class="tab-pane fade" id="features" role="tabpanel">
+                    <div class="tab-pane fade text-warning" id="features" role="tabpanel">
                         <h4>Key Features</h4>
                         <div class="row">
                             <div class="col-md-6">
@@ -360,7 +296,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="reviews" role="tabpanel">
+                    <div class="tab-pane fade text-warning" id="reviews" role="tabpanel">
                         <h4>Customer Reviews</h4>
                         <div class="mb-4">
                             <div class="d-flex justify-content-between">
@@ -411,8 +347,7 @@
                 <div class="row">
                     <div class="col-md-3 col-6 mb-4">
                         <div class="card h-100">
-                            <img src="images/Mobiles/1.png" class="card-img-top"
-                                alt="Galaxy A50">
+                            <img src="images/Mobiles/1.png" class="card-img-top" alt="Galaxy A50">
                             <div class="card-body">
                                 <h5 class="card-title">Samsung Galaxy A50</h5>
                                 <p class="card-text text-success">$349.99</p>
@@ -422,8 +357,7 @@
                     </div>
                     <div class="col-md-3 col-6 mb-4">
                         <div class="card h-100">
-                            <img src="images/Mobiles/2.png" class="card-img-top"
-                                alt="oppo">
+                            <img src="images/Mobiles/2.png" class="card-img-top" alt="oppo">
                             <div class="card-body">
                                 <h5 class="card-title">Oppo A3</h5>
                                 <p class="card-text text-success">$229.99</p>
@@ -433,8 +367,7 @@
                     </div>
                     <div class="col-md-3 col-6 mb-4">
                         <div class="card h-100">
-                            <img src="images/Mobiles/4.png" class="card-img-top"
-                                alt="Poco">
+                            <img src="images/Mobiles/4.png" class="card-img-top" alt="Poco">
                             <div class="card-body">
                                 <h5 class="card-title">Poco C75</h5>
                                 <p class="card-text text-success">$1,099.99</p>
@@ -444,8 +377,7 @@
                     </div>
                     <div class="col-md-3 col-6 mb-4">
                         <div class="card h-100">
-                            <img src="images/Mobiles/6.png" class="card-img-top"
-                                alt="redmi">
+                            <img src="images/Mobiles/6.png" class="card-img-top" alt="redmi">
                             <div class="card-body">
                                 <h5 class="card-title">Redmi 12</h5>
                                 <p class="card-text text-success">$990.99</p>
@@ -457,7 +389,7 @@
             </div>
         </div>
     </div>
-
+    <!---------------------- Footer -------------------------------------->
     <div id="footer"></div>
 
     <script>
@@ -467,6 +399,8 @@
                 document.getElementById('footer').innerHTML = data;
             });
     </script>
+
+    <!---------------------- Footer End-------------------------------------->
     <script>
         // Quantity controls
         document.getElementById('increment').addEventListener('click', function () {
@@ -490,6 +424,10 @@
             document.getElementById('mainImage').src = element.src;
         }
     </script>
+
+    <!-- Script JS -->
+    <script type="module" src="js/home.js"></script>
+    <script src="js/cart.js"></script>
 </body>
 
 </html>

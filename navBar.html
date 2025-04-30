@@ -1,90 +1,163 @@
-<!-- NavBar -->
+<!-- NavBar Start -->
+<nav class="navbar navbar-expand-lg navbar-dark p-3" style="background-color: #202529">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-light fs-4" href="home.html">
+      <i class="bi bi-lightning-fill"></i> Electronics Store
+    </a>
 
-<!------------------------------------ NavBar Start ------------------------------------>
-<nav class="navbar navbar-expand-lg navbar-dark  p-3" style="background-color: #202529;">
-    <div class="container">
-        <a class="navbar-brand fw-bold text-light fs-4" href="home.html">
-            <i class="bi bi-lightning-fill"></i> Electronics Store
-        </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <div class="collapse navbar-collapse" id="mainNavbar">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+        <li class="nav-item px-2">
+          <a class="nav-link active border-bottom border-warning special-hover" href="home.html">HOME</a>
+        </li>
+        <li class="nav-item px-2">
+          <a class="nav-link text-light special-hover" href="about.html">ABOUT</a>
+        </li>
+        <li class="nav-item px-2">
+          <a class="nav-link text-light special-hover" href="catalog.html">SHOP</a>
+        </li>
+        <li class="nav-item dropdown px-2">
+          <a class="nav-link dropdown-toggle text-light special-hover" href="#" role="button" data-bs-toggle="dropdown">
+            CATEGORIES
+          </a>
+          <ul class="dropdown-menu bg-dark">
+            <li><a class="dropdown-item text-light" href="#">Mobiles</a></li>
+            <li><a class="dropdown-item text-light" href="#">Laptops</a></li>
+            <li><a class="dropdown-item text-light" href="#">HeadPhones</a></li>
+            <li><a class="dropdown-item text-light" href="#">Tablets</a></li>
+            <li>
+              <a class="dropdown-item text-light" href="#">Accessories</a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item px-2">
+          <a class="nav-link text-light special-hover" href="contact.html">CONTACT</a>
+        </li>
+      </ul>
 
-        <div class="collapse navbar-collapse" id="mainNavbar">
-            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                <li class="nav-item px-2">
-                    <a class="nav-link active border-bottom border-warning special-hover" href="home.html">HOME</a>
-                </li>
-                <li class="nav-item px-2">
-                    <a class="nav-link text-light special-hover" href="about.html">ABOUT</a>
-                </li>
-                <li class="nav-item px-2">
-                    <a class="nav-link text-light special-hover" href="catalog.html">SHOP</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-light special-hover" href="#" role="button"
-                        data-bs-toggle="dropdown">
-                        CATEGORIES
-                    </a>
-                    <ul class="dropdown-menu bg-dark">
-                        <li>
-                            <a class="dropdown-item text-light" href="#">Mobiles</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item text-light" href="#">Laptops</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item text-light" href="#">HeadPhones</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item text-light" href="#">Tablets</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item text-light" href="#">Accessories</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item px-2">
-                    <a class="nav-link text-light special-hover" href="contact.html">CONTACT</a>
-                </li>
-            </ul>
+      <div class="d-flex gap-4 fs-5 icons">
+        <a id="Register-Icon" class="text-light"><i class="bi bi-person-circle"></i></a>
 
-            <div class="d-flex gap-4 fs-5 icons">
-                <a id="Register-Icon" class="text-light"><i class="bi bi-person-circle"></i></a>
-                <a href="#" class="text-light" onclick="toggleCart()"><i class="bi bi-cart"></i></a>
-                <a href="#" class="text-light heart-toggle"><i class="bi bi-heart"></i></a>
-            </div>
+        <!-- Customer Menu (Fixed) -->
+        <div id="userDropdown" class="dropdown d-none">
+          <button class="btn text-light border border-warning rounded-pill px-3" type="button" id="dropdownMenuButton"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            Customer Menu
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+            <li><a class="dropdown-item" href="profile.html">Profile</a></li>
+            <li><a class="dropdown-item" href="#" id="logout">Logout</a></li>
+          </ul>
         </div>
+
+        <a href="#" class="text-light" onclick="toggleCart()"><i class="bi bi-cart"></i></a>
+        <a href="#" class="text-light heart-toggle"><i class="bi bi-heart"></i></a>
+      </div>
     </div>
+  </div>
 </nav>
+
 <!-- -------------------------------------Cart Slider------------------------------- -->
 <div id="overlay"></div>
 <div id="cartSlider">
-    <div class="d-flex flex-column h-100">
-        <div class="cart-header d-flex justify-content-between align-items-center">
-            <h4 class="mb-0"><i class="bi bi-cart3"></i> Your Cart</h4>
-            <button class="btn btn-close" onclick="toggleCart()"></button>
-        </div>
-        <div class="cart-body flex-grow-1 overflow-auto">
-            <div id="cartItems"></div>
-        </div>
-        <div class="cart-footer mt-auto">
-            <div class="d-flex justify-content-between mb-3">
-                <h5>Total:</h5>
-                <h5 id="cartTotal">$0.00</h5>
-            </div>
-            <a href="checkout.html">
-                <button class="btn btn-yellow w-100 rounded-pill mb-2">
-                    <i class="bi bi-credit-card"></i> Checkout 
-                    </button>
-            </a>
-            <button class="btn btn-outline-secondary w-100 rounded-pill" onclick="toggleCart()">
-                <i class="bi bi-arrow-left"></i> Continue Shopping
-            </button>
-        </div>
+  <div class="d-flex flex-column h-100">
+    <div class="cart-header d-flex justify-content-between align-items-center">
+      <h4 class="mb-0"><i class="bi bi-cart3"></i> Your Cart</h4>
+      <button class="btn btn-close" onclick="toggleCart()"></button>
     </div>
+    <div class="cart-body flex-grow-1 overflow-auto">
+      <div id="cartItems"></div>
+    </div>
+    <div class="cart-footer mt-auto">
+      <div class="d-flex justify-content-between mb-3">
+        <h5>Total:</h5>
+        <h5 id="cartTotal">$0.00</h5>
+      </div>
+      <a href="checkout.html">
+        <button class="btn btn-yellow w-100 rounded-pill mb-2" id="checkout">
+          <i class="bi bi-credit-card"></i> Checkout
+        </button>
+      </a>
+      <button class="btn btn-outline-secondary w-100 rounded-pill" onclick="toggleCart()">
+        <i class="bi bi-arrow-left"></i> Continue Shopping
+      </button>
+    </div>
+  </div>
 </div>
 <!---------------------------------- Cart Slider End----------------------------->
+<!------------------------------------ Register/Login Start ------------------------------------>
+<div id="registerModal"
+  class="d-none position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex align-items-center justify-content-center"
+  style="z-index: 1050;">
+  <div class="modal-content p-4 bg-white rounded-3" style="width: 500px">
+    <button class="btn-close position-absolute top-0 end-0 p-2" id="closePopup"></button>
+    <div id="signUpForm">
+      <h2 class="text-center" style="color: #4E7CA3;">Create Account</h2>
+      <h5 class="text-center">To explore all features</h5>
 
-<!------------------------------------ NavBar End ------------------------------------>
+      <form onsubmit="Save(event)">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" placeholder="Name" />
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="text" class="form-control" id="email" placeholder="Email" />
+        </div>
+        <div class="mb-3 position-relative">
+          <label for="password" class="form-label">Password</label>
+          <div class="d-flex">
+            <input type="password" class="form-control" id="password" placeholder="Password" />
+            <img src="./images/Others/eye-close.png" id="eyeIcon" class="position-absolute top-95 end-0"
+              style="cursor: pointer; width: 30px; padding: 12px 5px 5px" />
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="role" class="form-label">Role</label>
+          <select class="form-select" id="role">
+            <option value="customer">Customer</option>
+            <option value="seller">Seller</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-warning w-100 fw-bold fs-5">
+          Sign Up
+        </button>
+      </form>
+      <div class="mb-3 text-center m-4">
+        <p>
+          Already have an account? <a href="#" id="toggleToLogin">Log in</a>
+        </p>
+      </div>
+    </div>
+
+    <div id="loginForm" style="display: none">
+      <h2 class="text-center" style="color: #4E7CA3;">Login Here</h2>
+      <h5 class="text-center">Welcome Back</h5>
+      <form onsubmit="Login (event)">
+        <div class="mb-3">
+          <label for="loginEmail" class="form-label">Email</label>
+          <input type="text" class="form-control" id="loginEmail" placeholder="Email" />
+        </div>
+        <div class="mb-3 position-relative">
+          <label for="loginPassword" class="form-label">Password</label>
+          <div class="d-flex">
+            <input type="password" class="form-control" id="loginPassword" placeholder="Password" />
+            <img src="./images/Others/eye-close.png" id="loginEyeIcon" class="position-absolute top-95 end-0"
+              style="cursor: pointer; width: 30px; padding: 12px 5px 5px" />
+          </div>
+        </div>
+        <button type="submit" class="btn btn-warning w-100 fw-bold fs-5">Log In</button>
+      </form>
+      <div class="mb-3 text-center p-3">
+        <p>
+          Don't have an account? <a href="#" id="toggleToSignUp">Sign Up</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<!------------------------------------ Register/Login Start ------------------------------------>

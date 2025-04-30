@@ -1,12 +1,3 @@
-// ------------------------------slider Start------------------------------
-var myCarousel = new bootstrap.Carousel(document.querySelector('#myCarousel'), {
-    interval: 3000, // 3 seconds
-    ride: 'carousel'
-});
-
-// ------------------------------slider End------------------------------
-
-
 
 // ------------------------------Register/Login Start------------------------------
 import StorageManager from '../modules/StorageModule.js'
@@ -56,10 +47,10 @@ const password = document.getElementById("password");
 eyeIcon.onclick = () => {
     if (password.type == "password") {
         password.type = "text";
-        eyeIcon.src = "./images/eye-open.png";
+        eyeIcon.src = "./images/Others/eye-open.png";
     } else {
         password.type = "password";
-        eyeIcon.src = "./images/eye-close.png";
+        eyeIcon.src = "./images/Others/eye-close.png";
     }
 };
 
@@ -68,10 +59,10 @@ const loginPassword = document.getElementById("loginPassword");
 loginEyeIcon.onclick = () => {
     if (loginPassword.type == "password") {
         loginPassword.type = "text";
-        loginEyeIcon.src = "./images/eye-open.png";
+        loginEyeIcon.src = "./images/Others/eye-open.png";
     } else {
         loginPassword.type = "password";
-        loginEyeIcon.src = "./images/eye-close.png";
+        loginEyeIcon.src = "./images/Others/eye-close.png";
     }
 };
 
@@ -102,11 +93,23 @@ window.Login = function (event) {
     const LoginUser = users.find(user => user.email === email && user.password === password);
 
     if (LoginUser) {
-        // alert(`Welcome back, ${LoginUser.name}! You are logged in as ${LoginUser.role}.`);
+        //repair
+        // alert(Welcome back, ${LoginUser.name}! You are logged in as ${LoginUser.role}.);
 
         switch (LoginUser.role) {
             case "customer":
-                window.location.href = "home.html";
+                sessionStorage.setItem('userLoggedIn', JSON.stringify(LoginUser));
+                document.getElementById("Register-Icon").classList.add("d-none");
+                const userDropdown = document.getElementById("userDropdown");
+                if (userDropdown) {
+                    userDropdown.classList.remove("d-none");
+                }
+
+                const modal = document.getElementById("registerModal");
+                if (modal) {
+                    modal.classList.add("d-none");
+                }
+                document.getElementById("homeContent");
                 break;
             case "admin":
                 window.location.href = "admin-panel.html";
@@ -122,3 +125,21 @@ window.Login = function (event) {
     }
 };
 // ------------------------------Register/Login End------------------------------
+
+window.addEventListener('DOMContentLoaded', () => {
+    const loggedInUser = JSON.parse(sessionStorage.getItem('userLoggedIn'));
+
+    if (loggedInUser && loggedInUser.role === 'customer') {
+        document.getElementById("Register-Icon")?.classList.add("d-none");
+        document.getElementById("userDropdown")?.classList.remove("d-none");
+    } else {
+        document.getElementById("Register-Icon")?.classList.remove("d-none");
+        document.getElementById("userDropdown")?.classList.add("d-none");
+    }
+});
+
+
+document.getElementById("logout")?.addEventListener("click", () => {
+    sessionStorage.removeItem("userLoggedIn");
+    location.reload();
+});

@@ -7,6 +7,7 @@
   justify-content: center;
   cursor: pointer;
 }
+
 .payment-option:hover,
 .form-control:hover,
 .form-control:active,
@@ -14,20 +15,39 @@
   border: 1px solid #ffc107 !important;
   outline: none;
 }
-.form-control:focus{
-  box-shadow: 0 0 0 .1rem #ffc107; 
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.1rem #ffc107;
 }
-.btn-check:checked + .payment-option {
-    border: 1px solid #ffc107;
-    box-shadow: 0 .5rem 1rem rgba(255,193,7,0.5); 
-  }
-  .dotted-line {
-    border: 0;
-    border-top: 1px dotted #000; 
-    margin: 1rem 0; 
-  }
-  .col-lg-5 button:hover{
-    background-color:#ffc107 ;
-    color: white;
-    border-color: #ffc107;
-  }
+
+.btn-check:checked+.payment-option {
+  border: 1px solid #ffc107;
+  box-shadow: 0 0.5rem 1rem rgba(255, 193, 7, 0.5);
+}
+
+.dotted-line {
+  border: 0;
+  border-top: 1px dotted #000;
+  margin: 1rem 0;
+}
+
+.col-lg-5 button:hover {
+  background-color: #ffc107;
+  color: white;
+  border-color: #ffc107;
+}
+
+form .form-control:hover,
+form textarea.form-control:hover {
+  border: 2px solid #ffc107 !important;
+  transition: all 0.2s ease-in-out;
+}
+
+form textarea.form-control:focus,
+form .form-control:focus {
+  box-shadow: 0 0 8px rgba(255, 193, 7, 0.7) !important;
+}
+
+.btn-warning:hover {
+  color: white;
+}

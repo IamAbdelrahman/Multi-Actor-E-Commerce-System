@@ -1,5 +1,5 @@
 /******************************************************************************
- * Copyright (C) 2024 by Abdelrahman Kamal - Admin Panel Page
+ * Copyright (C) 2025 by Abdelrahman Kamal - Admin Panel Page
  *****************************************************************************/
 
 /*****************************************************************************
@@ -96,50 +96,207 @@ window.addEventListener('load', () => {
   document.getElementById("orders-change").textContent = 
     `+${dashboardData.ordersChange}% Since Last Month`;
 });
+
+function ShowHeaderUser() {
+  var head = document.querySelector("thead");
+  var tr = document.createElement("tr");
+  var th = document.createElement("th");
+  th.textContent = "ID";
+  tr.appendChild(th);
+  var th = document.createElement("th");
+  th.textContent = "Name";
+  tr.appendChild(th);
+  var th = document.createElement("th");
+  th.textContent = "Email";
+  tr.appendChild(th);
+  var th = document.createElement("th");
+  th.textContent = "Password";
+  tr.appendChild(th);
+  var th = document.createElement("th");
+  th.textContent = "Role";
+  tr.appendChild(th);
+  var th = document.createElement("th");
+  th.textContent = "City";
+  tr.appendChild(th);
+  var th = document.createElement("th");
+  th.textContent = "Phone";
+  tr.appendChild(th);
+
+  head.appendChild(tr);
+}
+
+function ShowHeaderProduct() {
+  var head = document.querySelector("thead");
+  var tr = document.createElement("tr");
+
+  var th = document.createElement("th");
+  th.textContent = "ID";
+  tr.appendChild(th);
+
+  var th = document.createElement("th");
+  th.textContent = "Name";
+  tr.appendChild(th);
+
+  var th = document.createElement("th");
+  th.textContent = "Price";
+  tr.appendChild(th);
+
+  var th = document.createElement("th");
+  th.textContent = "Stock";
+  tr.appendChild(th);
+
+  head.appendChild(tr);
+}
+
+
 function ShowUsers() {
+  ShowHeaderUser();
   const usersList = StorageManager.LoadSection("users") || [];
   var body = document.querySelector("tbody");
   for (let i = 0; i < usersList.length; i++) {
     const user = usersList[i];
-    body.appendChild(createRow(user.id, user.name, user.email, user.password, user.role, user.Address.city, user.phone));
+    body.appendChild(createRowForUsers(user.id, user.name, user.email, user.password, user.role, user.Address.city, user.phone));
   }
 }
 
+function ShowProducts() {
+  ShowHeaderProduct();
+  const productList = StorageManager.LoadSection("products") || [];
+  var body = document.querySelector("tbody");
+  for (let i = 0; i < productList.length; i++) {
+    const product = productList[i];
+    body.appendChild(createRowForProducts(product.id, product.name, product.price, product.stock));
+  }
+}
 
+function ShowDashboard()
+{
+  const dashboardContent = document.getElementById("mainContent");
+  const dashboardInfo = dashboardContent.innerHTML = `
+          <div class="col-12 col-md-4">
+            <div class="card shadow">
+              <div class="card-body py-4">
+                <h5 class="mb-2 fw-bold"> TOTAL REVENUE </h5>
+                <p id="revenue" class="fw-bold mb02">$89,1891</p>
+                <div class="mb-0">
+                  <span id="revenue-change" class="bagde text-success me-2">+9.0%</span>
+                  <span class="fw-bold">Since Last Month</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <div class="card shadow">
+              <div class="card-body py-4">
+                <h5 class="mb-2 fw-bold">WEBSITE VISITORS</h5>
+                <p id = visitors class="fw-bold mb02">1891</p>
+                <div class="mb-0">
+                  <span id = visitors-change class="bagde text-success me-2">+9.0%</span>
+                  <span class="fw-bold">Since Last Month</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <div class="card shadow">
+              <div class="card-body py-4">
+                <h5 class="mb-2 fw-bold">TOTAL ORDERS</h5>
+                <p id = orders class="fw-bold mb02">1000</p>
+                <div class="mb-0">
+                  <span id = orders-change  class="bagde text-success me-2">+9.0%</span>
+                  <span class="fw-bold">Since Last Month</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <div class="card shadow">
+              <div class="card-body py-4">
+                <h5 class="mb-2 fw-bold">TOTAL CUSTOMERS</h5>
+                <p id = customers class="fw-bold mb02">1000</p>
+                <div class="mb-0">
+                  <span id = customers-change class="bagde text-success me-2">+9.0%</span>
+                  <span class="fw-bold">Since Last Month</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <div class="card shadow">
+              <div class="card-body py-4">
+                <h5 class="mb-2 fw-bold">TOTAL PRODUCTS</h5>
+                <p id = products class="fw-bold mb02">1000</p>
+                <div class="mb-0">
+                  <span id = products-change class="bagde text-success me-2">+9.0%</span>
+                  <span class="fw-bold">Since Last Month</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <div class="card shadow">
+              <div class="card-body py-4">
+                <h5 class="mb-2 fw-bold">PROFILE</h5>
+                <p id = orders class="fw-bold mb02">
+                  <span id=adminName>Name: </span><br>
+                  <span id=adminRole>Role: </span><br>
+                  <span id=adminEmail>Email: </span><br>
+                  <span id=adminPhone>Phone: </span><br>
+                  <i class="bi bi-linkedin fs-4 me-3"></i>
+                  <i class="bi bi-twitter fs-4 me-3"></i>
+                  <i class="bi bi-facebook fs-4"></i>
+              </p>
+                <div class="mb-0">
+                  <span id = orders-change  class="bagde text-success me-2">+1</span>
+                  <span class="fw-bold">Since Last Month</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <div class="row">
+          <div class="col-12 col-md-7">
+            <h3 class="fw-bold fs-4 my-3">Users</h3>
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered table-hover align-middle text-center">
+                <thead>
+
+                </thead>
+                <tbody>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-5">
+            <h3 class="fw-bold fs-4 my-3">Reports Overview</h3>
+            <canvas id="bar-chart-grouped" width="800" height="450"></canvas>
+          </div>
+        </div>  `
+  const adminName = document.getElementById("adminName");
+  const adminRole = document.getElementById("adminRole");
+  const adminEmail = document.getElementById("adminEmail");
+  const adminPhone = document.getElementById("adminPhone");
+  const admin = StorageManager.LoadSection("admin");
+  if (admin) {
+    adminName.innerText =  admin.name;
+    adminRole.innerText = admin.role;
+    adminEmail.innerText = admin.email;
+    adminPhone.innerText = admin.phone;
+  } else {
+    alert("Admin data not found.");
+  }
+
+}
 // function showProfile() {
-//   const profileContent = document.getElementById("adminContent");
-//   const profileInfo = `<div class="profile-card shadow-sm">
-//           <div class="d-flex justify-content-between">
-//             <div>
-//               <h4>Profile</h4>
-//               <p>
-//                 <span id=adminName>Name:</span> <br>
-//                 <span id=adminRole>Role:</span> <br>
-//                 <span id=adminEmail>Email:</span> <br>
-//                 <span id=adminPhone>Phone:</span> <br>
-//               </p>
-//               <div>
-//                 <i class="bi bi-linkedin fs-4 me-3"></i>
-//                 <i class="bi bi-twitter fs-4 me-3"></i>
-//                 <i class="bi bi-facebook fs-4"></i>
-//               </div>
-//             </div>
-//           </div>
-//         </div>`
-//   profileContent.innerHTML = profileInfo;
-//   const adminName = document.getElementById("adminName");
-//   const adminRole = document.getElementById("adminRole");
-//   const adminEmail = document.getElementById("adminEmail");
-//   const adminPhone = document.getElementById("adminPhone");
-//   const admin = StorageManager.LoadSection("admin");
-//   if (admin) {
-//     adminName.innerText =  admin.name;
-//     adminRole.innerText = admin.role;
-//     adminEmail.innerText = admin.email;
-//     adminPhone.innerText = admin.phone;
-//   } else {
-//     alert("Admin data not found.");
-//   }
+
+
 //   const Btns = document.createElement("div");
 //   Btns.classList.add("d-flex", "justify-content-between", "mt-3");
 //   profileContent.appendChild(Btns);
@@ -156,43 +313,12 @@ function ShowUsers() {
 //       showProfile();
 //     }
 //   });
-//   Btns.appendChild(editBtn);
-//   const changePassBtn = document.createElement("button");
-//   changePassBtn.innerText = "Change Password";
-//   changePassBtn.classList.add("btn", "btn-danger");
-//   changePassBtn.addEventListener("click", function () {
-//     const newPass = prompt("Enter new password:");
-//     if (newPass) {
-//       StorageManager.SaveSection("admin", { password: newPass });
-//       alert("Password changed successfully.");
-//     }
-//   });
-//   Btns.appendChild(changePassBtn);
-//   const deleteBtn = document.createElement("button");
-//   deleteBtn.innerText = "Delete Account";
-//   deleteBtn.classList.add("btn", "btn-warning");
-//   deleteBtn.addEventListener("click", function () {
-//     if (confirm("Are you sure you want to delete your account?")) {
-//       StorageManager.Remove("admin");
-//       alert("Account deleted successfully.");
-//       window.location.reload();
-//     }
-//   });
-//   Btns.appendChild(deleteBtn);
-//   const logoutBtn = document.createElement("button");
-//   logoutBtn.innerText = "Logout";
-//   logoutBtn.classList.add("btn", "btn-secondary");
-//   logoutBtn.addEventListener("click", function () {
-//     if (confirm("Are you sure you want to logout?")) {
-//       window.location.href = "./login.html";
-//     }
-//   });
-//   Btns.appendChild(logoutBtn);
+
 // }
 
 /*- HELPER FUNCTIONS
 -----------------------------------------------------------------------*/
-function createRow(id, name, email, password, role, city, phone) {
+function createRowForUsers(id, name, email, password, role, city, phone) {
   var tr = document.createElement("tr");
   var td = createCell();
   td.textContent = id;
@@ -228,6 +354,34 @@ function createRow(id, name, email, password, role, city, phone) {
   return tr;
 }
 
+function createRowForProducts(id, name, price, stock, category) {
+  var tr = document.createElement("tr");
+  var td = createCell();
+  td.textContent = id;
+  tr.appendChild(td);
+
+  var td = createCell();
+  td.textContent = name;
+  tr.appendChild(td);
+
+  var td = createCell();
+  td.textContent = price;
+  tr.appendChild(td);
+
+  var td = createCell();
+  td.textContent = stock;
+  tr.appendChild(td);
+
+  var td = createCell();
+  td.textContent = category;
+  tr.appendChild(td);
+
+  td = createCell();    // Delete
+  td.appendChild(createDeleteIcon(id));
+  tr.appendChild(td);
+  return tr;
+}
+
 function createCell() {
   var cell = document.createElement("td");
   return cell;
@@ -245,7 +399,7 @@ function createDeleteIcon(id) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  ShowUsers();
+  // ShowUsers();
 
   const toggleBtn = document.querySelector(".toggle-btn");
   const toggler = document.querySelector("#icon");
@@ -262,16 +416,12 @@ document.addEventListener('DOMContentLoaded', function() {
     alert(`Number of customers: ${customerCount}`);
   });
 
-});
+  const product = document.getElementById("products");
+  product.addEventListener('click', () => {
+    const products = StorageManager.LoadSection("products") || [];
+    const productCount = products.length;
+    alert(`Number of products: ${productCount}`);
+    ShowProducts();
+  });
 
-  // const profile = document.getElementById("profile");
-  // profile.addEventListener('click', () => showProfile());
-  // const accounts = document.getElementById("accounts");
-  // accounts.addEventListener('click', () => ShowUsers());
-
-// Delete user - View users - Reset password  - view products - add product - delete product - view orders - delete order 
-// if user cancel the orders - contacts us > submit to be display -  
-// Analytics : Most popular product - most sold product - most viewed product - most added to cart - most ordered product -
-// Most sold product - Most viewed product - Most ordered prduct - 
-
-// Seller Dashbord: 
+}); 
