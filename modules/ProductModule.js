@@ -5,14 +5,14 @@ import StorageManager from './StorageModule.js';
 -----------------------------------------------------------------------*/
 
 class Product {
-  constructor(id, name, description, price, stock, category, image, quantity = 1) {
-    this.ID = id;
+  constructor(name, description, price, stock, category, image, id = 0) {
     this.Name = name;
     this.Description = description;
     this.Price = price;
     this.Stock = stock;
     this.Category = category;
     this.Image = image;
+    this.ID = id;
   }
 
   set ID(id) {
@@ -111,14 +111,14 @@ class Product {
 }
 
 export class ProductManager{
-  static CreateProduct(...args) {
-    const product = new Product(...args);
+  static AddProduct(name, description, price, stock, category, image, id = 0) {
+    const product = new Product(name, description, price, stock, category, image, id = 0);
 
-    if (!product.ID || !product.Name || !product.Description || !product.Category || product.Price <= 0 || product.Stock <= 0) {
+    if (!product.Name || !product.Description || !product.Category || product.Price <= 0 || product.Stock <= 0) {
       console.error("Invalid product data. Please Enter valid data!");
       return;
     }
-    const products = StorageManager.Load("products") || [];
+    const products = StorageManager.LoadSection("products") || [];
     const existingProduct = products.find(p => p.ID === product.ID);
     if (existingProduct) {
       console.error("Product with this ID already exists.");
@@ -140,15 +140,15 @@ export class ProductManager{
       return;
     }
 
-    const id = products.length > 0 ? products[products.length - 1].ID + 1 : 1;
-    product.ID = id;
+    const _id = products.length > 0 ? products[products.length - 1].ID + 1 : 1;
+    product.ID = _id;
     products.push(product);
     StorageManager.SaveSection("products", products);
   }
 
-  // static GetAllProducts() {
-  //   return StorageManager.Load("products") || [];
-  // }
+  static GetAllProducts() {
+    return StorageManager.LoadSection("products") || [];
+  }
 
   static GetProductById(id) {
     const products = StorageManager.LoadSection("products") || [];

@@ -2,13 +2,14 @@ import StorageManager from './StorageModule.js'
 import Validate from './ValidationModule.js';
 
 class User {
-  constructor(id, name, email, password, role) {
+  constructor(name, email, password, address, phone, role, id) {
     this.ID = id;
     this.Name = name;
     this.Email = email;
     this.Pass = password;
     this.Role = role;
-
+    this.Address = address;
+    this.Phone = phone;
   }
 
   set ID(id) {
@@ -19,7 +20,6 @@ class User {
       this.id = 0;
     }
   }
-
   get ID() {
     return this.id;
   }
@@ -32,7 +32,6 @@ class User {
       return false;
     }
   }
-
   get Name() {
     return this.name;
   }
@@ -46,7 +45,6 @@ class User {
 
     }
   }
-
   get Email() {
     return this.email;
   }
@@ -60,7 +58,6 @@ class User {
 
     }
   }
-
   get Pass() {
     return this.password;
   }
@@ -73,81 +70,128 @@ class User {
       this.role = null;
     }
   }
-
   get Role() {
     return this.role;
   }
 
+  set Address(address) {
+    if (Validate.isAddressValid(address)) {
+      this.address = address;
+    } else {
+      console.error("Invalid address.");
+      this.address = null;
+    }
+  }
+  get Address() {
+    return this.address;
+  }
 
-
-
+  set Phone(phone) {
+    if (Validate.isPhoneValid(phone)) {
+      this.phone = phone;
+    } else {
+      console.error("Invalid phone number.");
+      this.phone = null;
+    }
+  }
+  get Phone() {
+    return this.phone;
+  }
 }
 
-
 export default class UserManager {
-  static CreateUser(id, name, email, password, role) {
-    //I make here to check empty because user may froget to enter 
-    if (name.trim() === "" && password.trim() === "" && email.trim() === "") {
-      alert("Please Enter Name , Email , Password");
-      return false;
-    }
-    else if (name.trim() == "") {
-      alert("Please Enter Name");
-      return false;
-    }
-    else if (email.trim() === "") {
-      alert("Please Enter Email");
-      return false;
-    }
-    else if (password.trim() === "") {
-      alert("Please Enter Password");
-      return false;
-    }
-    else if (name.trim() === "" || password.trim() === "" || email.trim() === "") {
-      alert("Please enter name , email , password");
-    }
-
+  static AddUser(name, email, password, address, phone, role, id = 0) {
     const users = StorageManager.LoadSection("users") || [];
 
-    //Here i make to prevent duplicate email or password
-    const userEnterEmail = users.some(user => user.email.toLowerCase() === email.toLowerCase());
-    if (userEnterEmail) {
+    // Trim input values
+    name = name.trim();
+    email = email.trim();
+    password = password.trim();
+    phone = phone.trim();
+    const { street = "", city = "", zipCode = "" } = address || {};
+
+    // Input empty checks
+    if (!name) {
+      alert("Please enter a name");
+      return false;
+    }
+
+    if (!email) {
+      alert("Please enter an email");
+      return false;
+    }
+
+    if (!password) {
+      alert("Please enter a password");
+      return false;
+    }
+
+    if (!street.trim() || !city.trim() || !zipCode.trim()) {
+      alert("Please enter a valid Address: Street, City, and Zip");
+      return false;
+    }
+
+    if (!phone.trim()) {
+      alert("Please enter Phone number");
+      return false;
+    }
+
+    // Duplicate check
+    const emailExists = users.some(user => user.email.toLowerCase() === email.toLowerCase());
+    if (emailExists) {
       alert("Email is already registered. Please enter a different email.");
       return false;
     }
-    const userEnterPass = users.some(user => user.password === password.trim());
-    if (userEnterPass) {
+
+    const passwordExists = users.some(user => user.password === password);
+    if (passwordExists) {
       alert("Password is already registered. Please enter a different password.");
       return false;
     }
 
-    const user = new User(id, name, email, password, role);
-
-    //After check empty i make to check validation 
-    if (!user.Name || !user.Email || !user.Pass || !user.Role) {
-      alert("Registration failed. Please ensure all fields are valid.");
+    // Validation using Validate module
+    if (!Validate.isNameValid(name)) {
+      alert("Invalid name. It must be 3–15 letters only.");
       return false;
     }
-    //She will storage if all correct
+
+    if (!Validate.isEmailValid(email)) {
+      alert("Invalid email format. Use example@example.com");
+      return false;
+    }
+
+    if (!Validate.isPasswordValid(password)) {
+      alert("Invalid password. It must include uppercase/lowercase, a number, and a special character, with at least 8 characters.");
+      return false;
+    }
+
+    if (!Validate.isPhoneValid(phone)) {
+      alert("Invalid phone number format.");
+      return false;
+    }
+
+    if (!Validate.isAddressValid(address)) {
+      alert("Invalid address format.");
+      return false;
+    }
+
+    function GenerateNextID() {
+      const users = StorageManager.LoadSection("users") || [];
+      const ids = users.map(user => user.id);
+      return Math.max(...ids) + 1;
+    }
+
+    const user = new User(name, email, password, address, phone, role, GenerateNextID());
     users.push(user);
     StorageManager.SaveSection("users", users);
     alert("Successfully Registered!");
     return true;
-
   }
 
-  static GetUser(id) {
+  static GetUserById(id) {
     const users = StorageManager.LoadSection("users") || [];
     return users.find(user => user.id === id);
   }
-
-  //Newwwwwwwwwww For Make ID for each user
-  static GenerateNextID() {
-    const users = StorageManager.LoadSection("users") || [];
-    const ids = users.map(user => user.id);
-    return Math.max(...ids) + 1;
-  }
-
 
   static UpdateUser(id, name, email) {
     var users = StorageManager.LoadSection("users") || [];
@@ -161,151 +205,4 @@ export default class UserManager {
     StorageManager.SaveSection("users", users);
   }
 }
-
-/*- CUSTOMER MANAGER
-/* -------------------------------------------------------------------------------- */
-class Customer extends User {
-  constructor(id, name, email, password, address, phone) {
-    super(id, name, email, password, address, phone);
-    this.date = (new Date()).getDate() + '/' + ((new Date()).getMonth() + 1) + '/' + (new Date()).getFullYear();
-    this.blocked = false;
-    this.role = 'customer';
-  }
-}
-export class CustomerManager extends UserManager {
-  static GetAllCustomers() {
-    const users = StorageManager.LoadSection("users") || [];
-    return users.filter(user => user.role === "customer");
-  }
-  static GetById(id) {
-    const customers = Customer.GetAllCustomers();
-    return customers.find(customer => customer.id === id);
-  }
-  static CreateCustomer(id, name, email, password, address, phone) {
-    const preCustomer = Customer.GetAllCustomers();
-    const _id = preCustomer.length > 0 ? preCustomer[preCustomer.length - 1].id + 1 : 1;
-    const customer = new Customer(_id, name, email, password, address, phone);
-    preCustomer.push(customer);
-    StorageManager.SaveSection('users', preCustomer);
-    return customer;
-  }
-
-  static UpdateCustomer(customer) {
-    let customers = Customer.GetAllCustomers();
-    customers = customers.map(c => c.id === customer.id ? customer : c);
-    StorageManager.SaveSection('users', customers);
-    return customer;
-  }
-
-  static DeleteCustomer(id) {
-    let customers = Customer.GetAllCustomers();
-    customers = customers.filter(customer => customer.id !== id);
-    StorageManager.SaveSection('customers', customers);
-    return true;
-  }
-
-  static BlockCustomer(id) {
-    const customer = Customer.GetById(id);
-    customer.blocked = true;
-    Customer.UpdateCustomer(customer);
-    return true;
-  }
-
-  static UnblockCustomer(id) {
-    const customer = Customer.GetById(id);
-    customer.blocked = false;
-    Customer.UpdateCustomer(customer);
-    return true;
-  }
-
-  static GetBlockedCustomer() {
-    const customers = Customer.GetAllCustomers();
-    return customers.filter(customer => customer.blocked);
-  }
-
-  static GetUnblockedCustomer() {
-    const customers = Customer.GetAllCustomers();
-    return customers.filter(customer => !customer.blocked);
-  }
-
-  static GetCustomerCounts() {
-    const customers = Customer.GetAllCustomers();
-    return customers.length;
-  }
-}
-
-/*- SELLER MANAGER
-/* -------------------------------------------------------------------------------- */
-class Seller extends User {
-  constructor(id, name, email, password, address, phone) {
-    super(id, name, email, password, address, phone);
-    this.date = (new Date()).getDate() + '/' + ((new Date()).getMonth() + 1) + '/' + (new Date()).getFullYear();
-    this.blocked = false;
-    this.role = 'seller';
-  }
-}
-export class SellerManager extends UserManager {
-  static GetAllSellers() {
-    const users = StorageManager.LoadSection("users") || [];
-    return users.filter(user => user.role === "seller");
-  }
-
-  static GetById(id) {
-    const sellers = Seller.GetAllSellers();
-    return sellers.find(seller => seller.id === id);
-  }
-
-  static CreateSeller(id, name, email, password, address, phone) {
-    const preSeller = Seller.GetAllSellers();
-    const _id = preSeller.length > 0 ? preSeller[preSeller.length - 1].id + 1 : 1;
-    const seller = new Seller(_id, name, email, password, address, phone);
-    preSeller.push(seller);
-    StorageManager.SaveSection('users', preSeller);
-    return seller;
-  }
-
-  static UpdateSeller(seller) {
-    let sellers = Seller.GetAllSellers();
-    sellers = sellers.map(s => s.id === seller.id ? seller : s);
-    StorageManager.SaveSection('users', sellers);
-    return seller;
-  }
-
-  static DeleteSeller(id) {
-    let sellers = Seller.GetAllSellers();
-    sellers = sellers.filter(seller => seller.id !== id);
-    StorageManager.SaveSection('sellers', sellers);
-    return true;
-  }
-
-  static BlockSeller(id) {
-    const seller = Seller.GetById(id);
-    seller.blocked = true;
-    Seller.UpdateSeller(seller);
-    return true;
-  }
-
-  static ActivateSeller(id) {
-    const seller = Seller.GetById(id);
-    seller.blocked = false;
-    Seller.UpdateSeller(seller);
-    return true;
-  }
-
-  static GetBlockedSeller() {
-    const sellers = Seller.GetAllSellers();
-    return sellers.filter(seller => seller.blocked);
-  }
-
-  static GetActivatedSeller() {
-    const sellers = Seller.GetAllSellers();
-    return sellers.filter(seller => !seller.blocked);
-  }
-
-  static GetSellerCounts() {
-    const sellers = Seller.GetAllSellers();
-    return sellers.length;
-  }
-}
-
 
