@@ -1,6 +1,9 @@
 import Validate from "../modules/ValidationModule.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+
+
+
+ 
   const submit = document.getElementById("submit");
 
   submit.addEventListener("click", (e) => {
@@ -37,4 +40,3 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Validation successful!");
     }
   });
-});
