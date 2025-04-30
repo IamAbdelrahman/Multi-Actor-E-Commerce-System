@@ -24,14 +24,19 @@ export default class Validate {
     return typeof value === 'string' && /^\+20\d{10}$/.test(value); // Egypt format
   }
 
-  static isAddressValid(address) {
-    if (!address || typeof address !== 'object') return false;
-    const { city, street, zip } = address;
-    return (
-      typeof city === 'string' &&
-      typeof street === 'string' &&
-      /^\d{5}$/.test(zip)
-    );
+  static isStreetValid(street) {
+    return typeof street === 'string' &&
+      /^[A-Za-z0-9\s\-\.]+$/.test(street.trim());
+  }
+
+  static isCityValid(city) {
+    return typeof city === 'string' &&
+      /^[A-Za-z\s]+$/.test(city.trim());
+  }
+
+  static isZipCodeValid(zipCode) {
+    return typeof zipCode === 'string' &&
+      /^\d{5}$/.test(zipCode);
   }
 
   static isProductIdValid(value) {
