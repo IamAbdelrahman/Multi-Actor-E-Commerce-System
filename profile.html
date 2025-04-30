@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="css/root.css" />
     <link rel="stylesheet" href="css/productCatalog.css" />
     <link rel="stylesheet" href="css/checkout.css">
+    <script type="module" src="js/utils.js"></script>
+
 
 
 </head>
@@ -31,26 +33,46 @@
             });
     </script>
     <div id="profileForm" class="container my-5">
-        <h2 class="text-center" style="color: #4E7CA3;">Update Profile</h2>
+        <h2 class="text-center" style="color: #202529;">Update Profile</h2>
         <form onsubmit="updateProfile(event)">
             <div class="mb-3">
-                <label for="profileName" class="form-label">Name</label>
+                <label for="profileName" class="form-label">Name *</label>
                 <input type="text" class="form-control" id="profileName" placeholder="Name" />
             </div>
+
             <div class="mb-3">
-                <label for="profileEmail" class="form-label">Email</label>
-                <input type="email" class="form-control" id="profileEmail" placeholder="Email" />
+                <label for="profileStreet" class="form-label">Street address *</label>
+                <input type="text" class="form-control" id="profileCity" placeholder="House number and street name" />
             </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="city" class="form-label">Town / City *</label>
+                    <input type="text" class="form-control" id="city" required />
+                </div>
+                <div class="col-md-6">
+                    <label for="state" class="form-label">State *</label>
+                    <input type="text" class="form-control" id="state" required />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="zip" class="form-label">ZIP Code *</label>
+                    <input type="text" class="form-control" id="zip" required />
+                </div>
+                <div class="col-md-6">
+                    <label for="profilePhone" class="form-label">Phone *</label>
+                    <input type="tel" class="form-control" id="phone" required />
+                </div>
+            </div>
+
             <div class="mb-3">
-                <label for="profilePhone" class="form-label">Phone</label>
-                <input type="text" class="form-control" id="profilePhone" placeholder="Phone" />
+                <label for="profileEmail" class="form-label">Email address *</label>
+                <input type="email" class="form-control" id="email" required />
             </div>
-            <div class="mb-3">
-                <label for="profileCity" class="form-label">City</label>
-                <input type="text" class="form-control" id="profileCity" placeholder="City" />
-            </div>
+
             <button type="submit" class="btn btn-warning w-100 fw-bold fs-5">Save Profile</button>
         </form>
+
     </div>
 
     <!------------------------------------ footer Start ------------------------------------>
@@ -68,8 +90,9 @@
 
     <!-- Script JS -->
     <script type="module" src="js/home.js"></script>
+    <script type="module" src="js/profile.js"></script>
+
     <script src="js/cart.js"></script>
-    <script type="module" src="profile.js"></script>
 
 </body>
 
