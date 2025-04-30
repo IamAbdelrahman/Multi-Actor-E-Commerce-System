@@ -7,18 +7,18 @@ import UserManager from '../modules/UserModule.js';
 const users = StorageManager.LoadSection("users") || [];
 const adminExists = users.some(user => user.id === 0 && user.role === "admin");
 
-if (!adminExists) {
-    const staticAdmin = {
-        id: 0,
-        name: "Admin User",
-        email: "admin@gmail.com",
-        password: "admin123",
-        role: "admin"
-    };
-    users.push(staticAdmin);
-    StorageManager.SaveSection("users", users);
-    console.log("Static admin added.");
-}
+// if (!adminExists) {
+//     const staticAdmin = {
+//         id: 0,
+//         name: "Admin User",
+//         email: "admin@gmail.com",
+//         password: "admin123",
+//         role: "admin"
+//     };
+//     users.push(staticAdmin);
+//     StorageManager.SaveSection("users", users);
+//     console.log("Static admin added.");
+// }
 
 // Show and hide modal
 const modal = document.getElementById("registerModal");
@@ -72,6 +72,7 @@ window.Save = function (event) {
     let name = document.getElementById('name').value.trim();
     let email = document.getElementById('email').value.trim().toLowerCase();
     let password = document.getElementById("password").value;
+
 
     // Add New Users with Incremental IDs
     UserManager.AddUser(name, email, password);
