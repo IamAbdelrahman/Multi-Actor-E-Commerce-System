@@ -25,138 +25,115 @@ import StorageManager from '../modules/StorageModule.js'
 import UserManager from '../modules/UserModule.js'
 import ProductManager from '../modules/ProductModule.js'
 import SellerManager from '../modules/SellerModule.js';
-// import CustomerManager from '../modules/CustomerModule.js';
+import CustomerManager from '../modules/CustomerModule.js';
 
-/*- SIDEBAR TOGGLER
+/*- USERS FUNCTIONS
 -----------------------------------------------------------------------*/
-new Chart(document.getElementById("bar-chart-grouped"), {
-  type: 'bar',
-  data: {
-    labels: ["1900", "1950", "1999", "2050"],
-    datasets: [
-      {
-        label: "Africa",
-        backgroundColor: "#3e95cd",
-        data: [133,221,783,2478]
-      }, {
-        label: "Europe",
-        backgroundColor: "#8e5ea2",
-        data: [408,547,675,734]
-      }
-    ]
-  },
-  options: {
-    title: {
-      display: true,
-      text: 'Population growth (millions)'
-    }
-  }
-});
+function CreateDataTable(id, name, email, password, city, phone) {
+  var tr = document.createElement("tr");
+  var td = createCell();
+  td.textContent = id;
+  tr.appendChild(td);
 
-/*- ADMIN DASHBOARD
------------------------------------------------------------------------*/
+  var td = createCell();
+  td.textContent = name;
+  tr.appendChild(td);
 
-var table = `
-<div class="row">
-  <div class="col-12 col-md-7">
-    <h3 class="fw-bold fs-4 my-3">Users</h3>
-    <div class="table-responsive">
-      <table class="table table-striped table-bordered table-hover align-middle text-center">
-        <thead>
+  var td = createCell();
+  td.textContent = email;
+  tr.appendChild(td);
 
-        </thead>
-        <tbody>
+  var td = createCell();
+  td.textContent = password;
+  tr.appendChild(td);
 
-        </tbody>
-      </table>
-    </div>
-  </div>
+  var td = createCell();
+  td.textContent = city;
+  tr.appendChild(td);
 
-  <div class="col-12 col-md-5">
-    <h3 class="fw-bold fs-4 my-3">Reports Overview</h3>
-    <canvas id="bar-chart-grouped" width="800" height="450"></canvas>
-  </div>
-</div>
-`
-// Simulated data (replace with real data from localStorage/API)
-const dashboardData = {
-  revenue: 89189,
-  revenueChange: 9.0,
-  visitors: 5243,
-  visitorsChange: 12.5,
-  orders: 1287,
-  ordersChange: 5.3
-};
+  var td = createCell();
+  td.textContent = phone;
+  tr.appendChild(td);
 
-// Animate numbers counting up
-function animateValue(id, target, duration = 2000) {
-  const element = document.getElementById(id);
-  const start = 0;
-  const increment = target / (duration / 16); // 60fps
-
-  let current = start;
-  const timer = setInterval(() => {
-    current += increment;
-    if (current >= target) {
-      clearInterval(timer);
-      current = target;
-    }
-    element.textContent = 
-      id === "revenue" ? `$${Math.floor(current).toLocaleString()}` 
-      : Math.floor(current).toLocaleString();
-  }, 16);
+  td = createCell();
+  td.appendChild(createDeleteIcon(id));
+  tr.appendChild(td);
+  return tr;
 }
 
-// Update all cards on page load
-window.addEventListener('load', () => {
-  // Animate numbers
-  animateValue("revenue", dashboardData.revenue);
-  animateValue("visitors", dashboardData.visitors);
-  animateValue("orders", dashboardData.orders);
-
-  // Update percentage changes
-  document.getElementById("revenue-change").textContent = 
-    `+${dashboardData.revenueChange}% Since Last Month`;
-  document.getElementById("visitors-change").textContent = 
-    `+${dashboardData.visitorsChange}% Since Last Month`;
-  document.getElementById("orders-change").textContent = 
-    `+${dashboardData.ordersChange}% Since Last Month`;
-});
-
-function ShowHeaderUser() {
+function CreateHeader() {
+  var table = createTable();
+  var contentdiv = document.querySelector("#mainContent");
+  contentdiv.innerHTML = table;
   var head = document.querySelector("thead");
   var tr = document.createElement("tr");
+
   var th = document.createElement("th");
   th.textContent = "ID";
   tr.appendChild(th);
+
   var th = document.createElement("th");
   th.textContent = "Name";
   tr.appendChild(th);
+
   var th = document.createElement("th");
   th.textContent = "Email";
   tr.appendChild(th);
+
   var th = document.createElement("th");
   th.textContent = "Password";
   tr.appendChild(th);
+
   var th = document.createElement("th");
   th.textContent = "Role";
   tr.appendChild(th);
+
   var th = document.createElement("th");
   th.textContent = "City";
   tr.appendChild(th);
+
   var th = document.createElement("th");
   th.textContent = "Phone";
   tr.appendChild(th);
-
   head.appendChild(tr);
 }
 
+function ShowCustomers() {
+  DisplayNone();
+  CreateHeader();
+  const usersList = StorageManager.LoadSection("users") || [];
+  const customers = usersList.filter(user => user.role === "customer");
+  var body = document.querySelector("tbody");
+  for (let i = 0; i < customers.length; i++) {
+    const customer = customers[i];
+    body.appendChild(CreateDataTable(customer.id, customer.name, customer.email, customer.password, customer.Address.city, customer.phone));
+  }
+}
+
+function ShowSellers() {
+  DisplayNone();
+  CreateHeader();
+  const usersList = StorageManager.LoadSection("users") || [];
+  const sellers = usersList.filter(user => user.role === "seller");
+  var body = document.querySelector("tbody");
+  for (let i = 0; i < sellers.length; i++) {
+    const seller = sellers[i];
+    body.appendChild(CreateDataTable(seller.id, seller.name, seller.email, seller.password, seller.Address.city, seller.phone));
+  }
+}
+/*----------------------------------------------------------------------------*/
+
+/*- PRODUCTS FUNCTIONS
+--------------------------------------------------------------------------------*/
 function ShowHeaderProduct() {
+  var table = createTable();
+  var contentdiv = document.querySelector("#mainContent");
+  contentdiv.innerHTML = table;
   var head = document.querySelector("thead");
   var tr = document.createElement("tr");
 
   var th = document.createElement("th");
-  th.textContent = "ID";
+  th.textContent = "#";
   tr.appendChild(th);
 
   var th = document.createElement("th");
@@ -175,17 +152,8 @@ function ShowHeaderProduct() {
 }
 
 
-function ShowUsers() {
-  ShowHeaderUser();
-  const usersList = StorageManager.LoadSection("users") || [];
-  var body = document.querySelector("tbody");
-  for (let i = 0; i < usersList.length; i++) {
-    const user = usersList[i];
-    body.appendChild(createRowForUsers(user.id, user.name, user.email, user.password, user.role, user.Address.city, user.phone));
-  }
-}
-
 function ShowProducts() {
+  DisplayNone();
   ShowHeaderProduct();
   const productList = StorageManager.LoadSection("products") || [];
   var body = document.querySelector("tbody");
@@ -195,8 +163,7 @@ function ShowProducts() {
   }
 }
 
-function ShowDashboard()
-{
+function ShowDashboard() {
   const dashHeader = document.getElementById("dashHeader");
   dashHeader.innerHTML = `
               <div class="col-12 col-md-4">
@@ -215,24 +182,68 @@ function ShowDashboard()
             <div class="col-12 col-md-4">
             <div class="card shadow">
               <div class="card-body py-4">
-                <h5 class="mb-2 fw-bold">PROFILE</h5>
-                <p id = orders class="fw-bold mb02">
-                  <span id=adminName>Name: </span><br>
-                  <span id=adminRole>Role: </span><br>
-                  <span id=adminEmail>Email: </span><br>
-                  <span id=adminPhone>Phone: </span><br>
-                  <i class="bi bi-linkedin fs-4 me-3"></i>
-                  <i class="bi bi-twitter fs-4 me-3"></i>
-                  <i class="bi bi-facebook fs-4"></i>
-              </p>
-                <div class="mb-0">
-                  <span id = orders-change  class="bagde text-success me-2">+1</span>
-                  <span class="fw-bold">Since Last Month</span>
+                  <h5 class="mb-2 fw-bold">PROFILE</h5>
+                  <p class="fw-bold mb02">
+                    <span id=adminName>Name: </span><br>
+                    <span id=adminRole>Role: </span><br>
+                    <span id=adminEmail>Email: </span><br>
+                    <span id=adminPhone>Phone: </span><br>
+                    <a href="www.linkedin.com"><i class="bi bi-linkedin fs-4 me-3"></i></a>
+                    <a href="www.facebook.com"><i class="bi bi-twitter fs-4 me-3"></i></a>
+                    <a href="www.twitter.com"><i class="bi bi-facebook fs-4 me-3"></i></a>
+                  </p>
                 </div>
               </div>
             </div>
           </div> `
-  
+  const adminName = document.getElementById("adminName");
+  const adminRole = document.getElementById("adminRole");
+  const adminEmail = document.getElementById("adminEmail");
+  const adminPhone = document.getElementById("adminPhone");
+  const users = StorageManager.LoadSection("users");
+  const admin = users.find(user => user.role === "admin");
+  if (admin) {
+    adminName.innerText = admin.name;
+    adminRole.innerText = admin.role;
+    adminEmail.innerText = admin.email;
+    adminPhone.innerText = admin.phone;
+  } else {
+    alert("Admin data not found.");
+  }
+}
+
+
+
+function ShowAnalytics() {
+  // Simulated data (replace with real data from localStorage/API)
+  const dashboardData = {
+    revenue: 89189,
+    revenueChange: 9.0,
+    visitors: 5243,
+    visitorsChange: 12.5,
+    orders: 1287,
+    ordersChange: 5.3
+  };
+
+  // Animate numbers counting up
+  function animateValue(id, target, duration = 5000) {
+    const element = document.getElementById(id);
+    const start = 0;
+    const increment = target / (duration / 16); // 60fps
+
+    let current = start;
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        clearInterval(timer);
+        current = target;
+      }
+      element.textContent =
+        id === "revenue" ? `$${Math.floor(current).toLocaleString()}`
+          : Math.floor(current).toLocaleString();
+    }, 16);
+  }
+  DisplayNone();
   const dashboardContent = document.getElementById("mainContent");
   dashboardContent.innerHTML = `
           <div class="col-12 col-md-4">
@@ -298,62 +309,79 @@ function ShowDashboard()
                 </div>
               </div>
             </div>
+          </div> 
+          <div class="col-12 col-md-5">
+            <h3 class="fw-bold fs-4 my-3">Reports Overview</h3>
+            <canvas id="bar-chart-grouped" width="800" height="450"></canvas>
           </div> `
-  
-  const adminName = document.getElementById("adminName");
-  const adminRole = document.getElementById("adminRole");
-  const adminEmail = document.getElementById("adminEmail");
-  const adminPhone = document.getElementById("adminPhone");
-  const admin = StorageManager.LoadSection("admin");
-  if (admin) {
-    adminName.innerText =  admin.name;
-    adminRole.innerText = admin.role;
-    adminEmail.innerText = admin.email;
-    adminPhone.innerText = admin.phone;
-  } else {
-    alert("Admin data not found.");
-  }
+  // Update all cards on page load
+  // Animate numbers
+  animateValue("revenue", dashboardData.revenue);
+  animateValue("visitors", dashboardData.visitors);
+  animateValue("orders", dashboardData.orders);
 
+  // Update percentage changes
+  document.getElementById("revenue-change").textContent =
+    `+${dashboardData.revenueChange}% Since Last Month`;
+  document.getElementById("visitors-change").textContent =
+    `+${dashboardData.visitorsChange}% Since Last Month`;
+  document.getElementById("orders-change").textContent =
+    `+${dashboardData.ordersChange}% Since Last Month`;
+    
+    new Chart(document.getElementById("bar-chart-grouped"), {
+      type: 'bar',
+      data: {
+        labels: ["1900", "1950", "1999", "2050"],
+        datasets: [
+          {
+            label: "Africa",
+            backgroundColor: "#3e95cd",
+            data: [133, 221, 783, 2478]
+          }, {
+            label: "Europe",
+            backgroundColor: "#8e5ea2",
+            data: [408, 547, 675, 734]
+          }
+        ]
+      },
+      options: {
+        title: {
+          display: true,
+          text: 'Population growth (millions)'
+        }
+      }
+    });
 }
-
 
 /*- HELPER FUNCTIONS
 -----------------------------------------------------------------------*/
-function createRowForUsers(id, name, email, password, role, city, phone) {
-  var tr = document.createElement("tr");
-  var td = createCell();
-  td.textContent = id;
-  tr.appendChild(td);
+function createTable() {
+  var table = `
+      <div class="row">
+        <div class="col-12 col-md-7">
+          <h3 class="fw-bold fs-4 my-3">Users</h3>
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover align-middle text-center">
+              <thead>
 
-  var td = createCell();
-  td.textContent = name;
-  tr.appendChild(td);
+              </thead>
+              <tbody>
 
-  var td = createCell();
-  td.textContent = email;
-  tr.appendChild(td);
-
-  var td = createCell();
-  td.textContent = password;
-  tr.appendChild(td);
-
-  var td = createCell();
-  td.textContent = role;
-  tr.appendChild(td);
-
-  var td = createCell();
-  td.textContent = city;
-  tr.appendChild(td);
-
-  var td = createCell();
-  td.textContent = phone;
-  tr.appendChild(td);
-
-  td = createCell();    // Delete
-  td.appendChild(createDeleteIcon(id));
-  tr.appendChild(td);
-  return tr;
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+            `
+  return table;
 }
+
+function DisplayNone() {
+  document.getElementById("mainContent").innerHTML = "";
+  document.getElementById("dashHeader").innerHTML = "";
+}
+
+
 
 function createRowForProducts(id, name, price, stock, category) {
   var tr = document.createElement("tr");
@@ -377,7 +405,7 @@ function createRowForProducts(id, name, price, stock, category) {
   td.textContent = category;
   tr.appendChild(td);
 
-  td = createCell();    // Delete
+  td = createCell();
   td.appendChild(createDeleteIcon(id));
   tr.appendChild(td);
   return tr;
@@ -399,50 +427,43 @@ function createDeleteIcon(id) {
   return icon;
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-
-
-  ShowDashboard()
-
-
-  const customers = document.getElementById("users");
-  customers.addEventListener('click', () => {
-    ShowUsers();
-  });
-
-  const product = document.getElementById("products");
-  product.addEventListener('click', () => {
-    const products = StorageManager.LoadSection("products") || [];
-    const productCount = products.length;
-    alert(`Number of products: ${productCount}`);
-    ShowProducts();
-  });
-
-}); 
 
 document.addEventListener('DOMContentLoaded', function () {
   // Toggle the Sidebar
   const toggleBtn = document.querySelector(".toggle-btn");
   const toggler = document.querySelector("#icon");
   toggleBtn.addEventListener("click", function () {
-  document.querySelector("#sidebar").classList.toggle("expand");
-  toggler.classList.toggle("bxs-chevrons-right");
-  toggler.classList.toggle("bxs-chevrons-left");
+    document.querySelector("#sidebar").classList.toggle("expand");
+    toggler.classList.toggle("bxs-chevrons-right");
+    toggler.classList.toggle("bxs-chevrons-left");
   });
 
-  // Default landing page content
+  // Show the dashboard by default
   ShowDashboard();
-
   // Attach event listeners to sidebar buttons
   document.querySelectorAll('[data-section]').forEach(button => {
     button.addEventListener('click', function () {
       const section = this.dataset.section;
-      if (section === "customers") ShowCustomers();
-      else if (section === "sellers") ShowSellers();
-      else if (section === "products") ShowProducts();
-      else if (section === "orders") ShowProducts();
-      else if (section === "analytics") ShowAnalytics();
-      else ShowDashboard(); 
+      switch (section) {
+        case "customers":
+          ShowCustomers();
+          break;
+        case "sellers":
+          ShowSellers();
+          break;
+        case "products":
+          ShowProducts();
+          break;
+        case "orders":
+          ShowOrders();
+          break;
+        case "analytics":
+          ShowAnalytics();
+          break;
+        default:
+          ShowDashboard();
+          break;
+      }
     });
   });
 });

@@ -279,3 +279,13 @@ footer {
     box-shadow: 0.1rem 0.2rem rgba(0, 0, 0, 0.5);
   }
 }
+
+.bi-linkedin {
+  color: #0077b5;
+}
+.bi-facebook {
+  color: #3b5998;
+}
+.bi-twitter {
+  color: #1da1f2;
+}
