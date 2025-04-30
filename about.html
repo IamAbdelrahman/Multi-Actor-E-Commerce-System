@@ -11,192 +11,211 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="css/home.css" />
   <link rel="stylesheet" href="css/root.css" />
   <link rel="stylesheet" href="css/about.css">
+  <link rel="stylesheet" href="css/checkout.css" />
+
 </head>
 
 <body>
 
   <!------------------------------------ NavBar Start ------------------------------------>
   <div id="navBar"></div>
-    <script>
-        fetch('navBar.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('navBar').innerHTML = data;
-            });
-    </script>
+  <script>
+    fetch('navBar.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('navBar').innerHTML = data;
+      });
+  </script>
   <!------------------------------------ NavBar End ------------------------------------>
   <!------------------------------------ Container Start ------------------------------------>
   <div class="container">
     <div class="about m-5">
-        <div class="row align-items-center justify-content-center text-center text-lg-start mb-5">
-            <div class="col-md-8 my-3 ">
-              <p class="text-muted m2-1">Our Mission to Make Kids Feel Comfortable and Confident</p>
-              <h2 class="fw-bold w-lg-75">
-                We believe every outfit should be as joyful, playful, and unique as the kids who wear it.
-              </h2>
-            </div>
-            <div class="col-md-4 col-sm-12 text-md-end my-3 mt-md-0">
-              <a href="catalog.html" class="btn btn-outline-dark p-3">
-                View All Products <i class="bi bi-arrow-up-right ms-1"></i>
-              </a>
+      <div class="row align-items-center justify-content-center text-center text-lg-start mb-5">
+        <div class="col-md-8 my-3 ">
+          <p class="text-muted m2-1">Our Mission to Make Kids Feel Comfortable and Confident</p>
+          <h2 class="fw-bold w-lg-75">
+            We believe every outfit should be as joyful, playful, and unique as the kids who wear it.
+          </h2>
+        </div>
+        <div class="col-md-4 col-sm-12 text-md-end my-3 mt-md-0">
+          <a href="catalog.html" class="btn btn-outline-dark p-3">
+            View All Products <i class="bi bi-arrow-up-right ms-1"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-12 col-sm-12 col-md-4 d-flex ">
+          <div class="card w-100 border-0 my-5 ">
+            <img src="images/Others/detail2.jpg" class="card-img-top rounded-4" alt="Card 1">
+            <div class="card-body text-center">
+              <h5 class="card-title h4 py-2 fw-bold">Driven by Love</h5>
+              <p class="card-text fs-5 text-muted">Founded by a team of experts</p>
             </div>
           </div>
-      
-          <div class="row g-4">
-            <div class="col-12 col-sm-12 col-md-4 d-flex ">
-              <div class="card w-100 border-0 my-5 ">
-                <img src="images/Others/detail2.jpg" class="card-img-top rounded-4" alt="Card 1">
-                <div class="card-body text-center">
-                  <h5 class="card-title h4 py-2 fw-bold">Driven by Love</h5>
-                  <p class="card-text fs-5 text-muted">Founded by a team of experts</p>
-                </div>
-              </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 d-flex">
+          <div class="card border-0 my-3">
+            <img src="images/Others/elctro2.jpg" class="card-img-top rounded-4" alt="Card 2">
+            <div class="card-body text-center">
+              <h5 class="card-title h4 py-2 fw-bold">Designed for Fun and Magic</h5>
+              <p class="card-text fs-5 text-muted">We deliver you all devices you want.</p>
             </div>
-            <div class="col-12 col-sm-12 col-md-4 d-flex">
-              <div class="card border-0 my-3">
-                <img src="images/Others/elctro2.jpg" class="card-img-top rounded-4"  alt="Card 2">
-                <div class="card-body text-center">
-                  <h5 class="card-title h4 py-2 fw-bold">Designed for Fun and Magic</h5>
-                  <p class="card-text fs-5 text-muted">We deliver you all devices you want.</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-md-4 d-flex ">
-                <div class="card w-100 border-0 my-5 ">
-                  <img src="images/Others/detail2.jpg" class="card-img-top rounded-4" alt="Card 1">
-                  <div class="card-body text-center">
-                    <h5 class="card-title h4 py-2 fw-bold">Driven by Love</h5>
-                    <p class="card-text fs-5 text-muted">Founded by a team of experts</p>
-                  </div>
-                </div>
-              </div>
           </div>
-          
-          
+        </div>
+        <div class="col-12 col-md-4 d-flex ">
+          <div class="card w-100 border-0 my-5 ">
+            <img src="images/Others/detail2.jpg" class="card-img-top rounded-4" alt="Card 1">
+            <div class="card-body text-center">
+              <h5 class="card-title h4 py-2 fw-bold">Driven by Love</h5>
+              <p class="card-text fs-5 text-muted">Founded by a team of experts</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
     </div>
     <div class="oueMission m-5">
-        <h2 class="fw-bold my-5">Our Mission To Power the Future of Electronics</h2>
-  <div class="row g-4">
-    
-    <div class="col-12 col-lg-6 my-2">
-        <div class="d-flex">
+      <h2 class="fw-bold my-5">Our Mission To Power the Future of Electronics</h2>
+      <div class="row g-4">
+
+        <div class="col-12 col-lg-6 my-2">
+          <div class="d-flex">
             <div class="my-2 me-3">
-                <div class="rounded-circle bg-warning fs-5 fw-bold d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+              <div class="rounded-circle bg-warning fs-5 fw-bold d-flex align-items-center justify-content-center"
+                style="width: 50px; height: 50px;">
                 1
               </div>
             </div>
             <div>
               <h5 class="fw-bold">Customer-Centric Innovation</h5>
               <p class="text-muted mb-0">
-                We design our products with real people in mind — intuitive, reliable, and packed with features that truly matter.
-            </p>
+                We design our products with real people in mind — intuitive, reliable, and packed with features that
+                truly matter.
+              </p>
             </div>
           </div>
-    </div>
-    
-    <div class="col-12 col-lg-6">
-        <div class="d-flex">
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="d-flex">
             <div class="me-3">
-                <div class="rounded-circle bg-warning fs-5 fw-bold d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
-                    2
+              <div class="rounded-circle bg-warning fs-5 fw-bold d-flex align-items-center justify-content-center"
+                style="width: 50px; height: 50px;">
+                2
               </div>
             </div>
             <div>
               <h5 class="fw-bold">Cutting-Edge Technology</h5>
               <p class="text-muted mb-0">
-                From smart home systems to high-performance laptops, we stay ahead of the curve to deliver the latest in electronic innovation.
-            </p>
+                From smart home systems to high-performance laptops, we stay ahead of the curve to deliver the latest in
+                electronic innovation.
+              </p>
             </div>
           </div>
-    </div>
+        </div>
 
-    <div class="col-12 col-lg-6">
-        <div class="d-flex">
+        <div class="col-12 col-lg-6">
+          <div class="d-flex">
             <div class="me-3">
-                <div class="rounded-circle bg-warning fs-5 fw-bold d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
-                    3
+              <div class="rounded-circle bg-warning fs-5 fw-bold d-flex align-items-center justify-content-center"
+                style="width: 50px; height: 50px;">
+                3
               </div>
             </div>
             <div>
               <h5 class="fw-bold">Reliable Customer Support</h5>
               <p class="text-muted mb-0">
-                Our expert team is always ready to help — from troubleshooting to product recommendations, we've got your back.
-            </p>
+                Our expert team is always ready to help — from troubleshooting to product recommendations, we've got
+                your back.
+              </p>
             </div>
           </div>
-    </div>
+        </div>
 
-    <div class="col-12 col-lg-6">
-        <div class="d-flex">
+        <div class="col-12 col-lg-6">
+          <div class="d-flex">
             <div class="me-3">
-                <div class="rounded-circle bg-warning fs-5 fw-bold d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
-                    4
+              <div class="rounded-circle bg-warning fs-5 fw-bold d-flex align-items-center justify-content-center"
+                style="width: 50px; height: 50px;">
+                4
               </div>
             </div>
             <div>
               <h5 class="fw-bold ">Sustainability & Responsibility</h5>
               <p class="text-muted mb-0">
-                We commit to eco-conscious manufacturing and packaging, helping build a cleaner, smarter future for everyone.
-            </p>
+                We commit to eco-conscious manufacturing and packaging, helping build a cleaner, smarter future for
+                everyone.
+              </p>
             </div>
           </div>
-    </div>
+        </div>
 
-  </div>
+      </div>
     </div>
     <div class="Description m-5 rounded-4 ">
-        <div class="layer p-5">
-            <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                  <div class="carousel-item active">
-                    <img src="images/Others/customer.jpg" class="testimonial-img" alt="Client">
-                    <p class="fs-4">
-                        Exceptional service from start to finish. The team was professional, responsive, and exceeded all my expectations. Highly recommended for anyone seeking quality and reliability.                    </p>
-                    <p class="testimonial-name">Ali</p>
-                    <br>
-                  </div>
-                  <div class="carousel-item">
-                    <img src="images/Others/customer.jpg" class="testimonial-img" alt="Client">
-                    <p class="fs-4">The product is intuitive, fast, and has significantly improved our workflow. We saw a 30% increase in efficiency within the first week of use</p>
-                    <p class="testimonial-name">Mohaned</p>
-                  </div>
-                  <br>
-                  <div class="carousel-item">
-                    <img src="images/Others/customer.jpg" class="testimonial-img" alt="Client">
-                    <p class="fs-4">I found exactly what I was looking for and the checkout process was smooth and quick. Delivery was faster than expected. A+ experience!</p>
-                    <p class="testimonial-name">Mona</p>
-                  </div>
-                  <br>
-                  <div class="carousel-item">
-                    <img src="images/Others/customer.jpg" class="testimonial-img" alt="Client">
-                    <p class="fs-4">The product is intuitive, fast, and has significantly improved our workflow. We saw a 30% increase in efficiency within the first week of use</p>
-                    <p class="testimonial-name">Mohaned</p>
-                  </div>
-                  <br>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon"></span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
-                  <span class="carousel-control-next-icon"></span>
-                </button>
-                <div class="carousel-indicators mt-4">
-                  <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active"></button>
-                  <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1"></button>
-                  <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="2"></button>
-                  <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="3"></button>
-                </div>
-              </div>
+      <div class="layer p-5">
+        <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img src="images/Others/customer.jpg" class="testimonial-img" alt="Client">
+              <p class="fs-4">
+                Exceptional service from start to finish. The team was professional, responsive, and exceeded all my
+                expectations. Highly recommended for anyone seeking quality and reliability. </p>
+              <p class="testimonial-name">Ali</p>
+              <p class="testimonial-name opacity-0">Ali</p>
+            </div>
+            <div class="carousel-item">
+              <img src="images/Others/customer.jpg" class="testimonial-img" alt="Client">
+              <p class="fs-4">The product is intuitive, fast, and has significantly improved our workflow. We saw a 30%
+                increase in efficiency within the first week of use</p>
+              <p class="testimonial-name">Mohaned</p>
+              <p class="testimonial-name opacity-0">Ali</p>
+            </div>
+            <br>
+            <div class="carousel-item">
+              <img src="images/Others/customer.jpg" class="testimonial-img" alt="Client">
+              <p class="fs-4">I found exactly what I was looking for and the checkout process was smooth and quick.
+                Delivery was faster than expected. A+ experience!</p>
+              <p class="testimonial-name">Mona</p>
+              <p class="testimonial-name opacity-0">Ali</p>
+            </div>
+            <br>
+            <div class="carousel-item">
+              <img src="images/Others/customer.jpg" class="testimonial-img" alt="Client">
+              <p class="fs-4">The product is intuitive, fast, and has significantly improved our workflow. We saw a 30%
+                increase in efficiency within the first week of use</p>
+              <p class="testimonial-name">Mohaned</p>
+              <p class="testimonial-name opacity-0">Ali</p>
+            </div>
+            <br>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+          </button>
+          <div class="carousel-indicators mt-4">
+            <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="2"></button>
+            <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="3"></button>
+          </div>
         </div>
+      </div>
     </div>
   </div>
   <!------------------------------------ Container End ------------------------------------>
   <!------------------------------------ footer Start ------------------------------------>
   <div id="footer"></div>
-
   <script>
     fetch('footer.html')
       .then(response => response.text())
@@ -206,7 +225,7 @@
   </script>
   <!------------------------------------ footer End ------------------------------------>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Script JS -->
   <script type="module" src="js/home.js"></script>
   <script src="js/cart.js"></script>
   <script type="module" src="js/utils.js"></script>
