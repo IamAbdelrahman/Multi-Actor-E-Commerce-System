@@ -72,14 +72,9 @@ window.Save = function (event) {
     let name = document.getElementById('name').value.trim();
     let email = document.getElementById('email').value.trim().toLowerCase();
     let password = document.getElementById("password").value;
-    let role = document.getElementById("role").value;
-
-
-
 
     // Add New Users with Incremental IDs
-    const newId = UserManager.GenerateNextID();
-    UserManager.CreateUser(newId, name, email, password, role);
+    UserManager.AddUser(name, email, password);
 }
 
 window.Login = function (event) {
