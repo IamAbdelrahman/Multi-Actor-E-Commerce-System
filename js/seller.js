@@ -23,6 +23,7 @@
 -----------------------------------------------------------------------*/
 import StorageManager from '../modules/StorageModule.js'
 import UserManager from '../modules/UserModule.js'
+import ProductManager from '../modules/ProductModule.js'
 
 /*- SIDEBAR TOGGLER
 -----------------------------------------------------------------------*/
@@ -275,3 +276,10 @@ document.addEventListener('DOMContentLoaded', function() {
 // Most sold product - Most viewed product - Most ordered prduct - 
 
 // Seller Dashbord: 
+
+
+
+
+
+
+
