@@ -1,5 +1,6 @@
 import Validate from "../modules/ValidationModule.js";
 import StorageManager from "../modules/StorageModule.js";
+import userManagerID from "../modules/UserModule.js"
 
 document.addEventListener("DOMContentLoaded", () => {
     const userLoggedIn = JSON.parse(sessionStorage.getItem("userLoggedIn"));
@@ -49,6 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
         totalAmountContainer.innerHTML = `$${userCart.totalAmount.toFixed(2)}`;
         const subtotalAmountContainer = document.getElementById("subtotal-amount");
         subtotalAmountContainer.innerHTML = `$${userCart.totalAmount.toFixed(2)}`;
+        
     }
 
     const submit = document.getElementById("submit");
@@ -56,6 +58,8 @@ document.addEventListener("DOMContentLoaded", () => {
     submit.addEventListener("click", (e) => {
         e.preventDefault();
 
+        const selectedPaymentInput = document.querySelector('input[name="payment"]:checked');
+        const paymentMethod = selectedPaymentInput ? selectedPaymentInput.nextElementSibling.textContent.trim() : "Not selected";
         const name = document.getElementById("checkout-name").value.trim();
         const street = document.getElementById("checkout-streetAddress").value.trim();
         const city = document.getElementById("checkout-city").value.trim();
@@ -85,14 +89,15 @@ document.addEventListener("DOMContentLoaded", () => {
             alert(errors.join("\n"));
         } else {
 
-            const newOrder = {
-                id: userId+1,  
+            const newOrder = { 
+                id: GenerateNextID(),
+                id: userId+10,
                 userId: userId,
                 products: userCart.products,
                 totalAmount: userCart.totalAmount,
                 status: "processing",
                 orderDate: new Date().toISOString(),
-                PaymentMethod: "credit card", 
+                PaymentMethod: paymentMethod, 
                 shippingAddress: {
                     street: street,
                     city: city,
@@ -112,3 +117,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+function GenerateNextID() {
+    const orders = StorageManager.LoadSection("orders") || [];
+    const ids = orders.map(order => order.id);
+    return Math.max(...ids) + 1;
+    }
