@@ -33,8 +33,8 @@
             });
     </script>
     <div id="profileForm" class="container my-5">
-        <h2 class="text-center" style="color: #202529;">Update Profile</h2>
-        <form onsubmit="updateProfile(event)">
+        <h2 class="text-center" style="color: black;">Update Profile</h2>
+        <form onsubmit="updateProfile(event)" id="form">
             <div class="mb-3">
                 <label for="profileName" class="form-label">Name *</label>
                 <input type="text" class="form-control" id="profileName" placeholder="Name" />
@@ -51,22 +51,22 @@
 
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label for="city" class="form-label">Town / City *</label>
-                    <input type="text" class="form-control" id="city" required />
+                    <label for="profileCity" class="form-label">Town / City *</label>
+                    <input type="text" class="form-control" id="profileCity" required />
                 </div>
                 <div class="col-md-6">
-                    <label for="zip" class="form-label">ZIP Code *</label>
-                    <input type="text" class="form-control" id="zip" required />
+                    <label for="profileZip" class="form-label">ZIP Code *</label>
+                    <input type="text" class="form-control" id="profileZip" required />
                 </div>
 
             </div>
             <div class="mb-3">
                 <label for="profilePhone" class="form-label">Phone *</label>
-                <input type="tel" class="form-control" id="phone" required />
+                <input type="tel" class="form-control" id="profilePhone" required />
             </div>
 
 
-            <button type="submit" class="btn btn-warning w-100 fw-bold fs-5">Save Profile</button>
+            <button id="saveProfileBtn" type="submit" class="btn btn-warning w-100 fw-bold fs-5">Save Profile</button>
         </form>
 
     </div>
