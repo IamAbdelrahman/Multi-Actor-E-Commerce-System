@@ -29,7 +29,7 @@ import CustomerManager from '../modules/CustomerModule.js';
 
 /*- USERS FUNCTIONS
 -----------------------------------------------------------------------*/
-function CreateDataTable(id, name, email, password, city, phone) {
+function CreateDataUserTable(id, name, email, password, city, phone) {
   var tr = document.createElement("tr");
   var td = createCell();
   td.textContent = id;
@@ -56,12 +56,12 @@ function CreateDataTable(id, name, email, password, city, phone) {
   tr.appendChild(td);
 
   td = createCell();
-  td.appendChild(createDeleteIcon(id));
+  td.appendChild(createDeleteIcon(id, "user"));
   tr.appendChild(td);
   return tr;
 }
 
-function CreateHeader() {
+function CreateUserHeader() {
   var table = createTable();
   var contentdiv = document.querySelector("#mainContent");
   contentdiv.innerHTML = table;
@@ -69,7 +69,7 @@ function CreateHeader() {
   var tr = document.createElement("tr");
 
   var th = document.createElement("th");
-  th.textContent = "ID";
+  th.textContent = "#";
   tr.appendChild(th);
 
   var th = document.createElement("th");
@@ -85,28 +85,28 @@ function CreateHeader() {
   tr.appendChild(th);
 
   var th = document.createElement("th");
-  th.textContent = "Role";
-  tr.appendChild(th);
-
-  var th = document.createElement("th");
   th.textContent = "City";
   tr.appendChild(th);
 
   var th = document.createElement("th");
   th.textContent = "Phone";
   tr.appendChild(th);
+
+  var th = document.createElement("th");
+  th.textContent = "Delete";
+  tr.appendChild(th);
   head.appendChild(tr);
 }
 
 function ShowCustomers() {
   DisplayNone();
-  CreateHeader();
+  CreateUserHeader();
   const usersList = StorageManager.LoadSection("users") || [];
   const customers = usersList.filter(user => user.role === "customer");
   var body = document.querySelector("tbody");
   for (let i = 0; i < customers.length; i++) {
     const customer = customers[i];
-    body.appendChild(CreateDataTable(customer.id, customer.name, customer.email, customer.password, customer.Address.city, customer.phone));
+    body.appendChild(CreateDataUserTable(customer.id, customer.name, customer.email, customer.password, customer.Address.city, customer.phone));
   }
 }
 
@@ -125,7 +125,7 @@ function ShowSellers() {
 
 /*- PRODUCTS FUNCTIONS
 --------------------------------------------------------------------------------*/
-function ShowHeaderProduct() {
+function CreateProductHeader() {
   var table = createTable();
   var contentdiv = document.querySelector("#mainContent");
   contentdiv.innerHTML = table;
@@ -148,18 +148,44 @@ function ShowHeaderProduct() {
   th.textContent = "Stock";
   tr.appendChild(th);
 
+  var th = document.createElement("th");
+  th.textContent = "Delete";
+  tr.appendChild(th);
   head.appendChild(tr);
 }
 
+function CreateDataProductTable(id, name, price, stock) {
+  var tr = document.createElement("tr");
+  var td = createCell();
+  td.textContent = id;
+  tr.appendChild(td);
+
+  var td = createCell();
+  td.textContent = name;
+  tr.appendChild(td);
+
+  var td = createCell();
+  td.textContent = price;
+  tr.appendChild(td);
+
+  var td = createCell();
+  td.textContent = stock;
+  tr.appendChild(td);
+
+  td = createCell();
+  td.appendChild(createDeleteIcon(id, "product"));
+  tr.appendChild(td);
+  return tr;
+}
 
 function ShowProducts() {
   DisplayNone();
-  ShowHeaderProduct();
+  CreateProductHeader();
   const productList = StorageManager.LoadSection("products") || [];
   var body = document.querySelector("tbody");
   for (let i = 0; i < productList.length; i++) {
     const product = productList[i];
-    body.appendChild(createRowForProducts(product.id, product.name, product.price, product.stock));
+    body.appendChild(CreateDataProductTable(product.id, product.name, product.price, product.stock));
   }
 }
 
@@ -327,30 +353,30 @@ function ShowAnalytics() {
     `+${dashboardData.visitorsChange}% Since Last Month`;
   document.getElementById("orders-change").textContent =
     `+${dashboardData.ordersChange}% Since Last Month`;
-    
-    new Chart(document.getElementById("bar-chart-grouped"), {
-      type: 'bar',
-      data: {
-        labels: ["1900", "1950", "1999", "2050"],
-        datasets: [
-          {
-            label: "Africa",
-            backgroundColor: "#3e95cd",
-            data: [133, 221, 783, 2478]
-          }, {
-            label: "Europe",
-            backgroundColor: "#8e5ea2",
-            data: [408, 547, 675, 734]
-          }
-        ]
-      },
-      options: {
-        title: {
-          display: true,
-          text: 'Population growth (millions)'
+
+  new Chart(document.getElementById("bar-chart-grouped"), {
+    type: 'bar',
+    data: {
+      labels: ["1900", "1950", "1999", "2050"],
+      datasets: [
+        {
+          label: "Africa",
+          backgroundColor: "#3e95cd",
+          data: [133, 221, 783, 2478]
+        }, {
+          label: "Europe",
+          backgroundColor: "#8e5ea2",
+          data: [408, 547, 675, 734]
         }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Population growth (millions)'
       }
-    });
+    }
+  });
 }
 
 /*- HELPER FUNCTIONS
@@ -386,48 +412,31 @@ function DisplayNone() {
   document.getElementById("dashHeader").innerHTML = "";
 }
 
-
-
-function createRowForProducts(id, name, price, stock, category) {
-  var tr = document.createElement("tr");
-  var td = createCell();
-  td.textContent = id;
-  tr.appendChild(td);
-
-  var td = createCell();
-  td.textContent = name;
-  tr.appendChild(td);
-
-  var td = createCell();
-  td.textContent = price;
-  tr.appendChild(td);
-
-  var td = createCell();
-  td.textContent = stock;
-  tr.appendChild(td);
-
-  var td = createCell();
-  td.textContent = category;
-  tr.appendChild(td);
-
-  td = createCell();
-  td.appendChild(createDeleteIcon(id));
-  tr.appendChild(td);
-  return tr;
-}
-
 function createCell() {
   var cell = document.createElement("td");
   return cell;
 }
 
-function createDeleteIcon(id) {
+function createDeleteIcon(id, type) {
   const icon = document.createElement("i");
   icon.classList.add("bi", "bi-trash-fill", "text-danger", "fs-5", "ms-2", "cursor-pointer");
   icon.addEventListener("click", function () {
     var tr = this.parentElement.parentElement;
-    (confirm("Do you want to delete this user?")) ? tr.remove() : "undefined";
-    UserManager.DeleteUser(id);
+    switch (type) {
+      case "user":
+        (confirm("Do you want to delete this user?")) ? tr.remove() : "undefined";
+        UserManager.DeleteUser(id);
+        break;
+      case "product":
+        (confirm("Do you want to delete this product?")) ? tr.remove() : "undefined";
+        ProductManager.DeleteProduct(id);
+        break;
+      case "order":
+        break;
+      default:
+        break;
+    }
+
   });
   return icon;
 }
