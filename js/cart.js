@@ -1,28 +1,23 @@
 // ------------------------------- Cart-Slider functions start
-import { 
-  getCurrentCart,
-  saveUserCart,
-  saveGuestCart,
-  mergeGuestCartWithUser
-} from './utils.js';
-
 let cartItems = [];
+
+// Helper function to get the full data object from localStorage
+function getAppData() {
+  const storedData = localStorage.getItem('data');
+  return storedData ? JSON.parse(storedData) : { users: [], products: [], orders: [], cart: [] };
+}
 
 // Helper function to save the current cart
 function saveCurrentCart() {
-  const userLoggedIn = JSON.parse(sessionStorage.getItem("userLoggedIn"));
-  const userId = userLoggedIn?.id;
-  
-  if (userId) {
-    saveUserCart(userId, cartItems);
-  } else {
-    saveGuestCart(cartItems);
-  }
+  const data = getAppData();
+  data.cart = cartItems;
+  localStorage.setItem('data', JSON.stringify(data));
 }
 
 // Initialize cart
 function initCart() {
-  cartItems = getCurrentCart();
+  const data = getAppData();
+  cartItems = data.cart || [];
   updateCartCount();
 }
 
@@ -233,10 +228,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // Handle login/logout changes
   window.addEventListener('storage', function(e) {
     if (e.key === 'userLoggedIn') {
-      const userLoggedIn = JSON.parse(sessionStorage.getItem("userLoggedIn"));
-      if (userLoggedIn) {
-        mergeGuestCartWithUser(userLoggedIn.id);
-      }
       initCart();
       renderCartItems();
     }
