@@ -67,6 +67,16 @@ function displayProduct(product) {
     // Generate and display reviews
     document.getElementById('reviewsContent').innerHTML = generateRandomReviews(randomRating, randomReviews);
     
+    function handleReviewButtons() {
+        const showMoreBtn = document.getElementById('showMoreReviews');
+        if (showMoreBtn) {
+            showMoreBtn.addEventListener('click', function() {
+                // You'll need to modify this to fetch/show all reviews
+                this.textContent = 'Loading all reviews...';
+                // Implement your logic to load all reviews here
+            });
+        }
+    }
     // Set key features
     document.getElementById('keyFeatures').innerHTML = generateKeyFeatures(product);
     
@@ -80,6 +90,16 @@ function setupQuantityControls(product) {
     const decrementBtn = document.getElementById('decrement');
     const addToCartBtn = document.getElementById('addToCartBtn');
     const maxStock = product.stock || 50;
+    
+    // Remove any existing event listeners first
+    const newIncrementBtn = incrementBtn.cloneNode(true);
+    const newDecrementBtn = decrementBtn.cloneNode(true);
+    incrementBtn.parentNode.replaceChild(newIncrementBtn, incrementBtn);
+    decrementBtn.parentNode.replaceChild(newDecrementBtn, decrementBtn);
+    
+    // Get references to the new buttons
+    const cleanIncrementBtn = document.getElementById('increment');
+    const cleanDecrementBtn = document.getElementById('decrement');
     
     // Set initial max attribute
     quantityInput.max = maxStock;
@@ -96,36 +116,28 @@ function setupQuantityControls(product) {
         }
         
         // Update button states
-        decrementBtn.disabled = quantityInput.value <= 1;
-        incrementBtn.disabled = quantityInput.value >= maxStock;
-        
-        // Update stock display if available
-        const stockDisplay = document.getElementById('remainingStock');
-        if (stockDisplay) {
-            stockDisplay.textContent = maxStock - quantityInput.value;
-        }
+        cleanDecrementBtn.disabled = quantityInput.value <= 1;
+        cleanIncrementBtn.disabled = quantityInput.value >= maxStock;
     }
     
     // Initialize controls
     updateControls();
     
-    // Event listeners
-    incrementBtn.addEventListener('click', () => {
-        quantityInput.stepUp();
+    // Event listeners - use onclick to prevent duplicate events
+    cleanIncrementBtn.onclick = () => {
+        quantityInput.value = parseInt(quantityInput.value) + 1;
         updateControls();
-    });
+    };
     
-    decrementBtn.addEventListener('click', () => {
-        quantityInput.stepDown();
+    cleanDecrementBtn.onclick = () => {
+        quantityInput.value = parseInt(quantityInput.value) - 1;
         updateControls();
-    });
+    };
     
-    quantityInput.addEventListener('input', () => {
-        updateControls();
-    });
+    quantityInput.addEventListener('input', updateControls);
     
     // Add to cart functionality
-    addToCartBtn.addEventListener('click', () => {
+    addToCartBtn.onclick = () => {
         const quantity = parseInt(quantityInput.value) || 1;
         addToCart({
             id: product.id,
@@ -134,7 +146,7 @@ function setupQuantityControls(product) {
             image: product.image,
             stock: maxStock
         }, quantity);
-    });
+    };
 }
 
 function removeLoadingPlaceholders() {
@@ -295,7 +307,7 @@ function generateRandomReviews(averageRating, reviewCount) {
                     <span class="me-2">5 star</span>
                     <div class="progress" style="height: 10px; width: 70%">
                         <div class="progress-bar bg-warning" role="progressbar" 
-                             style="width: ${(ratingDistribution.fiveStar/reviewCount)*100}%"></div>
+                            style="width: ${(ratingDistribution.fiveStar/reviewCount)*100}%"></div>
                     </div>
                     <span class="ms-2">${ratingDistribution.fiveStar}</span>
                 </div>
@@ -303,7 +315,7 @@ function generateRandomReviews(averageRating, reviewCount) {
                     <span class="me-2">4 star</span>
                     <div class="progress" style="height: 10px; width: 70%">
                         <div class="progress-bar bg-warning" role="progressbar" 
-                             style="width: ${(ratingDistribution.fourStar/reviewCount)*100}%"></div>
+                            style="width: ${(ratingDistribution.fourStar/reviewCount)*100}%"></div>
                     </div>
                     <span class="ms-2">${ratingDistribution.fourStar}</span>
                 </div>
@@ -311,7 +323,7 @@ function generateRandomReviews(averageRating, reviewCount) {
                     <span class="me-2">3 star</span>
                     <div class="progress" style="height: 10px; width: 70%">
                         <div class="progress-bar bg-warning" role="progressbar" 
-                             style="width: ${(ratingDistribution.threeStar/reviewCount)*100}%"></div>
+                            style="width: ${(ratingDistribution.threeStar/reviewCount)*100}%"></div>
                     </div>
                     <span class="ms-2">${ratingDistribution.threeStar}</span>
                 </div>
@@ -319,7 +331,7 @@ function generateRandomReviews(averageRating, reviewCount) {
                     <span class="me-2">2 star</span>
                     <div class="progress" style="height: 10px; width: 70%">
                         <div class="progress-bar bg-warning" role="progressbar" 
-                             style="width: ${(ratingDistribution.twoStar/reviewCount)*100}%"></div>
+                            style="width: ${(ratingDistribution.twoStar/reviewCount)*100}%"></div>
                     </div>
                     <span class="ms-2">${ratingDistribution.twoStar}</span>
                 </div>
@@ -327,7 +339,7 @@ function generateRandomReviews(averageRating, reviewCount) {
                     <span class="me-2">1 star</span>
                     <div class="progress" style="height: 10px; width: 70%">
                         <div class="progress-bar bg-warning" role="progressbar" 
-                             style="width: ${(ratingDistribution.oneStar/reviewCount)*100}%"></div>
+                            style="width: ${(ratingDistribution.oneStar/reviewCount)*100}%"></div>
                     </div>
                     <span class="ms-2">${ratingDistribution.oneStar}</span>
                 </div>
@@ -374,7 +386,7 @@ function calculateRatingDistribution(averageRating, reviewCount) {
     
     // Ensure the total matches reviewCount
     const total = distribution.fiveStar + distribution.fourStar + 
-                 distribution.threeStar + distribution.twoStar + distribution.oneStar;
+                distribution.threeStar + distribution.twoStar + distribution.oneStar;
     
     if (total !== reviewCount) {
         // Adjust the largest category to match
@@ -391,7 +403,7 @@ function calculateRatingDistribution(averageRating, reviewCount) {
 
 function generateReview(usernames, comments, rating, index) {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 
-                   'July', 'August', 'September', 'October', 'November', 'December'];
+                    'July', 'August', 'September', 'October', 'November', 'December'];
     const days = Math.floor(Math.random() * 28) + 1;
     const month = months[Math.floor(Math.random() * 12)];
     const year = 2023 - Math.floor(Math.random() * 3);
