@@ -11,67 +11,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/product-details.css">
     <link rel="stylesheet" href="css/checkout.css">
-    <link rel="stylesheet" href="css/home.css" />
-
-    <style>
-        .product-image {
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
-        }
-
-        .product-image:hover {
-            transform: scale(1.02);
-        }
-
-        .thumbnail {
-            cursor: pointer;
-            border: 2px solid transparent;
-            border-radius: 5px;
-        }
-
-        .thumbnail:hover,
-        .thumbnail.active {
-            border-color: #6c757d;
-        }
-
-        .benefit-icon {
-            font-size: 1.5rem;
-            color: #ffc107;
-            margin-right: 10px;
-        }
-
-        .quantity-input {
-            width: 60px;
-            text-align: center;
-        }
-
-        .rating {
-            color: #ffc107;
-        }
-
-        .btn-yellow {
-            background-color: #ffc107;
-            border-color: #ffc107;
-            color: #212529;
-        }
-
-        .btn-yellow:hover {
-            background-color: #e0a800;
-            border-color: #d39e00;
-            color: #212529;
-        }
-
-        .highlight-bg {
-            background-color: rgba(255, 193, 7, 0.1);
-        }
-
-        .nav-tabs .nav-link.active {
-            color: #ffc107;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="css/home.css">
 </head>
 
 <body>
@@ -88,97 +32,68 @@
     <!------------------------------------ NavBar End ------------------------------------>
 
     <!-- Main Content -->
-    <div class="container my-5">
+    <div class="container product-details-container">
         <div class="row">
-            <!-- Product Images -->
-            <div class="col-md-6">
+            <!-- Product Image -->
+            <div class="col-md-6 product-image-section">
                 <div class="mb-3">
-                    <img id="mainImage" src="images/Mobiles/s23ultra4.webp" alt="Samsung Galaxy S23 Ultra"
-                        class="img-fluid product-image">
-                </div>
-                <div class="row g-2">
-                    <div class="col-3">
-                        <img src="images/Mobiles/s234.jpg" alt="Side view" class="img-fluid thumbnail"
-                            onclick="changeImage(this)">
-                    </div>
-                    <div class="col-3">
-                        <img src="images/Mobiles/s231.jpg" alt="Front view" class="img-fluid  thumbnail active"
-                            onclick="changeImage(this)">
-                    </div>
-                    <div class="col-3">
-                        <img src="images/Mobiles/s233.jpg" alt="Back view" class="img-fluid thumbnail"
-                            onclick="changeImage(this)">
-                    </div>
-                    <div class="col-3">
-                        <img src="images/Mobiles/s232.jpg" alt="With accessories" class="img-fluid thumbnail"
-                            onclick="changeImage(this)">
-                    </div>
+                    <img id="mainImage" src="" alt="Product Image" class="img-fluid product-main-image loading-placeholder">
                 </div>
             </div>
 
             <!-- Product Details -->
-            <div class="col-md-6">
-                <h1>Samsung Galaxy S23 Ultra</h1>
-                <div class="mb-2">
-                    <span class="rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </span>
-                    <span class="ms-2">4.7 (428 reviews)</span>
+            <div class="col-md-6 product-info-section">
+                <h1 id="productName" class="product-title loading-placeholder"></h1>
+                
+                <div class="product-meta">
+                    <div class="d-flex align-items-center mb-2">
+                        <span class="rating me-2" id="productRatingStars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </span>
+                        <span id="productRating" class="me-3">Loading...</span>
+                        <span id="productStock" class="product-stock"></span>
+                    </div>
+                    <h3 id="productPrice" class="product-price loading-placeholder"></h3>
                 </div>
-                <h3 class="text-success">$1,199.99</h3>
 
-                <div class="mb-4">
-                    <p>The Samsung Galaxy S23 Ultra features a stunning 6.8-inch Dynamic AMOLED display, 200MP camera
-                        system, and the fastest Snapdragon processor yet. With built-in S Pen and all-day battery life,
-                        it's the ultimate smartphone for power users.</p>
+                <div class="product-description">
+                    <p id="productDescription" class="loading-placeholder"></p>
+                </div>
+
+                <!-- Key Features -->
+                <div class="key-features">
+                    <h5>Key Features</h5>
+                    <ul class="key-features-list" id="keyFeatures">
+                        <!-- Will be populated by JavaScript -->
+                    </ul>
                 </div>
 
                 <!-- Quantity and Add to Cart -->
-                <div class="row mb-4">
-                    <div class="col-md-3 mb-2 mb-md-0">
-                        <label class="form-label"><strong>Quantity:</strong></label>
-                        <div class="input-group">
-                            <button class="btn btn-outline-secondary" type="button" id="decrement">-</button>
-                            <input type="text" class="form-control quantity-input" value="1" id="quantity">
-                            <button class="btn btn-outline-secondary" type="button" id="increment">+</button>
+                <div class="quantity-controls">
+                    <div class="row">
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <label class="form-label"><strong>Quantity:</strong></label>
+                            <div class="input-group quantity-input-group">
+                                <button class="btn btn-outline-secondary" type="button" id="decrement">-</button>
+                                <input type="number" min="1" class="form-control quantity-input" value="1" id="quantity">
+                                <button class="btn btn-outline-secondary" type="button" id="increment">+</button>
+                            </div>
+                            <small class="text-muted">Max: <span id="maxQuantity"></span></small>
                         </div>
-                    </div>
-                    <div class="col-md-9">
-
-                        <button class="btn btn-yellow btn-lg w-100" style="height: 100%;" onclick="addToCart({
-                            id: 203, 
-                            name: 'Samsung Galaxy S23 Ultra', 
-                            price: 1199.99,
-                            stock: 35,
-                            image: 'images/Mobiles/s233.jpg'
-                        }, parseInt(document.getElementById('quantity').value))">
-
-                            <i class="fas fa-shopping-cart me-2"></i> Add to Cart
-                        </button>
-
-                    </div>
-                </div>
-
-                <!-- Benefits -->
-                <div class="card mb-4 highlight-bg">
-                    <div class="card-body">
-                        <h5 class="card-title"><i class="fas fa-bolt benefit-icon"></i>Key Features</h5>
-                        <ul class="list-unstyled">
-                            <li><i class="fas fa-check text-warning me-2"></i> 200MP Adaptive Pixel Sensor</li>
-                            <li><i class="fas fa-check text-warning me-2"></i> Built-in S Pen with 2.8ms latency</li>
-                            <li><i class="fas fa-check text-warning me-2"></i> Snapdragon 8 Gen 2 for Galaxy</li>
-                            <li><i class="fas fa-check text-warning me-2"></i> 5000mAh all-day battery</li>
-                            <li><i class="fas fa-check text-warning me-2"></i> IP68 water and dust resistance</li>
-                        </ul>
+                        <div class="col-md-8">
+                            <button id="addToCartBtn" class="btn btn-yellow btn-lg w-100 h-100" disabled>
+                                <i class="fas fa-shopping-cart me-2"></i> Loading...
+                            </button>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Share Buttons -->
-                <div>
+                <div class="mb-4">
                     <span class="me-2"><strong>Share:</strong></span>
                     <button class="btn btn-sm btn-outline-primary me-2"><i class="fab fa-facebook-f"></i></button>
                     <button class="btn btn-sm btn-outline-info me-2"><i class="fab fa-twitter"></i></button>
@@ -189,207 +104,43 @@
         </div>
 
         <!-- Product Description Tabs -->
-        <div class="row mt-5">
-            <div class="col-12">
-                <ul class="nav nav-tabs" id="productTabs" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
-                            data-bs-target="#description" type="button">Description</button>
-                    </li>
-                    <li class="nav-item " role="presentation">
-                        <button class="nav-link " id="specs-tab" data-bs-toggle="tab" data-bs-target="#specs"
-                            type="button">Specifications</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="features-tab" data-bs-toggle="tab" data-bs-target="#features"
-                            type="button">Features</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews"
-                            type="button">Reviews</button>
-                    </li>
-                </ul>
-                <div class="tab-content p-3 border border-top-0 rounded-bottom" id="productTabsContent">
-                    <div class="tab-pane fade show active text-dark" id="description" role="tabpanel">
-                        <h4 class="text-warning">About the Galaxy S23 Ultra</h4>
-                        <p>The Samsung Galaxy S23 Ultra is the pinnacle of smartphone technology, combining
-                            professional-grade camera capabilities with desktop-level performance. The 6.8-inch Dynamic
-                            AMOLED 2X display with 120Hz refresh rate delivers stunning visuals, while the new 200MP
-                            camera sensor captures incredible detail in any light.</p>
-                        <p>With the built-in S Pen, you get the precision of a pen on your phone, perfect for
-                            note-taking, photo editing, or creative work. The Snapdragon 8 Gen 2 for Galaxy processor is
-                            optimized specifically for this device, delivering unmatched speed and efficiency.</p>
-                        <p>Designed with premium materials and military-grade durability, the S23 Ultra is as tough as
-                            it is beautiful, featuring Gorilla Glass Victus 2 front and back with an armored aluminum
-                            frame.</p>
-                    </div>
-                    <div class="tab-pane fade text-warning" id="specs" role="tabpanel">
-                        <h4>Technical Specifications</h4>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><strong>Display:</strong> 6.8" Dynamic AMOLED 2X, 3088×1440,
-                                120Hz</li>
-                            <li class="list-group-item"><strong>Processor:</strong> Snapdragon 8 Gen 2 for Galaxy</li>
-                            <li class="list-group-item"><strong>RAM:</strong> 12GB LPDDR5X</li>
-                            <li class="list-group-item"><strong>Storage:</strong> 256GB/512GB/1TB UFS 4.0</li>
-                            <li class="list-group-item"><strong>Rear Cameras:</strong> 200MP wide + 12MP ultra-wide +
-                                10MP telephoto (3x) + 10MP telephoto (10x)</li>
-                            <li class="list-group-item"><strong>Front Camera:</strong> 12MP</li>
-                            <li class="list-group-item"><strong>Battery:</strong> 5000mAh, 45W wired charging, 15W
-                                wireless</li>
-                            <li class="list-group-item"><strong>OS:</strong> Android 13 with One UI 5.1</li>
-                            <li class="list-group-item"><strong>Dimensions:</strong> 163.4 x 78.1 x 8.9 mm, 234g</li>
-                        </ul>
-                    </div>
-                    <div class="tab-pane fade text-warning" id="features" role="tabpanel">
-                        <h4>Key Features</h4>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="card mb-3 highlight-bg">
-                                    <div class="card-body">
-                                        <h5><i class="fas fa-camera text-warning me-2"></i>Camera System</h5>
-                                        <ul>
-                                            <li>200MP Adaptive Pixel Sensor</li>
-                                            <li>100x Space Zoom with enhanced stabilization</li>
-                                            <li>8K video recording at 30fps</li>
-                                            <li>Nightography for stunning low-light photos</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="card mb-3 highlight-bg">
-                                    <div class="card-body">
-                                        <h5><i class="fas fa-microchip text-warning me-2"></i>Performance</h5>
-                                        <ul>
-                                            <li>Custom Snapdragon 8 Gen 2 for Galaxy</li>
-                                            <li>Vapor Chamber cooling system</li>
-                                            <li>12GB LPDDR5X RAM</li>
-                                            <li>UFS 4.0 storage (up to 1TB)</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="card mb-3 highlight-bg">
-                                    <div class="card-body">
-                                        <h5><i class="fas fa-mobile-alt text-warning me-2"></i>Display</h5>
-                                        <ul>
-                                            <li>6.8" Dynamic AMOLED 2X</li>
-                                            <li>120Hz adaptive refresh rate</li>
-                                            <li>1750 nits peak brightness</li>
-                                            <li>Vision Booster for outdoor visibility</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="card mb-3 highlight-bg">
-                                    <div class="card-body">
-                                        <h5><i class="fas fa-battery-full text-warning me-2"></i>Battery</h5>
-                                        <ul>
-                                            <li>5000mAh intelligent battery</li>
-                                            <li>45W Super Fast Charging 2.0</li>
-                                            <li>15W Wireless Fast Charging</li>
-                                            <li>Wireless PowerShare</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade text-warning" id="reviews" role="tabpanel">
-                        <h4>Customer Reviews</h4>
-                        <div class="mb-4">
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    <strong>Alex T.</strong>
-                                    <div class="rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                </div>
-                                <small class="text-muted">March 15, 2023</small>
-                            </div>
-                            <p class="mt-2">The camera on this phone is absolutely incredible. The 200MP sensor captures
-                                details I've never seen before in a smartphone. Battery life easily lasts me all day
-                                with heavy use.</p>
-                        </div>
-                        <div class="mb-4">
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    <strong>Sarah K.</strong>
-                                    <div class="rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </div>
-                                </div>
-                                <small class="text-muted">February 28, 2023</small>
-                            </div>
-                            <p class="mt-2">As a digital artist, the S Pen integration is game-changing. The low latency
-                                makes it feel like I'm drawing on paper. The screen is massive and beautiful - perfect
-                                for my work.</p>
-                        </div>
-                        <button class="btn btn-yellow">Write a Review</button>
-                    </div>
+        <div class="product-tabs">
+            <ul class="nav nav-tabs" id="productTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="details-tab" data-bs-toggle="tab"
+                        data-bs-target="#details" type="button">Product Details</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="specs-tab" data-bs-toggle="tab" data-bs-target="#specs"
+                        type="button">Technical Specs</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews"
+                        type="button">Customer Reviews</button>
+                </li>
+            </ul>
+            <div class="tab-content" id="productTabsContent">
+                <div class="tab-pane fade show active" id="details" role="tabpanel">
+                    <div id="fullDescription" class="loading-placeholder"></div>
+                </div>
+                <div class="tab-pane fade" id="specs" role="tabpanel">
+                    <div id="specificationsContent" class="loading-placeholder"></div>
+                </div>
+                <div class="tab-pane fade" id="reviews" role="tabpanel">
+                    <div id="reviewsContent" class="loading-placeholder"></div>
                 </div>
             </div>
         </div>
 
         <!-- Related Products -->
-        <div class="row mt-5">
-            <div class="col-12">
-                <h3 class="mb-4">You May Also Like</h3>
-                <div class="row">
-                    <div class="col-md-3 col-6 mb-4">
-                        <div class="card h-100">
-                            <img src="images/Mobiles/1.png" class="card-img-top" alt="Galaxy A50">
-                            <div class="card-body">
-                                <h5 class="card-title">Samsung Galaxy A50</h5>
-                                <p class="card-text text-success">$349.99</p>
-                                <a href="#" class="btn btn-sm btn-outline-primary">View</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-6 mb-4">
-                        <div class="card h-100">
-                            <img src="images/Mobiles/2.png" class="card-img-top" alt="oppo">
-                            <div class="card-body">
-                                <h5 class="card-title">Oppo A3</h5>
-                                <p class="card-text text-success">$229.99</p>
-                                <a href="#" class="btn btn-sm btn-outline-primary">View</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-6 mb-4">
-                        <div class="card h-100">
-                            <img src="images/Mobiles/4.png" class="card-img-top" alt="Poco">
-                            <div class="card-body">
-                                <h5 class="card-title">Poco C75</h5>
-                                <p class="card-text text-success">$1,099.99</p>
-                                <a href="#" class="btn btn-sm btn-outline-primary">View</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-6 mb-4">
-                        <div class="card h-100">
-                            <img src="images/Mobiles/6.png" class="card-img-top" alt="redmi">
-                            <div class="card-body">
-                                <h5 class="card-title">Redmi 12</h5>
-                                <p class="card-text text-success">$990.99</p>
-                                <a href="#" class="btn btn-sm btn-outline-primary">View</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="related-products">
+            <h3 class="mb-4">You May Also Like</h3>
+            <div class="row g-4" id="relatedProducts">
+                <!-- Related products will be loaded dynamically -->
             </div>
         </div>
     </div>
+
     <!---------------------- Footer -------------------------------------->
     <div id="footer"></div>
 
@@ -415,21 +166,10 @@
                 quantityInput.value = parseInt(quantityInput.value) - 1;
             }
         });
-
-        // Thumbnail image switcher
-        function changeImage(element) {
-            document.querySelectorAll('.thumbnail').forEach(thumb => {
-                thumb.classList.remove('active');
-            });
-            element.classList.add('active');
-            document.getElementById('mainImage').src = element.src;
-        }
     </script>
-
-    <!-- Script JS -->
-    <script type="module" src="js/home.js"></script>
-    <script src="js/checkLogin.js"></script>
+    <script type="module" src="js/product-details.js"></script>
     <script type="module" src="js/cart.js"></script>
+    <script src="js/checkLogin.js"></script>
 </body>
 
 </html>
