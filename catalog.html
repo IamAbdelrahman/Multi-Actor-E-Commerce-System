@@ -5,11 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop</title>
-
-
-
-
-
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
@@ -23,7 +18,7 @@
 
 </head>
 
-<body class="bg-light">
+<body class="bg-light d-flex flex-column min-vh-100">
 
     <!------------------------------------ NavBar Start ------------------------------------>
 
@@ -35,321 +30,48 @@
                 document.getElementById('navBar').innerHTML = data;
             });
     </script>
-
     <!------------------------------------ NavBar End ------------------------------------>
 
-    <!------------------------------------ Products Start ------------------------------------>
-
-    <div class="container">
-        <div class="row">
-            <div class="products my-5 col-md-9 shadow">
-
-                <div class="row g-5 p-4">
-
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="card h-100 position-relative text-center p-3">
-                            <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
-                                <button class="btn btn-light rounded-circle shadow-sm"><i
-                                        class="bi bi-heart"></i></button>
-                                <button class="btn btn-light rounded-circle shadow-sm"><i
-                                        class="bi bi-eye"></i></button>
-                            </div>
-
-                            <img src="images/HeadPhones/1.png" class="card-img-top mx-auto" alt="Fames Primis"
-                                style="width: 60%;">
-                            <div class="card-body">
-                                <h5 class="card-title fw-semibold">Title</h5>
-                                <p class="text-muted small">Desctiption</p>
-                            </div>
-                            <div class="card-footer bg-white border-0">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="fw-bold">$65.00</span>
-                                    <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold" onclick="addToCart({
-                                        id: 101, 
-                                        name: 'Wireless Headphones', 
-                                        price: 65.00, 
-                                        image: 'images/HeadPhones/1.png'
-                                    })">Add
-                                        to
-                                        cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="card h-100 position-relative text-center p-3">
-                            <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
-                                <button class="btn btn-light rounded-circle shadow-sm"><i
-                                        class="bi bi-heart"></i></button>
-                                <button class="btn btn-light rounded-circle shadow-sm"><i
-                                        class="bi bi-eye"></i></button>
-                            </div>
-                          
-                            <img src="images/HeadPhones/2.png" class="card-img-top mx-auto" alt="Fames Primis"
-                                style="width: 60%;">
-                            <div class="card-body">
-                                <h5 class="card-title fw-semibold">Title</h5>
-                                <p class="text-muted small">Desctiption</p>
-                            </div>
-                            <div class="card-footer bg-white border-0">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="fw-bold">$85.00</span>
-                                    <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold" onclick="addToCart({
-                                        id: 102, 
-                                        name: 'Wireless Headphones', 
-                                        price: 85.00, 
-                                        image: 'images/HeadPhones/2.png'
-                                    })">Add
-                                        to
-                                        cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="card h-100 position-relative text-center p-3">
-                            <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
-                                <button class="btn btn-light rounded-circle shadow-sm"><i
-                                        class="bi bi-heart"></i></button>
-                                <button class="btn btn-light rounded-circle shadow-sm"><i
-                                        class="bi bi-eye"></i></button>
-                            </div>
-
-                            <img src="images/HeadPhones/3.png" class="card-img-top mx-auto" alt="Fames Primis"
-                                style="width: 60%;">
-                            <div class="card-body">
-                                <h5 class="card-title fw-semibold">Title</h5>
-                                <p class="text-muted small">Desctiption</p>
-                            </div>
-                            <div class="card-footer bg-white border-0">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="fw-bold">$70.00</span>
-                                    <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold" onclick="addToCart({
-                                        id: 103, 
-                                        name: 'Wireless Headphones', 
-                                        price: 70.00, 
-                                        image: 'images/HeadPhones/3.png'
-                                    })">Add
-                                        to
-                                        cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="card h-100 position-relative text-center p-3">
-                            <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
-                                <button class="btn btn-light rounded-circle shadow-sm"><i
-                                        class="bi bi-heart"></i></button>
-                                <button class="btn btn-light rounded-circle shadow-sm"><i
-                                        class="bi bi-eye"></i></button>
-                            </div>
-
-                            <img src="images/HeadPhones/4.png" class="card-img-top mx-auto" alt="Fames Primis"
-                                style="width: 60%;">
-                            <div class="card-body">
-                                <h5 class="card-title fw-semibold">Title</h5>
-                                <p class="text-muted small">Desctiption</p>
-                            </div>
-                            <div class="card-footer bg-white border-0">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="fw-bold">$35.00</span>
-                                    <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold" onclick="addToCart({
-                                        id: 104, 
-                                        name: 'Wireless Headphones', 
-                                        price: 35.00, 
-                                        image: 'images/HeadPhones/4.png'
-                                    })">Add
-                                        to
-                                        cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="card h-100 position-relative text-center p-3">
-                            <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
-                                <button class="btn btn-light rounded-circle shadow-sm"><i
-                                        class="bi bi-heart"></i></button>
-                                <button class="btn btn-light rounded-circle shadow-sm"><i
-                                        class="bi bi-eye"></i></button>
-                            </div>
-
-                            <img src="images/HeadPhones/5.png" class="card-img-top mx-auto" alt="Fames Primis"
-                                style="width: 60%;">
-                            <div class="card-body">
-                                <h5 class="card-title fw-semibold">Title</h5>
-                                <p class="text-muted small">Desctiption</p>
-                            </div>
-                            <div class="card-footer bg-white border-0">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="fw-bold">$25.00</span>
-                                    <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold" onclick="addToCart({
-                                        id: 105, 
-                                        name: 'Wireless Headphones', 
-                                        price: 25.00, 
-                                        image: 'images/HeadPhones/5.png'
-                                    })">Add
-                                        to
-                                        cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="card h-100 position-relative text-center p-3">
-                            <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
-                                <button class="btn btn-light rounded-circle shadow-sm"><i
-                                        class="bi bi-heart"></i></button>
-                                <button class="btn btn-light rounded-circle shadow-sm"><i
-                                        class="bi bi-eye"></i></button>
-                            </div>
-
-                            <img src="images/HeadPhones/6.png" class="card-img-top mx-auto" alt="Fames Primis"
-                                style="width: 60%;">
-                            <div class="card-body">
-                                <h5 class="card-title fw-semibold">Title</h5>
-                                <p class="text-muted small">Desctiption</p>
-                            </div>
-                            <div class="card-footer bg-white border-0">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="fw-bold">$40.00</span>
-                                    <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold" onclick="addToCart({
-                                        id: 106, 
-                                        name: 'Wireless Headphones', 
-                                        price: 40.00, 
-                                        image: 'images/HeadPhones/6.png'
-                                    })">Add
-                                        to
-                                        cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="card h-100 position-relative text-center p-3">
-                            <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
-                                <button class="btn btn-light rounded-circle shadow-sm"><i
-                                        class="bi bi-heart"></i></button>
-                                <button class="btn btn-light rounded-circle shadow-sm"><i
-                                        class="bi bi-eye"></i></button>
-                            </div>
-
-                            <img src="images/HeadPhones/7.png" class="card-img-top mx-auto" alt="Fames Primis"
-                                style="width: 60%;">
-                            <div class="card-body">
-                                <h5 class="card-title fw-semibold">Title</h5>
-                                <p class="text-muted small">Desctiption</p>
-                            </div>
-                            <div class="card-footer bg-white border-0">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="fw-bold">$100.00</span>
-                                    <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold" onclick="addToCart({
-                                        id: 107, 
-                                        name: 'Wireless Headphones', 
-                                        price: 100.00, 
-                                        image: 'images/HeadPhones/7.png'
-                                    })">Add
-                                        to
-                                        cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="card h-100 position-relative text-center p-3">
-                            <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
-                                <button class="btn btn-light rounded-circle shadow-sm"><i
-                                        class="bi bi-heart"></i></button>
-                                <button class="btn btn-light rounded-circle shadow-sm"><i
-                                        class="bi bi-eye"></i></button>
-                            </div>
-
-                            <img src="images/HeadPhones/8.png" class="card-img-top mx-auto" alt="Fames Primis"
-                                style="width: 60%;">
-                            <div class="card-body">
-                                <h5 class="card-title fw-semibold">jss</h5>
-                                <p class="text-muted small">Desctiption</p>
-                            </div>
-                            <div class="card-footer bg-white border-0">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="fw-bold">$50.00</span>
-                                    <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold" onclick="addToCart({
-                                        id: 108, 
-                                        name: 'Wireless Headphones', 
-                                        price: 50.00, 
-                                        image: 'images/HeadPhones/8.png'
-                                    })">Add
-                                        to
-                                        cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="card h-100 position-relative text-center p-3">
-                            <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
-                                <button class="btn btn-light rounded-circle shadow-sm"><i
-                                        class="bi bi-heart"></i></button>
-                                <button class="btn btn-light rounded-circle shadow-sm"><i
-                                        class="bi bi-eye"></i></button>
-                            </div>
-
-                            <img src="images/HeadPhones/9.png" class="card-img-top mx-auto" alt="Fames Primis"
-                                style="width: 60%;">
-                            <div class="card-body">
-                                <h5 class="card-title fw-semibold">Title</h5>
-                                <p class="text-muted small">Desctiption</p>
-                            </div>
-                            <div class="card-footer bg-white border-0">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="fw-bold">$10.00</span>
-                                    <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold "onclick="addToCart({
-                                        id: 109, 
-                                        name: 'Wireless Headphones', 
-                                        price: 10.00, 
-                                        image: 'images/HeadPhones/9.png'
-                                    })">Add
-                                        to
-                                        cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <div class="container-fluid mt-3 ">
+        <div class="column">
+            <div class="col-md-12">
+                <h5 class="mb-2">Search Products</h5>
+                <div class="input-group">
+                    <input type="text" id="searchInput" class="form-control" placeholder="Enter product name"
+                        style="border-radius: 50px;" />
                 </div>
             </div>
-            <!-- Filters Column -->
-            <div class="col-md-3 my-5 ">
-                <div class="shadow rounded p-4">
-                    <!-- Filters by price -->
 
-                    <h4 class="text-center">Filter by price</h4>
-                    <div class="priceContent d-flex justify-content-between">
-                        <div>
-                            <label>Min</label>
-                            <p id="min-value">$10</p>
-                        </div>
-                        <div>
-                            <label>Max</label>
-                            <p id="max-value">$500</p>
-                        </div>
-                    </div>
-                    <div class="range-slider d-flex justify-content-between position-relative">
-                        <div class="range-fill"></div>
-                        <input type="range" class="min-price" value="100" min="10" max="500" step="10" />
-                        <input type="range" class="max-price" value="300" min="10" max="500" step="10" />
-                    </div>
-                    <!-- Filters by naem -->
-                    <h4>Filter by name</h4>
-                    <input type="text" class="searchByName" placeholder="search by name" />
-
-                </div>
-            </div>
         </div>
     </div>
 
+    <div class="container-fluid my-5 ">
+        <div class="row">
+            <div class="col-md-2 card  " style="height: 200px; padding: 30px;" id="priceCard">
+                <h5 class="mb-2">Filter By Price</h5>
+                <div class="priceContent">
+                    <div class="d-flex justify-content-between">
+                        <span id="min-value">$10</span> - <span id="max-value">$1000</span>
+                    </div>
+                    <div class="range-slider ">
+
+                        <input type="range" id="min-range" class="form-range" min="10" max="1000" value="200" step="10">
+                        <input type="range" id="max-range" class="form-range" min="10" max="1000" value="700" step="10">
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-10">
+                <div id="productCatalog"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
     <!------------------------------------ footer Start ------------------------------------>
-    <div id="footer"></div>
+    <div id="footer" class="mt-auto"></div>
 
     <script>
         fetch('footer.html')
@@ -365,7 +87,7 @@
     <script type="module" src="js/cart.js"></script>
     <script type="module" src="js/utils.js"></script>
     <script src="js/checkLogin.js"></script>
-    <script src="./js/catalog.js"></script>
+    <script type="module" src="./js/catalog.js"></script>
 
 
 </body>
