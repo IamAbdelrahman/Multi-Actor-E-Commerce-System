@@ -83,7 +83,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!Validate.isNameValid(name)) errors.push("Invalid name (must be 3-15 characters long and contain only letters)");
         if (!Validate.isEmailValid(email)) errors.push("Invalid email");
         if (!Validate.isPhoneValid(phone)) errors.push("Invalid phone (expected format: +20XXXXXXXXXX)");
-        if (!Validate.isAddressValid(address)) errors.push("Invalid address");
+        if (!Validate.isCityValid(address.city)) errors.push("Invalid city");
+        if (!Validate.isZipCodeValid(address.zip)) errors.push("Invalid zipcode");
+        if (!Validate.isStreetValid(address.street)) errors.push("Invalid street");
 
         if (errors.length > 0) {
             alert(errors.join("\n"));
