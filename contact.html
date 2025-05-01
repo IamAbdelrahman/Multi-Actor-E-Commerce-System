@@ -37,39 +37,30 @@
                 </div>
             </div>
 
-            <!-- Right Section (Form) -->
             <div class="col-md-7 order-1 order-md-2 mb-4 mb-md-0 ">
                 <div class="bg-white p-4 shadow-sm rounded">
                     <h2 class="mb-4 text-center fw-semibold">Have Questions ? <br> We are here for you</h2>
                     <p class="text-center mb-4 text-muted">Send us a message and we will get back to you shortly.</p>
 
-                    <form class="d-flex flex-column">
-                        <div class="row mb-3">
+                    <div class="d-flex flex-column">
+                        <div class="mb-3">
                             <div class="col">
-                                <input type="text" class="form-control rounded" placeholder="First Name" required
-                                    pattern="[A-Za-z]+" title="First Name should contain only letters">
-                            </div>
-                            <div class="col">
-                                <input type="text" class="form-control rounded" placeholder="Last Name" required
-                                    pattern="[A-Za-z]+" title="Last Name should contain only letters">
+                                <input type="text" name="contactName" class="form-control rounded" placeholder="First Name" required>
                             </div>
                         </div>
                         <div class="mb-3">
-                            <input type="email" class="form-control rounded" placeholder="Email Address" required
-                                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}"
-                                title="Please enter a valid email address (e.g., example@domain.com)">
+                            <input type="email" name="contactEmail" class="form-control rounded" placeholder="Email Address" required>
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control rounded" placeholder="Subject" required>
+                            <input type="text" name="contactSubject" class="form-control rounded" placeholder="Subject" required>
                         </div>
                         <div class="mb-3 flex-grow-1">
-                            <textarea class="form-control rounded" rows="5" placeholder="Your Message" required
-                                minlength="10" title="Message should be at least 10 characters long"></textarea>
+                            <textarea class="form-control rounded" rows="5" name="contactDescription" placeholder="Your Message" required></textarea>
                         </div>
                         <div class="d-grid mt-auto">
-                            <button type="submit" class="btn btn-warning btn-lg rounded">Send Message</button>
+                            <button type="submit" id="sendMessage" class="btn btn-warning btn-lg rounded">Send Message</button>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -78,60 +69,25 @@
 
 
 
-    <!------------------------------------ Footer ------------------------------------>
-    <footer class="footer-expand-lg footer-dark p-3 text-white py-4 mt-5" style="background-color: #202529;">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 mb-3">
-                    <h5>Electronics Store</h5>
-                    <p>Premium electronics and accessories from top brands.</p>
-                    <div class="social-icons">
-                        <a href="#" class="text-warning me-2"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-warning me-2"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-warning me-2"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-warning"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-                <div class="col-md-2 mb-3">
-                    <h5>Shop</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-decoration-none text-white-50">Smartphones</a></li>
-                        <li><a href="#" class="text-decoration-none text-white-50">Laptops</a></li>
-                        <li><a href="#" class="text-decoration-none text-white-50">Tablets</a></li>
-                        <li><a href="#" class="text-decoration-none text-white-50">Accessories</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-2 mb-3">
-                    <h5>Support</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-decoration-none text-white-50">Contact Us</a></li>
-                        <li><a href="#" class="text-decoration-none text-white-50">Shipping</a></li>
-                        <li><a href="#" class="text-decoration-none text-white-50">Returns</a></li>
-                        <li><a href="#" class="text-decoration-none text-white-50">FAQs</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <h5>Newsletter</h5>
-                    <p>Subscribe for exclusive offers and tech news.</p>
-                    <div class="input-group">
-                        <input type="email" class="form-control" placeholder="Your email">
-                        <button class="btn btn-warning" type="button">Subscribe</button>
-                    </div>
-                </div>
-            </div>
-            <hr class="my-4 bg-secondary">
-            <div class="text-center">
-                <p class="mb-0 text-white-50">&copy; ITI Electronics Store. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+<!------------------------------------ footer Start ------------------------------------>
+<div id="footer"></div>
+
+<script>
+  fetch('footer.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('footer').innerHTML = data;
+    });
+</script>
+<!------------------------------------ footer End ------------------------------------>
 
     <!-- Script JS -->
     <script type="module" src="js/home.js"></script>
     <script type="module" src="js/cart.js"></script>
     <script src="js/checkLogin.js"></script>
     <script type="module" src="js/utils.js"></script>
-
+    <script src="js/navbar.js"></script>
+    <script type="module" src="js/contact.js"></script>
 </body>
 
 </html>
