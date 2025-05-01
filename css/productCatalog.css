@@ -1,17 +1,10 @@
-.range-fill {
-    height: 6px;
-    background-color: #FFC107;
-    position: absolute;
-    z-index: 1;
-
-}
-
 input[type="range"] {
     -webkit-appearance: none;
     width: 100%;
     background: transparent;
     position: absolute;
     left: 0;
+    padding: 10px;
 }
 
 input[type="range"]::-webkit-slider-thumb {
