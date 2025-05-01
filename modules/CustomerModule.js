@@ -4,14 +4,14 @@ import UserManager from './UserModule.js';
 /*- CUSTOMER MANAGER
 /* -------------------------------------------------------------------------------- */
 class Customer {
-  constructor(name, email, password, address, phone, role = "customer", id = 0) {
+  constructor(id, name, email, password, role = "customer", address = { street: "", city: "", zipCode: "" }, phone = "", blocked = false) {
     this.ID = id;
     this.Name = name;
     this.Email = email;
     this.Pass = password;
     this.Role = role;
     this.Address = address;
-    this.Phone = phone;
+    this.phone = phone;
   }
 
   set ID(id) {
@@ -104,61 +104,111 @@ class Customer {
 export default class CustomerManager extends UserManager {
   static GetAllCustomers() {
     const users = StorageManager.LoadSection("users") || [];
-    return users.filter(user => user.role === "customer");
-  }
-  static GetById(id) {
-    const customers = Customer.GetAllCustomers();
-    return customers.find(customer => customer.id === id);
-  }
-  static CreateCustomer(id, name, email, password, address, phone) {
-    const preCustomer = Customer.GetAllCustomers();
-    const _id = preCustomer.length > 0 ? preCustomer[preCustomer.length - 1].id + 1 : 1;
-    const customer = new Customer(_id, name, email, password, address, phone);
-    preCustomer.push(customer);
-    StorageManager.SaveSection('users', preCustomer);
-    return customer;
+    let customers = users.filter(user => user.role === "customer");
+    return customers;
   }
 
-  static UpdateCustomer(customer) {
-    let customers = Customer.GetAllCustomers();
-    customers = customers.map(c => c.id === customer.id ? customer : c);
-    StorageManager.SaveSection('users', customers);
-    return customer;
+  static GetCustomerById(id) {
+    const customers = CustomerManager.GetAllCustomers();
+    return customers.find(customer => customer.id === id);
+  }
+  static AddCustomer (customer) {
+    CustomerManager.AddUser(customer.name, customer.email, customer.password);
+  }
+
+  static UpdateCustomer(updatedCustomer) {
+    let customers = CustomerManager.GetAllCustomers();
+  
+    const id = updatedCustomer.id;
+    const name = updatedCustomer.name;
+    const email = updatedCustomer.email;
+    const phone = updatedCustomer.phone;
+    const address = updatedCustomer.Address || {};
+    const password = updatedCustomer.password;  
+    // Validate input
+    const isValid = CustomerManager.DoValidation(name, email, password. address);
+    if (!isValid) return false;
+  
+    // Check if email is already used by another customer
+    const emailExists = customers.some(c =>
+      c.email.toLowerCase() === email.toLowerCase() && c.id !== id
+    );
+    if (emailExists) {
+      alert("Email is already registered. Please enter a different email.");
+      return false;
+    }
+  
+    // Update the matched customer
+    customers = customers.map(c => {
+      if (c.id === id) {
+        c.name = name;
+        c.email = email;
+        c.Address = { city, street, zipCode };
+        c.phone = phone;
+      }
+      return c;
+    });
+  
+    StorageManager.SaveSection("users", customers);
+    alert("Customer updated successfully.");
+    return true;
   }
 
   static DeleteCustomer(id) {
-    let customers = Customer.GetAllCustomers();
+    let customers = CustomerManager.GetAllCustomers();
     customers = customers.filter(customer => customer.id !== id);
-    StorageManager.SaveSection('customers', customers);
+    StorageManager.SaveSection('users', customers);
     return true;
   }
 
   static BlockCustomer(id) {
-    const customer = Customer.GetById(id);
+    const customer = CustomerManager.GetById(id);
     customer.blocked = true;
     Customer.UpdateCustomer(customer);
     return true;
   }
 
   static UnblockCustomer(id) {
-    const customer = Customer.GetById(id);
+    const customer = CustomerManager.GetById(id);
     customer.blocked = false;
     Customer.UpdateCustomer(customer);
     return true;
   }
 
   static GetBlockedCustomer() {
-    const customers = Customer.GetAllCustomers();
+    const customers = CustomerManager.GetAllCustomers();
     return customers.filter(customer => customer.blocked);
   }
 
   static GetUnblockedCustomer() {
-    const customers = Customer.GetAllCustomers();
+    const customers = CustomerManager.GetAllCustomers();
     return customers.filter(customer => !customer.blocked);
   }
 
   static GetCustomerCounts() {
-    const customers = Customer.GetAllCustomers();
+    const customers = CustomerManager.GetAllCustomers();
     return customers.length;
+  }
+
+  static DoValidation(name, email, password, address) {
+    // Validation using Validate module
+    if (!Validate.isNameValid(name)) {
+      alert("Invalid name. It must be 3–15 letters only.");
+      return false;
+    }
+    if (!Validate.isPasswordValid(password)) {
+      alert("Invalid password. It must include uppercase/lowercase, a number, and a special character, with at least 8 characters.");
+      return false;
+    }
+    if (!Validate.isEmailValid(email)) {
+      alert("Invalid email format. Use example@example.com");
+      return false;
+    }
+
+    if (!Validate.isAddressValid(address)) {
+      return false;
+    }
+    return true;
+    
   }
 }

@@ -29,7 +29,7 @@ import CustomerManager from '../modules/CustomerModule.js';
 
 /*- USERS FUNCTIONS
 -----------------------------------------------------------------------*/
-function CreateDataUserTable(id, name, email, password, city, phone) {
+function CreateDataUserTable(id, name, email, password, city, phone, status) {
   var tr = document.createElement("tr");
   var td = createCell();
   td.textContent = id;
@@ -55,21 +55,44 @@ function CreateDataUserTable(id, name, email, password, city, phone) {
   td.textContent = phone;
   tr.appendChild(td);
 
+  var td = createCell();
+  td.textContent = status;
+  tr.appendChild(td);
+
   td = createCell();
   td.appendChild(createDeleteIcon(id, "user"));
   tr.appendChild(td);
   return tr;
 }
 
-function CreateUserHeader() {
+function CreateUserHeader(type) {
+  var btns = ` 
+    <div class="d-flex flex-wrap gap-2 mb-3">
+      <button class="btn btn-success" id="addCustomerBtn">
+        <i class="bi bi-person-plus"></i> Add Customer
+      </button>
+
+      <button class="btn btn-primary" id="updateCustomerBtn">
+        <i class="bi bi-pencil-square"></i> Update Customer
+      </button>
+
+      <button class="btn btn-warning text-white" id="blockCustomerBtn">
+        <i class="bi bi-lock-fill"></i> Block Customer
+      </button>
+
+      <button class="btn btn-info text-white" id="unblockCustomerBtn">
+        <i class="bi bi-unlock"></i> Unblock Customer
+      </button>
+    </div>
+  `
   var table = createTable();
   var contentdiv = document.querySelector("#mainContent");
-  contentdiv.innerHTML = table;
+  contentdiv.innerHTML = btns + table;
   var head = document.querySelector("thead");
   var tr = document.createElement("tr");
 
   var th = document.createElement("th");
-  th.textContent = "#";
+  th.textContent = type;
   tr.appendChild(th);
 
   var th = document.createElement("th");
@@ -93,6 +116,10 @@ function CreateUserHeader() {
   tr.appendChild(th);
 
   var th = document.createElement("th");
+  th.textContent = "Status";
+  tr.appendChild(th);
+
+  var th = document.createElement("th");
   th.textContent = "Delete";
   tr.appendChild(th);
   head.appendChild(tr);
@@ -100,25 +127,25 @@ function CreateUserHeader() {
 
 function ShowCustomers() {
   DisplayNone();
-  CreateUserHeader();
-  const usersList = StorageManager.LoadSection("users") || [];
-  const customers = usersList.filter(user => user.role === "customer");
+  CreateUserHeader("Customer");
+  const customers = CustomerManager.GetAllCustomers();
   var body = document.querySelector("tbody");
   for (let i = 0; i < customers.length; i++) {
     const customer = customers[i];
-    body.appendChild(CreateDataUserTable(customer.id, customer.name, customer.email, customer.password, customer.Address.city, customer.phone));
+    const status = customer.blocked ? "InActive" : "Active";
+    body.appendChild(CreateDataUserTable(customer.id, customer.name, customer.email, customer.password, customer.Address.city, customer.phone, status));
   }
 }
 
 function ShowSellers() {
   DisplayNone();
-  CreateHeader();
-  const usersList = StorageManager.LoadSection("users") || [];
-  const sellers = usersList.filter(user => user.role === "seller");
+  CreateUserHeader("Seller");
+  const sellers = SellerManager.GetAllSellers();
   var body = document.querySelector("tbody");
   for (let i = 0; i < sellers.length; i++) {
     const seller = sellers[i];
-    body.appendChild(CreateDataTable(seller.id, seller.name, seller.email, seller.password, seller.Address.city, seller.phone));
+    const status = seller.blocked ? "InActive" : "Active";
+    body.appendChild(CreateDataUserTable(seller.id, seller.name, seller.email, seller.password, seller.Address.city, seller.phone, status));
   }
 }
 /*----------------------------------------------------------------------------*/
@@ -133,7 +160,7 @@ function CreateProductHeader() {
   var tr = document.createElement("tr");
 
   var th = document.createElement("th");
-  th.textContent = "#";
+  th.textContent = "Product";
   tr.appendChild(th);
 
   var th = document.createElement("th");
@@ -387,10 +414,10 @@ function createTable() {
       <div class="row">
         <div class="col-12">
           <div class="d-flex justify-content-between align-items-center mb-3">
-            <input type="text" class="form-control w-25" placeholder="Search..." id="searchInput">
+            <input type="text" class="form-control w-25" placeholder="Search By Id..." id="searchInput">
           </div>
 
-          <div class="table-responsive shadow-sm rounded bg-white p-3">
+          <div class="table-responsive shadow-sm rounded bg-white p-2">
             <table class="table table-striped table-bordered table-hover align-middle text-center">
               <thead class="table-dark">
 

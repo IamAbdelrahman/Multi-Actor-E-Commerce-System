@@ -4,7 +4,7 @@ import UserManager from './UserModule.js';
 /*- SELLER MANAGER
 /* -------------------------------------------------------------------------------- */
 class Seller {
-  constructor(name, email, password, address, phone, role = "seller", id = 0) {
+  constructor(name, email, password, address, phone, id = 1, role = "seller", blocked = false) {
     this.ID = id;
     this.Name = name;
     this.Email = email;
@@ -110,47 +110,79 @@ export default class SellerManager extends UserManager {
       sellers.forEach(seller => {
         seller.blocked = seller.blocked || false;
       });
-      StorageManager.SaveSection('users', sellers);
     }
+    return sellers;
   }
 
-  static AddSeller(name, email, password, address, phone, role = "seller", id = 0) {
-    const sellers = StorageManager.LoadSection("sellers") || [];
+  static AddSeller(name, email, password, address, phone, id = 1, role = "seller", blocked = false) {
+    const sellers = StorageManager.LoadSection("users") || [];
     function NextSellerID() {
       const ids = sellers.map(seller => seller.id);
       return Math.max(...ids) + 1;
     }
     const seller = new Seller(name, email, password, address, phone, NextSellerID());
     sellers.push(seller);
-    StorageManager.SaveSection('sellers', sellers);
+    StorageManager.SaveSection('users', sellers);
     return seller;
   }
 
   static GetSellerById(id) {
-    const sellers = StorageManager.LoadSection("sellers") || [];
+    const sellers = StorageManager.LoadSection("users") || [];
     return sellers.find(seller => seller.id === id);
   }
 
 
   static UpdateSeller(seller) {
-    const sellers = StorageManager.LoadSection("sellers") || [];
+    const sellers = StorageManager.LoadSection("users") || [];
     sellers = sellers.map(s => s.id === seller.id ? seller : s);
     StorageManager.SaveSection('users', sellers);
     return seller;
   }
 
   static DeleteSeller(id) {
-    const sellers = StorageManager.LoadSection("sellers") || [];
+    const sellers = StorageManager.LoadSection("users") || [];
     sellers = sellers.filter(seller => seller.id !== id);
-    StorageManager.SaveSection('sellers', sellers);
+    StorageManager.SaveSection('users', sellers);
     return true;
   }
 
-  static UpdateSeller(seller) {
-    const sellers = StorageManager.LoadSection("sellers") || [];
-    sellers = sellers.map(s => s.id === seller.id ? seller : s);
-    StorageManager.SaveSection('sellers', sellers);
-    return seller;
+  static UpdateSeller(updatedSeller) {
+    let sellers = CustomerManager.GetAllSellers();
+  
+    const id = updatedSeller.id;
+    const name = updatedSeller.name;
+    const email = updatedSeller.email;
+    const phone = updatedSeller.phone;
+    const address = updatedSeller.Address || {};
+    const { city, street, zipCode } = address;
+  
+    // Validate input
+    const isValid = CustomerManager.DoValidation(name, email, street, city, zipCode);
+    if (!isValid) return false;
+  
+    // Check if email is already used by another customer
+    const emailExists = customers.some(c =>
+      c.email.toLowerCase() === email.toLowerCase() && c.id !== id
+    );
+    if (emailExists) {
+      alert("Email is already registered. Please enter a different email.");
+      return false;
+    }
+  
+    // Update the matched customer
+    sellers = sellers.map(s => {
+      if (s.id === id) {
+        s.name = name;
+        s.email = email;
+        s.Address = { city, street, zipCode };
+        s.phone = phone;
+      }
+      return c;
+    });
+  
+    StorageManager.SaveSection("users", sellers);
+    alert("Customer updated successfully.");
+    return true;
   }
 
   static BlockSeller(id) {
