@@ -1,4 +1,4 @@
-// -------------------------------Cart-Slider functions start
+// ------------------------------- Cart-Slider functions start
 import { 
   getCurrentCart,
   saveUserCart,
@@ -89,10 +89,15 @@ function renderCartItems() {
         <div>
           <h6 class="mb-1">${item.name}</h6>
           <p class="mb-1">$${item.price.toFixed(2)}</p>
+          <small class="text-muted d-block">Max: ${item.stock || 50}</small>
           <div class="input-group input-group-sm" style="width: 120px;">
-            <button class="btn btn-outline-secondary" onclick="updateQuantity(${index}, -1, event)">-</button>
+            <button class="btn btn-outline-secondary" 
+                    onclick="updateQuantity(${index}, -1, event)"
+                    ${item.quantity <= 1 ? 'disabled' : ''}>-</button>
             <input type="text" class="form-control text-center" value="${item.quantity}" readonly>
-            <button class="btn btn-outline-secondary" onclick="updateQuantity(${index}, 1, event)">+</button>
+            <button class="btn btn-outline-secondary" 
+                    onclick="updateQuantity(${index}, 1, event)"
+                    ${item.quantity >= (item.stock || 50) ? 'disabled' : ''}>+</button>
           </div>
         </div>
       </div>
@@ -109,6 +114,17 @@ function renderCartItems() {
 
 function addToCart(product, quantity = 1) {
   const existingItem = cartItems.find(item => item.id === product.id);
+  const availableStock = product.stock || 50;
+  
+  // Calculate requested total quantity
+  const requestedQty = (existingItem?.quantity || 0) + quantity;
+  
+  // Validate against available stock
+  if (requestedQty > availableStock) {
+    showWarningMessage(`Only ${availableStock} available in stock`);
+    quantity = availableStock - (existingItem?.quantity || 0);
+    if (quantity <= 0) return;
+  }
 
   if (existingItem) {
     existingItem.quantity += quantity;
@@ -121,7 +137,9 @@ function addToCart(product, quantity = 1) {
 
   saveCurrentCart();
   updateCartCount();
+  showWarningMessage(`${quantity} ${product.name} added to cart`);
 
+  // Show cart if not already visible
   const cartSlider = document.getElementById("cartSlider");
   if (cartSlider && !cartSlider.classList.contains("show")) {
     toggleCart();
@@ -134,14 +152,22 @@ function updateQuantity(index, change, event) {
     event.preventDefault();
   }
 
-  const newQuantity = cartItems[index].quantity + change;
+  const item = cartItems[index];
+  const newQuantity = item.quantity + change;
+  const availableStock = item.stock || 50;
+
+  // Check stock before increasing quantity
+  if (change > 0 && newQuantity > availableStock) {
+    showWarningMessage(`Only ${availableStock} available in stock`);
+    return;
+  }
 
   if (newQuantity < 1) {
     removeFromCart(index);
     return;
   }
 
-  cartItems[index].quantity = newQuantity;
+  item.quantity = newQuantity;
   saveCurrentCart();
   renderCartItems();
   updateCartCount();
@@ -155,15 +181,8 @@ function removeFromCart(index, event) {
 
   const item = cartItems[index];
   
-  // Show warning message
-  const warning = document.createElement('div');
-  warning.className = 'warning-message';
-  warning.innerHTML = `<i class="bi bi-exclamation-triangle-fill text-warning me-2"></i> ${item.name} removed from cart`;
-  document.body.appendChild(warning);
-  
-  setTimeout(() => {
-    warning.remove();
-  }, 2300);
+  // Show removal message
+  showWarningMessage(`${item.name} removed from cart`);
   
   // Animate removal
   const cartItemElement = document.querySelectorAll('#cartItems > div')[index];
@@ -181,6 +200,24 @@ function removeFromCart(index, event) {
       }
     }, 300);
   }
+}
+
+function showWarningMessage(message) {
+  // Remove any existing messages first
+  const existingMessages = document.querySelectorAll('.warning-message');
+  existingMessages.forEach(msg => msg.remove());
+
+  const warning = document.createElement('div');
+  warning.className = 'warning-message';
+  warning.innerHTML = `
+    <i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>
+    ${message}
+  `;
+  document.body.appendChild(warning);
+  
+  setTimeout(() => {
+    warning.remove();
+  }, 2300);
 }
 
 // Expose necessary functions to global scope
@@ -209,17 +246,6 @@ document.addEventListener('DOMContentLoaded', function() {
 // Add CSS dynamically for transitions
 const style = document.createElement('style');
 style.textContent = `
-  .cart-item-remove {
-    transition: all 0.3s ease;
-    opacity: 1;
-    transform: translateX(0);
-  }
-  
-  .cart-item-remove.removing {
-    opacity: 0;
-    transform: translateX(100%);
-  }
-  
   .warning-message {
     position: fixed;
     top: 70px;
@@ -232,6 +258,7 @@ style.textContent = `
     z-index: 1200;
     animation: slideIn 0.3s ease, fadeOut 0.3s ease 2s forwards;
     border-left: 4px solid #ffc107;
+    max-width: 300px;
   }
   
   @keyframes slideIn {
@@ -242,6 +269,12 @@ style.textContent = `
   @keyframes fadeOut {
     from { opacity: 1; }
     to { opacity: 0; }
+  }
+  
+  .removing {
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease;
   }
 `;
 document.head.appendChild(style);

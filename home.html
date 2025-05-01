@@ -202,6 +202,35 @@
               <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
             </div>
 
+
+            <a href="product-details.html?id=203" class="text-decoration-none">
+              <img src="/images/Mobiles/s233.jpg" class="card-img-top w-75 mx-auto" alt="Samsung Galaxy S23 Ultra">
+              <div class="card-body">
+                <h5 id="productName" class="product-title loading-placeholder card-title fw-semibold text-dark">Samsung Galaxy S23 Ultra</h5>
+                <p class="text-muted small">Flagship smartphone with 200MP camera</p>
+              </div>
+            </a>
+            <div class="card-footer bg-white border-0">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold">$1,199.99</span>
+                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold" onclick="addToCart({
+                id: 203, 
+                name: 'Samsung Galaxy S23 Ultra', 
+                price: 1199.99,
+                stock: 35,
+                image: 'images/Mobiles/s233.jpg'
+                })">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-3">
+          <div class="card h-100 position-relative text-center p-3">
+            <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
+              <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-heart"></i></button>
+              <button class="btn btn-light rounded-circle shadow-sm"><i class="bi bi-eye"></i></button>
+            </div>
             <img src="/images/Headphones/10.png" class="card-img-top mx-auto" alt="Fames Primis" style="width: 60%;">
             <div class="card-body">
               <h5 class="card-title fw-semibold">Title</h5>
@@ -219,10 +248,10 @@
                   Add to cart
                 </button>
               </div>
-
             </div>
           </div>
         </div>
+
         <div class="col-12 col-sm-6 col-lg-3">
           <div class="card h-100 position-relative text-center p-3">
             <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
@@ -478,7 +507,7 @@
   <script type="module" src="js/cart.js"></script>
   <script src="js/checkLogin.js"></script>
   <script type="module" src="js/utils.js"></script>
-
+  <script src="js/navbar.js"></script>
 </body>
 
 </html>
