@@ -100,7 +100,17 @@ function mergeGuestCartWithUser(userId) {
     StorageManager.Save('data', data);
   }
 }
+// Get the product details by its id
+export function getProductById(id) {
+  const data = StorageManager.Load('data');
+  const product = data.products.find(p => p.id === parseInt(id));
+  return product ? product : null;
+}
 
+export function getProductsByCategory(category) {
+  const data = StorageManager.Load('data');
+  return data.products.filter(p => p.category === category);
+}
 await StoreJSON();
 
 // Export the new cart-related functions
