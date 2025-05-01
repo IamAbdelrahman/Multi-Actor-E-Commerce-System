@@ -11,12 +11,10 @@
  *	@details Single Admin account with a predefined email & password.
     Can block or activate customers and sellers.
     Has the exclusive ability to add new sellers.
-    Can add, edit, or remove any product.
+    Can approve, or reject any product.
     Access to a dashboard displaying:
     Number of customers
     Sales statistics
-    Other key metrics
-    Can purchase products like a regular customer.
  *****************************************************************************/
 
 /*- INCLUDES
@@ -27,102 +25,156 @@ import ProductManager from '../modules/ProductModule.js'
 import SellerManager from '../modules/SellerModule.js';
 import CustomerManager from '../modules/CustomerModule.js';
 
+
 /*- USERS FUNCTIONS
 -----------------------------------------------------------------------*/
-function CreateDataUserTable(id, name, email, password, city, phone, status) {
-  var tr = document.createElement("tr");
-  var td = createCell();
-  td.textContent = id;
-  tr.appendChild(td);
-
-  var td = createCell();
-  td.textContent = name;
-  tr.appendChild(td);
-
-  var td = createCell();
-  td.textContent = email;
-  tr.appendChild(td);
-
-  var td = createCell();
-  td.textContent = password;
-  tr.appendChild(td);
-
-  var td = createCell();
-  td.textContent = city;
-  tr.appendChild(td);
-
-  var td = createCell();
-  td.textContent = phone;
-  tr.appendChild(td);
-
-  var td = createCell();
-  td.textContent = status;
-  tr.appendChild(td);
-
-  td = createCell();
-  td.appendChild(createDeleteIcon(id, "user"));
-  tr.appendChild(td);
-  return tr;
-}
-
 function CreateUserHeader(type) {
-  var btns = ` 
-    <div class="d-flex flex-wrap gap-2 mb-3">
-      <button class="btn btn-success" id="addCustomerBtn">
-        <i class="bi bi-person-plus"></i> Add Customer
+  var Usersbtns = ` 
+    <div class="my-4">
+      <button class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#customerActionModal" data-action="block">
+        Block Customer
       </button>
+      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#customerActionModal" data-action="unblock">
+        Unblock Customer
+      </button>
+    </div>
 
-      <button class="btn btn-primary" id="updateCustomerBtn">
-        <i class="bi bi-pencil-square"></i> Update Customer
-      </button>
-
-      <button class="btn btn-warning text-white" id="blockCustomerBtn">
-        <i class="bi bi-lock-fill"></i> Block Customer
-      </button>
-
-      <button class="btn btn-info text-white" id="unblockCustomerBtn">
-        <i class="bi bi-unlock"></i> Unblock Customer
-      </button>
+    <!-- Modal Form -->
+    <div class="modal fade" id="customerActionModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalTitle">Block/Unblock Customer</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="customerActionForm">
+              <div class="mb-3">
+                <label for="customerId" class="form-label">Enter Customer ID</label>
+                <input type="number" class="form-control" id="customerId" required>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" id="confirmAction">Confirm</button>
+          </div>
+        </div>
+      </div>
     </div>
   `
   var table = createTable();
   var contentdiv = document.querySelector("#mainContent");
-  contentdiv.innerHTML = btns + table;
+  contentdiv.innerHTML = Usersbtns + table;
   var head = document.querySelector("thead");
   var tr = document.createElement("tr");
-
-  var th = document.createElement("th");
-  th.textContent = type;
-  tr.appendChild(th);
-
-  var th = document.createElement("th");
-  th.textContent = "Name";
-  tr.appendChild(th);
-
-  var th = document.createElement("th");
-  th.textContent = "Email";
-  tr.appendChild(th);
-
-  var th = document.createElement("th");
-  th.textContent = "Password";
-  tr.appendChild(th);
-
-  var th = document.createElement("th");
-  th.textContent = "City";
-  tr.appendChild(th);
-
-  var th = document.createElement("th");
-  th.textContent = "Phone";
-  tr.appendChild(th);
-
-  var th = document.createElement("th");
-  th.textContent = "Status";
-  tr.appendChild(th);
-
-  var th = document.createElement("th");
-  th.textContent = "Delete";
-  tr.appendChild(th);
+  var attributes = [type, "Name", "Email", "Password", "City", "Phone", "Status", "Delete"];
+  for (var i = 0; i < attributes.length; i++) {
+    var th = document.createElement("th");
+    th.textContent = attributes[i];
+    tr.appendChild(th);
+  }
   head.appendChild(tr);
+}
+
+function CreateDataTable(type, ...args) {
+  var tr = document.createElement("tr");
+  for (var i = 0; i < args.length; i++) {
+    var td = createCell();
+    td.textContent = args[i];
+    tr.appendChild(td);
+  }
+  td = createCell();
+  td.appendChild(createDeleteIcon(args[0], type));
+  tr.appendChild(td);
+  return tr;
+}
+
+function ManageCustomers() {
+  const modal = new bootstrap.Modal('#customerActionModal');
+  let currentAction = '';
+  document.querySelectorAll('[data-bs-target="#customerActionModal"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentAction = btn.dataset.action;
+      document.getElementById('modalTitle').textContent = 
+        `${currentAction === 'block' ? 'Block' : 'Unblock'} Customer`;
+    });
+  });
+
+  document.getElementById('confirmAction').addEventListener('click', () => {
+    const customerId = parseInt(document.getElementById('customerId').value);
+    if (isNaN(customerId)) {
+      alert('Please enter a valid ID');
+      return;
+    }
+    if (currentAction === 'block') {
+      CustomerManager.BlockCustomer(customerId);
+      alert(`Customer #${customerId} blocked successfully!`);
+    } else {
+      CustomerManager.UnblockCustomer(customerId);
+      alert(`Customer #${customerId} unblocked successfully!`);
+    }
+    modal.hide();
+    document.getElementById('customerId').value = '';
+  });
+}
+
+function OpenSellerForm() {
+  const formHTML = `
+    <form id="customerForm" class="d-flex flex-column">
+      <div class="row mb-3">
+        <div class="col">
+          <input type="text" id=name" class="form-control rounded" placeholder="First Name" required pattern="[A-Za-z]+" title="Only letters allowed">
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <input type="email" id="email" class="form-control rounded" placeholder="Email Address" required
+          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}"
+          title="Please enter a valid email address">
+      </div>
+
+      <div class="mb-3">
+        <input type="text" id="phone" class="form-control rounded" placeholder="Phone Number" required
+        pattern=>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col">
+          <input type="text" id="street" class="form-control rounded" placeholder="Street" required>
+        </div>
+        <div class="col">
+          <input type="text" id="city" class="form-control rounded" placeholder="City" required>
+        </div>
+        <div class="col">
+          <input type="text" id="zip" class="form-control rounded" placeholder="ZIP Code" required pattern="\\d{5}">
+        </div>
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-warning btn-lg rounded">Save Customer</button>
+      </div>
+    </form>
+  `;
+
+  document.getElementById("customerFormContainer").innerHTML = formHTML;
+
+  // Handle form submission
+  document.getElementById("customerForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const customer = {
+      name: document.getElementById("name").value,
+      email: document.getElementById("email").value,
+      phone: document.getElementById("phone").value,
+      address: {
+        street: document.getElementById("street").value,
+        city: document.getElementById("city").value,
+        zipCode: document.getElementById("zip").value
+      }
+    };
+    CustomerManager.AddCustomer(customer);
+  });
 }
 
 function ShowCustomers() {
@@ -133,8 +185,9 @@ function ShowCustomers() {
   for (let i = 0; i < customers.length; i++) {
     const customer = customers[i];
     const status = customer.blocked ? "InActive" : "Active";
-    body.appendChild(CreateDataUserTable(customer.id, customer.name, customer.email, customer.password, customer.Address.city, customer.phone, status));
+    body.appendChild(CreateDataTable("user", customer.id, customer.name, customer.email, customer.password, customer.Address.city, customer.phone, status));
   }
+  ManageCustomers();
 }
 
 function ShowSellers() {
@@ -145,64 +198,40 @@ function ShowSellers() {
   for (let i = 0; i < sellers.length; i++) {
     const seller = sellers[i];
     const status = seller.blocked ? "InActive" : "Active";
-    body.appendChild(CreateDataUserTable(seller.id, seller.name, seller.email, seller.password, seller.Address.city, seller.phone, status));
+    body.appendChild(CreateDataTable("user", seller.id, seller.name, seller.email, seller.password, seller.Address.city, seller.phone, status));
   }
+
+  // Add Events to the buttons
+  var addBtn = document.getElementById()
 }
-/*----------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------*/
 
 /*- PRODUCTS FUNCTIONS
 --------------------------------------------------------------------------------*/
 function CreateProductHeader() {
+  var Productsbtns = ` 
+    <div class="d-flex flex-wrap gap-2 mb-3">
+      <button class="btn btn-success" id="addCustomerBtn">
+        <i class="bi bi-person-plus"></i> Approve Product
+      </button>
+
+      <button class="btn btn-danger text-white" id="blockCustomerBtn">
+        <i class="bi bi-lock-fill"></i> Reject Product
+      </button>
+
+    </div> `
   var table = createTable();
   var contentdiv = document.querySelector("#mainContent");
-  contentdiv.innerHTML = table;
+  contentdiv.innerHTML = Productsbtns + table;
   var head = document.querySelector("thead");
   var tr = document.createElement("tr");
-
-  var th = document.createElement("th");
-  th.textContent = "Product";
-  tr.appendChild(th);
-
-  var th = document.createElement("th");
-  th.textContent = "Name";
-  tr.appendChild(th);
-
-  var th = document.createElement("th");
-  th.textContent = "Price";
-  tr.appendChild(th);
-
-  var th = document.createElement("th");
-  th.textContent = "Stock";
-  tr.appendChild(th);
-
-  var th = document.createElement("th");
-  th.textContent = "Delete";
-  tr.appendChild(th);
+  var attributes = ["Product", "Name", "Price", "Stock", "Delete"];
+  for (var i = 0; i < attributes.length; i++) {
+    var th = document.createElement("th");
+    th.textContent = attributes[i];
+    tr.appendChild(th);
+  }
   head.appendChild(tr);
-}
-
-function CreateDataProductTable(id, name, price, stock) {
-  var tr = document.createElement("tr");
-  var td = createCell();
-  td.textContent = id;
-  tr.appendChild(td);
-
-  var td = createCell();
-  td.textContent = name;
-  tr.appendChild(td);
-
-  var td = createCell();
-  td.textContent = price;
-  tr.appendChild(td);
-
-  var td = createCell();
-  td.textContent = stock;
-  tr.appendChild(td);
-
-  td = createCell();
-  td.appendChild(createDeleteIcon(id, "product"));
-  tr.appendChild(td);
-  return tr;
 }
 
 function ShowProducts() {
@@ -212,43 +241,47 @@ function ShowProducts() {
   var body = document.querySelector("tbody");
   for (let i = 0; i < productList.length; i++) {
     const product = productList[i];
-    body.appendChild(CreateDataProductTable(product.id, product.name, product.price, product.stock));
+    body.appendChild(CreateDataTable("product", product.id, product.name, product.price, product.stock));
   }
 }
 
+/*------------------------------------------------------------------------------*/
+
+/*- ORDERS FUNCTIONS
+--------------------------------------------------------------------------------*/
 function ShowDashboard() {
   const dashHeader = document.getElementById("dashHeader");
   dashHeader.innerHTML = `
-              <div class="col-12 col-md-4">
-                <div class="card shadow">
-                  <div class="card-body py-4">
-                    <h3 class="fw-bold fs-4 mb-3">Welcome to Admin Dashboard</h3>
-                    <p>Use the sidebar to manage users, products, and orders.</p>
-                    <ul>
-                      <li>👥 Manage Users: view, add, or remove users.</li>
-                      <li>📦 Manage Products: create, update, delete inventory.</li>
-                      <li>🧾 Manage Orders: track, fulfill, or cancel orders.</li>
-                    </ul>
-                  </div>
-                </div>
+        <div class="col-12 col-md-4">
+          <div class="card shadow">
+            <div class="card-body py-4">
+              <h3 class="fw-bold fs-4 mb-3">Welcome to Admin Dashboard</h3>
+              <p>Use the sidebar to manage users, products, and orders.</p>
+              <ul>
+                <li>👥 Manage Users: view, add, or remove users.</li>
+                <li>📦 Manage Products: create, update, delete inventory.</li>
+                <li>🧾 Manage Orders: track, fulfill, or cancel orders.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="card shadow">
+            <div class="card-body py-4">
+                <h3 class="fw-bold fs-4 mb-3">Profile</h3>
+                <p class="fw-bold mb02">
+                  <span id=adminName>Name: </span><br>
+                  <span id=adminRole>Role: </span><br>
+                  <span id=adminEmail>Email: </span><br>
+                  <span id=adminPhone>Phone: </span><br>
+                  <a href="www.linkedin.com"><i class="bi bi-linkedin fs-4 me-3"></i></a>
+                  <a href="www.facebook.com"><i class="bi bi-twitter fs-4 me-3"></i></a>
+                  <a href="www.twitter.com"><i class="bi bi-facebook fs-4 me-3"></i></a>
+                </p>
               </div>
-              <div class="col-12 col-md-4">
-                <div class="card shadow">
-                  <div class="card-body py-4">
-                      <h3 class="fw-bold fs-4 mb-3">Profile</h3>
-                      <p class="fw-bold mb02">
-                        <span id=adminName>Name: </span><br>
-                        <span id=adminRole>Role: </span><br>
-                        <span id=adminEmail>Email: </span><br>
-                        <span id=adminPhone>Phone: </span><br>
-                        <a href="www.linkedin.com"><i class="bi bi-linkedin fs-4 me-3"></i></a>
-                        <a href="www.facebook.com"><i class="bi bi-twitter fs-4 me-3"></i></a>
-                        <a href="www.twitter.com"><i class="bi bi-facebook fs-4 me-3"></i></a>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div> `
+            </div>
+          </div>
+        </div> `
   const adminName = document.getElementById("adminName");
   const adminRole = document.getElementById("adminRole");
   const adminEmail = document.getElementById("adminEmail");
@@ -264,8 +297,6 @@ function ShowDashboard() {
     alert("Admin data not found.");
   }
 }
-
-
 
 function ShowAnalytics() {
   // Simulated data (replace with real data from localStorage/API)
@@ -381,29 +412,29 @@ function ShowAnalytics() {
   document.getElementById("orders-change").textContent =
     `+${dashboardData.ordersChange}% Since Last Month`;
 
-  new Chart(document.getElementById("bar-chart-grouped"), {
-    type: 'bar',
-    data: {
-      labels: ["1900", "1950", "1999", "2050"],
-      datasets: [
-        {
-          label: "Africa",
-          backgroundColor: "#3e95cd",
-          data: [133, 221, 783, 2478]
-        }, {
-          label: "Europe",
-          backgroundColor: "#8e5ea2",
-          data: [408, 547, 675, 734]
-        }
-      ]
-    },
-    options: {
-      title: {
-        display: true,
-        text: 'Population growth (millions)'
-      }
-    }
-  });
+  // new Chart(document.getElementById("bar-chart-grouped"), {
+  //   type: 'bar',
+  //   data: {
+  //     labels: ["1900", "1950", "1999", "2050"],
+  //     datasets: [
+  //       {
+  //         label: "Africa",
+  //         backgroundColor: "#3e95cd",
+  //         data: [133, 221, 783, 2478]
+  //       }, {
+  //         label: "Europe",
+  //         backgroundColor: "#8e5ea2",
+  //         data: [408, 547, 675, 734]
+  //       }
+  //     ]
+  //   },
+  //   options: {
+  //     title: {
+  //       display: true,
+  //       text: 'Population growth (millions)'
+  //     }
+  //   }
+  // });
 }
 
 /*- HELPER FUNCTIONS
@@ -468,7 +499,8 @@ function createDeleteIcon(id, type) {
   return icon;
 }
 
-
+/*- ON LOADING
+-----------------------------------------------------------------------*/
 document.addEventListener('DOMContentLoaded', function () {
   // Toggle the Sidebar
   const toggleBtn = document.querySelector(".toggle-btn");
