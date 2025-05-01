@@ -152,7 +152,7 @@ function CreateSellerHeader() {
       </button>
     </div> 
     
-    <form id="customerForm" class="d-flex flex-column">
+    <form id="Form" class="d-flex flex-column">
       <div class="row mb-3">
         <div class="col">
           <input type="text" id=name" class="form-control rounded" placeholder="First Name" required pattern="[A-Za-z]+" title="Only letters allowed">
@@ -204,7 +204,6 @@ function CreateSellerHeader() {
 }
 
 function ManageSellers() {
-  // Handle form submission
   document.getElementById("customerForm").addEventListener("submit", function (e) {
     e.preventDefault();
 
@@ -221,8 +220,6 @@ function ManageSellers() {
     CustomerManager.AddCustomer(customer);
   });
 }
-
-
 
 function ShowSellers() {
   DisplayNone();
