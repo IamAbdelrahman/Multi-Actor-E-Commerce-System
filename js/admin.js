@@ -152,22 +152,25 @@ function CreateSellerHeader() {
       </button>
     </div> 
     
-    <form id="Form" class="d-flex flex-column">
+    <form id="sellerForm" class="d-flex flex-column">
       <div class="row mb-3">
         <div class="col">
-          <input type="text" id=name" class="form-control rounded" placeholder="First Name" required pattern="[A-Za-z]+" title="Only letters allowed">
+          <input type="text" id=name" class="form-control rounded" placeholder="First Name" required 
+           pattern="[A-Za-z]+" 
+           title="Please enter a valid name">
         </div>
       </div>
 
       <div class="mb-3">
-        <input type="email" id="email" class="form-control rounded" placeholder="Email Address" required
-          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}"
-          title="Please enter a valid email address">
+          <input type="email" id="email" class="form-control rounded" placeholder="Email Address" required
+            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}"
+            title="Please enter a valid email address">
       </div>
 
       <div class="mb-3">
         <input type="text" id="phone" class="form-control rounded" placeholder="Phone Number" required
-        pattern=>
+         pattern= "[\^(010|011|012|015)-\d{8}$\]"
+         title="Please enter a valid phone number">
       </div>
 
       <div class="row mb-3">
