@@ -2,7 +2,7 @@ import StorageManager from './StorageModule.js'
 import Validate from './ValidationModule.js';
 
 class User {
-  constructor(id, name, email, password, role, address = { street: "", city: "", zipCode: "" }, phone = "") {
+  constructor(id, name, email, password, role, address = { street: "", city: "", zipCode: "" }, phone = "", blocked = false) {
     this.ID = id;
     this.Name = name;
     this.Email = email;
