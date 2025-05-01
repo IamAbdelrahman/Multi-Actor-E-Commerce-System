@@ -24,11 +24,11 @@ import UserManager from '../modules/UserModule.js'
 import ProductManager from '../modules/ProductModule.js'
 import SellerManager from '../modules/SellerModule.js';
 import CustomerManager from '../modules/CustomerModule.js';
+/*------------------------------------------------------------------------------*/
 
-
-/*- USERS FUNCTIONS
+/*- CUSTOMER FUNCTIONS
 -----------------------------------------------------------------------*/
-function CreateUserHeader(type) {
+function CreateCustomerHeader() {
   var Usersbtns = ` 
     <div class="my-4">
       <button class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#customerActionModal" data-action="block">
@@ -68,7 +68,7 @@ function CreateUserHeader(type) {
   contentdiv.innerHTML = Usersbtns + table;
   var head = document.querySelector("thead");
   var tr = document.createElement("tr");
-  var attributes = [type, "Name", "Email", "Password", "City", "Phone", "Status", "Delete"];
+  var attributes = ["Customers", "Name", "Email", "Password", "City", "Phone", "Status", "Delete"];
   for (var i = 0; i < attributes.length; i++) {
     var th = document.createElement("th");
     th.textContent = attributes[i];
@@ -119,8 +119,39 @@ function ManageCustomers() {
   });
 }
 
-function OpenSellerForm() {
-  const formHTML = `
+function ShowCustomers() {
+  DisplayNone();
+  CreateCustomerHeader();
+  const customers = CustomerManager.GetAllCustomers();
+  var body = document.querySelector("tbody");
+  for (let i = 0; i < customers.length; i++) {
+    const customer = customers[i];
+    const status = customer.blocked ? "InActive" : "Active";
+    body.appendChild(CreateDataTable("user", customer.id, customer.name, customer.email, customer.password, customer.Address.city, customer.phone, status));
+  }
+  ManageCustomers();
+}
+
+/*------------------------------------------------------------------------------*/
+
+/*- SELLER FUNCTIONS
+-----------------------------------------------------------------------*/
+function CreateSellerHeader() {
+  var Usersbtns = ` 
+    <div class="my-4">
+      <button class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#customerActionModal" data-action="block">
+        Add Seller
+      </button>
+
+      <button class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#customerActionModal" data-action="block">
+        Block Seller
+      </button>
+
+      <button class="btn btn-info text-white" data-bs-toggle="modal" data-bs-target="#customerActionModal" data-action="unblock">
+        Unblock Seller
+      </button>
+    </div> 
+    
     <form id="customerForm" class="d-flex flex-column">
       <div class="row mb-3">
         <div class="col">
@@ -157,8 +188,22 @@ function OpenSellerForm() {
     </form>
   `;
 
-  document.getElementById("customerFormContainer").innerHTML = formHTML;
+  // document.getElementById("customerFormContainer").innerHTML = formHTML;
+  var table = createTable();
+  var contentdiv = document.querySelector("#mainContent");
+  contentdiv.innerHTML = Usersbtns + table;
+  var head = document.querySelector("thead");
+  var tr = document.createElement("tr");
+  var attributes = ["Sellers", "Name", "Email", "Password", "City", "Phone", "Status", "Delete"];
+  for (var i = 0; i < attributes.length; i++) {
+    var th = document.createElement("th");
+    th.textContent = attributes[i];
+    tr.appendChild(th);
+  }
+  head.appendChild(tr);
+}
 
+function ManageSellers() {
   // Handle form submission
   document.getElementById("customerForm").addEventListener("submit", function (e) {
     e.preventDefault();
@@ -177,22 +222,11 @@ function OpenSellerForm() {
   });
 }
 
-function ShowCustomers() {
-  DisplayNone();
-  CreateUserHeader("Customer");
-  const customers = CustomerManager.GetAllCustomers();
-  var body = document.querySelector("tbody");
-  for (let i = 0; i < customers.length; i++) {
-    const customer = customers[i];
-    const status = customer.blocked ? "InActive" : "Active";
-    body.appendChild(CreateDataTable("user", customer.id, customer.name, customer.email, customer.password, customer.Address.city, customer.phone, status));
-  }
-  ManageCustomers();
-}
+
 
 function ShowSellers() {
   DisplayNone();
-  CreateUserHeader("Seller");
+  CreateSellerHeader();
   const sellers = SellerManager.GetAllSellers();
   var body = document.querySelector("tbody");
   for (let i = 0; i < sellers.length; i++) {
@@ -201,8 +235,7 @@ function ShowSellers() {
     body.appendChild(CreateDataTable("user", seller.id, seller.name, seller.email, seller.password, seller.Address.city, seller.phone, status));
   }
 
-  // Add Events to the buttons
-  var addBtn = document.getElementById()
+  ManageSellers();
 }
 /*------------------------------------------------------------------------------*/
 
