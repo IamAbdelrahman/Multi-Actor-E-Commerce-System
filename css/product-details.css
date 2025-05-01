@@ -206,7 +206,7 @@
     color: #28a745;
 }
 .tab-content {
-    color: #333; /* Set default text color to dark gray */
+    color: #333; 
 }
 
 /* Ensure loading placeholders are visible */
