@@ -11,3 +11,7 @@ a{
 button:hover{
     color: white !important;
 }
+::selection {
+    background-color: #ffc107; 
+    color: white;              
+  }
