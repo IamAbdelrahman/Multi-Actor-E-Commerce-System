@@ -232,4 +232,25 @@ export default class ProductManager {
     ];
   }
 
+  static ApproveProduct (id)
+  {
+    const products = ProductManager.GetAllProducts();
+    const updatedProducts = products.map(p => {
+      if (p.id === id && p.role === "seller") {
+        return { ...p, status: "approved" };
+      }
+      return p;
+    });
+  }
+
+  static RejectProduct (id)
+  {
+    const products = ProductManager.GetAllProducts();
+    const updatedProducts = products.map(p => {
+      if (p.id === id && p.role === "seller") {
+        return { ...p, status: "rejected" };
+      }
+      return p;
+    });
+  }
 }
