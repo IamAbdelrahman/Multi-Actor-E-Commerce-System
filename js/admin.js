@@ -254,7 +254,7 @@ function ManageSellers() {
         email: document.getElementById("email").value,
         password: GenerateSecurePassword(),
         phone: document.getElementById("phone").value,
-        address: {
+        Address: {
           street: document.getElementById("street").value,
           city: document.getElementById("city").value,
           zipCode: document.getElementById("zip").value
@@ -262,7 +262,7 @@ function ManageSellers() {
       };
 
 
-      SellerManager.AddSeller(seller.name, seller.email, seller.password, seller.phone, seller.address);
+      SellerManager.AddSeller(seller.name, seller.email, seller.password, seller.phone, seller.Address);
       alert("Seller added successfully!");
 
       var body = document.querySelector("tbody");
@@ -270,7 +270,7 @@ function ManageSellers() {
       var s = SellerManager.GetSellerById(len - 1);
       console.log(s);
       const status = seller.blocked ? "InActive" : "Active";
-      body.appendChild(CreateDataTable("user", s.id, s.name, s.email, s.password, s.address.city, s.phone, status));
+      body.appendChild(CreateDataTable("user", s.id, s.name, s.email, s.password, s.Address.city, s.phone, status));
 
 
     } else {
@@ -299,10 +299,13 @@ function ShowSellers() {
   ManageSellers();
   const sellers = SellerManager.GetAllSellers();
   var body = document.querySelector("tbody");
+  console.log(sellers.length);
   for (let i = 0; i < sellers.length; i++) {
     const seller = sellers[i];
     const status = seller.blocked ? "InActive" : "Active";
-    body.appendChild(CreateDataTable("user", seller.id, seller.name, seller.email, seller.password, seller.address.city, seller.phone, status));
+    const city = seller.Address.city;
+    console.log(city);
+    body.appendChild(CreateDataTable("user", seller.id, seller.name, seller.email, seller.password, city, seller.phone, status));
   }
 }
 /*------------------------------------------------------------------------------*/
@@ -326,13 +329,23 @@ function CreateProductHeader() {
   contentdiv.innerHTML = Productsbtns + table;
   var head = document.querySelector("thead");
   var tr = document.createElement("tr");
-  var attributes = ["Product", "Name", "Price", "Stock", "Delete"];
+  var attributes = ["Product", "Name", "Price", "Stock", "Status"];
   for (var i = 0; i < attributes.length; i++) {
     var th = document.createElement("th");
     th.textContent = attributes[i];
     tr.appendChild(th);
   }
   head.appendChild(tr);
+}
+
+function CreateProductTable(type, ...args) {
+  var tr = document.createElement("tr");
+  for (var i = 0; i < args.length; i++) {
+    var td = createCell();
+    td.textContent = args[i];
+    tr.appendChild(td);
+  }
+  return tr;
 }
 
 function ShowProducts() {
@@ -342,7 +355,7 @@ function ShowProducts() {
   var body = document.querySelector("tbody");
   for (let i = 0; i < productList.length; i++) {
     const product = productList[i];
-    body.appendChild(CreateDataTable("product", product.id, product.name, product.price, product.stock));
+    body.appendChild(CreateProductTable("product", product.id, product.name, product.price, product.stock));
   }
 }
 
@@ -397,6 +410,20 @@ function ShowDashboard() {
   } else {
     alert("Admin data not found.");
   }
+}
+
+/*------------------------------------------------------------------------------*/
+
+/*- NOTIFICATION FUNCTIONS
+--------------------------------------------------------------------------------*/
+function ShowMessages() {
+  var msgs = StorageManager.LoadSection("messages");
+  if (msgs) {
+    for (var i = 1; msgs.length; i++) {
+
+    }
+  }
+
 }
 
 function ShowAnalytics() {
@@ -651,6 +678,9 @@ document.addEventListener('DOMContentLoaded', function () {
           break;
         case "orders":
           ShowOrders();
+          break;
+        case "notifications":
+          ShowMessages();
           break;
         case "analytics":
           ShowAnalytics();

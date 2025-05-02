@@ -782,11 +782,11 @@
       "userId": 1,
       "products": [
         {
-          "productId": 101,
+          "productId": 1,
           "quantity": 1
         },
         {
-          "productId": 102,
+          "productId": 2,
           "quantity": 2
         }
       ],

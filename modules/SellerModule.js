@@ -21,7 +21,7 @@ export default class SellerManager {
       email: email,
       password: password,
       phone: phone,
-      address: address,
+      Address: address,
       id: NextSellerID(),
       role : "seller",
       blocked : false
