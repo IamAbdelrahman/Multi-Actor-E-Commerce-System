@@ -25,6 +25,10 @@ const modal = document.getElementById("registerModal");
 const icon = document.getElementById("Register-Icon");
 const closeBtn = document.getElementById("closePopup");
 
+function getRandomValues(min, max) {
+    return ((Math.floor(Math.random() * (max - min + 1)) + min));
+}
+
 document.getElementById('toggleToLogin').onclick = function () {
     document.getElementById('signUpForm').style.display = 'none';
     document.getElementById('loginForm').style.display = 'block';
@@ -84,9 +88,13 @@ window.Login = function (event) {
 
     const users = StorageManager.LoadSection("users") || [];
 
-    const LoginUser = users.find(user => user.email === email && user.password === password);
-
-    if (LoginUser) {
+    const LoginUser = users.find(user => user.email === email);
+    if (!LoginUser) {
+        alert("Email does not exist. Please register first.");
+    } else if (LoginUser.password !== password) {
+        alert("Incorrect password. Please try again.");
+    }
+    else {
         //repair
         // alert(Welcome back, ${LoginUser.name}! You are logged in as ${LoginUser.role}.);
 
@@ -115,9 +123,8 @@ window.Login = function (event) {
             default:
                 alert("Invalid role. Please try again.");
         }
-    } else {
-        alert("Invalid email or password. Please try again.");
     }
+
 };
 // ------------------------------Register/Login End------------------------------
 
@@ -131,6 +138,7 @@ window.addEventListener('DOMContentLoaded', () => {
         document.getElementById("Register-Icon")?.classList.remove("d-none");
         document.getElementById("userDropdown")?.classList.add("d-none");
     }
+    CreateFeaturedPrducts(StorageManager.LoadSection("products"));
 });
 
 
@@ -138,3 +146,59 @@ document.getElementById("logout")?.addEventListener("click", () => {
     sessionStorage.removeItem("userLoggedIn");
     location.reload();
 });
+
+
+function CreateFeaturedPrducts(products) {
+    var content = document.getElementById("Featured-Products-Container");
+    const row = document.createElement("div");
+    row.className = "row g-4";
+    for (var i = 1; i <= 9; i++) {
+        var product = products[getRandomValues(1, 25)];
+        const card = document.createElement("div");
+        card.className = "col-12 col-sm-6 col-lg-3 mb-4";
+        card.innerHTML = `
+          <div class="card h-100 position-relative text-center p-3">
+
+            <!-- Buttons for heart and eye icons -->
+            <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
+              <button class="btn btn-light rounded-circle shadow-sm">
+                <i class="bi bi-heart"></i>
+              </button>
+              <a href="product-details.html?id=${product.id}" class="text-decoration-none">
+              <button class="btn btn-light rounded-circle shadow-sm">
+                <i class="bi bi-eye"></i>
+              </button>
+              </a>
+            </div>
+            
+            <a href="product-details.html?id=${product.id}" class="text-decoration-none">
+              <img src="${product.image}" class="card-img-top w-75 mx-auto">
+                <div class="card-body d-flex flex-column justify-content-between ">
+                <h5 class="card-title fw-semibold mb-2  ">${product.name}</h5>
+                <p class="text-muted small">${product.description}</p>
+            </div>
+            </a>
+
+            <!-- Card Footer with Price and Add to Cart Button -->
+            <div class="card-footer bg-white border-0">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold">$${product.price}</span>
+                <button class="btn btn-outline-dark btn-sm text-body-emphasis p-2 fw-semibold" 
+                        onclick="addToCart({
+                          id: ${product.id}, 
+                          name: '${product.name}', 
+                          price: ${product.price}, 
+                          image: '${product.image}'
+                        })">
+                  Add to cart
+                </button>
+              </div>
+            </div>
+          </div>
+       `;
+
+        row.appendChild(card);
+        content.appendChild(row);
+    }
+
+}

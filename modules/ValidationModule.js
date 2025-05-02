@@ -21,7 +21,7 @@ export default class Validate {
   }
 
   static isPhoneValid(value) {
-    return typeof value === 'string' && /^\+20\d{10}$/.test(value); // Egypt format
+    return typeof value === 'string' && /^\+20\d{10}$/.test(value);
   }
 
   static isStreetValid(street) {
