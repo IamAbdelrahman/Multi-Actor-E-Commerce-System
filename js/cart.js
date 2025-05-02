@@ -1,74 +1,28 @@
 // ------------------------------- Cart-Slider functions start
-import StorageManager from "../modules/StorageModule.js";
-
 let cartItems = [];
 
-// Helper function to get current user's cart from storage
-function getCurrentCart() {
-  const userLoggedIn = JSON.parse(sessionStorage.getItem("userLoggedIn"));
-  const userId = userLoggedIn?.id;
-  
-  const cart = StorageManager.LoadSection("cart") || [];
-  return cart.find(item => item.userId === (userId || null)) || { 
-    userId: userId || null, 
-    products: [], 
-    totalAmount: 0 
-  };
+// Helper function to get the full data object from localStorage
+function getAppData() {
+  const storedData = localStorage.getItem('data');
+  return storedData ? JSON.parse(storedData) : { users: [], products: [], orders: [], cart: [] };
 }
 
-// Helper function to save the current cart to storage
+// Helper function to save the current cart
 function saveCurrentCart() {
-  const userLoggedIn = JSON.parse(sessionStorage.getItem("userLoggedIn"));
-  const userId = userLoggedIn?.id;
-  
-  const cart = StorageManager.LoadSection("cart") || [];
-  
-  // Calculate total amount
-  const products = StorageManager.LoadSection("products") || [];
-  const totalAmount = cartItems.reduce((total, item) => {
-    const product = products.find(p => p.id === item.id);
-    return total + (product ? product.price * item.quantity : 0);
-  }, 0);
-  
-  // Find existing cart or create new one
-  const existingCartIndex = cart.findIndex(item => item.userId === (userId || null));
-  const currentCart = {
-    userId: userId || null,
-    products: cartItems.map(item => ({
-      productId: item.id,
-      quantity: item.quantity
-    })),
-    totalAmount: totalAmount
-  };
-  
-  if (existingCartIndex !== -1) {
-    cart[existingCartIndex] = currentCart;
-  } else {
-    cart.push(currentCart);
-  }
-  
-  StorageManager.SaveSection("cart", cart);
+  const data = getAppData();
+  data.cart = cartItems;
+  localStorage.setItem('data', JSON.stringify(data));
 }
 
 // Initialize cart
 function initCart() {
-  const currentCart = getCurrentCart();
-  const products = StorageManager.LoadSection("products") || [];
-  
-  // Convert stored cart items to UI format
-  cartItems = currentCart.products.map(cartProduct => {
-    const product = products.find(p => p.id === cartProduct.productId);
-    return product ? {
-      ...product,
-      quantity: cartProduct.quantity
-    } : null;
-  }).filter(Boolean);
-  
+  const data = getAppData();
+  cartItems = Array.isArray(data.cart) ? data.cart : [];
   updateCartCount();
 }
 
 function updateCartCount() {
-  const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
+  const totalItems = cartItems.reduce((total, item) => total + (item.quantity || 0), 0);
   const cartElement = document.getElementById("cart");
   if (cartElement) {
     cartElement.textContent = totalItems;
@@ -78,6 +32,8 @@ function updateCartCount() {
 function toggleCart() {
   const cartSlider = document.getElementById("cartSlider");
   const overlay = document.getElementById("overlay");
+
+  if (!cartSlider || !overlay) return;
 
   if (cartSlider.classList.contains("show")) {
     cartSlider.classList.remove("show");
@@ -98,6 +54,8 @@ function handleOutsideClick(event) {
   const cartSlider = document.getElementById("cartSlider");
   const overlay = document.getElementById("overlay");
   
+  if (!cartSlider || !overlay) return;
+  
   const isClickInsideCart = event.target.closest('#cartSlider') || 
                           event.target.closest('.btn-outline-secondary') || 
                           event.target.closest('.btn-danger');
@@ -111,34 +69,47 @@ function handleOutsideClick(event) {
 
 function renderCartItems() {
   const cartItemsContainer = document.getElementById("cartItems");
-  if (!cartItemsContainer) return;
+  const cartTotalElement = document.getElementById("cartTotal");
+  
+  if (!cartItemsContainer || !cartTotalElement) return;
   
   cartItemsContainer.innerHTML = '';
 
+  if (!Array.isArray(cartItems)) {
+    cartItems = [];
+  }
+
   if (cartItems.length === 0) {
     cartItemsContainer.innerHTML = '<p class="text-center">Your cart is empty</p>';
-    document.getElementById("cartTotal").textContent = '$0.00';
+    cartTotalElement.textContent = '$0.00';
     return;
   }
 
   cartItems.forEach((item, index) => {
+    // Safely handle item properties
+    const itemName = item.name || 'Unknown Product';
+    const itemImage = item.image || '';
+    const itemPrice = typeof item.price === 'number' ? item.price : 0;
+    const itemStock = typeof item.stock === 'number' ? item.stock : 50;
+    const itemQuantity = typeof item.quantity === 'number' ? item.quantity : 1;
+
     const cartItem = document.createElement("div");
     cartItem.className = "d-flex justify-content-between align-items-center mb-3 p-2 border-bottom";
     cartItem.innerHTML = `
       <div class="d-flex align-items-center gap-3">
-        <img src="${item.image}" alt="${item.name}" style="width: 55px; height: 75px; object-fit: cover;">
+        <img src="${itemImage}" alt="${itemName}" style="width: 55px; height: 75px; object-fit: cover;">
         <div>
-          <h6 class="mb-1">${item.name}</h6>
-          <p class="mb-1">$${item.price.toFixed(2)}</p>
-          <small class="text-muted d-block">Max: ${item.stock || 50}</small>
+          <h6 class="mb-1">${itemName}</h6>
+          <p class="mb-1">$${itemPrice.toFixed(2)}</p>
+          <small class="text-muted d-block">Max: ${itemStock}</small>
           <div class="input-group input-group-sm" style="width: 120px;">
             <button class="btn btn-outline-secondary" 
                     onclick="updateQuantity(${index}, -1, event)"
-                    ${item.quantity <= 1 ? 'disabled' : ''}>-</button>
-            <input type="text" class="form-control text-center" value="${item.quantity}" readonly>
+                    ${itemQuantity <= 1 ? 'disabled' : ''}>-</button>
+            <input type="text" class="form-control text-center" value="${itemQuantity}" readonly>
             <button class="btn btn-outline-secondary" 
                     onclick="updateQuantity(${index}, 1, event)"
-                    ${item.quantity >= (item.stock || 50) ? 'disabled' : ''}>+</button>
+                    ${itemQuantity >= itemStock ? 'disabled' : ''}>+</button>
           </div>
         </div>
       </div>
@@ -149,38 +120,48 @@ function renderCartItems() {
     cartItemsContainer.appendChild(cartItem);
   });
 
-  const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  document.getElementById("cartTotal").textContent = `$${total.toFixed(2)}`;
+  const total = cartItems.reduce((sum, item) => {
+    const itemPrice = typeof item.price === 'number' ? item.price : 0;
+    const itemQuantity = typeof item.quantity === 'number' ? item.quantity : 0;
+    return sum + (itemPrice * itemQuantity);
+  }, 0);
+  
+  cartTotalElement.textContent = `$${total.toFixed(2)}`;
 }
 
 function addToCart(product, quantity = 1) {
-  const existingItem = cartItems.find(item => item.id === product.id);
-  const availableStock = product.stock || 50;
-  
-  // Calculate requested total quantity
-  const requestedQty = (existingItem?.quantity || 0) + quantity;
-  
-  // Validate against available stock
-  if (requestedQty > availableStock) {
-    showWarningMessage(`Only ${availableStock} available in stock`);
-    quantity = availableStock - (existingItem?.quantity || 0);
-    if (quantity <= 0) return;
+  if (!product || typeof product.id === 'undefined') {
+    console.error('Invalid product data');
+    return;
   }
 
+  const availableStock = typeof product.stock === 'number' ? product.stock : 50;
+  const safeQuantity = Math.max(1, Math.min(quantity, availableStock));
+  
+  const existingItem = cartItems.find(item => item.id === product.id);
+  
   if (existingItem) {
-    existingItem.quantity += quantity;
+    const requestedQty = existingItem.quantity + safeQuantity;
+    if (requestedQty > availableStock) {
+      showWarningMessage(`Only ${availableStock} available in stock`);
+      return;
+    }
+    existingItem.quantity = requestedQty;
   } else {
     cartItems.push({
-      ...product,
-      quantity: quantity
+      id: product.id,
+      name: product.name || 'Unknown Product',
+      price: typeof product.price === 'number' ? product.price : 0,
+      image: product.image || '',
+      stock: availableStock,
+      quantity: safeQuantity
     });
   }
 
   saveCurrentCart();
   updateCartCount();
-  showWarningMessage(`${quantity} ${product.name} added to cart`);
+  showWarningMessage(`${safeQuantity} ${product.name || 'item'} added to cart`);
 
-  // Show cart if not already visible
   const cartSlider = document.getElementById("cartSlider");
   if (cartSlider && !cartSlider.classList.contains("show")) {
     toggleCart();
@@ -193,11 +174,13 @@ function updateQuantity(index, change, event) {
     event.preventDefault();
   }
 
-  const item = cartItems[index];
-  const newQuantity = item.quantity + change;
-  const availableStock = item.stock || 50;
+  if (index < 0 || index >= cartItems.length) return;
 
-  // Check stock before increasing quantity
+  const item = cartItems[index];
+  const currentQuantity = typeof item.quantity === 'number' ? item.quantity : 1;
+  const newQuantity = currentQuantity + change;
+  const availableStock = typeof item.stock === 'number' ? item.stock : 50;
+
   if (change > 0 && newQuantity > availableStock) {
     showWarningMessage(`Only ${availableStock} available in stock`);
     return;
@@ -220,33 +203,30 @@ function removeFromCart(index, event) {
     event.preventDefault();
   }
 
+  if (index < 0 || index >= cartItems.length) return;
+
   const item = cartItems[index];
+  const itemName = item.name || 'item';
   
-  // Show removal message
-  showWarningMessage(`${item.name} removed from cart`);
+  showWarningMessage(`${itemName} removed from cart`);
   
-  // Animate removal
-  const cartItemElement = document.querySelectorAll('#cartItems > div')[index];
-  if (cartItemElement) {
-    cartItemElement.classList.add('removing');
+  const cartItemElements = document.querySelectorAll('#cartItems > div');
+  if (cartItemElements[index]) {
+    cartItemElements[index].classList.add('removing');
     setTimeout(() => {
       cartItems.splice(index, 1);
       saveCurrentCart();
       updateCartCount();
       renderCartItems();
-      
-      if (cartItems.length === 0) {
-        document.getElementById("cartItems").innerHTML = '<p class="text-center">Your cart is empty</p>';
-        document.getElementById("cartTotal").textContent = '$0.00';
-      }
     }, 300);
   }
 }
 
 function showWarningMessage(message) {
-  // Remove any existing messages first
   const existingMessages = document.querySelectorAll('.warning-message');
   existingMessages.forEach(msg => msg.remove());
+
+  if (!message) return;
 
   const warning = document.createElement('div');
   warning.className = 'warning-message';
@@ -271,36 +251,8 @@ window.removeFromCart = removeFromCart;
 document.addEventListener('DOMContentLoaded', function() {
   initCart();
   
-  // Handle login/logout changes
   window.addEventListener('storage', function(e) {
     if (e.key === 'userLoggedIn') {
-      const userLoggedIn = JSON.parse(sessionStorage.getItem("userLoggedIn"));
-      if (userLoggedIn) {
-        // Merge guest cart with user cart if needed
-        const cart = StorageManager.LoadSection("cart") || [];
-        const guestCart = cart.find(item => item.userId === null);
-        const userCart = cart.find(item => item.userId === userLoggedIn.id);
-        
-        if (guestCart && guestCart.products.length > 0) {
-          if (userCart) {
-            // Merge products from guest cart to user cart
-            guestCart.products.forEach(guestProduct => {
-              const existingProduct = userCart.products.find(p => p.productId === guestProduct.productId);
-              if (existingProduct) {
-                existingProduct.quantity += guestProduct.quantity;
-              } else {
-                userCart.products.push(guestProduct);
-              }
-            });
-          } else {
-            // Convert guest cart to user cart
-            guestCart.userId = userLoggedIn.id;
-          }
-          
-          // Remove guest cart
-          StorageManager.SaveSection("cart", cart.filter(item => item.userId !== null));
-        }
-      }
       initCart();
       renderCartItems();
     }
