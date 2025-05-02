@@ -1,23 +1,41 @@
 // ------------------------------- Cart-Slider functions start
 let cartItems = [];
 
+// Helper function to get current user ID
+function getCurrentUserId() {
+  return sessionStorage.getItem('userId') || 'guest';
+}
+
 // Helper function to get the full data object from localStorage
 function getAppData() {
   const storedData = localStorage.getItem('data');
-  return storedData ? JSON.parse(storedData) : { users: [], products: [], orders: [], cart: [] };
+  return storedData ? JSON.parse(storedData) : { users: [], products: [], orders: [], cart: {} };
 }
 
 // Helper function to save the current cart
 function saveCurrentCart() {
   const data = getAppData();
-  data.cart = cartItems;
+  const userId = getCurrentUserId();
+  
+  if (!data.cart) {
+    data.cart = {};
+  }
+  
+  data.cart[userId] = cartItems;
   localStorage.setItem('data', JSON.stringify(data));
 }
 
 // Initialize cart
 function initCart() {
   const data = getAppData();
-  cartItems = Array.isArray(data.cart) ? data.cart : [];
+  const userId = getCurrentUserId();
+  
+  if (data.cart && data.cart[userId]) {
+    cartItems = Array.isArray(data.cart[userId]) ? data.cart[userId] : [];
+  } else {
+    cartItems = [];
+  }
+  
   updateCartCount();
 }
 
