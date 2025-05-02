@@ -23,6 +23,8 @@ export default class SellerManager {
       phone: phone,
       address: address,
       id: NextSellerID(),
+      role : "seller",
+      blocked : false
     };
     sellers.push(seller);
     StorageManager.SaveSection('users', sellers);

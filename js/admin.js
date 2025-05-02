@@ -302,7 +302,7 @@ function ShowSellers() {
   for (let i = 0; i < sellers.length; i++) {
     const seller = sellers[i];
     const status = seller.blocked ? "InActive" : "Active";
-    body.appendChild(CreateDataTable("user", seller.id, seller.name, seller.email, seller.password, seller.Address.city, seller.phone, status));
+    body.appendChild(CreateDataTable("user", seller.id, seller.name, seller.email, seller.password, seller.address.city, seller.phone, status));
   }
 }
 /*------------------------------------------------------------------------------*/
