@@ -37,7 +37,7 @@ function SearchProduct(products) {
     card.innerHTML = `
       <div class="card h-100 position-relative text-center p-3">
         <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
-          <button class="btn btn-light rounded-circle shadow-sm">
+          <button class="btn btn-light rounded-circle shadow-sm" ">
             <i class="bi bi-heart"></i>
           </button>
           <button class="btn btn-light rounded-circle shadow-sm">
@@ -84,9 +84,19 @@ const urlParams = new URLSearchParams(window.location.search);
 currentCategory = urlParams.get('category') || '';
 
 //Use GetProductByFilters that filter price and category from ProductModule
-function FilterByCategoryAndPrice() {
-  const filteredProducts = ProductManager.GetProductByFilters(minPrice, maxPrice, currentCategory);
-  SearchProduct(filteredProducts);
+function FilterByCategoryAndPrice(filteredProducts = ProductManager.GetAllProducts()) {
+  // Filter the products by the current price and category
+  const filteredProductsByCategoryAndPrice = ProductManager.GetProductByFilters(minPrice, maxPrice, currentCategory);
+
+  // filter also price , name , category
+  if (filteredProducts.length > 0) {
+    const filteredByName = filteredProductsByCategoryAndPrice.filter(product =>
+      product.name.toLowerCase().includes(searchInput.value.trim().toLowerCase())
+    );
+    SearchProduct(filteredByName);
+  } else {
+    SearchProduct(filteredProductsByCategoryAndPrice);
+  }
 }
 
 //Validate Range
