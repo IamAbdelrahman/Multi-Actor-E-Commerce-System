@@ -318,102 +318,427 @@
   ],
   "products": [
     {
-      "id": 101,
-      "name": "Wireless Noise-Cancelling Headphones",
-      "description": "Premium over-ear headphones with 30-hour battery life and active noise cancellation.",
-      "price": 799.99,
-      "stock": 15,
-      "category": "Headphones",
-      "image": "images/HeadPhones/1.png"
+      "id": 1,
+      "name": "Accessory1",
+      "description": "High-quality accessories compatible with computers and mobile devices, offering enhanced usability and performance.",
+      "price": 13.32,
+      "stock": 13,
+      "category": "Accessories",
+      "image": "/images/Accessories/Accessory1.jpg"
     },
     {
-      "id": 102,
-      "name": "In-Ear Sports Earbuds",
-      "description": "Sweat-proof wireless earbuds with secure fit for workouts.",
-      "price": 299.50,
-      "stock": 30,
-      "category": "Headphones",
-      "image": "images/HeadPhones/2.png"
+      "id": 2,
+      "name": "Accessory2",
+      "description": "High-quality accessories compatible with computers and mobile devices, offering enhanced usability and performance.",
+      "price": 14.99,
+      "stock": 16,
+      "category": "Accessories",
+      "image": "/images/Accessories/Accessory2.jpg"
     },
     {
-      "id": 201,
-      "name": "Flagship Smartphone (128GB)",
-      "description": "6.5-inch AMOLED display, triple camera, 5G support.",
-      "price": 1299.00,
-      "stock": 20,
-      "category": "Mobiles",
-      "image": "images/smartphone.jpg"
+      "id": 3,
+      "name": "Accessory3",
+      "description": "High-quality accessories compatible with computers and mobile devices, offering enhanced usability and performance.",
+      "price": 16.66,
+      "stock": 19,
+      "category": "Accessories",
+      "image": "/images/Accessories/Accessory3.jpg"
     },
     {
-      "id": 202,      
-      "name": "Budget Smartphone (64GB)",
-      "description": "Affordable 6.2-inch HD+ phone with long battery life.",
-      "price": 499.99,
-      "stock": 35,
-      "category": "Mobiles",
-      "image": "images/budget_phone.jpg"
+      "id": 4,
+      "name": "Accessory4",
+      "description": "High-quality accessories compatible with computers and mobile devices, offering enhanced usability and performance.",
+      "price": 18.32,
+      "stock": 22,
+      "category": "Accessories",
+      "image": "/images/Accessories/Accessory4.jpg"
     },
     {
-      "id": 203,
-      "name": "Samsung Galaxy S23 Ultra (256GB)",
-      "description": "The Samsung Galaxy S23 Ultra features a stunning 6.8-inch Dynamic AMOLED display, 200MP camera system, and the fastest Snapdragon processor yet. With built-in S Pen and all-day battery life, it's the ultimate smartphone for power users.",
-      "price": 1199.99,
-      "stock": 35,
-      "category": "Mobiles",
-      "image": "images/Mobiles/s233.jpg"
-    },{
-      "id": 301,
-      "name": "Ultra-Thin Laptop (13-inch)",
-      "description": "Lightweight laptop with 16GB RAM and 512GB SSD.",
-      "price": 1499.00,
+      "id": 5,
+      "name": "Accessory5",
+      "description": "High-quality accessories compatible with computers and mobile devices, offering enhanced usability and performance.",
+      "price": 19.99,
+      "stock": 10,
+      "category": "Accessories",
+      "image": "/images/Accessories/Accessory5.jpg"
+    },
+    {
+      "id": 6,
+      "name": "Accessory6",
+      "description": "High-quality accessories compatible with computers and mobile devices, offering enhanced usability and performance.",
+      "price": 21.66,
+      "stock": 13,
+      "category": "Accessories",
+      "image": "/images/Accessories/Accessory6.jpg"
+    },
+    {
+      "id": 7,
+      "name": "Accessory7",
+      "description": "High-quality accessories compatible with computers and mobile devices, offering enhanced usability and performance.",
+      "price": 23.32,
+      "stock": 16,
+      "category": "Accessories",
+      "image": "/images/Accessories/Accessory7.jpg"
+    },
+    {
+      "id": 13,
+      "name": "HeadPhone1",
+      "description": "Premium sound quality headphones with noise cancellation and comfortable design for long listening sessions.",
+      "price": 49.99,
+      "stock": 13,
+      "category": "HeadPhones",
+      "image": "/images/HeadPhones/HeadPhone1.jpg"
+    },
+    {
+      "id": 14,
+      "name": "HeadPhone2",
+      "description": "Premium sound quality headphones with noise cancellation and comfortable design for long listening sessions.",
+      "price": 54.99,
+      "stock": 16,
+      "category": "HeadPhones",
+      "image": "/images/HeadPhones/HeadPhone2.jpg"
+    },
+    {
+      "id": 15,
+      "name": "HeadPhone3",
+      "description": "Premium sound quality headphones with noise cancellation and comfortable design for long listening sessions.",
+      "price": 59.99,
+      "stock": 19,
+      "category": "HeadPhones",
+      "image": "/images/HeadPhones/HeadPhone3.jpg"
+    },
+    {
+      "id": 16,
+      "name": "HeadPhone4",
+      "description": "Premium sound quality headphones with noise cancellation and comfortable design for long listening sessions.",
+      "price": 64.99,
+      "stock": 22,
+      "category": "HeadPhones",
+      "image": "/images/HeadPhones/HeadPhone4.jpg"
+    },
+    {
+      "id": 17,
+      "name": "HeadPhone5",
+      "description": "Premium sound quality headphones with noise cancellation and comfortable design for long listening sessions.",
+      "price": 69.99,
+      "stock": 10,
+      "category": "HeadPhones",
+      "image": "/images/HeadPhones/HeadPhone5.jpg"
+    },
+    {
+      "id": 18,
+      "name": "HeadPhone6",
+      "description": "Premium sound quality headphones with noise cancellation and comfortable design for long listening sessions.",
+      "price": 74.99,
+      "stock": 13,
+      "category": "HeadPhones",
+      "image": "/images/HeadPhones/HeadPhone6.jpg"
+    },
+    {
+      "id": 19,
+      "name": "HeadPhone7",
+      "description": "Premium sound quality headphones with noise cancellation and comfortable design for long listening sessions.",
+      "price": 79.99,
+      "stock": 16,
+      "category": "HeadPhones",
+      "image": "/images/HeadPhones/HeadPhone7.jpg"
+    },
+    {
+      "id": 20,
+      "name": "HeadPhone8",
+      "description": "Premium sound quality headphones with noise cancellation and comfortable design for long listening sessions.",
+      "price": 84.99,
+      "stock": 19,
+      "category": "HeadPhones",
+      "image": "/images/HeadPhones/HeadPhone8.jpg"
+    },
+    {
+      "id": 21,
+      "name": "HeadPhone9",
+      "description": "Premium sound quality headphones with noise cancellation and comfortable design for long listening sessions.",
+      "price": 89.99,
+      "stock": 22,
+      "category": "HeadPhones",
+      "image": "/images/HeadPhones/HeadPhone9.jpg"
+    },
+    {
+      "id": 26,
+      "name": "Laptop2",
+      "description": "Powerful laptops designed for productivity, gaming, and entertainment, featuring the latest processors and high-resolution displays.",
+      "price": 699.99,
+      "stock": 16,
+      "category": "Laptops",
+      "image": "/images/Laptops/Laptop2.jpg"
+    },
+    {
+      "id": 27,
+      "name": "Laptop3",
+      "description": "Powerful laptops designed for productivity, gaming, and entertainment, featuring the latest processors and high-resolution displays.",
+      "price": 766.66,
+      "stock": 19,
+      "category": "Laptops",
+      "image": "/images/Laptops/Laptop3.jpg"
+    },
+    {
+      "id": 28,
+      "name": "Laptop4",
+      "description": "Powerful laptops designed for productivity, gaming, and entertainment, featuring the latest processors and high-resolution displays.",
+      "price": 833.32,
+      "stock": 22,
+      "category": "Laptops",
+      "image": "/images/Laptops/Laptop4.jpg"
+    },
+    {
+      "id": 29,
+      "name": "Laptop5",
+      "description": "Powerful laptops designed for productivity, gaming, and entertainment, featuring the latest processors and high-resolution displays.",
+      "price": 899.99,
       "stock": 10,
       "category": "Laptops",
-      "image": "images/laptop.jpg"
+      "image": "/images/Laptops/Laptop5.jpg"
     },
     {
-      "id": 302,
-      "name": "Gaming Laptop (15-inch)",
-      "description": "High-performance laptop with RTX 3060 and 144Hz display.",
-      "price": 2199.99,
-      "stock": 8,
+      "id": 30,
+      "name": "Laptop6",
+      "description": "Powerful laptops designed for productivity, gaming, and entertainment, featuring the latest processors and high-resolution displays.",
+      "price": 966.66,
+      "stock": 13,
       "category": "Laptops",
-      "image": "images/gaming_laptop.jpg"
+      "image": "/images/Laptops/Laptop6.jpg"
     },
     {
-      "id": 401,
-      "name": "10-inch Tablet (64GB)",
-      "description": "Versatile tablet with stylus support and 10-hour battery.",
-      "price": 599.50,
-      "stock": 18,
+      "id": 31,
+      "name": "Laptop7",
+      "description": "Powerful laptops designed for productivity, gaming, and entertainment, featuring the latest processors and high-resolution displays.",
+      "price": 1033.32,
+      "stock": 16,
+      "category": "Laptops",
+      "image": "/images/Laptops/Laptop7.jpg"
+    },
+    {
+      "id": 32,
+      "name": "Laptop8",
+      "description": "Powerful laptops designed for productivity, gaming, and entertainment, featuring the latest processors and high-resolution displays.",
+      "price": 1099.99,
+      "stock": 19,
+      "category": "Laptops",
+      "image": "/images/Laptops/Laptop8.jpg"
+    },
+    {
+      "id": 33,
+      "name": "Laptop9",
+      "description": "Powerful laptops designed for productivity, gaming, and entertainment, featuring the latest processors and high-resolution displays.",
+      "price": 1166.66,
+      "stock": 22,
+      "category": "Laptops",
+      "image": "/images/Laptops/Laptop9.jpg"
+    },
+    {
+      "id": 34,
+      "name": "Laptop10",
+      "description": "Powerful laptops designed for productivity, gaming, and entertainment, featuring the latest processors and high-resolution displays.",
+      "price": 1233.32,
+      "stock": 10,
+      "category": "Laptops",
+      "image": "/images/Laptops/Laptop10.jpg"
+    },
+    {
+      "id": 37,
+      "name": "Mobile1",
+      "description": "Latest generation smartphones with cutting-edge technology, excellent cameras, and long battery life.",
+      "price": 399.99,
+      "stock": 13,
+      "category": "Mobiles",
+      "image": "/images/Mobiles/Mobile1.jpg"
+    },
+    {
+      "id": 38,
+      "name": "Mobile2",
+      "description": "Latest generation smartphones with cutting-edge technology, excellent cameras, and long battery life.",
+      "price": 449.99,
+      "stock": 16,
+      "category": "Mobiles",
+      "image": "/images/Mobiles/Mobile2.jpg"
+    },
+    {
+      "id": 39,
+      "name": "Mobile3",
+      "description": "Latest generation smartphones with cutting-edge technology, excellent cameras, and long battery life.",
+      "price": 499.99,
+      "stock": 19,
+      "category": "Mobiles",
+      "image": "/images/Mobiles/Mobile3.jpg"
+    },
+    {
+      "id": 40,
+      "name": "Mobile4",
+      "description": "Latest generation smartphones with cutting-edge technology, excellent cameras, and long battery life.",
+      "price": 549.99,
+      "stock": 22,
+      "category": "Mobiles",
+      "image": "/images/Mobiles/Mobile4.jpg"
+    },
+    {
+      "id": 41,
+      "name": "Mobile5",
+      "description": "Latest generation smartphones with cutting-edge technology, excellent cameras, and long battery life.",
+      "price": 599.99,
+      "stock": 10,
+      "category": "Mobiles",
+      "image": "/images/Mobiles/Mobile5.jpg"
+    },
+    {
+      "id": 42,
+      "name": "Mobile6",
+      "description": "Latest generation smartphones with cutting-edge technology, excellent cameras, and long battery life.",
+      "price": 649.99,
+      "stock": 13,
+      "category": "Mobiles",
+      "image": "/images/Mobiles/Mobile6.jpg"
+    },
+    {
+      "id": 43,
+      "name": "Mobile7",
+      "description": "Latest generation smartphones with cutting-edge technology, excellent cameras, and long battery life.",
+      "price": 699.99,
+      "stock": 16,
+      "category": "Mobiles",
+      "image": "/images/Mobiles/Mobile7.jpg"
+    },
+    {
+      "id": 44,
+      "name": "Mobile8",
+      "description": "Latest generation smartphones with cutting-edge technology, excellent cameras, and long battery life.",
+      "price": 749.99,
+      "stock": 19,
+      "category": "Mobiles",
+      "image": "/images/Mobiles/Mobile8.jpg"
+    },
+    {
+      "id": 45,
+      "name": "Mobile9",
+      "description": "Latest generation smartphones with cutting-edge technology, excellent cameras, and long battery life.",
+      "price": 799.99,
+      "stock": 22,
+      "category": "Mobiles",
+      "image": "/images/Mobiles/Mobile9.jpg"
+    },
+    {
+      "id": 46,
+      "name": "Mobile10",
+      "description": "Latest generation smartphones with cutting-edge technology, excellent cameras, and long battery life.",
+      "price": 849.99,
+      "stock": 10,
+      "category": "Mobiles",
+      "image": "/images/Mobiles/Mobile10.jpg"
+    },
+    {
+      "id": 47,
+      "name": "Mobile11",
+      "description": "Latest generation smartphones with cutting-edge technology, excellent cameras, and long battery life.",
+      "price": 899.99,
+      "stock": 13,
+      "category": "Mobiles",
+      "image": "/images/Mobiles/Mobile11.jpg"
+    },
+    {
+      "id": 49,
+      "name": "Tablet1",
+      "description": "Lightweight and versatile tablets perfect for entertainment, productivity, and creative work on the go.",
+      "price": 266.66,
+      "stock": 13,
       "category": "Tablets",
-      "image": "images/tablet.jpg"
+      "image": "/images/Tablets/Tablet1.jpg"
     },
     {
-      "id": 402,
-      "name": "Kids' Educational Tablet",
-      "description": "Durable tablet with parental controls and preloaded apps.",
-      "price": 349.99,
-      "stock": 25,
+      "id": 50,
+      "name": "Tablet2",
+      "description": "Lightweight and versatile tablets perfect for entertainment, productivity, and creative work on the go.",
+      "price": 299.99,
+      "stock": 16,
       "category": "Tablets",
-      "image": "images/kids_tablet.jpg"
+      "image": "/images/Tablets/Tablet2.jpg"
     },
     {
-      "id": 501,
-      "name": "Wireless Charging Pad",
-      "description": "Fast-charging Qi-compatible pad for phones and earbuds.",
-      "price": 89.99,
-      "stock": 40,
-      "category": "Accessories",
-      "image": "images/charger.jpg"
+      "id": 51,
+      "name": "Tablet3",
+      "description": "Lightweight and versatile tablets perfect for entertainment, productivity, and creative work on the go.",
+      "price": 333.32,
+      "stock": 19,
+      "category": "Tablets",
+      "image": "/images/Tablets/Tablet3.jpg"
     },
     {
-      "id": 502,
-      "name": "Protective Phone Case",
-      "description": "Shockproof case with raised edges for screen protection.",
-      "price": 49.50,
-      "stock": 50,
-      "category": "Accessories",
-      "image": "images/phone_case.jpg"
+      "id": 52,
+      "name": "Tablet4",
+      "description": "Lightweight and versatile tablets perfect for entertainment, productivity, and creative work on the go.",
+      "price": 366.66,
+      "stock": 22,
+      "category": "Tablets",
+      "image": "/images/Tablets/Tablet4.jpg"
+    },
+    {
+      "id": 53,
+      "name": "Tablet5",
+      "description": "Lightweight and versatile tablets perfect for entertainment, productivity, and creative work on the go.",
+      "price": 399.99,
+      "stock": 10,
+      "category": "Tablets",
+      "image": "/images/Tablets/Tablet5.jpg"
+    },
+    {
+      "id": 54,
+      "name": "Tablet6",
+      "description": "Lightweight and versatile tablets perfect for entertainment, productivity, and creative work on the go.",
+      "price": 433.32,
+      "stock": 13,
+      "category": "Tablets",
+      "image": "/images/Tablets/Tablet6.jpg"
+    },
+    {
+      "id": 55,
+      "name": "Tablet7",
+      "description": "Lightweight and versatile tablets perfect for entertainment, productivity, and creative work on the go.",
+      "price": 466.66,
+      "stock": 16,
+      "category": "Tablets",
+      "image": "/images/Tablets/Tablet7.jpg"
+    },
+    {
+      "id": 56,
+      "name": "Tablet8",
+      "description": "Lightweight and versatile tablets perfect for entertainment, productivity, and creative work on the go.",
+      "price": 499.99,
+      "stock": 19,
+      "category": "Tablets",
+      "image": "/images/Tablets/Tablet8.jpg"
+    },
+    {
+      "id": 57,
+      "name": "Tablet9",
+      "description": "Lightweight and versatile tablets perfect for entertainment, productivity, and creative work on the go.",
+      "price": 533.32,
+      "stock": 22,
+      "category": "Tablets",
+      "image": "/images/Tablets/Tablet9.jpg"
+    },
+    {
+      "id": 58,
+      "name": "Tablet10",
+      "description": "Lightweight and versatile tablets perfect for entertainment, productivity, and creative work on the go.",
+      "price": 566.66,
+      "stock": 10,
+      "category": "Tablets",
+      "image": "/images/Tablets/Tablet10.jpg"
+    },
+    {
+      "id": 59,
+      "name": "Tablet11",
+      "description": "Lightweight and versatile tablets perfect for entertainment, productivity, and creative work on the go.",
+      "price": 599.99,
+      "stock": 13,
+      "category": "Tablets",
+      "image": "/images/Tablets/Tablet11.jpg"
     }
   ],
   "orders": [

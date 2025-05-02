@@ -4,7 +4,7 @@ import StorageManager from './StorageModule.js';
 -----------------------------------------------------------------------*/
 
 class Product {
-  constructor(name, description, price, stock, category, image, id = 0) {
+  constructor(name, description, price, stock, category, image, id = 1) {
     this.Name = name;
     this.Description = description;
     this.Price = price;
@@ -109,7 +109,7 @@ class Product {
   }
 }
 
-export default class ProductManager{
+export default class ProductManager {
   static AddProduct(name, description, price, stock, category, image, id = 0) {
     const product = new Product(name, description, price, stock, category, image, id = 0);
     const products = StorageManager.LoadSection("products") || [];
@@ -117,7 +117,7 @@ export default class ProductManager{
     //   console.error("Invalid product data. Please Enter valid data!");
     //   return;
     // }
-    
+
     // const existingProduct = products.find(p => p.ID === product.ID);
     // if (existingProduct) {
     //   console.error("Product with this ID already exists.");
@@ -168,18 +168,18 @@ export default class ProductManager{
     category = category == 'all' ? '' : category;
     const products = Product.GetAllProducts();
     if (!maxPrice && !category) {
-        return products;
+      return products;
     } else if (!maxPrice) {
-        return Product.GetProductsByCategory(category);
+      return Product.GetProductsByCategory(category);
     } else if (!category) {
-        return Product.GetProductsByPriceRange(0, maxPrice);
+      return Product.GetProductsByPriceRange(0, maxPrice);
     } else {
-        return products.filter(product => product.price <= maxPrice && product.category === category);
+      return products.filter(product => product.price <= maxPrice && product.category === category);
     }
   }
 
   static GetProductsBySearch(product_name) {
-    const products = Product.GetAllProducts();
+    const products = ProductManager.GetAllProducts();
     return products.filter(product => product.name.toLowerCase().includes(product_name.toLowerCase()));
   }
 
@@ -204,13 +204,13 @@ export default class ProductManager{
   static ChangeQuantity(productId, amount) {
     const product = Product.GetProductById(productId);
     if (!product) {
-        console.log(`Product with ID ${productId} not found.`);
-        return false;
+      console.log(`Product with ID ${productId} not found.`);
+      return false;
     }
     product.stock = parseInt(product.stock) + parseInt(amount);
     if (product.stock < 0) {
-        console.log('Cannot decrease quantity below zero.');
-        return false;
+      console.log('Cannot decrease quantity below zero.');
+      return false;
     }
     let products = Product.GetAllProducts();
     products = products.map(p => p.id == productId ? product : p);
@@ -225,11 +225,11 @@ export default class ProductManager{
 
   static categoriesList() {
     return [
-        "Mobiles",
-        "Laptops",
-        "Headphones",
-        "Tablets",
-        "Accessories"
+      "Mobiles",
+      "Laptops",
+      "Headphones",
+      "Tablets",
+      "Accessories"
     ];
   }
 
