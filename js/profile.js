@@ -6,6 +6,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const userId = userLoggedIn?.id;
 
     if (userId) {
+        if (!sessionStorage.getItem('userId')) {
+            sessionStorage.setItem('userId', userId);
+            sessionStorage.setItem('userLoggedIn', 'true');
+        }
+        
         const users = StorageManager.LoadSection("users");
         const currentUser = users.find(user => user.id === userId);
         if (currentUser) {
@@ -16,9 +21,13 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("profileZip").value = currentUser.Address.zipCode || "";
             document.getElementById("profilePhone").value = currentUser.phone || "";
         }
+    } else {
+        
+        if (!sessionStorage.getItem('userId')) {
+            sessionStorage.setItem('userId', 'guest');
+        }
     }
     window.updateProfile = function (event) {
-
         const name = document.getElementById("profileName").value.trim();
         const email = document.getElementById("profileEmail").value.trim();
         const street = document.getElementById("profileStreet").value.trim();
@@ -33,6 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (updated) {
             alert("Profile updated successfully!");
         }
-        // Else: alert already shown inside UpdateUser in case of failure
+        
     };
 });
