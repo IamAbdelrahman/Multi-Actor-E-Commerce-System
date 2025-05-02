@@ -103,16 +103,25 @@ function ManageCustomers() {
 
   document.getElementById('confirmAction').addEventListener('click', () => {
     const customerId = parseInt(document.getElementById('customerId').value);
-    if (isNaN(customerId)) {
+    if (isNaN(customerId) || customerId < 0 || !customerId){
       alert('Please enter a valid ID');
+      return;
+    }
+    const users = StorageManager.LoadSection("users");
+    const customers = users.filter(user => user.role === "customer");
+    const returnId = customers.find(c => c.id === customerId);
+    if (!returnId){
+      alert("ID doesn't exist")
       return;
     }
     if (currentAction === 'block') {
       CustomerManager.BlockCustomer(customerId);
       alert(`Customer #${customerId} blocked successfully!`);
+      location.reload();
     } else {
       CustomerManager.UnblockCustomer(customerId);
       alert(`Customer #${customerId} unblocked successfully!`);
+      location.reload();
     }
     modal.hide();
     document.getElementById('customerId').value = '';
@@ -271,27 +280,35 @@ function ManageSellers() {
       console.log(s);
       const status = seller.blocked ? "InActive" : "Active";
       body.appendChild(CreateDataTable("user", s.id, s.name, s.email, s.password, s.Address.city, s.phone, status));
-
+      location.reload();
 
     } else {
-      const id = parseInt(document.getElementById('sellerId').value);
-      if (isNaN(id)) {
+      const sellerId = parseInt(document.getElementById('sellerId').value);
+      if (isNaN(sellerId) || sellerId < 0 || !sellerId) {
         alert("Please enter a valid Seller ID.");
         return;
       }
-
+      const users = StorageManager.LoadSection("users");
+      const sellers = users.filter(user => user.role === "seller");
+      const returnId = sellers.find(s => s.id === sellerId);
+      if (!returnId){
+        alert("ID doesn't exist")
+        return;
+      }
       if (currentAction === 'block') {
         SellerManager.BlockSeller(id);
         alert(`Seller #${id} blocked.`);
+        location.reload();
       } else if (currentAction === 'unblock') {
         SellerManager.UnblockSeller(id);
         alert(`Seller #${id} unblocked.`);
+        location.reload();
       }
     }
     modal.hide();
+    document.getElementById('sellerId').value = '';
   });
 }
-
 
 function ShowSellers() {
   DisplayNone();
