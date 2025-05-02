@@ -9,7 +9,7 @@ function getCurrentUserId() {
 // Helper function to get the full data object from localStorage
 function getAppData() {
   const storedData = localStorage.getItem('data');
-  return storedData ? JSON.parse(storedData) : { users: [], products: [], orders: [], cart: {} };
+  return storedData ? JSON.parse(storedData) : { users: [], products: [], orders: [], cart: [] };
 }
 
 // Helper function to save the current cart
@@ -17,11 +17,18 @@ function saveCurrentCart() {
   const data = getAppData();
   const userId = getCurrentUserId();
   
-  if (!data.cart) {
-    data.cart = {};
+  // Find existing cart for user or create new one
+  let userCart = data.cart.find(c => c.userId === userId);
+  
+  if (userCart) {
+    userCart.products = cartItems;
+  } else {
+    data.cart.push({
+      userId: userId,
+      products: cartItems
+    });
   }
   
-  data.cart[userId] = cartItems;
   localStorage.setItem('data', JSON.stringify(data));
 }
 
@@ -30,11 +37,8 @@ function initCart() {
   const data = getAppData();
   const userId = getCurrentUserId();
   
-  if (data.cart && data.cart[userId]) {
-    cartItems = Array.isArray(data.cart[userId]) ? data.cart[userId] : [];
-  } else {
-    cartItems = [];
-  }
+  const userCart = data.cart.find(c => c.userId === userId);
+  cartItems = userCart && Array.isArray(userCart.products) ? userCart.products : [];
   
   updateCartCount();
 }
@@ -104,7 +108,6 @@ function renderCartItems() {
   }
 
   cartItems.forEach((item, index) => {
-    // Safely handle item properties
     const itemName = item.name || 'Unknown Product';
     const itemImage = item.image || '';
     const itemPrice = typeof item.price === 'number' ? item.price : 0;
@@ -155,8 +158,9 @@ function addToCart(product, quantity = 1) {
 
   const availableStock = typeof product.stock === 'number' ? product.stock : 50;
   const safeQuantity = Math.max(1, Math.min(quantity, availableStock));
+  const userId = getCurrentUserId();
   
-  const existingItem = cartItems.find(item => item.id === product.id);
+  const existingItem = cartItems.find(item => item.id === product.id && item.userId === userId);
   
   if (existingItem) {
     const requestedQty = existingItem.quantity + safeQuantity;
@@ -168,6 +172,7 @@ function addToCart(product, quantity = 1) {
   } else {
     cartItems.push({
       id: product.id,
+      userId: userId,
       name: product.name || 'Unknown Product',
       price: typeof product.price === 'number' ? product.price : 0,
       image: product.image || '',
