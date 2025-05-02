@@ -112,7 +112,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if (loggedInUser) {
         document.getElementById("Register-Icon")?.classList.add("d-none");
         document.getElementById("userDropdown")?.classList.remove("d-none");
-        
+
         // Ensure cart has the correct user ID even after page refresh
         if (!sessionStorage.getItem('userId')) {
             sessionStorage.setItem('userId', loggedInUser.id);
@@ -121,7 +121,7 @@ window.addEventListener('DOMContentLoaded', () => {
     } else {
         document.getElementById("Register-Icon")?.classList.remove("d-none");
         document.getElementById("userDropdown")?.classList.add("d-none");
-        
+
         // Set guest ID for cart if no user is logged in
         if (!sessionStorage.getItem('userId')) {
             sessionStorage.setItem('userId', 'guest');
@@ -132,15 +132,15 @@ window.addEventListener('DOMContentLoaded', () => {
 
 document.getElementById("logout")?.addEventListener("click", (e) => {
     e.preventDefault();
-    
+
     // Clear all user session data
     sessionStorage.removeItem("userLoggedIn");
     sessionStorage.removeItem("userId");
     sessionStorage.removeItem("userRole");
-    
+
     // Set guest ID for cart after logout
     sessionStorage.setItem('userId', 'guest');
-    
+
     location.reload();
 });
 
@@ -149,8 +149,10 @@ function CreateFeaturedPrducts(products) {
     var content = document.getElementById("Featured-Products-Container");
     const row = document.createElement("div");
     row.className = "row g-4";
-    for (var i = 1; i <= 9; i++) {
+    var count = 9;
+    do {
         var product = products[getRandomValues(1, 25)];
+        console.log(product.id);
         const card = document.createElement("div");
         card.className = "col-12 col-sm-6 col-lg-3 mb-4";
         card.innerHTML = `
@@ -196,11 +198,11 @@ function CreateFeaturedPrducts(products) {
 
         row.appendChild(card);
         content.appendChild(row);
-    }
+    } while (count--);
 
 }
 // Initialize cart for current user
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Ensure cart has a user ID (logged in or guest)
     if (!sessionStorage.getItem('userId')) {
         const loggedInUser = JSON.parse(sessionStorage.getItem('userLoggedIn'));
