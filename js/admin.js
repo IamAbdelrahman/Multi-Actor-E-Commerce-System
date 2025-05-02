@@ -440,6 +440,21 @@ function ShowProducts() {
 
 /*- ORDERS FUNCTIONS
 --------------------------------------------------------------------------------*/
+function CreateOrderHeader() {
+  var table = createTable();
+  var contentdiv = document.querySelector("#mainContent");
+  contentdiv.innerHTML = Usersbtns + table;
+  var head = document.querySelector("thead");
+  var tr = document.createElement("tr");
+  var attributes = ["Orders", "Useur-ID", "Product-ID", "Status", "City", "Phone", "Status", "Delete"];
+  for (var i = 0; i < attributes.length; i++) {
+    var th = document.createElement("th");
+    th.textContent = attributes[i];
+    tr.appendChild(th);
+  }
+  head.appendChild(tr);
+}
+
 function ShowDashboard() {
   const dashHeader = document.getElementById("dashHeader");
   dashHeader.innerHTML = `

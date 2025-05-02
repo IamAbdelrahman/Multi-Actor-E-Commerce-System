@@ -181,7 +181,6 @@ function CreateFeaturedProducts(products) {
        `;
        content.innerHTML += cards;
     }
-
 }
 
 window.addEventListener('DOMContentLoaded', () => {
