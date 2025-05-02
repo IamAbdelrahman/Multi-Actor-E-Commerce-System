@@ -125,7 +125,8 @@
     <div class="categories m-4">
       <h3 class="fs-1 fw-bold text-center py-3">Categories</h3>
       <div class="row gy-4 justify-content-center">
-        <div class="col-12 col-md-6 col-lg-4 cursor-pointer">
+        <div class="col-12 col-md-6 col-lg-4 cursor-pointer"
+          onclick="window.location.href='catalog.html?category=mobiles'">
           <div class="d-flex justify-content-between align-items-center p-4 rounded-pill bg-primary bg-opacity-25">
             <div class="d-flex align-items-center gap-3">
               <i class="fa-solid fa-mobile-screen-button fs-2"></i>
@@ -136,11 +137,12 @@
             </div>
           </div>
         </div>
+
         <div class="col-12 col-md-6 col-lg-4 cursor-pointer">
           <div class="d-flex justify-content-between align-items-center p-4 rounded-pill bg-warning bg-opacity-25">
             <div class="d-flex align-items-center gap-3">
               <i class="fa-solid fa-laptop fs-2"></i>
-              <div><strong>LAPTOP</strong></div>
+              <div id="mobile"><strong>LAPTOP</strong></div>
             </div>
             <div class="fs-4 rounded-circle p-2">
               <i class="fa-solid fa-arrow-right"></i>
@@ -206,7 +208,8 @@
             <a href="product-details.html?id=203" class="text-decoration-none">
               <img src="/images/Mobiles/s233.jpg" class="card-img-top w-75 mx-auto" alt="Samsung Galaxy S23 Ultra">
               <div class="card-body">
-                <h5 id="productName" class="product-title loading-placeholder card-title fw-semibold text-dark">Samsung Galaxy S23 Ultra</h5>
+                <h5 id="productName" class="product-title loading-placeholder card-title fw-semibold text-dark">Samsung
+                  Galaxy S23 Ultra</h5>
                 <p class="text-muted small">Flagship smartphone with 200MP camera</p>
               </div>
             </a>
@@ -503,9 +506,17 @@
   <!------------------------------------ footer End ------------------------------------>
 
   <!-- Script JS -->
+  <script>
+    function goToCategory(element) {
+      const category = element.getAttribute('data-category');
+      // Redirect to the shop page with a query string
+      window.location.href = `catalog.html?category=${category}`;
+    }
+  </script>
+
   <script type="module" src="js/home.js"></script>
   <script type="module" src="js/cart.js"></script>
-  <script src="js/checkLogin.js"></script>
+  <script type="module" src="js/checkLogin.js"></script>
   <script type="module" src="js/utils.js"></script>
   <script src="js/navbar.js"></script>
 </body>
