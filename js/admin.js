@@ -122,6 +122,7 @@ function ManageCustomers() {
 function ShowCustomers() {
   DisplayNone();
   CreateCustomerHeader();
+  ManageCustomers();
   const customers = CustomerManager.GetAllCustomers();
   var body = document.querySelector("tbody");
   for (let i = 0; i < customers.length; i++) {
@@ -129,7 +130,7 @@ function ShowCustomers() {
     const status = customer.blocked ? "InActive" : "Active";
     body.appendChild(CreateDataTable("user", customer.id, customer.name, customer.email, customer.password, customer.Address.city, customer.phone, status));
   }
-  ManageCustomers();
+  
 }
 
 /*------------------------------------------------------------------------------*/
@@ -170,7 +171,7 @@ function CreateSellerHeader() {
 
             <div class="mb-3">
               <input type="email" id="email" class="form-control rounded" placeholder="Email Address" required
-                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}"
+                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}"
                 title="Please enter a valid email address">
             </div>
 
@@ -182,7 +183,7 @@ function CreateSellerHeader() {
             <div class="row mb-3">
               <div class="col">
                 <input type="text" id="street" class="form-control rounded" placeholder="Street" required
-                  pattern="^[A-Za-z0-9\\s]{3,50}$">
+                  pattern="^[A-Za-z0-9\s]{3,50}$">
               </div>
               <div class="col">
                 <input type="text" id="city" class="form-control rounded" placeholder="City" required
@@ -248,12 +249,6 @@ function ManageSellers() {
 
   document.getElementById('confirmAction').addEventListener('click', () => {
     if (currentAction === 'add') {
-      const form = document.getElementById('sellerForm');
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
-
       const seller = {
         name: document.getElementById("name").value,
         email: document.getElementById("email").value,
@@ -266,8 +261,17 @@ function ManageSellers() {
         }
       };
 
+
       SellerManager.AddSeller(seller.name, seller.email, seller.password, seller.phone, seller.address);
       alert("Seller added successfully!");
+
+      var body = document.querySelector("tbody");
+      var len = UserManager.GetUsersCount();
+      var s = SellerManager.GetSellerById(len - 1);
+      console.log(s);
+      const status = seller.blocked ? "InActive" : "Active";
+      body.appendChild(CreateDataTable("user", s.id, s.name, s.email, s.password, s.address.city, s.phone, status));
+
 
     } else {
       const id = parseInt(document.getElementById('sellerId').value);
@@ -292,6 +296,7 @@ function ManageSellers() {
 function ShowSellers() {
   DisplayNone();
   CreateSellerHeader();
+  ManageSellers();
   const sellers = SellerManager.GetAllSellers();
   var body = document.querySelector("tbody");
   for (let i = 0; i < sellers.length; i++) {
@@ -299,7 +304,6 @@ function ShowSellers() {
     const status = seller.blocked ? "InActive" : "Active";
     body.appendChild(CreateDataTable("user", seller.id, seller.name, seller.email, seller.password, seller.Address.city, seller.phone, status));
   }
-  ManageSellers();
 }
 /*------------------------------------------------------------------------------*/
 

@@ -18,15 +18,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     
-    // Load cart from storage
     const cart = StorageManager.LoadSection("cart") || [];
     const userCart = cart.find(item => item.userId === (userId || null));
-    
+    console.log(userCart);
     if (userCart) {
         const cartItemsContainer = document.getElementById("cart-items-container");
         const products = StorageManager.LoadSection("products");
         
-        // Calculate total amount
         let totalAmount = 0;
         
         userCart.products.forEach(product => {
@@ -55,7 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Update total amounts
         document.getElementById("total-amount").innerHTML = `$${totalAmount.toFixed(2)}`;
         document.getElementById("subtotal-amount").innerHTML = `$${totalAmount.toFixed(2)}`;
     }
@@ -71,8 +68,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const zip = document.getElementById("checkout-zip").value.trim();
         const phone = document.getElementById("checkout-phone").value.trim();
         const email = document.getElementById("checkout-email").value.trim();
-
-        if (!name || !street || !city || !zip || !phone || !email) {
+        const PaymentMethod = document.querySelector('input[name="payment"]:checked')?.id;
+        if (!name || !street || !city || !zip || !phone || !email||!PaymentMethod) {
             alert("Please fill in all fields");
             return;
         }
@@ -88,12 +85,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!Validate.isNameValid(name)) errors.push("Invalid name (must be 3-15 characters long and contain only letters)");
         if (!Validate.isEmailValid(email)) errors.push("Invalid email");
         if (!Validate.isPhoneValid(phone)) errors.push("Invalid phone (expected format: +20XXXXXXXXXX)");
-        if (!Validate.isAddressValid(address)) errors.push("Invalid address");
+        if (!Validate.isCityValid(city)) errors.push("Invalid city");
+        if (!Validate.isStreetValid(street)) errors.push("Invalid street");
+        if (!Validate.isZipCodeValid(zip)) errors.push("Invalid zipcode");
+
 
         if (errors.length > 0) {
             alert(errors.join("\n"));
         } else {
-            // Get cart again in case it changed
             const cart = StorageManager.LoadSection("cart") || [];
             const userCart = cart.find(item => item.userId === (userId || null));
             
@@ -102,15 +101,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // Create new order
             const newOrder = {
-                id: Date.now(),  // Use timestamp as unique ID
-                userId: userId || null,
+                id: GenerateNextID(),  
+                userId: userId,
                 products: userCart.products,
                 totalAmount: userCart.totalAmount,
                 status: "processing",
                 orderDate: new Date().toISOString(),
-                PaymentMethod: "credit card", 
+                PaymentMethod: PaymentMethod, 
                 shippingAddress: {
                     street: street,
                     city: city,
@@ -122,12 +120,17 @@ document.addEventListener("DOMContentLoaded", () => {
             orders.push(newOrder);
             StorageManager.SaveSection("orders", orders);
 
-            // Clear the cart after successful order
             const updatedCart = cart.filter(item => item.userId !== (userId || null));
             StorageManager.SaveSection("cart", updatedCart);
 
-            // Redirect to confirmation page
-            window.location.href = "/order-confirmation.html";  
+            window.location.href = "../home.html";  
         }
     });
 });
+
+function GenerateNextID() {
+    const orders = StorageManager.LoadSection("orders") || [];
+    if (orders.length === 0) return 1;
+    const ids = orders.map(order => order.id);
+    return Math.max(...ids) + 1;
+}
