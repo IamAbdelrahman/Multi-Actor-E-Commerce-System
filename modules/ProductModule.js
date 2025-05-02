@@ -236,21 +236,25 @@ export default class ProductManager {
   {
     const products = ProductManager.GetAllProducts();
     const updatedProducts = products.map(p => {
-      if (p.id === id && p.role === "seller") {
+      if (p.id === id) {
         return { ...p, status: "approved" };
       }
       return p;
     });
+    StorageManager.SaveSection("products", updatedProducts);
+    return true;
   }
 
   static RejectProduct (id)
   {
     const products = ProductManager.GetAllProducts();
     const updatedProducts = products.map(p => {
-      if (p.id === id && p.role === "seller") {
+      if (p.id === id) {
         return { ...p, status: "rejected" };
       }
       return p;
     });
+    StorageManager.SaveSection("products", updatedProducts);
+    return true;
   }
 }

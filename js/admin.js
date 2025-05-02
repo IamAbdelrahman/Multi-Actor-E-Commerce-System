@@ -329,29 +329,30 @@ function ShowSellers() {
 /*- PRODUCTS FUNCTIONS
 --------------------------------------------------------------------------------*/
 function CreateProductHeader() {
-  var Usersbtns = ` 
+  var Productsbtns = ` 
     <div class="my-4">
-      <button class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#customerActionModal" data-action="block">
-        Block Customer
+      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#productActionModal" data-action="approve">
+        Approve Product
       </button>
-      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#customerActionModal" data-action="unblock">
-        Unblock Customer
+      <button class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#productActionModal" data-action="reject">
+        Reject Product
       </button>
+
     </div>
 
     <!-- Modal Form -->
-    <div class="modal fade" id="customerActionModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="productActionModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="modalTitle">Block/Unblock Customer</h5>
+            <h5 class="modal-title" id="modalTitle">Approve/Reject Product</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form id="customerActionForm">
+            <form id="productActionForm">
               <div class="mb-3">
-                <label for="customerId" class="form-label">Enter Customer ID</label>
-                <input type="number" class="form-control" id="customerId" required>
+                <label for="productId" class="form-label">Enter Product ID</label>
+                <input type="number" class="form-control" id="productId" required>
               </div>
             </form>
           </div>
@@ -365,10 +366,10 @@ function CreateProductHeader() {
   `
   var table = createTable();
   var contentdiv = document.querySelector("#mainContent");
-  contentdiv.innerHTML = Usersbtns + table;
+  contentdiv.innerHTML = Productsbtns + table;
   var head = document.querySelector("thead");
   var tr = document.createElement("tr");
-  var attributes = ["Customers", "Name", "Email", "Password", "City", "Phone", "Status", "Delete"];
+  var attributes = ["Products", "Name", "Price", "Category", "Stock", "Status"];
   for (var i = 0; i < attributes.length; i++) {
     var th = document.createElement("th");
     th.textContent = attributes[i];
@@ -431,7 +432,7 @@ function ShowProducts() {
   var body = document.querySelector("tbody");
   for (let i = 0; i < productList.length; i++) {
     const product = productList[i];
-    body.appendChild(CreateProductTable("product", product.id, product.name, product.price, product.stock, product.status));
+    body.appendChild(CreateProductTable("product", product.id, product.name, product.price, product.category, product.stock, product.status));
   }
 }
 
