@@ -186,6 +186,11 @@ export default class UserManager {
       return false;
     }
 
+    if (!Validate.isPhoneValid(phone)) {
+      alert("Invalid phone (expected format: +20XXXXXXXXXX)");
+      return false;
+
+    }
     users = users.map(user => {
       if (user.id === id) {
         user.name = name;
@@ -206,5 +211,10 @@ export default class UserManager {
     var users = StorageManager.LoadSection("users") || [];
     users = users.filter(user => user.id !== id);
     StorageManager.SaveSection("users", users);
+  }
+
+  static GetUsersCount () {
+    const users = StorageManager.LoadSection("users") || [];
+    return users.length;
   }
 }
