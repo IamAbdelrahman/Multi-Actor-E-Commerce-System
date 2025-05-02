@@ -270,7 +270,6 @@ function ManageSellers() {
         }
       };
 
-
       SellerManager.AddSeller(seller.name, seller.email, seller.password, seller.phone, seller.Address);
       alert("Seller added successfully!");
 
@@ -296,12 +295,12 @@ function ManageSellers() {
         return;
       }
       if (currentAction === 'block') {
-        SellerManager.BlockSeller(id);
-        alert(`Seller #${id} blocked.`);
+        SellerManager.BlockSeller(sellerId);
+        alert(`Seller #${sellerId} blocked.`);
         location.reload();
       } else if (currentAction === 'unblock') {
-        SellerManager.UnblockSeller(id);
-        alert(`Seller #${id} unblocked.`);
+        SellerManager.UnblockSeller(sellerId);
+        alert(`Seller #${sellerId} unblocked.`);
         location.reload();
       }
     }
@@ -330,23 +329,46 @@ function ShowSellers() {
 /*- PRODUCTS FUNCTIONS
 --------------------------------------------------------------------------------*/
 function CreateProductHeader() {
-  var Productsbtns = ` 
-    <div class="d-flex flex-wrap gap-2 mb-3">
-      <button class="btn btn-success" id="addCustomerBtn">
-        <i class="bi bi-person-plus"></i> Approve Product
+  var Usersbtns = ` 
+    <div class="my-4">
+      <button class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#customerActionModal" data-action="block">
+        Block Customer
       </button>
-
-      <button class="btn btn-danger text-white" id="blockCustomerBtn">
-        <i class="bi bi-lock-fill"></i> Reject Product
+      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#customerActionModal" data-action="unblock">
+        Unblock Customer
       </button>
+    </div>
 
-    </div> `
+    <!-- Modal Form -->
+    <div class="modal fade" id="customerActionModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalTitle">Block/Unblock Customer</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="customerActionForm">
+              <div class="mb-3">
+                <label for="customerId" class="form-label">Enter Customer ID</label>
+                <input type="number" class="form-control" id="customerId" required>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" id="confirmAction">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `
   var table = createTable();
   var contentdiv = document.querySelector("#mainContent");
-  contentdiv.innerHTML = Productsbtns + table;
+  contentdiv.innerHTML = Usersbtns + table;
   var head = document.querySelector("thead");
   var tr = document.createElement("tr");
-  var attributes = ["Product", "Name", "Price", "Stock", "Status"];
+  var attributes = ["Customers", "Name", "Email", "Password", "City", "Phone", "Status", "Delete"];
   for (var i = 0; i < attributes.length; i++) {
     var th = document.createElement("th");
     th.textContent = attributes[i];
@@ -365,14 +387,51 @@ function CreateProductTable(type, ...args) {
   return tr;
 }
 
+function ManageProducts() {
+  const modal = new bootstrap.Modal('#productActionModal');
+  let currentAction = '';
+  document.querySelectorAll('[data-bs-target="#productActionModal"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentAction = btn.dataset.action;
+      document.getElementById('modalTitle').textContent =
+        `${currentAction === 'approve' ? 'Approve' : 'Reject'} Product`;
+    });
+  });
+
+  document.getElementById('confirmAction').addEventListener('click', () => {
+    const productId = parseInt(document.getElementById('productId').value);
+    if (isNaN(productId) || productId < 0 || !productId){
+      alert('Please enter a valid ID');
+      return;
+    }
+    const products = ProductManager.GetAllProducts();
+    const returnId = products.find(c => c.id === productId);
+    if (!returnId){
+      alert("ID doesn't exist")
+      return;
+    }
+    if (currentAction === 'approve') {
+      ProductManager.ApproveProduct(productId)
+      alert(`Product #${productId} approved successfully!`);
+      location.reload();
+    } else {
+      ProductManager.RejectProduct(productId)
+      alert(`Product #${productId} rejected successfully!`);
+      location.reload();
+    }
+    modal.hide();
+    document.getElementById('productId').value = '';
+  });
+}
 function ShowProducts() {
   DisplayNone();
   CreateProductHeader();
+  ManageProducts();
   const productList = StorageManager.LoadSection("products") || [];
   var body = document.querySelector("tbody");
   for (let i = 0; i < productList.length; i++) {
     const product = productList[i];
-    body.appendChild(CreateProductTable("product", product.id, product.name, product.price, product.stock));
+    body.appendChild(CreateProductTable("product", product.id, product.name, product.price, product.stock, product.status));
   }
 }
 
@@ -388,7 +447,6 @@ function ShowDashboard() {
             <div class="card-body py-4">
               <h3 class="fw-bold fs-4 mb-3">Welcome to Admin Dashboard</h3>
               <p>Use the sidebar to manage users, products, and orders.</p>
-              <ul>
                 <li>👥 Manage Users: view, add, or remove users.</li>
                 <li>📦 Manage Products: create, update, delete inventory.</li>
                 <li>🧾 Manage Orders: track, fulfill, or cancel orders.</li>
