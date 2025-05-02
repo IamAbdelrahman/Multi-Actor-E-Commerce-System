@@ -1,23 +1,69 @@
 // ------------------------------- Cart-Slider functions start
+import StorageManager from "../modules/StorageModule.js";
+
 let cartItems = [];
 
-// Helper function to get the full data object from localStorage
-function getAppData() {
-  const storedData = localStorage.getItem('data');
-  return storedData ? JSON.parse(storedData) : { users: [], products: [], orders: [], cart: [] };
+// Helper function to get current user's cart from storage
+function getCurrentCart() {
+  const userLoggedIn = JSON.parse(sessionStorage.getItem("userLoggedIn"));
+  const userId = userLoggedIn?.id;
+  
+  const cart = StorageManager.LoadSection("cart") || [];
+  return cart.find(item => item.userId === (userId || null)) || { 
+    userId: userId || null, 
+    products: [], 
+    totalAmount: 0 
+  };
 }
 
-// Helper function to save the current cart
+// Helper function to save the current cart to storage
 function saveCurrentCart() {
-  const data = getAppData();
-  data.cart = cartItems;
-  localStorage.setItem('data', JSON.stringify(data));
+  const userLoggedIn = JSON.parse(sessionStorage.getItem("userLoggedIn"));
+  const userId = userLoggedIn?.id;
+  
+  const cart = StorageManager.LoadSection("cart") || [];
+  
+  // Calculate total amount
+  const products = StorageManager.LoadSection("products") || [];
+  const totalAmount = cartItems.reduce((total, item) => {
+    const product = products.find(p => p.id === item.id);
+    return total + (product ? product.price * item.quantity : 0);
+  }, 0);
+  
+  // Find existing cart or create new one
+  const existingCartIndex = cart.findIndex(item => item.userId === (userId || null));
+  const currentCart = {
+    userId: userId || null,
+    products: cartItems.map(item => ({
+      productId: item.id,
+      quantity: item.quantity
+    })),
+    totalAmount: totalAmount
+  };
+  
+  if (existingCartIndex !== -1) {
+    cart[existingCartIndex] = currentCart;
+  } else {
+    cart.push(currentCart);
+  }
+  
+  StorageManager.SaveSection("cart", cart);
 }
 
 // Initialize cart
 function initCart() {
-  const data = getAppData();
-  cartItems = data.cart || [];
+  const currentCart = getCurrentCart();
+  const products = StorageManager.LoadSection("products") || [];
+  
+  // Convert stored cart items to UI format
+  cartItems = currentCart.products.map(cartProduct => {
+    const product = products.find(p => p.id === cartProduct.productId);
+    return product ? {
+      ...product,
+      quantity: cartProduct.quantity
+    } : null;
+  }).filter(Boolean);
+  
   updateCartCount();
 }
 
@@ -228,6 +274,33 @@ document.addEventListener('DOMContentLoaded', function() {
   // Handle login/logout changes
   window.addEventListener('storage', function(e) {
     if (e.key === 'userLoggedIn') {
+      const userLoggedIn = JSON.parse(sessionStorage.getItem("userLoggedIn"));
+      if (userLoggedIn) {
+        // Merge guest cart with user cart if needed
+        const cart = StorageManager.LoadSection("cart") || [];
+        const guestCart = cart.find(item => item.userId === null);
+        const userCart = cart.find(item => item.userId === userLoggedIn.id);
+        
+        if (guestCart && guestCart.products.length > 0) {
+          if (userCart) {
+            // Merge products from guest cart to user cart
+            guestCart.products.forEach(guestProduct => {
+              const existingProduct = userCart.products.find(p => p.productId === guestProduct.productId);
+              if (existingProduct) {
+                existingProduct.quantity += guestProduct.quantity;
+              } else {
+                userCart.products.push(guestProduct);
+              }
+            });
+          } else {
+            // Convert guest cart to user cart
+            guestCart.userId = userLoggedIn.id;
+          }
+          
+          // Remove guest cart
+          StorageManager.SaveSection("cart", cart.filter(item => item.userId !== null));
+        }
+      }
       initCart();
       renderCartItems();
     }

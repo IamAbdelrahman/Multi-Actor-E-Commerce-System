@@ -1,11 +1,10 @@
 import Validate from "../modules/ValidationModule.js";
 import StorageManager from "../modules/StorageModule.js";
-import ProductManager from "../modules/ProductModule.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const userLoggedIn = JSON.parse(sessionStorage.getItem("userLoggedIn"));
     const userId = userLoggedIn?.id;
-
+    
     if (userId) {
         const users = StorageManager.LoadSection("users");
         const currentUser = users.find(user => user.id === userId);
@@ -18,45 +17,47 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("checkout-phone").value = currentUser.phone || "";
         }
     }
-
-    const cart = StorageManager.LoadSection("cart");
-    const userCart = cart.find(cartItem => cartItem.userId === userId);
-
-    if (userCart && Array.isArray(userCart.products) && userCart.products.length > 0) {
+    
+    // Load cart from storage
+    const cart = StorageManager.LoadSection("cart") || [];
+    const userCart = cart.find(item => item.userId === (userId || null));
+    
+    if (userCart) {
         const cartItemsContainer = document.getElementById("cart-items-container");
-
-        for (let i = 0; i < userCart.products.length; i++) {
-            const cartItem = userCart.products[i];
-            const productData = ProductManager.GetProductById(cartItem.productId);
-
-            if (!productData) continue;
-
-            const productElement = document.createElement("div");
-            productElement.classList.add("cart-item");
-            productElement.innerHTML = `
-                <div class="row align-items-center mb-4">
-                    <div class="col-auto">
-                        <img
-                          src="${productData.image}"
-                          alt="${productData.name}"
-                          class="img-fluid"
-                          style="max-width: 80px;"
-                        >
+        const products = StorageManager.LoadSection("products");
+        
+        // Calculate total amount
+        let totalAmount = 0;
+        
+        userCart.products.forEach(product => {
+            const productData = products.find(p => p.id === product.productId);
+            if (productData) {
+                const productElement = document.createElement("div");
+                productElement.classList.add("cart-item");
+                productElement.innerHTML = `
+                    <div class="row align-items-center mb-4">
+                        <div class="col-auto">
+                            <img
+                              src="${productData.image}"
+                              alt="${productData.name}"
+                              class="img-fluid"
+                              style="max-width: 80px;"
+                            >
+                        </div>
+                        <div class="col">
+                            <p>${productData.name} (x${product.quantity})</p>
+                            <p>Price: $${(productData.price * product.quantity).toFixed(2)}</p>
+                        </div>
                     </div>
-                    <div class="col">
-                        <p>${productData.name} (x${cartItem.quantity})</p>
-                        <p>Price: $${(productData.price * cartItem.quantity).toFixed(2)}</p>
-                    </div>
-                </div>
-            `;
-            cartItemsContainer.appendChild(productElement);
-        }
+                `;
+                cartItemsContainer.appendChild(productElement);
+                totalAmount += productData.price * product.quantity;
+            }
+        });
 
-        document.getElementById("total-amount").innerHTML = `$${userCart.totalAmount.toFixed(2)}`;
-        document.getElementById("subtotal-amount").innerHTML = `$${userCart.totalAmount.toFixed(2)}`;
-    } else {
-        const cartItemsContainer = document.getElementById("cart-items-container");
-        cartItemsContainer.innerHTML = "<p class='text-muted'>Your cart is empty.</p>";
+        // Update total amounts
+        document.getElementById("total-amount").innerHTML = `$${totalAmount.toFixed(2)}`;
+        document.getElementById("subtotal-amount").innerHTML = `$${totalAmount.toFixed(2)}`;
     }
 
     const submit = document.getElementById("submit");
@@ -64,8 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
     submit.addEventListener("click", (e) => {
         e.preventDefault();
 
-        const selectedPaymentInput = document.querySelector('input[name="payment"]:checked');
-        const paymentMethod = selectedPaymentInput ? selectedPaymentInput.nextElementSibling.textContent.trim() : "Not selected";
         const name = document.getElementById("checkout-name").value.trim();
         const street = document.getElementById("checkout-streetAddress").value.trim();
         const city = document.getElementById("checkout-city").value.trim();
@@ -78,54 +77,57 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        const address = { street, city, zip };
+        const address = {
+            street,
+            city,
+            zip,
+        };
 
         const errors = [];
+
         if (!Validate.isNameValid(name)) errors.push("Invalid name (must be 3-15 characters long and contain only letters)");
         if (!Validate.isEmailValid(email)) errors.push("Invalid email");
         if (!Validate.isPhoneValid(phone)) errors.push("Invalid phone (expected format: +20XXXXXXXXXX)");
-        if (!Validate.isCityValid(city)) errors.push("Invalid city");
-        if (!Validate.isZipCodeValid(zip)) errors.push("Invalid zipcode");
-        if (!Validate.isStreetValid(street)) errors.push("Invalid street");
+        if (!Validate.isAddressValid(address)) errors.push("Invalid address");
 
         if (errors.length > 0) {
             alert(errors.join("\n"));
-            return;
+        } else {
+            // Get cart again in case it changed
+            const cart = StorageManager.LoadSection("cart") || [];
+            const userCart = cart.find(item => item.userId === (userId || null));
+            
+            if (!userCart) {
+                alert("Your cart is empty");
+                return;
+            }
+
+            // Create new order
+            const newOrder = {
+                id: Date.now(),  // Use timestamp as unique ID
+                userId: userId || null,
+                products: userCart.products,
+                totalAmount: userCart.totalAmount,
+                status: "processing",
+                orderDate: new Date().toISOString(),
+                PaymentMethod: "credit card", 
+                shippingAddress: {
+                    street: street,
+                    city: city,
+                    zipCode: zip,
+                },
+            };
+
+            const orders = StorageManager.LoadSection("orders") || [];
+            orders.push(newOrder);
+            StorageManager.SaveSection("orders", orders);
+
+            // Clear the cart after successful order
+            const updatedCart = cart.filter(item => item.userId !== (userId || null));
+            StorageManager.SaveSection("cart", updatedCart);
+
+            // Redirect to confirmation page
+            window.location.href = "/order-confirmation.html";  
         }
-
-        if (!userCart || !Array.isArray(userCart.products) || userCart.products.length === 0) {
-            alert("Your cart is empty.");
-            return;
-        }
-
-        const newOrder = {
-            id: GenerateNextID(),
-            userId: userId,
-            products: userCart.products,
-            totalAmount: userCart.totalAmount,
-            status: "processing",
-            orderDate: new Date().toISOString(),
-            PaymentMethod: paymentMethod,
-            shippingAddress: {
-                street: street,
-                city: city,
-                zipCode: zip,
-            },
-        };
-
-        const orders = StorageManager.LoadSection("orders") || [];
-        orders.push(newOrder);
-        StorageManager.SaveSection("orders", orders);
-
-        const updatedCart = cart.filter(cartItem => cartItem.userId !== userId);
-        StorageManager.SaveSection("cart", updatedCart);
-
-        window.location.href = "/home.html";
     });
 });
-
-function GenerateNextID() {
-    const orders = StorageManager.LoadSection("orders") || [];
-    const ids = orders.map(order => order.id);
-    return ids.length > 0 ? Math.max(...ids) + 1 : 1;
-}
