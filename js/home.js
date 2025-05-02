@@ -71,8 +71,8 @@ window.Save = function (event) {
     let email = document.getElementById('email').value.trim().toLowerCase();
     let password = document.getElementById("password").value;
 
-
     // Add New Users with Incremental IDs
+    UserManager.AddUser(name, email, password);
     UserManager.AddUser(name, email, password);
 }
 

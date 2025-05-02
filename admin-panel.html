@@ -12,8 +12,6 @@
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet" href="css/admin.css" />
   <link rel="stylesheet" href="css/root.css" />
-  
-  <script type="module" src="js/admin.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
     crossorigin="anonymous"></script>
@@ -23,7 +21,6 @@
 <body>
   <!------------------------------------ Wrapper Start ------------------------------------>
   <div class="wrapper">
-
     <!------------------------------------ Sidebar Start ------------------------------------>
     <aside id="sidebar">
       <div class="d-flex justify-content-between p-4">
@@ -40,45 +37,58 @@
 
       <ul class="sidebar-nav">
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse" data-bs-target="#users"
-            aria-expanded="false" aria-controls="users">
-            <i class="bx bxs-user-account"></i>
-            <span>Users</span>
+          <a data-section = "customers" href="#" class="sidebar-link">
+            <i class="bi bi-bag"></i>
+            <span>Customers</span>
           </a>
-          <ul id="users" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-            <li class="sidebar-item">
-              <a href="#" class="sidebar-link">
-                <i data-section = "customers" class="bx bxs-user"></i>
-                <span>Customers</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
-              <a href="#" class="sidebar-link">
-                <i data-section = "sellers"  class="bx bxs-user-plus"></i>
-                <span>Sellers</span>
-              </a>
-            </li>
-          </ul>
-        </li> 
+        </li>
 
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link">
-            <i data-section = "products"  class='bx bx-shopping-bag'></i>
+          <a data-section = "sellers"  href="#" class="sidebar-link">
+            <i  class="bi bi-person-badge"></i>
+            <span>Sellers</span>
+          </a>
+        </li>
+        
+        <li class="sidebar-item">
+          <a data-section = "products"   href="#" class="sidebar-link">
+            <i class='bx bx-shopping-bag'></i>
             <span>Products</span>
           </a>
         </li>
 
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link">
-            <i data-section = "orders"  class='bx bxs-cart'></i>
+          <a data-section = "orders" href="#" class="sidebar-link">
+            <i class='bx bxs-cart'></i>
             <span>Orders</span>
           </a>
         </li>
 
         <li class="sidebar-item">
+          <a data-section = "stats" href="#" class="sidebar-link">
+            <i class='bx bx-stats'></i>
+            <span>Stats</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item">
           <a href="#" class="sidebar-link">
-            <i data-section = "analytics"  class='bx bx-stats'></i>
-            <span>Analytics</span>
+            <i data-section = "notifications" class="bx bxs-bell-ring"></i>
+            <span>Notifications</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item">
+          <a href="#" class="sidebar-link">
+            <i data-section = "settings" class="bx bxs-cog" ></i>
+            <span>Settings</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item">
+          <a href="#" class="sidebar-link">
+            <i data-section = "help"  class='bx bx-help-circle'></i>
+            <span>Help Center</span>
           </a>
         </li>
       </ul>
@@ -95,36 +105,12 @@
     <div class="main">
       <!------------------------------------ Dashboard Navbar Start ------------------------------------>
       <nav class="navbar navbar-expand px-4 py-3">
-
-        <form action="#" class="d-none d-sm-inline-block">
-          <div class="input-group input-group-navbar">
-            <input type="text" class="form-control border-0 rounded-0 pe-0" placeholder="Search..."
-              aria-label="Search" />
-            <button class="btn border-0 rounded-0" type="button">
-              <i class="bx bx-search"></i>
-            </button>
-          </div>
-        </form>
-
         <div class="navbar-collapse collapse">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item dropdown">
-              <a href="#" 
-                 class="nav-link dropdown-toggle pe-md-0" 
-                 id="userDropdown" 
-                 role="button" 
-                 data-bs-toggle="dropdown" 
-                 aria-expanded="false">
-                <img src="/images/Others/admin.jpg" alt="User" class="avatar img-fluid rounded-circle" />
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end rounded-0 border-0 shadow mt-3" aria-labelledby="userDropdown">
-                <li><a href="#" class="dropdown-item"> <i class="bx bxs-bell-ring" style="color:black";></i> Notifications</a></li>
-                <li><a href="#" class="dropdown-item"> <i class="bx bxs-cog" style="color:black"></i> Settings</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li><a href="#" class="dropdown-item"><i class="bx bx-help-circle" style="color:black"></i> Help Center</a></li>
-              </ul>
-            </li>
-          </ul>
+          <div class="ticker-container bg-light text-dark py-2 shadow-sm">
+            <div class="ticker-text">
+              ✨ Welcome to your Admin Panel — Track your inventory, manage users, and grow your business effortlessly!
+            </div>
+          </div>
         </div>
       </nav>
       <!------------------------------------ Dashboard Navbar End ------------------------------------>

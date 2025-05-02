@@ -1,11 +1,11 @@
 import Validate from "../modules/ValidationModule.js";
 import StorageManager from "../modules/StorageModule.js";
-import userManagerID from "../modules/UserModule.js"
+import ProductManager from "../modules/ProductModule.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const userLoggedIn = JSON.parse(sessionStorage.getItem("userLoggedIn"));
     const userId = userLoggedIn?.id;
-    
+
     if (userId) {
         const users = StorageManager.LoadSection("users");
         const currentUser = users.find(user => user.id === userId);
@@ -18,13 +18,16 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("checkout-phone").value = currentUser.phone || "";
         }
     }
-    
+
     const cart = StorageManager.LoadSection("cart");
     const userCart = cart.find(cartItem => cartItem.userId === userId);
-    if (userCart) {
+    if (userCart && Array.isArray(userCart.products) && userCart.products.length > 0) {
         const cartItemsContainer = document.getElementById("cart-items-container");
-        userCart.products.forEach(product => {
-            const productData = StorageManager.LoadSection("products").find(p => p.id === product.productId);
+        for (let i = 0; i < userCart.products.length; i++) {
+            const cartItem = userCart.products[i];
+            const productData = ProductManager.GetProductById(cartItem.productId);
+            if (!productData) continue;
+
             const productElement = document.createElement("div");
             productElement.classList.add("cart-item");
             productElement.innerHTML = `
@@ -38,19 +41,19 @@ document.addEventListener("DOMContentLoaded", () => {
                         >
                     </div>
                     <div class="col">
-                        <p>${productData.name} (x${product.quantity})</p>
-                        <p>Price: $${(productData.price * product.quantity).toFixed(2)}</p>
+                        <p>${productData.name} (x${cartItem.quantity})</p>
+                        <p>Price: $${(productData.price * cartItem.quantity).toFixed(2)}</p>
                     </div>
                 </div>
             `;
             cartItemsContainer.appendChild(productElement);
-        });
+        }
 
-        const totalAmountContainer = document.getElementById("total-amount");
-        totalAmountContainer.innerHTML = `$${userCart.totalAmount.toFixed(2)}`;
-        const subtotalAmountContainer = document.getElementById("subtotal-amount");
-        subtotalAmountContainer.innerHTML = `$${userCart.totalAmount.toFixed(2)}`;
-        
+        document.getElementById("total-amount").innerHTML = `$${userCart.totalAmount.toFixed(2)}`;
+        document.getElementById("subtotal-amount").innerHTML = `$${userCart.totalAmount.toFixed(2)}`;
+    } else {
+        const cartItemsContainer = document.getElementById("cart-items-container");
+        cartItemsContainer.innerHTML = "<p class='text-muted'>Your cart is empty.</p>";
     }
 
     const submit = document.getElementById("submit");
@@ -72,60 +75,54 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        const address = {
-            street,
-            city,
-            zip,
-        };
+        const address = { street, city, zip };
 
         const errors = [];
-
         if (!Validate.isNameValid(name)) errors.push("Invalid name (must be 3-15 characters long and contain only letters)");
         if (!Validate.isEmailValid(email)) errors.push("Invalid email");
         if (!Validate.isPhoneValid(phone)) errors.push("Invalid phone (expected format: +20XXXXXXXXXX)");
-        if (!Validate.isCityValid(address.city)) errors.push("Invalid city");
-        if (!Validate.isZipCodeValid(address.zip)) errors.push("Invalid zipcode");
-        if (!Validate.isStreetValid(address.street)) errors.push("Invalid street");
+        if (!Validate.isCityValid(city)) errors.push("Invalid city");
+        if (!Validate.isZipCodeValid(zip)) errors.push("Invalid zipcode");
+        if (!Validate.isStreetValid(street)) errors.push("Invalid street");
 
         if (errors.length > 0) {
             alert(errors.join("\n"));
-        } else {
-
-            if (!userCart || userCart.products.length === 0) {
-                alert("Your cart is empty. Please add items before placing any order.");
-                return;
-            }
-            const newOrder = { 
-                id: GenerateNextID(),
-                id: userId+10,
-                userId: userId,
-                products: userCart.products,
-                totalAmount: userCart.totalAmount,
-                status: "processing",
-                orderDate: new Date().toISOString(),
-                PaymentMethod: paymentMethod, 
-                shippingAddress: {
-                    street: street,
-                    city: city,
-                    zipCode: zip,
-                },
-            };
-
-            const orders = StorageManager.LoadSection("orders") || [];
-            orders.push(newOrder);
-
-            StorageManager.SaveSection("orders", orders);
-
-            const updatedCart = cart.filter(cartItem => cartItem.userId !== userId);
-            StorageManager.SaveSection("cart", updatedCart);
-
-            window.location.href = "/home.html";  
+            return;
         }
+
+        if (!userCart || !Array.isArray(userCart.products) || userCart.products.length === 0) {
+            alert("Your cart is empty. Please add items before placing any order.");
+            return;
+        }
+
+        const newOrder = {
+            id: GenerateNextID(),
+            userId: userId,
+            products: userCart.products,
+            totalAmount: userCart.totalAmount,
+            status: "processing",
+            orderDate: new Date().toISOString(),
+            PaymentMethod: paymentMethod,
+            shippingAddress: {
+                street: street,
+                city: city,
+                zipCode: zip,
+            },
+        };
+
+        const orders = StorageManager.LoadSection("orders") || [];
+        orders.push(newOrder);
+        StorageManager.SaveSection("orders", orders);
+
+        const updatedCart = cart.filter(cartItem => cartItem.userId !== userId);
+        StorageManager.SaveSection("cart", updatedCart);
+
+        window.location.href = "/home.html";
     });
 });
 
 function GenerateNextID() {
     const orders = StorageManager.LoadSection("orders") || [];
     const ids = orders.map(order => order.id);
-    return Math.max(...ids) + 1;
-    }
+    return ids.length > 0 ? Math.max(...ids) + 1 : 1;
+}

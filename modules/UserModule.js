@@ -2,7 +2,7 @@ import StorageManager from './StorageModule.js'
 import Validate from './ValidationModule.js';
 
 class User {
-  constructor(id, name, email, password, role, address = { street: "", city: "", zipCode: "" }, phone = "") {
+  constructor(id, name, email, password, role, address = { street: "", city: "", zipCode: "" }, phone = "", blocked = false) {
     this.ID = id;
     this.Name = name;
     this.Email = email;
@@ -211,5 +211,10 @@ export default class UserManager {
     var users = StorageManager.LoadSection("users") || [];
     users = users.filter(user => user.id !== id);
     StorageManager.SaveSection("users", users);
+  }
+
+  static GetUsersCount () {
+    const users = StorageManager.LoadSection("users") || [];
+    return users.length;
   }
 }

@@ -766,23 +766,15 @@
       }
     }
   ],
-  "categories": [
+  "messages":[
     {
-      "id": 1,
-      "name": "Electronics",
-      "description": "Devices and gadgets",
-      "products": [
-        101,
-        103
-      ]
-    },
-    {
-      "id": 2,
-      "name": "Footwear",
-      "description": "Shoes and sandals",
-      "products": [
-        102
-      ]
+      "id": 0,
+      "userId": 0,
+      "userName": "Abdelruhman Kamal",
+      "userEmail": "abdokamal@gmail.com",
+      "messageSubject":"Messages",
+      "messageDescription":"our messageDashBoard",
+      "status":true
     }
   ],
   "cart": [
@@ -790,11 +782,11 @@
       "userId": 1,
       "products": [
         {
-          "productId": 101,
+          "productId": 1,
           "quantity": 1
         },
         {
-          "productId": 102,
+          "productId": 2,
           "quantity": 2
         }
       ],
@@ -810,17 +802,5 @@
       ],
       "totalAmount": 999.00
     }
-  ],
-  "messages":[
-    {
-      "id": 0,
-      "userId": 0,
-      "userName": "Abdelruhman Kamal",
-      "userEmail": "abdokamal@gmail.com",
-      "messageSubject":"Messages",
-      "messageDescription":"our messageDashBoard",
-      "status":true
-    }
   ]
-
 }
