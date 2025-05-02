@@ -1,6 +1,5 @@
 import Validate from "../modules/ValidationModule.js";
 import StorageManager from "../modules/StorageModule.js";
-import userManagerID from "../modules/UserModule.js"
 
 document.addEventListener("DOMContentLoaded", () => {
     const userLoggedIn = JSON.parse(sessionStorage.getItem("userLoggedIn"));
@@ -19,38 +18,46 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     
-    const cart = StorageManager.LoadSection("cart");
-    const userCart = cart.find(cartItem => cartItem.userId === userId);
+    // Load cart from storage
+    const cart = StorageManager.LoadSection("cart") || [];
+    const userCart = cart.find(item => item.userId === (userId || null));
+    
     if (userCart) {
         const cartItemsContainer = document.getElementById("cart-items-container");
+        const products = StorageManager.LoadSection("products");
+        
+        // Calculate total amount
+        let totalAmount = 0;
+        
         userCart.products.forEach(product => {
-            const productData = StorageManager.LoadSection("products").find(p => p.id === product.productId);
-            const productElement = document.createElement("div");
-            productElement.classList.add("cart-item");
-            productElement.innerHTML = `
-                <div class="row align-items-center mb-4">
-                    <div class="col-auto">
-                        <img
-                          src="${productData.image}"
-                          alt="${productData.name}"
-                          class="img-fluid"
-                          style="max-width: 80px;"
-                        >
+            const productData = products.find(p => p.id === product.productId);
+            if (productData) {
+                const productElement = document.createElement("div");
+                productElement.classList.add("cart-item");
+                productElement.innerHTML = `
+                    <div class="row align-items-center mb-4">
+                        <div class="col-auto">
+                            <img
+                              src="${productData.image}"
+                              alt="${productData.name}"
+                              class="img-fluid"
+                              style="max-width: 80px;"
+                            >
+                        </div>
+                        <div class="col">
+                            <p>${productData.name} (x${product.quantity})</p>
+                            <p>Price: $${(productData.price * product.quantity).toFixed(2)}</p>
+                        </div>
                     </div>
-                    <div class="col">
-                        <p>${productData.name} (x${product.quantity})</p>
-                        <p>Price: $${(productData.price * product.quantity).toFixed(2)}</p>
-                    </div>
-                </div>
-            `;
-            cartItemsContainer.appendChild(productElement);
+                `;
+                cartItemsContainer.appendChild(productElement);
+                totalAmount += productData.price * product.quantity;
+            }
         });
 
-        const totalAmountContainer = document.getElementById("total-amount");
-        totalAmountContainer.innerHTML = `$${userCart.totalAmount.toFixed(2)}`;
-        const subtotalAmountContainer = document.getElementById("subtotal-amount");
-        subtotalAmountContainer.innerHTML = `$${userCart.totalAmount.toFixed(2)}`;
-        
+        // Update total amounts
+        document.getElementById("total-amount").innerHTML = `$${totalAmount.toFixed(2)}`;
+        document.getElementById("subtotal-amount").innerHTML = `$${totalAmount.toFixed(2)}`;
     }
 
     const submit = document.getElementById("submit");
@@ -58,8 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
     submit.addEventListener("click", (e) => {
         e.preventDefault();
 
-        const selectedPaymentInput = document.querySelector('input[name="payment"]:checked');
-        const paymentMethod = selectedPaymentInput ? selectedPaymentInput.nextElementSibling.textContent.trim() : "Not selected";
         const name = document.getElementById("checkout-name").value.trim();
         const street = document.getElementById("checkout-streetAddress").value.trim();
         const city = document.getElementById("checkout-city").value.trim();
@@ -83,27 +88,29 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!Validate.isNameValid(name)) errors.push("Invalid name (must be 3-15 characters long and contain only letters)");
         if (!Validate.isEmailValid(email)) errors.push("Invalid email");
         if (!Validate.isPhoneValid(phone)) errors.push("Invalid phone (expected format: +20XXXXXXXXXX)");
-        if (!Validate.isCityValid(address.city)) errors.push("Invalid city");
-        if (!Validate.isZipCodeValid(address.zip)) errors.push("Invalid zipcode");
-        if (!Validate.isStreetValid(address.street)) errors.push("Invalid street");
+        if (!Validate.isAddressValid(address)) errors.push("Invalid address");
 
         if (errors.length > 0) {
             alert(errors.join("\n"));
         } else {
-
-            if (!userCart || userCart.products.length === 0) {
-                alert("Your cart is empty. Please add items before placing any order.");
+            // Get cart again in case it changed
+            const cart = StorageManager.LoadSection("cart") || [];
+            const userCart = cart.find(item => item.userId === (userId || null));
+            
+            if (!userCart) {
+                alert("Your cart is empty");
                 return;
             }
-            const newOrder = { 
-                id: GenerateNextID(),
-                id: userId+10,
-                userId: userId,
+
+            // Create new order
+            const newOrder = {
+                id: Date.now(),  // Use timestamp as unique ID
+                userId: userId || null,
                 products: userCart.products,
                 totalAmount: userCart.totalAmount,
                 status: "processing",
                 orderDate: new Date().toISOString(),
-                PaymentMethod: paymentMethod, 
+                PaymentMethod: "credit card", 
                 shippingAddress: {
                     street: street,
                     city: city,
@@ -113,19 +120,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const orders = StorageManager.LoadSection("orders") || [];
             orders.push(newOrder);
-
             StorageManager.SaveSection("orders", orders);
 
-            const updatedCart = cart.filter(cartItem => cartItem.userId !== userId);
+            // Clear the cart after successful order
+            const updatedCart = cart.filter(item => item.userId !== (userId || null));
             StorageManager.SaveSection("cart", updatedCart);
 
-            window.location.href = "/home.html";  
+            // Redirect to confirmation page
+            window.location.href = "/order-confirmation.html";  
         }
     });
 });
-
-function GenerateNextID() {
-    const orders = StorageManager.LoadSection("orders") || [];
-    const ids = orders.map(order => order.id);
-    return Math.max(...ids) + 1;
-    }

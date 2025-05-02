@@ -4,7 +4,7 @@ import StorageManager from './StorageModule.js';
 -----------------------------------------------------------------------*/
 
 class Product {
-  constructor(name, description, price, stock, category, image, id = 0) {
+  constructor(name, description, price, stock, category, image, id = 1) {
     this.Name = name;
     this.Description = description;
     this.Price = price;
