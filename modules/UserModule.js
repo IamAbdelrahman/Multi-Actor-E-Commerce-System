@@ -207,4 +207,9 @@ export default class UserManager {
     users = users.filter(user => user.id !== id);
     StorageManager.SaveSection("users", users);
   }
+
+  static GetUsersCount () {
+    const users = StorageManager.LoadSection("users") || [];
+    return users.length;
+  }
 }

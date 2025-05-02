@@ -96,7 +96,7 @@ function ManageCustomers() {
   document.querySelectorAll('[data-bs-target="#customerActionModal"]').forEach(btn => {
     btn.addEventListener('click', () => {
       currentAction = btn.dataset.action;
-      document.getElementById('modalTitle').textContent = 
+      document.getElementById('modalTitle').textContent =
         `${currentAction === 'block' ? 'Block' : 'Unblock'} Customer`;
     });
   });
@@ -122,6 +122,7 @@ function ManageCustomers() {
 function ShowCustomers() {
   DisplayNone();
   CreateCustomerHeader();
+  ManageCustomers();
   const customers = CustomerManager.GetAllCustomers();
   var body = document.querySelector("tbody");
   for (let i = 0; i < customers.length; i++) {
@@ -129,7 +130,7 @@ function ShowCustomers() {
     const status = customer.blocked ? "InActive" : "Active";
     body.appendChild(CreateDataTable("user", customer.id, customer.name, customer.email, customer.password, customer.Address.city, customer.phone, status));
   }
-  ManageCustomers();
+  
 }
 
 /*------------------------------------------------------------------------------*/
@@ -138,57 +139,82 @@ function ShowCustomers() {
 -----------------------------------------------------------------------*/
 function CreateSellerHeader() {
   var Usersbtns = ` 
-    <div class="my-4">
-      <button class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#customerActionModal" data-action="block">
-        Add Seller
-      </button>
+  <div class="my-4">
+    <button class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#sellerActionModal" data-action="add">
+      Add Seller
+    </button>
+    <button class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#sellerActionModal" data-action="block">
+      Block Seller
+    </button>
+    <button class="btn btn-info text-white" data-bs-toggle="modal" data-bs-target="#sellerActionModal" data-action="unblock">
+      Unblock Seller
+    </button>
+  </div> 
 
-      <button class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#customerActionModal" data-action="block">
-        Block Seller
-      </button>
+  <div class="modal fade" id="sellerActionModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle">Manage Seller</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
 
-      <button class="btn btn-info text-white" data-bs-toggle="modal" data-bs-target="#customerActionModal" data-action="unblock">
-        Unblock Seller
-      </button>
-    </div> 
-    
-    <form id="Form" class="d-flex flex-column">
-      <div class="row mb-3">
-        <div class="col">
-          <input type="text" id=name" class="form-control rounded" placeholder="First Name" required pattern="[A-Za-z]+" title="Only letters allowed">
+        <div class="modal-body">
+          <!-- Add Seller Form -->
+          <form id="sellerForm" class="d-flex flex-column d-none">
+            <div class="row mb-3">
+              <div class="col">
+                <input type="text" id="name" class="form-control rounded" placeholder="First Name" required 
+                  pattern="[A-Za-z]+" title="Please enter a valid name">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <input type="email" id="email" class="form-control rounded" placeholder="Email Address" required
+                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}"
+                title="Please enter a valid email address">
+            </div>
+
+            <div class="mb-3">
+              <input type="text" id="phone" class="form-control rounded" placeholder="Phone Number" required
+                pattern="^01[0125][0-9]{8}$" title="Please enter a valid phone number">
+            </div>
+
+            <div class="row mb-3">
+              <div class="col">
+                <input type="text" id="street" class="form-control rounded" placeholder="Street" required
+                  pattern="^[A-Za-z0-9\s]{3,50}$">
+              </div>
+              <div class="col">
+                <input type="text" id="city" class="form-control rounded" placeholder="City" required
+                  pattern="^[A-Za-z\\s]{2,30}$">
+              </div>
+              <div class="col">
+                <input type="text" id="zip" class="form-control rounded" placeholder="ZIP Code" required
+                  pattern="\\d{5}">
+              </div>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-warning btn-lg rounded">Save Seller</button>
+            </div>
+          </form>
+
+          <!-- Block / Unblock Seller Form -->
+          <div id="blockUnblockForm" class="d-none">
+            <input type="number" id="sellerId" class="form-control mb-3" placeholder="Enter Seller ID" required />
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="confirmAction">Confirm</button>
         </div>
       </div>
+    </div>
+  </div>
+`;
 
-      <div class="mb-3">
-        <input type="email" id="email" class="form-control rounded" placeholder="Email Address" required
-          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}"
-          title="Please enter a valid email address">
-      </div>
-
-      <div class="mb-3">
-        <input type="text" id="phone" class="form-control rounded" placeholder="Phone Number" required
-        pattern=>
-      </div>
-
-      <div class="row mb-3">
-        <div class="col">
-          <input type="text" id="street" class="form-control rounded" placeholder="Street" required>
-        </div>
-        <div class="col">
-          <input type="text" id="city" class="form-control rounded" placeholder="City" required>
-        </div>
-        <div class="col">
-          <input type="text" id="zip" class="form-control rounded" placeholder="ZIP Code" required pattern="\\d{5}">
-        </div>
-      </div>
-
-      <div class="d-grid">
-        <button type="submit" class="btn btn-warning btn-lg rounded">Save Customer</button>
-      </div>
-    </form>
-  `;
-
-  // document.getElementById("customerFormContainer").innerHTML = formHTML;
   var table = createTable();
   var contentdiv = document.querySelector("#mainContent");
   contentdiv.innerHTML = Usersbtns + table;
@@ -204,35 +230,83 @@ function CreateSellerHeader() {
 }
 
 function ManageSellers() {
-  document.getElementById("customerForm").addEventListener("submit", function (e) {
-    e.preventDefault();
+  const modal = new bootstrap.Modal(document.getElementById('sellerActionModal'));
+  let currentAction = '';
 
-    const customer = {
-      name: document.getElementById("name").value,
-      email: document.getElementById("email").value,
-      phone: document.getElementById("phone").value,
-      address: {
-        street: document.getElementById("street").value,
-        city: document.getElementById("city").value,
-        zipCode: document.getElementById("zip").value
+  document.querySelectorAll('[data-bs-target="#sellerActionModal"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentAction = btn.dataset.action;
+
+      const title = currentAction === 'add' ? 'Add Seller' :
+        currentAction === 'block' ? 'Block Seller' :
+          'Unblock Seller';
+      document.getElementById('modalTitle').textContent = title;
+
+      document.getElementById('sellerForm').classList.toggle('d-none', currentAction !== 'add');
+      document.getElementById('blockUnblockForm').classList.toggle('d-none', currentAction === 'add');
+    });
+  });
+
+  document.getElementById('confirmAction').addEventListener('click', () => {
+    if (currentAction === 'add') {
+      const seller = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        password: GenerateSecurePassword(),
+        phone: document.getElementById("phone").value,
+        Address: {
+          street: document.getElementById("street").value,
+          city: document.getElementById("city").value,
+          zipCode: document.getElementById("zip").value
+        }
+      };
+
+
+      SellerManager.AddSeller(seller.name, seller.email, seller.password, seller.phone, seller.Address);
+      alert("Seller added successfully!");
+
+      var body = document.querySelector("tbody");
+      var len = UserManager.GetUsersCount();
+      var s = SellerManager.GetSellerById(len - 1);
+      console.log(s);
+      const status = seller.blocked ? "InActive" : "Active";
+      body.appendChild(CreateDataTable("user", s.id, s.name, s.email, s.password, s.Address.city, s.phone, status));
+
+
+    } else {
+      const id = parseInt(document.getElementById('sellerId').value);
+      if (isNaN(id)) {
+        alert("Please enter a valid Seller ID.");
+        return;
       }
-    };
-    CustomerManager.AddCustomer(customer);
+
+      if (currentAction === 'block') {
+        SellerManager.BlockSeller(id);
+        alert(`Seller #${id} blocked.`);
+      } else if (currentAction === 'unblock') {
+        SellerManager.UnblockSeller(id);
+        alert(`Seller #${id} unblocked.`);
+      }
+    }
+    modal.hide();
   });
 }
+
 
 function ShowSellers() {
   DisplayNone();
   CreateSellerHeader();
+  ManageSellers();
   const sellers = SellerManager.GetAllSellers();
   var body = document.querySelector("tbody");
+  console.log(sellers.length);
   for (let i = 0; i < sellers.length; i++) {
     const seller = sellers[i];
     const status = seller.blocked ? "InActive" : "Active";
-    body.appendChild(CreateDataTable("user", seller.id, seller.name, seller.email, seller.password, seller.Address.city, seller.phone, status));
+    const city = seller.Address.city;
+    console.log(city);
+    body.appendChild(CreateDataTable("user", seller.id, seller.name, seller.email, seller.password, city, seller.phone, status));
   }
-
-  ManageSellers();
 }
 /*------------------------------------------------------------------------------*/
 
@@ -255,13 +329,23 @@ function CreateProductHeader() {
   contentdiv.innerHTML = Productsbtns + table;
   var head = document.querySelector("thead");
   var tr = document.createElement("tr");
-  var attributes = ["Product", "Name", "Price", "Stock", "Delete"];
+  var attributes = ["Product", "Name", "Price", "Stock", "Status"];
   for (var i = 0; i < attributes.length; i++) {
     var th = document.createElement("th");
     th.textContent = attributes[i];
     tr.appendChild(th);
   }
   head.appendChild(tr);
+}
+
+function CreateProductTable(type, ...args) {
+  var tr = document.createElement("tr");
+  for (var i = 0; i < args.length; i++) {
+    var td = createCell();
+    td.textContent = args[i];
+    tr.appendChild(td);
+  }
+  return tr;
 }
 
 function ShowProducts() {
@@ -271,7 +355,7 @@ function ShowProducts() {
   var body = document.querySelector("tbody");
   for (let i = 0; i < productList.length; i++) {
     const product = productList[i];
-    body.appendChild(CreateDataTable("product", product.id, product.name, product.price, product.stock));
+    body.appendChild(CreateProductTable("product", product.id, product.name, product.price, product.stock));
   }
 }
 
@@ -326,6 +410,20 @@ function ShowDashboard() {
   } else {
     alert("Admin data not found.");
   }
+}
+
+/*------------------------------------------------------------------------------*/
+
+/*- NOTIFICATION FUNCTIONS
+--------------------------------------------------------------------------------*/
+function ShowMessages() {
+  var msgs = StorageManager.LoadSection("messages");
+  if (msgs) {
+    for (var i = 1; msgs.length; i++) {
+
+    }
+  }
+
 }
 
 function ShowAnalytics() {
@@ -529,6 +627,27 @@ function createDeleteIcon(id, type) {
   return icon;
 }
 
+function GenerateSecurePassword() {
+  const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const digits = "0123456789";
+  const specialChars = "_()!@#$%^&*";
+  const allChars = letters + digits + specialChars;
+
+  let password = "";
+  password += letters[Math.floor(Math.random() * letters.length)];
+  password += digits[Math.floor(Math.random() * digits.length)];
+  password += specialChars[Math.floor(Math.random() * specialChars.length)];
+
+  const remainingLength = 8 + Math.floor(Math.random() * 4) - 3; 
+  for (let i = password.length; i < remainingLength; i++) {
+    password += allChars[Math.floor(Math.random() * allChars.length)];
+  }
+
+  password = password.split('').sort(() => 0.5 - Math.random()).join('');
+  return password;
+}
+
+
 /*- ON LOADING
 -----------------------------------------------------------------------*/
 document.addEventListener('DOMContentLoaded', function () {
@@ -559,6 +678,9 @@ document.addEventListener('DOMContentLoaded', function () {
           break;
         case "orders":
           ShowOrders();
+          break;
+        case "notifications":
+          ShowMessages();
           break;
         case "analytics":
           ShowAnalytics();
