@@ -84,9 +84,13 @@ window.Login = function (event) {
 
     const users = StorageManager.LoadSection("users") || [];
 
-    const LoginUser = users.find(user => user.email === email && user.password === password);
-
-    if (LoginUser) {
+    const LoginUser = users.find(user => user.email === email);
+    if (!LoginUser) {
+        alert("Email does not exist. Please register first.");
+    } else if (LoginUser.password !== password) {
+        alert("Incorrect password. Please try again.");
+    }
+    else {
         //repair
         // alert(Welcome back, ${LoginUser.name}! You are logged in as ${LoginUser.role}.);
 
@@ -115,9 +119,8 @@ window.Login = function (event) {
             default:
                 alert("Invalid role. Please try again.");
         }
-    } else {
-        alert("Invalid email or password. Please try again.");
     }
+
 };
 // ------------------------------Register/Login End------------------------------
 

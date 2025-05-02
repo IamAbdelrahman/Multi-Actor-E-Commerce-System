@@ -155,30 +155,29 @@ export default class ProductManager {
   }
 
   static GetProductsByCategory(category) {
-    const products = StorageManager.LoadSection("products") || [];
-    return products.filter(p => p.Category === category);
+    const products = ProductManager.GetAllProducts();
+    return products.filter(p => p.category.toLowerCase() === category.toLowerCase());
   }
 
   static GetProductsByPriceRange(minPrice, maxPrice) {
-    const products = Product.GetAllProducts();
+    const products = ProductManager.GetAllProducts();
     return products.filter(product => product.price >= minPrice && product.price <= maxPrice);
   }
 
-  static GetProductByFilters(maxPrice = 0, category = '') {
-    category = category == 'all' ? '' : category;
-    const products = Product.GetAllProducts();
-    if (!maxPrice && !category) {
-      return products;
-    } else if (!maxPrice) {
-      return Product.GetProductsByCategory(category);
-    } else if (!category) {
-      return Product.GetProductsByPriceRange(0, maxPrice);
-    } else {
-      return products.filter(product => product.price <= maxPrice && product.category === category);
-    }
+  static GetProductByFilters(minPrice, maxPrice, category = '') {
+    category = category === 'all' ? '' : category;
+    const products = ProductManager.GetAllProducts();
+
+    return products.filter(product => {
+      const matchesCategory = category ? product.category.toLowerCase() === category.toLowerCase() : true;
+      const matchesPrice = (!minPrice && !maxPrice) ||
+        (product.price >= minPrice && product.price <= maxPrice);
+      return matchesCategory && matchesPrice;
+    });
   }
 
-  static GetProductsBySearch(product_name) {
+
+  static GetProductsBySearchName(product_name) {
     const products = ProductManager.GetAllProducts();
     return products.filter(product => product.name.toLowerCase().includes(product_name.toLowerCase()));
   }
