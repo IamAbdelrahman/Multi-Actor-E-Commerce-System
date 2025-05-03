@@ -202,7 +202,7 @@ export default class UserManager {
     });
 
     StorageManager.SaveSection("users", users);
-    return true; // ✅ return success
+    return true;
   }
 
 
@@ -213,7 +213,7 @@ export default class UserManager {
     StorageManager.SaveSection("users", users);
   }
 
-  static GetUsersCount () {
+  static GetUsersCount() {
     const users = StorageManager.LoadSection("users") || [];
     return users.length;
   }

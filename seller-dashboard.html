@@ -3,32 +3,30 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Seller Dashboard</title>
+  <title>Seller Panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script type="module" src="js/utils.js"></script>
+  <script type="module" src="js/seller.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <link rel="stylesheet" href="css/seller.css" />
+  <link rel="stylesheet" href="css/admin.css" />
   <link rel="stylesheet" href="css/root.css" />
-  
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
     crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script type="module" src="js/seller.js"></script>
-  <script type="module" src="js/utils.js"></script>
 </head>
 
 <body>
   <!------------------------------------ Wrapper Start ------------------------------------>
   <div class="wrapper">
-
     <!------------------------------------ Sidebar Start ------------------------------------>
     <aside id="sidebar">
       <div class="d-flex justify-content-between p-4">
         <div class="sidebar-logo">
-          <a href="#"> Seller Dashboard</a>
-            <i class="bi bi-lightning-fill"></i>
+          <a href="#"> Seller Panel</a>
+          <i class="bi bi-lightning-fill"></i>
           </a>
         </div>
 
@@ -37,264 +35,78 @@
         </button>
       </div>
 
-      <!------------------------------------ Sidebar Links Start ------------------------------------>
-      <ul class="sidebar-nav">
-
-        <li class="sidebar-item">
-          <a href="#" class="sidebar-link">
-            <i class='bx bx-line-chart'></i>
-            <span id="analyticscontent">Analytics</span>
-          </a>
-        </li>
-
-        <li class="sidebar-item">
-          <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse" data-bs-target="#products-dropdown" aria-expanded="false" aria-controls="products-dropdown">
-            <i class='bx bx-shopping-bag'></i>
-            <span id="productscontent">Products</span>
-          </a>
-          <ul id="products-dropdown" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-            <li class="sidebar-item">
-              <a href="#" class="sidebar-link" id="addproducts">Add Products</a>
-            </li>
-            <li class="sidebar-item">
-              <a href="#" class="sidebar-link" id="viewproducts">View Products</a>
-            </li>
-          </ul>
-        </li>
-
-        <li class="sidebar-item">
-          <a href="#" class="sidebar-link">
-            <i class='bx bx-receipt'></i>
-            <span id="orderscontent">Orders</span>
-          </a>
 
 
-        <!-- <li class="sidebar-item">
-          <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse" data-bs-target="#multi"
-            aria-expanded="false" aria-controls="multi">
-            <i class="bx bxs-bar-chart-alt-2"></i>
-            <span>Multi Level</span>
-          </a>
-          <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-            <li class="sidebar-item">
-              <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                data-bs-target="#multi-two" aria-expanded="false" aria-controls="multi-two">
-                Two Links
-              </a>
-              <ul id="multi-two" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                <li class="sidebar-item">
-                  <a href="#" class="sidebar-link">Link 1</a>
-                </li>
-                <li class="sidebar-item">
-                  <a href="#" class="sidebar-link">Link 2</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li> -->
+      <li class="sidebar-item">
+        <a data-section="products" href="#" class="sidebar-link">
+          <i class='bx bx-shopping-bag'></i>
+          <span>Products</span>
+        </a>
+      </li>
 
-        <!-- <li class="sidebar-item">
-          <a href="#" class="sidebar-link">
-            <i class="bx bxs-bell-ring"></i>
-            <span>Notification</span>
-          </a>
-        </li>
+      <li class="sidebar-item">
+        <a data-section="orders" href="#" class="sidebar-link">
+          <i class='bx bxs-cart'></i>
+          <span>Orders</span>
+        </a>
+      </li>
 
-        <li class="sidebar-item">
-          <a href="#" class="sidebar-link">
-            <i class="bx bxs-cog"></i>
-            <span>Settings</span>
-          </a>
-        </li>
-      </ul> -->
-      <!------------------------------------ Sidebar Links End ------------------------------------>
+      <li class="sidebar-item">
+        <a data-section="stats" href="#" class="sidebar-link">
+          <i class='bx bx-stats'></i>
+          <span>Stats</span>
+        </a>
+      </li>
 
-      <!------------------------------------ Sidebar Footer Start ------------------------------------>
+
+
       <div class="sidebar-footer">
         <a href="#" class="sidebar-link">
-          <i class="bx bxs-log-out"></i>
+          <i id="logout" class="bx bxs-log-out"></i>
           <span>Logout</span>
         </a>
       </div>
     </aside>
+    <script>
+      document.getElementById("logout")?.addEventListener("click", () => {
+        sessionStorage.removeItem("userLoggedIn");
+        window.location.href = "home.html"; // Redirect to homepage
+      });
 
-    <!------------------------------------ Sidebar Footer End ------------------------------------>
+    </script>
     <!------------------------------------ Sidebar End ------------------------------------>
 
-    <!------------------------------------ Main Content Start ------------------------------------>
     <div class="main">
       <!------------------------------------ Dashboard Navbar Start ------------------------------------>
       <nav class="navbar navbar-expand px-4 py-3">
-
-        <form action="#" class="d-none d-sm-inline-block">
-          <div class="input-group input-group-navbar">
-            <input type="text" class="form-control border-0 rounded-0 pe-0" placeholder="Search..."
-              aria-label="Search" />
-            <button class="btn border-0 rounded-0" type="button">
-              <i class="bx bx-search"></i>
-            </button>
+        <div class="navbar-collapse collapse">
+          <div class="ticker-container bg-light text-dark py-2 shadow-sm">
+            <div class="ticker-text">
+              ✨ Welcome to your Seller Panel — Track your inventory, manage products, and grow your business
+              effortlessly!
+            </div>
           </div>
-        </form>
-
-        <div class="navbar-collapse collape">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item dropdown">
-              <a href="#" data-bs-target="dropdown" class="nav-icon pe-md-0">
-                <img src="/images/Others/admin.jpg" alt="User" class="avatar img-fluid" />
-              </a>
-              <div class="dropdown-menu dropdown-menu-end rounded-0 border-0 shadow mt-3">
-                <a href="#" class="dropdown-item">
-                  <i class="bx bx-cog"></i>
-                  <span>Analytics</span>
-                </a>
-                <a href="#" class="dropdown-item">
-                  <i class="bx bx-data"></i>
-                  <span>Settings</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                  <i class="bx bx-help-circle"></i>
-                  <span>Help Center</span>
-                </a>
-              </div>
-            </li>
-          </ul>
         </div>
       </nav>
       <!------------------------------------ Dashboard Navbar End ------------------------------------>
 
-      <!------------------------------------ Dashboard Start ------------------------------------>
+      <!------------------------------------ Dashboard Content Start ------------------------------------>
       <main class="content px-3 py-4">
         <div class="container-fluid">
           <div class="mb-3">
-            <h3 class="fw-bold fs-4 mb-3">Seller Dashboard</h3>
-            <div class="row">
+            <div class="row" id="dashHeader">
+              <!-- Header will be inserted here -->
+            </div>
 
-              <div class="col-12 col-md-4">
-                <div class="card shadow">
-                  <div class="card-body py-4">
-                    <h5 class="mb-2 fw-bold"> TOTAL REVENUE </h5>
-                    <p id="revenue" class="fw-bold mb02">$89,1891</p>
-                    <div class="mb-0">
-                      <span id="revenue-change" class="bagde text-success me-2">+9.0%</span>
-                      <span class="fw-bold">Since Last Month</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-12 col-md-4">
-                <div class="card shadow">
-                  <div class="card-body py-4">
-                    <h5 class="mb-2 fw-bold">WEBSITE VISITORS</h5>
-                    <p id = visitors class="fw-bold mb02">1891</p>
-                    <div class="mb-0">
-                      <span id = visitors-change class="bagde text-success me-2">+9.0%</span>
-                      <span class="fw-bold">Since Last Month</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-12 col-md-4">
-                <div class="card shadow">
-                  <div class="card-body py-4">
-                    <h5 class="mb-2 fw-bold">TOTAL ORDERS</h5>
-                    <p id = orders class="fw-bold mb02">1000</p>
-                    <div class="mb-0">
-                      <span id = orders-change  class="bagde text-success me-2">+9.0%</span>
-                      <span class="fw-bold">Since Last Month</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-
-              <div class="column">
-
-                <div class="fw-bold fs-4 my-3" id="contentdiv">
-                  <div class="d-none" id="chartcontent">
-                    
-                  </div>
-                </div>
-                
-                <div class="col-12 col-md-12 ">
-                  <!-- <h3 class="fw-bold fs-4 my-3" ></h3> -->
-                  <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover align-middle text-center  ">
-                      <thead>
-
-                      </thead>
-                      <tbody>
-
-                      </tbody>
-                    </table>
-
-                    
-
-                    <div class="d-none p-4 m-5" id="formdiv">
-                      <form class="form-inline d-flex justify-content-center align-items-center d-none" id="formcontent">
-                        <!-- <div class="mb-3">
-                          <label for="productID" class="form-label">Product ID</label>
-                          <input type="text" class="form-control" id="productID" placeholder="Enter product ID">
-                          </div> -->
-                        <div class="mb-3">
-                        <label for="productName" class="form-label">Product Name</label>
-                        <input type="text" class="form-control" id="productName" placeholder="Enter product name">
-                        </div>
-
-                        <div class="mb-3">
-                          <label for="productDescription" class="form-label">Product Description</label>
-                          <textarea class="form-control" id="productDescription" rows="3" placeholder="Enter product description"></textarea>
-                          </div>
-
-                        <div class="mb-3">
-                          <label for="productPrice" class="form-label">Product Price</label>
-                          <input type="number" class="form-control" id="productPrice" placeholder="Enter product price">
-                          </div>
-
-                        <div class="mb-3">
-                          <label for="productStock" class="form-label">Product stock</label>
-                          <input type="number" class="form-control" id="productQuantity" placeholder="Enter product quantity">
-                        </div>
-              
-                        <div class="mb-3">
-                        <label for="productCategory" class="form-label">Product Category</label>
-                        <select class="form-select" id="productCategory">
-                          <option value="1" selected>Mobiles</option>
-                          <option value="2">Laptops</option>
-                          <option value="3">HeadPhones</option>
-                          <option value="4">Tablets</option>
-                          <option value="5">Accessories</option>
-                        </select>
-                        </div>
-
-                        <div class="mb-3">
-                          <label for="productImage" class="form-label">Product Image</label>
-                          <input type="file" class="form-control" id="productImage" accept="image/*">
-                        </div>
- 
-                        <button type="submit" class="btn btn-warning" id="submitProduct">Add Product</button>
-                        <button type="submit" class="btn btn-warning" id="updateProduct">Update Product</button>
-
-                      </form>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- <div class="col-12 col-md-5">
-                  <h3 class="fw-bold fs-4 my-3">Reports Overview</h3>
-                  <canvas id="bar-chart-grouped" width="800" height="450"></canvas>
-                </div> -->
-              </div>
-
+            <div class="row" id="mainContent">
+              <!-- Content will be inserted here -->
             </div>
           </div>
         </div>
       </main>
       <!------------------------------------ Dashboard End ------------------------------------>
 
-      <!------------------------------------ Dashboard Footer Start ------------------------------------> 
+      <!------------------------------------ Dashboard Footer Start ------------------------------------>
       <footer class="footer">
         <div class="container-fluid">
           <div class="row text-body-secondary">
@@ -317,16 +129,16 @@
                 <a href="#" class="text-body-secondary">Terms & Conditions</a>
               </li>
               <li class="list-inline-item">
-                  <a href="#" class="text-body-secondary">
-                    <i class="bx bxs-copyright"></i>
-                    <span>2025</span>
-                  </a>
+                <a href="#" class="text-body-secondary">
+                  <i class="bx bxs-copyright"></i>
+                  <span>2025</span>
+                </a>
               </li>
             </ul>
           </div>
 
         </div>
-      </footer> 
+      </footer>
     </div>
   </div>
 
