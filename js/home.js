@@ -2,6 +2,23 @@
 import StorageManager from '../modules/StorageModule.js'
 import UserManager from '../modules/UserModule.js';
 
+// Add Static ADMIN in Local Storage in Section Users and whenn open even not there are users will reload local storage with admin
+const users = StorageManager.LoadSection("users") || [];
+const adminExists = users.some(user => user.id === 0 && user.role === "admin");
+
+// if (!adminExists) {
+//     const staticAdmin = {
+//         id: 0,
+//         name: "Admin User",
+//         email: "admin@gmail.com",
+//         password: "admin123",
+//         role: "admin"
+//     };
+//     users.push(staticAdmin);
+//     StorageManager.SaveSection("users", users);
+//     console.log("Static admin added.");
+// }
+
 // Show and hide modal
 const modal = document.getElementById("registerModal");
 const icon = document.getElementById("Register-Icon");
@@ -23,6 +40,7 @@ document.getElementById('toggleToSignUp').onclick = function () {
 
 icon.onclick = () => modal.classList.remove('d-none');
 closeBtn.onclick = () => modal.classList.add('d-none');
+
 
 // Password eyeIcon
 const eyeIcon = document.getElementById("eyeIcon");
@@ -56,6 +74,8 @@ window.Save = function (event) {
     let email = document.getElementById('email').value.trim().toLowerCase();
     let password = document.getElementById("password").value;
 
+    // Add New Users with Incremental IDs
+    UserManager.AddUser(name, email, password);
     UserManager.AddUser(name, email, password);
 }
 
@@ -77,19 +97,21 @@ window.Login = function (event) {
         //repair
         // alert(Welcome back, ${LoginUser.name}! You are logged in as ${LoginUser.role}.);
 
-        // Handle different user roles
         switch (LoginUser.role) {
             case "customer":
+                sessionStorage.setItem('userLoggedIn', JSON.stringify(LoginUser));
                 location.reload();
                 document.getElementById("Register-Icon").classList.add("d-none");
                 const userDropdown = document.getElementById("userDropdown");
                 if (userDropdown) {
                     userDropdown.classList.remove("d-none");
                 }
+
                 const modal = document.getElementById("registerModal");
                 if (modal) {
                     modal.classList.add("d-none");
                 }
+                document.getElementById("homeContent");
                 break;
             case "admin":
                 window.location.href = "admin-panel.html";
@@ -105,57 +127,18 @@ window.Login = function (event) {
 };
 // ------------------------------Register/Login End------------------------------
 
-window.addEventListener('DOMContentLoaded', () => {
-    const loggedInUser = JSON.parse(sessionStorage.getItem('userLoggedIn'));
-
-    // Set up UI based on login status
-    if (loggedInUser) {
-        document.getElementById("Register-Icon")?.classList.add("d-none");
-        document.getElementById("userDropdown")?.classList.remove("d-none");
-
-        // Ensure cart has the correct user ID even after page refresh
-        if (!sessionStorage.getItem('userId')) {
-            sessionStorage.setItem('userId', loggedInUser.id);
-            sessionStorage.setItem('userRole', loggedInUser.role);
-        }
-    } else {
-        document.getElementById("Register-Icon")?.classList.remove("d-none");
-        document.getElementById("userDropdown")?.classList.add("d-none");
-
-        // Set guest ID for cart if no user is logged in
-        if (!sessionStorage.getItem('userId')) {
-            sessionStorage.setItem('userId', 'guest');
-        }
-    }
-    CreateFeaturedPrducts(StorageManager.LoadSection("products"));
-});
-
-document.getElementById("logout")?.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    // Clear all user session data
+document.getElementById("logout")?.addEventListener("click", () => {
     sessionStorage.removeItem("userLoggedIn");
-    sessionStorage.removeItem("userId");
-    sessionStorage.removeItem("userRole");
-
-    // Set guest ID for cart after logout
-    sessionStorage.setItem('userId', 'guest');
-
     location.reload();
 });
 
 
-function CreateFeaturedPrducts(products) {
-    var content = document.getElementById("Featured-Products-Container");
-    const row = document.createElement("div");
-    row.className = "row g-4";
-    var count = 9;
-    do {
+function CreateFeaturedProducts(products) {
+    var content = document.getElementById("content");
+    for (var i = 1; i <= 9; i++) {
         var product = products[getRandomValues(1, 25)];
-        console.log(product.id);
-        const card = document.createElement("div");
-        card.className = "col-12 col-sm-6 col-lg-3 mb-4";
-        card.innerHTML = `
+        var cards = `
+        <div class = "col-12 col-sm-6 col-lg-3 mb-4 ">
           <div class="card h-100 position-relative text-center p-3">
 
             <!-- Buttons for heart and eye icons -->
@@ -194,19 +177,21 @@ function CreateFeaturedPrducts(products) {
               </div>
             </div>
           </div>
+        </div>
        `;
-
-        row.appendChild(card);
-        content.appendChild(row);
-    } while (count--);
-
-}
-// Initialize cart for current user
-document.addEventListener('DOMContentLoaded', function () {
-    // Ensure cart has a user ID (logged in or guest)
-    if (!sessionStorage.getItem('userId')) {
-        const loggedInUser = JSON.parse(sessionStorage.getItem('userLoggedIn'));
-        sessionStorage.setItem('userId', loggedInUser ? loggedInUser.id : 'guest');
+       content.innerHTML += cards;
     }
-});
+}
 
+window.addEventListener('DOMContentLoaded', () => {
+    const loggedInUser = JSON.parse(sessionStorage.getItem('userLoggedIn'));
+
+    if (loggedInUser && loggedInUser.role === 'customer') {
+        document.getElementById("Register-Icon")?.classList.add("d-none");
+        document.getElementById("userDropdown")?.classList.remove("d-none");
+    } else {
+        document.getElementById("Register-Icon")?.classList.remove("d-none");
+        document.getElementById("userDropdown")?.classList.add("d-none");
+    }
+    CreateFeaturedProducts(StorageManager.LoadSection("products"));
+});
