@@ -187,8 +187,6 @@ export default class ProductManager {
     return true;
   }
 
-
-
   static GetAllProducts() {
     return StorageManager.LoadSection("products") || [];
   }
