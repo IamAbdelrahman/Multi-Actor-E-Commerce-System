@@ -257,4 +257,8 @@ export default class ProductManager {
     StorageManager.SaveSection("products", updatedProducts);
     return true;
   }
+
+  static GetProductCounts() {
+    return ProductManager.GetAllProducts().length;
+  }
 }

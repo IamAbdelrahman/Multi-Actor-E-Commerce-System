@@ -29,46 +29,13 @@ import CustomerManager from '../modules/CustomerModule.js';
 /*- CUSTOMER FUNCTIONS
 -----------------------------------------------------------------------*/
 function CreateCustomerHeader() {
-  var Usersbtns = ` 
-    <div class="my-4">
-      <button class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#customerActionModal" data-action="block">
-        Block Customer
-      </button>
-      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#customerActionModal" data-action="unblock">
-        Unblock Customer
-      </button>
-    </div>
-
-    <!-- Modal Form -->
-    <div class="modal fade" id="customerActionModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalTitle">Block/Unblock Customer</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form id="customerActionForm">
-              <div class="mb-3">
-                <label for="customerId" class="form-label">Enter Customer ID</label>
-                <input type="number" class="form-control" id="customerId" required>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-primary" id="confirmAction">Confirm</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  `
+  var Usersbtns = CreateModal("Customer", "Block", "Unblock");
   var table = createTable();
   var contentdiv = document.querySelector("#mainContent");
   contentdiv.innerHTML = Usersbtns + table;
   var head = document.querySelector("thead");
   var tr = document.createElement("tr");
-  var attributes = ["Customers", "Name", "Email", "Password", "City", "Phone", "Status", "Delete"];
+  var attributes = ["Customer ID", "Name", "Email", "Password", "City", "Phone", "Status", "Delete"];
   for (var i = 0; i < attributes.length; i++) {
     var th = document.createElement("th");
     th.textContent = attributes[i];
@@ -91,18 +58,18 @@ function CreateDataTable(type, ...args) {
 }
 
 function ManageCustomers() {
-  const modal = new bootstrap.Modal('#customerActionModal');
+  const modal = new bootstrap.Modal('#CustomerActionModal');
   let currentAction = '';
-  document.querySelectorAll('[data-bs-target="#customerActionModal"]').forEach(btn => {
+  document.querySelectorAll('[data-bs-target="#CustomerActionModal"]').forEach(btn => {
     btn.addEventListener('click', () => {
       currentAction = btn.dataset.action;
       document.getElementById('modalTitle').textContent =
-        `${currentAction === 'block' ? 'Block' : 'Unblock'} Customer`;
+        `${currentAction === 'Block' ? 'Block' : 'Unblock'} Customer`;
     });
   });
 
   document.getElementById('confirmAction').addEventListener('click', () => {
-    const customerId = parseInt(document.getElementById('customerId').value);
+    const customerId = parseInt(document.getElementById('CustomerId').value);
     if (isNaN(customerId) || customerId < 0 || !customerId){
       alert('Please enter a valid ID');
       return;
@@ -114,7 +81,7 @@ function ManageCustomers() {
       alert("ID doesn't exist")
       return;
     }
-    if (currentAction === 'block') {
+    if (currentAction === 'Block') {
       CustomerManager.BlockCustomer(customerId);
       alert(`Customer #${customerId} blocked successfully!`);
       location.reload();
@@ -229,7 +196,7 @@ function CreateSellerHeader() {
   contentdiv.innerHTML = Usersbtns + table;
   var head = document.querySelector("thead");
   var tr = document.createElement("tr");
-  var attributes = ["Sellers", "Name", "Email", "Password", "City", "Phone", "Status", "Delete"];
+  var attributes = ["Seller ID", "Name", "Email", "Password", "City", "Phone", "Status", "Delete"];
   for (var i = 0; i < attributes.length; i++) {
     var th = document.createElement("th");
     th.textContent = attributes[i];
@@ -329,47 +296,13 @@ function ShowSellers() {
 /*- PRODUCTS FUNCTIONS
 --------------------------------------------------------------------------------*/
 function CreateProductHeader() {
-  var Productsbtns = ` 
-    <div class="my-4">
-      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#productActionModal" data-action="approve">
-        Approve Product
-      </button>
-      <button class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#productActionModal" data-action="reject">
-        Reject Product
-      </button>
-
-    </div>
-
-    <!-- Modal Form -->
-    <div class="modal fade" id="productActionModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalTitle">Approve/Reject Product</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form id="productActionForm">
-              <div class="mb-3">
-                <label for="productId" class="form-label">Enter Product ID</label>
-                <input type="number" class="form-control" id="productId" required>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-primary" id="confirmAction">Confirm</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  `
+  var ProductBtns = CreateModal("Product", "Approve", "Reject");
   var table = createTable();
   var contentdiv = document.querySelector("#mainContent");
-  contentdiv.innerHTML = Productsbtns + table;
+  contentdiv.innerHTML = ProductBtns + table;
   var head = document.querySelector("thead");
   var tr = document.createElement("tr");
-  var attributes = ["Products", "Name", "Price", "Category", "Stock", "Status"];
+  var attributes = ["Product ID", "Name", "Price", "Category", "Stock", "Status"];
   for (var i = 0; i < attributes.length; i++) {
     var th = document.createElement("th");
     th.textContent = attributes[i];
@@ -389,18 +322,18 @@ function CreateProductTable(type, ...args) {
 }
 
 function ManageProducts() {
-  const modal = new bootstrap.Modal('#productActionModal');
+  const modal = new bootstrap.Modal('#ProductActionModal');
   let currentAction = '';
-  document.querySelectorAll('[data-bs-target="#productActionModal"]').forEach(btn => {
+  document.querySelectorAll('[data-bs-target="#ProductActionModal"]').forEach(btn => {
     btn.addEventListener('click', () => {
       currentAction = btn.dataset.action;
       document.getElementById('modalTitle').textContent =
-        `${currentAction === 'approve' ? 'Approve' : 'Reject'} Product`;
+        `${currentAction === 'Approve' ? 'Approve' : 'Reject'} Product`;
     });
   });
 
   document.getElementById('confirmAction').addEventListener('click', () => {
-    const productId = parseInt(document.getElementById('productId').value);
+    const productId = parseInt(document.getElementById('ProductId').value);
     if (isNaN(productId) || productId < 0 || !productId){
       alert('Please enter a valid ID');
       return;
@@ -411,7 +344,7 @@ function ManageProducts() {
       alert("ID doesn't exist")
       return;
     }
-    if (currentAction === 'approve') {
+    if (currentAction === 'Approve') {
       ProductManager.ApproveProduct(productId)
       alert(`Product #${productId} approved successfully!`);
       location.reload();
@@ -424,6 +357,7 @@ function ManageProducts() {
     document.getElementById('productId').value = '';
   });
 }
+
 function ShowProducts() {
   DisplayNone();
   CreateProductHeader();
@@ -440,6 +374,184 @@ function ShowProducts() {
 
 /*- ORDERS FUNCTIONS
 --------------------------------------------------------------------------------*/
+// Create the Orders Header
+function CreateOrdersHeader() {
+  const OrdersBtns = ` 
+    <div class="my-4">
+      <h3 class="fw-bold">Orders Management</h3>
+    </div>
+  `;
+  
+  const table = createTable();
+  const contentdiv = document.querySelector("#mainContent");
+  contentdiv.innerHTML = OrdersBtns + table;
+  
+  const head = document.querySelector("thead");
+  const tr = document.createElement("tr");
+  const attributes = ["Order ID", "Customer Name", "Order Date", "Total Amount", "Status", "Actions"];
+
+  for (let i = 0; i < attributes.length; i++) {
+    const th = document.createElement("th");
+    th.textContent = attributes[i];
+    tr.appendChild(th);
+  }
+  
+  head.appendChild(tr);
+}
+
+function CreateOrdersTable(orderId, customerName, orderDate, totalAmount, status) {
+  const tr = document.createElement("tr");
+  const cells = [orderId, customerName, orderDate, totalAmount, status];
+  cells.forEach(cellContent => {
+    const td = createCell();
+    td.textContent = cellContent;
+    tr.appendChild(td);
+  });
+  
+  const actionTd = createCell();
+  const displayIcon = createDisplayIcon(orderId);
+  actionTd.appendChild(displayIcon);
+  tr.appendChild(actionTd);
+  return tr;
+}
+
+function createDisplayIcon(orderId) {
+  const icon = document.createElement("i");
+  icon.classList.add("bi", "bi-eye-fill", "text-info", "fs-5", "ms-2", "cursor-pointer");
+  icon.addEventListener("click", () => {
+    ShowOrderDetails(orderId);
+  });
+  return icon;
+}
+
+function CloseCard() {
+  ShowOrders();
+}
+
+function ShowOrderDetails(orderId) {
+  const orders = StorageManager.LoadSection("orders") || [];
+  const order = orders.find(o => o.id === orderId);
+  
+  if (!order) {
+    alert("Order not found!");
+    return;
+  }
+
+  
+  const cardHtml = `
+    <div class="card shadow-lg p-4">
+      <h5 class="card-title">Order Details</h5>
+      <p><strong>Order ID:</strong> ${order.id}</p>
+      <p><strong>Customer:</strong> ${CustomerManager.GetCustomerById(order.userId).name}</p>
+      <p><strong>Order Date:</strong> ${order.orderDate}</p>
+      <p><strong>Status:</strong> ${order.status}</p>
+      <h6>Products:</h6>
+      <ul>
+        ${order.products.map(p => p`
+          <li>
+          ${product.name} (x${product.quantity}) - $${product.price}
+          </li>
+        `).join('')}
+      </ul>
+      <button class="btn btn-secondary" onclick="CloseCard()">Close</button>
+    </div>
+  `;
+  
+  const contentDiv = document.querySelector("#mainContent");
+  contentDiv.innerHTML = cardHtml;
+}
+
+// Close the card
+
+
+// Show Orders
+function ShowOrders() {
+  DisplayNone();
+  CreateOrdersHeader();
+  
+  const orders = StorageManager.LoadSection("orders") || [];
+  const body = document.querySelector("tbody");
+  
+  orders.forEach(order => {
+    const status = order.completed ? "Completed" : "Pending";
+    body.appendChild(CreateOrdersTable(order.id, order.customerName, order.orderDate, order.totalAmount, status));
+  });
+}
+// function CreateOrderHeader() {
+//   var details =  `
+//   <div id = modal class="col-12 col-md-4">
+//     <div class="card shadow">
+//       <div class="card-body py-4">
+//       <button id="closePopup" style="position: absolute; top: 10px; right: 10px;" class="btn-close"></button>
+//           <h3 class="fw-bold fs-4 mb-3">Profile</h3>
+//           <p class="fw-bold mb02">
+//             <span id=productName>Name: </span><br>
+//             <span id=productPrice>Price: </span><br>
+//             <span id=productStock>Stock: </span><br>
+//             <span id=productCategory>Category: </span><br>
+//           </p>
+//         </div>
+//       </div>
+//     </div>
+//   </div> `
+  
+//   const modal = document.getElementById("modal");
+//   const Icon = document.getElementsByClassName("bi-trash-fill");
+//   const closeBtn = document.getElementById("closePopup");
+//   Icon.onclick = () => modal.classList.remove('d-none');
+//   closeBtn.onclick = () => modal.classList.add('d-none');
+//   window.onclick = (e) => {
+//       if (e.target === modal) modal.classList.add('d-none');
+//   }
+//   var table = createTable();
+//   var contentdiv = document.querySelector("#mainContent");
+//   contentdiv.innerHTML = details + table;
+//   var head = document.querySelector("thead");
+//   var tr = document.createElement("tr");
+//   var attributes = ["Orders", "User-ID", "Product-ID", "Status", "Display"];
+//   for (var i = 0; i < attributes.length; i++) {
+//     var th = document.createElement("th");
+//     th.textContent = attributes[i];
+//     tr.appendChild(th);
+//   }
+//   head.appendChild(tr);
+// }
+
+// function CreateOrderTable( ...args) {
+//   var tr = document.createElement("tr");
+//   for (var i = 0; i < args.length; i++) {
+//     var td = createCell();
+//     td.textContent = args[i];
+//     tr.appendChild(td);
+//   }
+//   var td = createCell();
+//   td.textContent = createDisplayIcon(args[0]);
+//   tr.appendChild(td);
+//   return tr;
+// }
+
+// function ShowOrders() {
+//   DisplayNone();
+//   CreateOrderHeader();
+//   const orderList = StorageManager.LoadSection("orders") || [];
+//   var body = document.querySelector("tbody");
+//   var productIds = "";
+//   for (var i = 0; i < orderList.length; i++) {
+//     var orderId = orderList[i].id;
+//     var userId = orderList[i].userId;
+//     var orderStatus = orderList[i].status;
+//     for (var j = 0; j < orderList[i].products.length; j++) {
+//       productIds += ` ${orderList[i].products[j].productId} -`
+//     }
+//     body.appendChild(CreateOrderTable(orderId, userId, productIds, orderStatus));
+//   }
+//   DisplayDetails();
+// }
+/*------------------------------------------------------------------------------*/
+
+/*- STATS FUNCTIONS
+--------------------------------------------------------------------------------*/
+
 function ShowDashboard() {
   const dashHeader = document.getElementById("dashHeader");
   dashHeader.innerHTML = `
@@ -487,30 +599,26 @@ function ShowDashboard() {
     alert("Admin data not found.");
   }
 }
-
-/*------------------------------------------------------------------------------*/
-
-/*- NOTIFICATION FUNCTIONS
---------------------------------------------------------------------------------*/
-function ShowMessages() {
-  var msgs = StorageManager.LoadSection("messages");
-  if (msgs) {
-    for (var i = 1; msgs.length; i++) {
-
-    }
-  }
-
-}
-
 function ShowAnalytics() {
-  // Simulated data (replace with real data from localStorage/API)
+  var totalProducts = ProductManager.GetProductCounts();
+  var totalCustomers = CustomerManager.GetCustomerCounts();
+  var totalSellers =  SellerManager.GetSellerCounts();
+  var carts = StorageManager.LoadSection("cart");
+  var revenue = 0;
+  var totalOrders = StorageManager.LoadSection("orders").length;
+  for (var i = 0; i < carts.length - 1; i++) {
+      revenue += carts[i].totalAmount;
+  }
   const dashboardData = {
-    revenue: 89189,
-    revenueChange: 9.0,
+    _revenue: revenue,
+    _revenueChange: 9.0,
+    products: totalProducts,
+    customers: totalCustomers,
+    sellers: totalSellers,
+    orders: totalOrders,
+    _ordersChange: 5.3,
     visitors: 5243,
     visitorsChange: 12.5,
-    orders: 1287,
-    ordersChange: 5.3
   };
 
   // Animate numbers counting up
@@ -531,7 +639,6 @@ function ShowAnalytics() {
           : Math.floor(current).toLocaleString();
     }, 16);
   }
-  DisplayNone();
   const dashboardContent = document.getElementById("mainContent");
   dashboardContent.innerHTML = `
           <div class="col-12 col-md-4">
@@ -539,10 +646,6 @@ function ShowAnalytics() {
               <div class="card-body py-4">
                 <h5 class="mb-2 fw-bold"> TOTAL REVENUE </h5>
                 <p id="revenue" class="fw-bold mb02">$89,1891</p>
-                <div class="mb-0">
-                  <span id="revenue-change" class="bagde text-success me-2">+9.0%</span>
-                  <span class="fw-bold">Since Last Month</span>
-                </div>
               </div>
             </div>
           </div>
@@ -552,10 +655,6 @@ function ShowAnalytics() {
               <div class="card-body py-4">
                 <h5 class="mb-2 fw-bold">WEBSITE VISITORS</h5>
                 <p id = visitors class="fw-bold mb02">1891</p>
-                <div class="mb-0">
-                  <span id = visitors-change class="bagde text-success me-2">+9.0%</span>
-                  <span class="fw-bold">Since Last Month</span>
-                </div>
               </div>
             </div>
           </div>
@@ -565,10 +664,6 @@ function ShowAnalytics() {
               <div class="card-body py-4">
                 <h5 class="mb-2 fw-bold">TOTAL ORDERS</h5>
                 <p id = orders class="fw-bold mb02">1000</p>
-                <div class="mb-0">
-                  <span id = orders-change  class="bagde text-success me-2">+9.0%</span>
-                  <span class="fw-bold">Since Last Month</span>
-                </div>
               </div>
             </div>
           </div>
@@ -578,10 +673,15 @@ function ShowAnalytics() {
               <div class="card-body py-4">
                 <h5 class="mb-2 fw-bold">TOTAL CUSTOMERS</h5>
                 <p id = customers class="fw-bold mb02">1000</p>
-                <div class="mb-0">
-                  <span id = customers-change class="bagde text-success me-2">+9.0%</span>
-                  <span class="fw-bold">Since Last Month</span>
-                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <div class="card shadow">
+              <div class="card-body py-4">
+                <h5 class="mb-2 fw-bold">TOTAL SELLERS</h5>
+                <p id = sellers class="fw-bold mb02">1000</p>
               </div>
             </div>
           </div>
@@ -591,55 +691,34 @@ function ShowAnalytics() {
               <div class="card-body py-4">
                 <h5 class="mb-2 fw-bold">TOTAL PRODUCTS</h5>
                 <p id = products class="fw-bold mb02">1000</p>
-                <div class="mb-0">
-                  <span id = products-change class="bagde text-success me-2">+9.0%</span>
-                  <span class="fw-bold">Since Last Month</span>
-                </div>
               </div>
             </div>
-          </div> 
-          <div class="col-12 col-md-5">
-            <h3 class="fw-bold fs-4 my-3">Reports Overview</h3>
-            <canvas id="bar-chart-grouped" width="800" height="450"></canvas>
           </div> `
-  // Update all cards on page load
-  // Animate numbers
-  animateValue("revenue", dashboardData.revenue);
+
+  animateValue("revenue", dashboardData._revenue);
   animateValue("visitors", dashboardData.visitors);
-  animateValue("orders", dashboardData.orders);
+  animateValue("orders", dashboardData._orders);
+  animateValue("products", dashboardData.products);
+  animateValue("customers", dashboardData.customers);
+  animateValue("sellers", dashboardData.sellers);
 
-  // Update percentage changes
-  document.getElementById("revenue-change").textContent =
-    `+${dashboardData.revenueChange}% Since Last Month`;
-  document.getElementById("visitors-change").textContent =
-    `+${dashboardData.visitorsChange}% Since Last Month`;
-  document.getElementById("orders-change").textContent =
-    `+${dashboardData.ordersChange}% Since Last Month`;
-
-  // new Chart(document.getElementById("bar-chart-grouped"), {
-  //   type: 'bar',
-  //   data: {
-  //     labels: ["1900", "1950", "1999", "2050"],
-  //     datasets: [
-  //       {
-  //         label: "Africa",
-  //         backgroundColor: "#3e95cd",
-  //         data: [133, 221, 783, 2478]
-  //       }, {
-  //         label: "Europe",
-  //         backgroundColor: "#8e5ea2",
-  //         data: [408, 547, 675, 734]
-  //       }
-  //     ]
-  //   },
-  //   options: {
-  //     title: {
-  //       display: true,
-  //       text: 'Population growth (millions)'
-  //     }
-  //   }
-  // });
 }
+
+/*------------------------------------------------------------------------------*/
+
+/*- NOTIFICATION FUNCTIONS
+--------------------------------------------------------------------------------*/
+function ShowMessages() {
+  var msgs = StorageManager.LoadSection("messages");
+  if (msgs) {
+    for (var i = 1; msgs.length; i++) {
+
+    }
+  }
+
+}
+
+
 
 /*- HELPER FUNCTIONS
 -----------------------------------------------------------------------*/
@@ -679,6 +758,44 @@ function createCell() {
   return cell;
 }
 
+function CreateModal (type, ...actions) {
+  var modal = `
+    <div class="my-4">
+      <button class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#${type}ActionModal" data-action="${actions[0]}">
+        ${actions[0]} ${type}
+      </button>
+      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#${type}ActionModal" data-action="${actions[1]}">
+        ${actions[1]} ${type}
+      </button>
+    </div>
+
+      <div class="modal fade" id="${type}ActionModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalTitle">${actions[0]}/${actions[1]} ${type}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <form id="${type}ActionForm">
+              <div class="mb-3">
+                <label for="${type}Id" class="form-label">Enter ${type} ID</label>
+                <input type="number" class="form-control" id="${type}Id" required>
+              </div>
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" id="confirmAction">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>`
+  return modal;
+}
+
 function createDeleteIcon(id, type) {
   const icon = document.createElement("i");
   icon.classList.add("bi", "bi-trash-fill", "text-danger", "fs-5", "ms-2", "cursor-pointer");
@@ -692,8 +809,6 @@ function createDeleteIcon(id, type) {
       case "product":
         (confirm("Do you want to delete this product?")) ? tr.remove() : "undefined";
         ProductManager.DeleteProduct(id);
-        break;
-      case "order":
         break;
       default:
         break;
@@ -738,6 +853,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Show the dashboard by default
   ShowDashboard();
+  ShowAnalytics();
   // Attach event listeners to sidebar buttons
   document.querySelectorAll('[data-section]').forEach(button => {
     button.addEventListener('click', function () {
