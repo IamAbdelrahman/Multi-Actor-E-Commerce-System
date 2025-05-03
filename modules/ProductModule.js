@@ -120,6 +120,7 @@ class Product {
 }
 
 export default class ProductManager {
+
   static AddProduct(name, description, price, stock, category, image) {
     const products = StorageManager.LoadSection("products") || [];
 
@@ -185,6 +186,7 @@ export default class ProductManager {
     StorageManager.SaveSection("products", products);
     return true;
   }
+
 
 
   static GetAllProducts() {
