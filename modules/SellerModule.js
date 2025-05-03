@@ -28,12 +28,12 @@ export default class SellerManager {
       blocked : false
     };
         // Validate basic input to enter empty
-    if (!name || !email || !password || !Address) {
+    if (!name || !email || !password || !address) {
       console.error("Invalid data. Please enter valid data!");
       return false;
     }
 
-    if (!Validate.isNameValid(email)) {
+    if (!Validate.isNameValid(name)) {
       alert("Invalid Name");
       return false;
     }
@@ -43,16 +43,16 @@ export default class SellerManager {
       return false;
     }
 
-    if (!Validate.isStreetValid(street)) {
+    if (!Validate.isStreetValid(address.street)) {
       alert("Street cannot be empty.");
       return false;
     }
 
-    if (!Validate.isCityValid(city)) {
+    if (!Validate.isCityValid(address.city)) {
       alert("City cannot have numbers.");
       return false;
     }
-    if (!Validate.isZipCodeValid(zipCode)) {
+    if (!Validate.isZipCodeValid(address.zipCode)) {
       alert("ZIP code must be exactly 5 digits.");
       return false;
     }

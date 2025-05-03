@@ -458,7 +458,7 @@ function ShowOrderDetails(orderId) {
       <p><strong>Order Date:</strong> ${order.orderDate}</p>
       <p><strong>Status:</strong> ${order.status}</p>
       <p><strong>Payment Method:</strong> ${order.PaymentMethod}</p>
-      <p><strong>Total Amount:</strong> $${order.totalAmount}</p>
+      <p><strong>Total Amount:</strong> $${order.totalAmount.toFixed(2)}</p>
       <h6>Shipping Address:</h6>
       <p>${order.shippingAddress.street}, ${order.shippingAddress.city}, ${order.shippingAddress.zipCode}</p>
       <h6>Products:</h6>
@@ -552,8 +552,7 @@ function ShowAnalytics() {
   var totalSellers =  SellerManager.GetSellerCounts();
   var carts = StorageManager.LoadSection("cart");
   var revenue = 0;
-  var totalOrders = JSON.parse(localStorage.getItem("data"))["orders"].length
-  console.log(totalOrders);
+  var totalOrders = StorageManager.LoadSection("orders").length;
   for (var i = 0; i < carts.length - 1; i++) {
       revenue += carts[i].totalAmount;
   }

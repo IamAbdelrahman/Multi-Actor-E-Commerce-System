@@ -120,8 +120,7 @@ class Product {
 }
 
 export default class ProductManager {
-<<<<<<<< < Temporary merge branch 1
-=========
+
   static AddProduct(name, description, price, stock, category, image) {
     const products = StorageManager.LoadSection("products") || [];
 
@@ -189,7 +188,7 @@ export default class ProductManager {
   }
 
 
->>>>>>>>> Temporary merge branch 2
+
   static GetAllProducts() {
     return StorageManager.LoadSection("products") || [];
   }
