@@ -64,12 +64,19 @@ export default class Validate {
   }
 
   static isCategoryValid(value) {
-    return typeof value === 'string' && value.trim().length >= 3;
+    const allowedCategories = ["mobiles", "tablets", "headphones", "accessories", "laptops"];
+    return typeof value === "string" && allowedCategories.includes(value.trim().toLowerCase());
   }
 
+
   static isImageValid(value) {
-    return typeof value === 'string' && value.match(/\.(jpeg|jpg|gif|png|webp)$/i);
+    if (typeof value !== 'string') return false;
+
+    // Check for image extensions and basic URL structure
+    const pattern = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|svg))$/i;
+    return pattern.test(value.trim());
   }
+
 
   static isOrderIdValid(value) {
     return typeof value === 'number' && value > 0;
