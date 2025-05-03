@@ -175,7 +175,7 @@ function ShowProducts() {
 
 /*- ORDERS FUNCTIONS
 --------------------------------------------------------------------------------*/
-// Create the Orders Header
+
 function CreateOrdersHeader() {
   const OrdersBtns = ` 
     <div class="my-4">
@@ -225,9 +225,6 @@ function createDisplayIcon(orderId) {
   return icon;
 }
 
-function CloseCard() {
-  ShowOrders();
-}
 
 function ShowOrderDetails(orderId) {
   const orders = StorageManager.LoadSection("orders") || [];
@@ -238,34 +235,53 @@ function ShowOrderDetails(orderId) {
     return;
   }
 
+  const customer = CustomerManager.GetCustomerById(order.userId);
+  if (!customer) {
+    alert("Customer not found!");
+    return;
+  }
+
+  const productListHtml = order.products.map(p => {
+    const product = ProductManager.GetProductById(p.productId);
+    if (!product) return `<li>Unknown product (ID: ${p.productId})</li>`;
+    return `
+      <li>
+        ${product.name} (x${p.quantity}) - $${(product.price * p.quantity).toFixed(2)}
+      </li>
+    `;
+  }).join("");
 
   const cardHtml = `
-    <div class="card shadow-lg p-4">
+    <div class="shadow-lg p-4">
       <h5 class="card-title">Order Details</h5>
       <p><strong>Order ID:</strong> ${order.id}</p>
-      <p><strong>Customer:</strong> ${CustomerManager.GetCustomerById(order.userId).name}</p>
+      <p><strong>Customer:</strong> ${customer.name}</p>
       <p><strong>Order Date:</strong> ${order.orderDate}</p>
       <p><strong>Status:</strong> ${order.status}</p>
+      <p><strong>Payment Method:</strong> ${order.PaymentMethod}</p>
+      <p><strong>Total Amount:</strong> $${order.totalAmount.toFixed(2)}</p>
+      <h6>Shipping Address:</h6>
+      <p>${order.shippingAddress.street}, ${order.shippingAddress.city}, ${order.shippingAddress.zipCode}</p>
       <h6>Products:</h6>
       <ul>
-        ${order.products.map(p => p`
-          <li>
-          ${product.name} (x${product.quantity}) - $${product.price}
-          </li>
-        `).join('')}
+        ${productListHtml}
       </ul>
-      <button class="btn btn-secondary" onclick="CloseCard()">Close</button>
+      <button id=close class="btn btn-secondary">Close</button>
     </div>
   `;
-
   const contentDiv = document.querySelector("#mainContent");
   contentDiv.innerHTML = cardHtml;
+  var closeBtn = document.getElementById("close");
+  closeBtn.addEventListener("click", function () {
+    ShowOrders();
+  })
 }
+
 
 // Close the card
 
 
-// Show Orders
+
 function ShowOrders() {
   DisplayNone();
   CreateOrdersHeader();
@@ -278,76 +294,7 @@ function ShowOrders() {
     body.appendChild(CreateOrdersTable(order.id, order.customerName, order.orderDate, order.totalAmount, status));
   });
 }
-// function CreateOrderHeader() {
-//   var details =  `
-//   <div id = modal class="col-12 col-md-4">
-//     <div class="card shadow">
-//       <div class="card-body py-4">
-//       <button id="closePopup" style="position: absolute; top: 10px; right: 10px;" class="btn-close"></button>
-//           <h3 class="fw-bold fs-4 mb-3">Profile</h3>
-//           <p class="fw-bold mb02">
-//             <span id=productName>Name: </span><br>
-//             <span id=productPrice>Price: </span><br>
-//             <span id=productStock>Stock: </span><br>
-//             <span id=productCategory>Category: </span><br>
-//           </p>
-//         </div>
-//       </div>
-//     </div>
-//   </div> `
 
-//   const modal = document.getElementById("modal");
-//   const Icon = document.getElementsByClassName("bi-trash-fill");
-//   const closeBtn = document.getElementById("closePopup");
-//   Icon.onclick = () => modal.classList.remove('d-none');
-//   closeBtn.onclick = () => modal.classList.add('d-none');
-//   window.onclick = (e) => {
-//       if (e.target === modal) modal.classList.add('d-none');
-//   }
-//   var table = createTable();
-//   var contentdiv = document.querySelector("#mainContent");
-//   contentdiv.innerHTML = details + table;
-//   var head = document.querySelector("thead");
-//   var tr = document.createElement("tr");
-//   var attributes = ["Orders", "User-ID", "Product-ID", "Status", "Display"];
-//   for (var i = 0; i < attributes.length; i++) {
-//     var th = document.createElement("th");
-//     th.textContent = attributes[i];
-//     tr.appendChild(th);
-//   }
-//   head.appendChild(tr);
-// }
-
-// function CreateOrderTable( ...args) {
-//   var tr = document.createElement("tr");
-//   for (var i = 0; i < args.length; i++) {
-//     var td = createCell();
-//     td.textContent = args[i];
-//     tr.appendChild(td);
-//   }
-//   var td = createCell();
-//   td.textContent = createDisplayIcon(args[0]);
-//   tr.appendChild(td);
-//   return tr;
-// }
-
-// function ShowOrders() {
-//   DisplayNone();
-//   CreateOrderHeader();
-//   const orderList = StorageManager.LoadSection("orders") || [];
-//   var body = document.querySelector("tbody");
-//   var productIds = "";
-//   for (var i = 0; i < orderList.length; i++) {
-//     var orderId = orderList[i].id;
-//     var userId = orderList[i].userId;
-//     var orderStatus = orderList[i].status;
-//     for (var j = 0; j < orderList[i].products.length; j++) {
-//       productIds += ` ${orderList[i].products[j].productId} -`
-//     }
-//     body.appendChild(CreateOrderTable(orderId, userId, productIds, orderStatus));
-//   }
-//   DisplayDetails();
-// }
 /*------------------------------------------------------------------------------*/
 
 /*- STATS FUNCTIONS
