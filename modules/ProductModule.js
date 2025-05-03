@@ -110,41 +110,6 @@ class Product {
 }
 
 export default class ProductManager {
-  static AddProduct(name, description, price, stock, category, image, id = 0) {
-    const product = new Product(name, description, price, stock, category, image, id = 0);
-    const products = StorageManager.LoadSection("products") || [];
-    // if (!product.Name || !product.Description || !product.Category || product.Price <= 0 || product.Stock <= 0) {
-    //   console.error("Invalid product data. Please Enter valid data!");
-    //   return;
-    // }
-
-    // const existingProduct = products.find(p => p.ID === product.ID);
-    // if (existingProduct) {
-    //   console.error("Product with this ID already exists.");
-    //   return;
-    // }
-    // const existingCategory = products.find(p => p.Category === product.Category);
-    // if (!existingCategory) {
-    //   console.error("Category does not exist.");
-    //   return;
-    // }
-    // const existingImage = products.find(p => p.Image === product.Image);
-    // if (!existingImage) {
-    //   console.error("Image does not exist.");
-    //   return;
-    // }
-    // const existingName = products.find(p => p.Name === product.Name);
-    // if (!existingName) {
-    //   console.error("Product name does not exist.");
-    //   return;
-    // }
-
-    const _id = products.length > 0 ? products[products.length - 1].ID + 1 : 1;
-    product.ID = _id;
-    products.push(product);
-    StorageManager.SaveSection("products", products);
-  }
-
   static GetAllProducts() {
     return StorageManager.LoadSection("products") || [];
   }
@@ -232,8 +197,7 @@ export default class ProductManager {
     ];
   }
 
-  static ApproveProduct (id)
-  {
+  static ApproveProduct(id) {
     const products = ProductManager.GetAllProducts();
     const updatedProducts = products.map(p => {
       if (p.id === id) {
@@ -245,8 +209,7 @@ export default class ProductManager {
     return true;
   }
 
-  static RejectProduct (id)
-  {
+  static RejectProduct(id) {
     const products = ProductManager.GetAllProducts();
     const updatedProducts = products.map(p => {
       if (p.id === id) {
