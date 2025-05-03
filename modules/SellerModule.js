@@ -26,6 +26,30 @@ export default class SellerManager {
       role : "seller",
       blocked : false
     };
+    const existingName = sellers.find(s => s.name === seller.name);
+    if (existingName) {
+      alert("Seller name already exists.");
+      return;
+    }
+
+    const existingEmail = sellers.find(s => s.email === seller.email);
+    if (existingEmail) {
+      alert("Seller email already exists.");
+      return;
+    }
+
+    const existingPhone = sellers.find(s => s.phone === seller.phone);
+    if (existingPhone) {
+      alert("Seller phone already exists.");
+      return;
+    }
+
+    const existingAddress = sellers.find(s => JSON.stringify(s.address) === JSON.stringify(seller.Address));
+    if (existingAddress) {
+      alert("Seller address already exists.");
+      return;
+    }
+
     sellers.push(seller);
     StorageManager.SaveSection('users', sellers);
     return seller;
