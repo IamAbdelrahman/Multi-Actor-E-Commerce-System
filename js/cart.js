@@ -3,7 +3,8 @@ let cartItems = [];
 
 // Helper function to get current user ID
 function getCurrentUserId() {
-  return sessionStorage.getItem('userId') || 'guest';
+  var users = JSON.parse(sessionStorage.getItem('userLoggedIn'));
+  return users.id;
 }
 
 // Helper function to get the full data object from localStorage
