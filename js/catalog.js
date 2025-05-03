@@ -40,10 +40,14 @@ function SearchProduct(products) {
           <button class="btn btn-light rounded-circle shadow-sm" ">
             <i class="bi bi-heart"></i>
           </button>
+          <a href="product-details.html?id=${product.id}" class="text-decoration-none">
           <button class="btn btn-light rounded-circle shadow-sm">
-            <i class="bi bi-eye"></i>
+               <i class="bi bi-eye"></i>
           </button>
+          </a>
         </div>
+            
+        <a href="product-details.html?id=${product.id}" class="text-decoration-none">
         <img src="${product.image}" class="card-img-top  mx-auto" style="max-width: 60%; height:200px">
         <div class="card-body d-flex flex-column justify-content-between">
           <h5 class="card-title fw-semibold mb-2">${product.name}</h5>
