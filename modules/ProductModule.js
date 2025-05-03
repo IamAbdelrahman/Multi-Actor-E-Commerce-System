@@ -1,32 +1,42 @@
 import StorageManager from './StorageModule.js';
+import Validate from './ValidationModule.js';
 
 /*- PRODUCT MANAGER
 -----------------------------------------------------------------------*/
 
 class Product {
-  constructor(name, description, price, stock, category, image, id = 1) {
+  constructor(id, name, description, price, stock, category, image) {
+    this.ID = id;
     this.Name = name;
     this.Description = description;
     this.Price = price;
     this.Stock = stock;
     this.Category = category;
     this.Image = image;
-    this.ID = id;
+
   }
 
+
   set ID(id) {
-    this.id = Validate.isProductIdValid(id) ? id : 0;
+    if (Validate.isUserIdValid(id)) {
+      this.id = id;
+    } else {
+      console.error("Invalid ID: must be a positive number.");
+      this.id = 0;
+      return false;
+    }
   }
+
   get ID() {
     return this.id;
   }
 
   set Name(value) {
     if (Validate.isProductNameValid(value)) {
-      this.name = value.trim();
+      this.name = value.trim().toLowerCase();
     } else {
       alert("Invalid product name: must be at least 3 characters.");
-      this.name = null;
+      return false;
     }
   }
   get Name() {
@@ -35,10 +45,10 @@ class Product {
 
   set Description(value) {
     if (Validate.isDescriptionValid(value)) {
-      this.description = value.trim();
+      this.description = value.trim().toLowerCase();
     } else {
       alert("Invalid description: must be at least 15 characters.");
-      this.description = null;
+      return false;
     }
   }
   get Description() {
@@ -50,7 +60,7 @@ class Product {
       this.price = value;
     } else {
       alert("Invalid price: must be a non-negative number.");
-      this.price = 0;
+      return false;
     }
   }
   get Price() {
@@ -62,7 +72,7 @@ class Product {
       this.stock = value;
     } else {
       alert("Invalid stock: must be a non-negative integer.");
-      this.stock = 0;
+      return false;
     }
   }
   get Stock() {
@@ -74,7 +84,7 @@ class Product {
       this.category = value.trim().toLowerCase();
     } else {
       alert("Invalid category: must be at least 3 characters.");
-      this.category = null;
+      return false;
     }
   }
   get Category() {
@@ -100,7 +110,7 @@ class Product {
       this.quantity = value;
     } else {
       console.error("Invalid quantity: must be a positive integer.");
-      this.quantity = 1;
+      return false;
     }
   }
 
@@ -110,40 +120,72 @@ class Product {
 }
 
 export default class ProductManager {
-  static AddProduct(name, description, price, stock, category, image, id = 0) {
-    const product = new Product(name, description, price, stock, category, image, id = 0);
+  static AddProduct(name, description, price, stock, category, image) {
     const products = StorageManager.LoadSection("products") || [];
-    // if (!product.Name || !product.Description || !product.Category || product.Price <= 0 || product.Stock <= 0) {
-    //   console.error("Invalid product data. Please Enter valid data!");
-    //   return;
-    // }
 
-    // const existingProduct = products.find(p => p.ID === product.ID);
-    // if (existingProduct) {
-    //   console.error("Product with this ID already exists.");
-    //   return;
-    // }
-    // const existingCategory = products.find(p => p.Category === product.Category);
-    // if (!existingCategory) {
-    //   console.error("Category does not exist.");
-    //   return;
-    // }
-    // const existingImage = products.find(p => p.Image === product.Image);
-    // if (!existingImage) {
-    //   console.error("Image does not exist.");
-    //   return;
-    // }
-    // const existingName = products.find(p => p.Name === product.Name);
-    // if (!existingName) {
-    //   console.error("Product name does not exist.");
-    //   return;
-    // }
+    // Validate basic input to enter empty
+    if (!name || !description || !category || price <= 0 || stock < 0 || !image) {
+      console.error("Invalid product data. Please enter valid data!");
+      return false;
+    }
 
-    const _id = products.length > 0 ? products[products.length - 1].ID + 1 : 1;
-    product.ID = _id;
-    products.push(product);
+    //validation
+    if (!Validate.isProductNameValid(name)) {
+      alert("Invalid product name: must be at least 3 characters.");
+      return false;
+    }
+
+    if (!Validate.isDescriptionValid(description)) {
+      alert("Invalid description: must be at least 15 characters.");
+      return false;
+    }
+
+    if (!Validate.isPriceValid(price)) {
+      alert("Invalid price: must be a non-negative number.");
+      return false;
+    }
+
+    if (!Validate.isStockValid(stock)) {
+      alert("Invalid stock: must be a non-negative integer.");
+      return false;
+    }
+
+    if (!Validate.isCategoryValid(category)) {
+      alert("Invalid category: Allowed is one of that [mobiles, tablets, headphones, accessories, laptops");
+      return false;
+    }
+
+
+
+    //Newwwwwwwwwww For Make ID for each user
+    function GenerateNextID() {
+      const products = StorageManager.LoadSection("products") || [];
+      const ids = products.map(p => p.id || 0);
+      const maxId = ids.length > 0 ? Math.max(...ids) : 0;
+      return maxId + 1;
+    }
+
+    const newProduct = new Product(GenerateNextID(), name, description, price, stock, category, image);
+
+    // Check for duplicatationn name
+    const nameExists = products.some(p => p.Name === name);
+    if (nameExists) {
+      console.error("A product with this name already exists.");
+      return false;
+    }
+
+    //Check for category
+    const existingCategory = products.find(p => p.Category === products.Category);
+    if (!existingCategory) {
+      console.error("Category does not exist.");
+      return false;
+    }
+
+    products.push(newProduct);
     StorageManager.SaveSection("products", products);
+    return true;
   }
+
 
   static GetAllProducts() {
     return StorageManager.LoadSection("products") || [];
@@ -181,17 +223,25 @@ export default class ProductManager {
     const products = ProductManager.GetAllProducts();
     return products.filter(product => product.name.toLowerCase().includes(product_name.toLowerCase()));
   }
+  ////////////////////////UpdateProduct
+  static UpdateProduct(id, name, description, price, stock, category, image) {
+    let products = StorageManager.LoadSection("products") || [];
 
-  static UpdateProduct(id, updatedData) {
-    let products = StorageManager.Load("products") || [];
+
     products = products.map(product => {
       if (product.id === id) {
-        return { ...product, ...updatedData };
+        product.name = name;
+        product.description = description;
+        product.price = price;
+        product.stock = stock;
+        product.category = category;
+        product.image = image;
       }
       return product;
     });
 
     StorageManager.SaveSection("products", products);
+    return true;
   }
 
   static DeleteProduct(id) {
@@ -232,8 +282,7 @@ export default class ProductManager {
     ];
   }
 
-  static ApproveProduct (id)
-  {
+  static ApproveProduct(id) {
     const products = ProductManager.GetAllProducts();
     const updatedProducts = products.map(p => {
       if (p.id === id) {
@@ -245,8 +294,7 @@ export default class ProductManager {
     return true;
   }
 
-  static RejectProduct (id)
-  {
+  static RejectProduct(id) {
     const products = ProductManager.GetAllProducts();
     const updatedProducts = products.map(p => {
       if (p.id === id) {
