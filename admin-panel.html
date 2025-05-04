@@ -87,11 +87,18 @@
       </ul>
 
       <div class="sidebar-footer">
-        <a href="#" class="sidebar-link">
-          <i id = "logout" class="bx bxs-log-out"></i>
+        <a id = "logout" href="#" class="sidebar-link">
+          <i class="bx bxs-log-out"></i>
           <span>Logout</span>
         </a>
       </div>
+      <script>
+        document.getElementById("logout")?.addEventListener("click", () => {
+          sessionStorage.removeItem("userLoggedIn");
+          window.location.href = "home.html"; // Redirect to homepage
+        });
+      </script>
+
     </aside>
     <!------------------------------------ Sidebar End ------------------------------------>
 

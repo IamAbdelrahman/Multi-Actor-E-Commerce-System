@@ -1,5 +1,6 @@
 import StorageManager from './StorageModule.js'
 import UserManager from './UserModule.js';
+import Validate from './ValidationModule.js';
 
 /*- SELLER MANAGER
 /* -------------------------------------------------------------------------------- */
@@ -26,6 +27,43 @@ export default class SellerManager {
       role : "seller",
       blocked : false
     };
+        // Validate basic input to enter empty
+    if (!name || !email || !password || !address) {
+      console.error("Invalid data. Please enter valid data!");
+      return false;
+    }
+
+    if (!Validate.isNameValid(name)) {
+      alert("Invalid Name");
+      return false;
+    }
+
+    if (!Validate.isEmailValid(email)) {
+      alert("Invalid email format. Use example@example.com");
+      return false;
+    }
+
+    if (!Validate.isStreetValid(address.street)) {
+      alert("Street cannot be empty.");
+      return false;
+    }
+
+    if (!Validate.isCityValid(address.city)) {
+      alert("City cannot have numbers.");
+      return false;
+    }
+    if (!Validate.isZipCodeValid(address.zipCode)) {
+      alert("ZIP code must be exactly 5 digits.");
+      return false;
+    }
+
+    if (!Validate.isPhoneValid(phone)) {
+      alert("Invalid phone (expected format: +20XXXXXXXXXX)");
+      return false;
+
+    }
+
+    
     const existingName = sellers.find(s => s.name === seller.name);
     if (existingName) {
       alert("Seller name already exists.");
