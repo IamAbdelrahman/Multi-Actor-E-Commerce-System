@@ -1,4 +1,5 @@
 import StorageManager from "../modules/StorageModule.js";
+import Validate from "../modules/ValidationModule.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const sendBtn = document.getElementById("sendMessage");
@@ -26,7 +27,26 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Please fill in all fields.");
       return;
     }
+    
+    if (!Validate.isNameValid(name)) {
+      alert("Please enter a valid name.");
+      return;
+    }
 
+    if (!Validate.isEmailValid(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    if (!Validate.isProductNameValid(subject)) {
+      alert("Please enter a valid subject (min 3 characters).");
+      return;
+    }
+
+    if (!Validate.isDescriptionValid(message)) {
+      alert("Please enter a valid message (min 15 characters).");
+      return;
+    }
     const messages = StorageManager.LoadSection("messages") || [];
     const newMessage = {
       id:GenerateNextID(),
@@ -40,7 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     messages.push(newMessage);
     StorageManager.SaveSection("messages", messages);
-
     nameInput.value = "";
     emailInput.value = "";
     subjectInput.value = "";
