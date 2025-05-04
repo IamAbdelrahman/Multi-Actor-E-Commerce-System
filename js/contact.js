@@ -60,7 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     messages.push(newMessage);
     StorageManager.SaveSection("messages", messages);
-
     nameInput.value = "";
     emailInput.value = "";
     subjectInput.value = "";
