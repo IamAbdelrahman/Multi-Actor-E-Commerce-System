@@ -1,22 +1,3 @@
-/******************************************************************************
- * Copyright (C) 2025 by Abdelrahman Kamal - Admin Panel Page
- *****************************************************************************/
-
-/*****************************************************************************
- * FILE DESCRIPTION
- * ----------------------------------------------------------------------------
- *	@file admin.js
- *	@brief This module contains all functionalities about the admin.
- *
- *	@details Single Admin account with a predefined email & password.
-    Can block or activate customers and sellers.
-    Has the exclusive ability to add new sellers.
-    Can approve, or reject any product.
-    Access to a dashboard displaying:
-    Number of customers
-    Sales statistics
- *****************************************************************************/
-
 /*- INCLUDES
 -----------------------------------------------------------------------*/
 import StorageManager from '../modules/StorageModule.js'
