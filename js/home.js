@@ -135,7 +135,7 @@ document.getElementById("logout")?.addEventListener("click", () => {
 
 function CreateFeaturedProducts(products) {
     var content = document.getElementById("content");
-    for (var i = 1; i <= 4; i++) {
+    for (var i = 1; i <= 8; i++) {
         var product = products[getRandomValues(1, 25)];
         console.log(product.id);
         var cards = `
