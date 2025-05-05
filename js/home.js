@@ -1,6 +1,7 @@
 // ------------------------------Register/Login Start------------------------------
 import StorageManager from '../modules/StorageModule.js'
 import UserManager from '../modules/UserModule.js';
+import {transferGuestCartToUser} from "./cart.js"
 
 // Add Static ADMIN in Local Storage in Section Users and whenn open even not there are users will reload local storage with admin
 const users = StorageManager.LoadSection("users") || [];
@@ -100,12 +101,14 @@ window.Login = function (event) {
         switch (LoginUser.role) {
             case "customer":
                 sessionStorage.setItem('userLoggedIn', JSON.stringify(LoginUser));
-                location.reload();
+                sessionStorage.setItem("userId",LoginUser.id)
+                transferGuestCartToUser(LoginUser.id)
                 document.getElementById("Register-Icon").classList.add("d-none");
                 const userDropdown = document.getElementById("userDropdown");
                 if (userDropdown) {
                     userDropdown.classList.remove("d-none");
                 }
+                
 
                 const modal = document.getElementById("registerModal");
                 if (modal) {
