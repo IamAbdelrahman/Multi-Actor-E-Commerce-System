@@ -4,9 +4,19 @@ let cartItems = [];
 // ================== CORE FUNCTIONS ==================
 
 function updateCartCount() {
-    const totalItems = cartItems.reduce((total, item) => total + (item.quantity || 0), 0);
-    const cartElement = document.getElementById("cart");
+    const totalItems = cartItems.reduce((total, item) => total + (item.quantity || 1), 0);
+    const cartElement = document.getElementById("cartCount");
     if (cartElement) cartElement.textContent = totalItems;
+    
+    const cartTotalElement = document.getElementById("cartTotal");
+    if (cartTotalElement) {
+        const total = cartItems.reduce((sum, item) => {
+            const itemPrice = typeof item.price === 'number' ? item.price : 0;
+            const itemQuantity = typeof item.quantity === 'number' ? item.quantity : 1;
+            return sum + (itemPrice * itemQuantity);
+        }, 0);
+        cartTotalElement.textContent = `$${total.toFixed(2)}`;
+    }
 }
 
 function getCurrentUserId() {
@@ -40,7 +50,7 @@ function saveCurrentCart() {
 
 // ================== MIGRATION SYSTEM ==================
 
-export function transferGuestCartToUser(userId) {
+ function transferGuestCartToUser(userId) {
     const data = getAppData();
     const guestCartIndex = data.cart.findIndex(c => c.userId === 'guest');
 
@@ -60,7 +70,7 @@ export function transferGuestCartToUser(userId) {
     // Remove guest cart
     data.cart.splice(guestCartIndex, 1);
     localStorage.setItem('data', JSON.stringify(data));
-
+    updateCartCount();
     return true;
 }
 
@@ -358,12 +368,14 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 // User logged out - switch to guest cart
                 loadCartForCurrentUser();
+                updateCartCount();
             }
         }
     });
 });
 
 // Expose public functions
+window.transferGuestCartToUser = transferGuestCartToUser;
 window.toggleCart = toggleCart;
 window.addToCart = addToCart;
 window.updateQuantity = updateQuantity;
