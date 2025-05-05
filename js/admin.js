@@ -644,7 +644,7 @@ function ShowAnalytics() {
 
   animateValue("revenue", dashboardData._revenue);
   animateValue("visitors", dashboardData.visitors);
-  animateValue("orders", dashboardData._orders);
+  animateValue("orders", dashboardData.orders);
   animateValue("products", dashboardData.products);
   animateValue("customers", dashboardData.customers);
   animateValue("sellers", dashboardData.sellers);

@@ -92,14 +92,16 @@ class Product {
   }
 
 
+
   set Image(value) {
     if (Validate.isImageValid(value)) {
       this.image = value;
     } else {
-      console.error("Invalid image: must be a valid image URL.");
+      console.error("Invalid image data. Value was:", value);
       this.image = '';
     }
   }
+
 
   get Image() {
     return this.image;
@@ -120,7 +122,6 @@ class Product {
 }
 
 export default class ProductManager {
-
   static AddProduct(name, description, price, stock, category, image) {
     const products = StorageManager.LoadSection("products") || [];
 
@@ -157,7 +158,10 @@ export default class ProductManager {
     }
 
 
-
+    if (!Validate.isImageValid(image)) {
+      alert("Invalid image: must be a valid image URL.");
+      return false;
+    }
     //Newwwwwwwwwww For Make ID for each user
     function GenerateNextID() {
       const products = StorageManager.LoadSection("products") || [];
@@ -186,7 +190,6 @@ export default class ProductManager {
     StorageManager.SaveSection("products", products);
     return true;
   }
-
 
 
   static GetAllProducts() {
@@ -255,7 +258,7 @@ export default class ProductManager {
   static ChangeQuantity(productId, amount) {
     const product = Product.GetProductById(productId);
     if (!product) {
-      console.log(`Product with ID ${productId} not found.`);
+      console.log("Product with ID ${productId} not found.");
       return false;
     }
     product.stock = parseInt(product.stock) + parseInt(amount);

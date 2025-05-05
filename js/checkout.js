@@ -3,6 +3,7 @@ import StorageManager from "../modules/StorageModule.js";
 import ProductManager from "../modules/ProductModule.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+    var total = 0;
     const userLoggedIn = JSON.parse(sessionStorage.getItem("userLoggedIn"));
     const userId = userLoggedIn?.id;
 
@@ -25,7 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const cartItemsContainer = document.getElementById("cart-items-container");
         for (let i = 0; i < userCart.products.length; i++) {
             const cartItem = userCart.products[i];
-            const productData = ProductManager.GetProductById(cartItem.productId);
+            console.log(cartItem.quantity);
+            const productData = ProductManager.GetProductById(cartItem.id);
             if (!productData) continue;
 
             const productElement = document.createElement("div");
@@ -42,15 +44,22 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
                     <div class="col">
                         <p>${productData.name} (x${cartItem.quantity})</p>
-                        <p>Price: $${(productData.price * cartItem.quantity).toFixed(2)}</p>
+                        <p>Price: $${(productData.price * cartItem.quantity)}</p>
                     </div>
                 </div>
             `;
             cartItemsContainer.appendChild(productElement);
         }
 
-        document.getElementById("total-amount").innerHTML = `$${userCart.totalAmount.toFixed(2)}`;
-        document.getElementById("subtotal-amount").innerHTML = `$${userCart.totalAmount.toFixed(2)}`;
+        var total = cartItems.reduce((sum, item) => {
+        const itemPrice = typeof item.price === 'number' ? item.price : 0;
+        const itemQuantity = typeof item.quantity === 'number' ? item.quantity : 0;
+        return sum + (itemPrice * itemQuantity);
+    }, 0);
+  
+        // cartTotalElement.textContent = `$${total.toFixed(2)}`;
+        document.getElementById("total-amount").innerHTML = `$${total}`;
+        document.getElementById("subtotal-amount").innerHTML = `$${total}`;
     } else {
         const cartItemsContainer = document.getElementById("cart-items-container");
         cartItemsContainer.innerHTML = "<p class='text-muted'>Your cart is empty.</p>";
@@ -99,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
             id: GenerateNextID(),
             userId: userId,
             products: userCart.products,
-            totalAmount: userCart.totalAmount,
+            totalAmount: total,
             status: "processing",
             orderDate: new Date().toISOString(),
             PaymentMethod: paymentMethod,
