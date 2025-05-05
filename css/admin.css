@@ -327,7 +327,22 @@ tbody tr:hover {
     transition: all 0.7s ease-in-out;           
 }
 
+:root{
+  --main-color:#d3ad7f;
+  --black:#13131a;
+  --bg:#010103;
+  --border:.1rem solid rgba(255,255,255,.3);
+}
+
 .review .box-container{
+  font-family: 'Roboto', sans-serif;
+  margin:0; padding:0;
+  box-sizing: border-box;
+  outline: none; border:none;
+  text-decoration: none;
+  text-transform: capitalize;
+  transition: .2s linear;
+  background: var(--bg);
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
   gap:1.5rem;
@@ -362,4 +377,9 @@ tbody tr:hover {
 .review .box-container .box .stars i{
   font-size: 1.5rem;
   color:var(--main-color);
+}
+
+.box {
+  transform: scaleY(1);
+  transition: all 0.5s;
 }
