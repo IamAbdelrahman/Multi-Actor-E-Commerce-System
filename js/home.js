@@ -107,18 +107,30 @@ window.Login = function (event) {
                 if (userDropdown) {
                     userDropdown.classList.remove("d-none");
                 }
-                
-
+            
                 const modal = document.getElementById("registerModal");
                 if (modal) {
                     modal.classList.add("d-none");
                 }
                 document.getElementById("homeContent");
+                localStorage.setItem("loggedInUser", JSON.stringify({
+                    name: LoginUser.name,
+                    role: LoginUser.role
+                }));
                 break;
             case "admin":
+                localStorage.setItem("loggedInUser", JSON.stringify({
+                    name: LoginUser.name,
+                    role: LoginUser.role
+                }));
+
                 window.location.href = "admin-panel.html";
                 break;
             case "seller":
+                localStorage.setItem("loggedInUser", JSON.stringify({
+                    name: LoginUser.name,
+                    role: LoginUser.role
+                }));
                 window.location.href = "seller-dashboard.html";
                 break;
             default:

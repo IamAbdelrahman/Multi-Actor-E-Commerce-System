@@ -63,24 +63,22 @@ function ManageProducts() {
       currentAction = btn.dataset.action;
       document.getElementById('modalTitle').textContent =
         `${currentAction === 'Add' ? 'Add' : 'Edit'} Product`;
+         ClearForm("Product");
     });
   });
 
   document.getElementById('confirmAction').addEventListener('click', () => {
-
-    const name = document.getElementById('productName').value.trim();
-    const description = document.getElementById('productDescription').value.trim();
-    const price = parseFloat(document.getElementById('productPrice').value);
-    const stock = parseInt(document.getElementById('productStock').value);
-    const category = document.getElementById('productCategory').value.trim();
-    const imageFile = document.getElementById('productImage').files[0];
+    const name = document.getElementById('ProductName').value.trim();
+    const description = document.getElementById('ProductDescription').value.trim();
+    const price = parseFloat(document.getElementById('ProductPrice').value);
+    const stock = parseInt(document.getElementById('ProductStock').value);
+    const category = document.getElementById('ProductCategory').value.trim();
+    const imageFile = document.getElementById('ProductImage').files[0];
 
     const currentAction = document.getElementById("currentAction").value;
     const productId = parseInt(document.getElementById("currentProductId").value);
 
     if (currentAction === 'Add') {
-
-
       if (!imageFile) return alert("Please select an image.");
       const reader = new FileReader();
       reader.onload = function (e) {
@@ -88,20 +86,12 @@ function ManageProducts() {
       const success = ProductManager.AddProduct(name, description, price, stock, category, base64Image);
       if (success) {
         alert(`Product "${name}" added successfully!`);
-              // Clear old data from inputs
-      document.getElementById('productName').value = '';
-      document.getElementById('productDescription').value = '';
-      document.getElementById('productPrice').value = '';
-      document.getElementById('productStock').value = '';
-      document.getElementById('productCategory').value = '';
-      document.getElementById('productImage').value = '';
         location.reload();
       }
       };
       reader.readAsDataURL(imageFile);
 
     } else if (currentAction === 'Edit') {
-      
       const productId = parseInt(document.getElementById("currentProductId").value);
 
       if (imageFile) {
@@ -125,7 +115,6 @@ function ManageProducts() {
       }
     }
 
-
     const modal = bootstrap.Modal.getInstance(document.getElementById('ProductActionModal'));
     modal.hide();
   });
@@ -136,11 +125,11 @@ window.openEditProductModal = function (productId) {
   const product = products.find(p => p.id === productId);
   if (!product) return;
 
-  document.getElementById("productName").value = product.name;
-  document.getElementById("productDescription").value = product.description;
-  document.getElementById("productPrice").value = product.price;
-  document.getElementById("productStock").value = product.stock;
-  document.getElementById("productCategory").value = product.category;
+  document.getElementById("ProductName").value = product.name;
+  document.getElementById("ProductDescription").value = product.description;
+  document.getElementById("ProductPrice").value = product.price;
+  document.getElementById("ProductStock").value = product.stock;
+  document.getElementById("ProductCategory").value = product.category;
   document.getElementById("currentProductId").value = product.id;
   document.getElementById("currentAction").value = "Edit";
 
@@ -263,10 +252,6 @@ function ShowOrderDetails(orderId) {
 }
 
 
-// Close the card
-
-
-
 function ShowOrders() {
   DisplayNone();
   CreateOrdersHeader();
@@ -286,9 +271,6 @@ function ShowOrders() {
 /*- STATS FUNCTIONS
 --------------------------------------------------------------------------------*/
 
-function ShowDashboard() {
-
-}
 function ShowAnalytics() {
   assignheader("Analytics");
 
@@ -398,19 +380,6 @@ function ShowAnalytics() {
 
 /*------------------------------------------------------------------------------*/
 
-/*- NOTIFICATION FUNCTIONS
---------------------------------------------------------------------------------*/
-function ShowMessages() {
-  var msgs = StorageManager.LoadSection("messages");
-  if (msgs) {
-    for (var i = 1; msgs.length; i++) {
-
-    }
-  }
-
-}
-
-
 
 /*- HELPER FUNCTIONS
 -----------------------------------------------------------------------*/
@@ -470,12 +439,20 @@ function CreateModal(type, ...actions) {
             <form id="${type}ActionForm">
               <input type="hidden" id="currentAction" value="${actions[0]}">
               <input type="hidden" id="currentProductId">
-              <div class="mb-3"><label class="form-label">Product Name</label><input type="text" class="form-control" id="productName" required></div>
-              <div class="mb-3"><label class="form-label">Description</label><textarea class="form-control" id="productDescription" required></textarea></div>
-              <div class="mb-3"><label class="form-label">Price</label><input type="number" class="form-control" id="productPrice" required></div>
-              <div class="mb-3"><label class="form-label">Stock</label><input type="number" class="form-control" id="productStock" required></div>
-              <div class="mb-3"><label class="form-label">Category</label><input type="text" class="form-control" id="productCategory" required></div>
-              <div class="mb-3"><label class="form-label">Image</label><input type="file" class="form-control" id="productImage" accept="image/*" required></div>
+              <div class="mb-3"><label class="form-label">Product Name</label><input type="text" class="form-control" id="ProductName" required></div>
+              <div class="mb-3"><label class="form-label">Description</label><textarea class="form-control" id="ProductDescription" required></textarea></div>
+              <div class="mb-3"><label class="form-label">Price</label><input type="number" class="form-control" id="ProductPrice" required></div>
+              <div class="mb-3"><label class="form-label">Stock</label><input type="number" class="form-control" id="ProductStock" required></div>
+              <div class="mb-3"><label class="form-label">Category</label>
+              <select class="form-select" id="ProductCategory" required>
+                <option value="1" selected>Mobiles</option>
+                <option value="2">Laptops</option>
+                <option value="3">HeadPhones</option>
+                <option value="4">Tablets</option>
+                <option value="5">Accessories</option>
+              </select>
+              </div>
+              <div class="mb-3"><label class="form-label">Image</label><input type="file" class="form-control" id="ProductImage" accept="image/*" required></div>
             </form>
           </div>
 
@@ -489,6 +466,14 @@ function CreateModal(type, ...actions) {
   return modal;
 }
 
+function ClearForm (type) {
+  document.getElementById(`${type}Name`).value = "";
+  document.getElementById(`${type}Description`).value = "";
+  document.getElementById(`${type}Price`).value = "";
+  document.getElementById(`${type}Stock`).value = "";
+  document.getElementById(`${type}Category`).value = "";
+  document.getElementById(`${type}Image`).value = "";  
+}
 
 function createDeleteIcon(id, type) {
   const icon = document.createElement("i");
@@ -525,7 +510,7 @@ function assignheader(title) {
 -----------------------------------------------------------------------*/
 document.addEventListener('DOMContentLoaded', function () {
   const user = JSON.parse(localStorage.getItem("loggedInUser"));
-  if (!user || user.role !== "admin" || user.role !== "seller") {
+  if (!user || user.role !== "seller") {
   alert("Unauthorized access. Redirecting...");
   window.location.href = "home.html"; 
 }
@@ -539,7 +524,6 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // Show the dashboard by default
-  ShowDashboard();
   ShowAnalytics();
   // Attach event listeners to sidebar buttons
   document.querySelectorAll('[data-section]').forEach(button => {
@@ -556,7 +540,7 @@ document.addEventListener('DOMContentLoaded', function () {
           ShowAnalytics();
           break;
         default:
-          ShowDashboard();
+          ShowAnalytics();
           break;
       }
     });
