@@ -177,7 +177,8 @@ function CreateFeaturedProducts(products) {
                           id: ${product.id}, 
                           name: '${product.name}', 
                           price: ${product.price}, 
-                          image: '${product.image}'
+                          image: '${product.image}',
+                          stock: ${product.stock}
                         })">
                   Add to cart
                 </button>
