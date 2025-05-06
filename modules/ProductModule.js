@@ -120,8 +120,6 @@ class Product {
 }
 
 export default class ProductManager {
-<<<<<<<< < Temporary merge branch 1
-=========
   static AddProduct(name, description, price, stock, category, image) {
     const products = StorageManager.LoadSection("products") || [];
 
@@ -189,7 +187,6 @@ export default class ProductManager {
   }
 
 
->>>>>>>>> Temporary merge branch 2
   static GetAllProducts() {
     return StorageManager.LoadSection("products") || [];
   }
@@ -256,7 +253,7 @@ export default class ProductManager {
   static ChangeQuantity(productId, amount) {
     const product = Product.GetProductById(productId);
     if (!product) {
-      console.log(`Product with ID ${productId} not found.`);
+      console.log("Product with ID ${productId} not found.");
       return false;
     }
     product.stock = parseInt(product.stock) + parseInt(amount);
