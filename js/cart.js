@@ -20,7 +20,7 @@ function updateCartCount() {
 }
 
 function getCurrentUserId() {
-    const userLoggedIn = sessionStorage.getItem('userLoggedIn');
+    const userLoggedIn = JSON.parse(sessionStorage.getItem('userLoggedIn'));
     // return userLoggedIn ? sessionStorage.getItem('userId') : 'guest';
     return userLoggedIn ? userLoggedIn.id : 'guest';
 }
@@ -354,7 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Handle current auth state
-    if (sessionStorage.getItem('userLoggedIn') === 'true') {
+    if (sessionStorage.getItem('userLoggedInStatus') === 'true') {
         handleUserLogin();
     } else {
         loadCartForCurrentUser(); // Load guest cart
@@ -362,7 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Watch for auth changes from other tabs
     window.addEventListener('storage', (e) => {
-        if (e.key === 'userLoggedIn') {
+        if (e.key === 'userLoggedInStatus') {
             if (e.newValue === 'true') {
                 handleUserLogin();
             } else {
