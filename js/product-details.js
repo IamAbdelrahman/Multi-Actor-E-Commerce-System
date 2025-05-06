@@ -1,3 +1,5 @@
+import StorageManager from '../modules/StorageModule.js'
+import ProductManager from '../modules/ProductModule.js'
 document.addEventListener('DOMContentLoaded', () => {
     // Get product ID from URL
     const urlParams = new URLSearchParams(window.location.search);
@@ -13,18 +15,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadProductData(productId) {
     try {
-        const response = await fetch('data/data.json');
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        const response = ProductManager.GetAllProducts();
+        // if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         
-        const data = await response.json();
-        if (!data.products || !Array.isArray(data.products)) {
+        const data = await response;
+        if (!data || !Array.isArray(data)) {
             throw new Error('Invalid data structure: products array not found');
         }
-        
-        const product = data.products.find(p => p.id === productId);
+        const product = data.find(p => p.id === productId);
         if (!product) {
             throw new Error(`Product with ID ${productId} not found`);
         }
+
 
         displayProduct(product);
         loadRelatedProducts(data.products, product.id, product.category);

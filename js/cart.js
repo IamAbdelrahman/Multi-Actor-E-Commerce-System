@@ -110,7 +110,7 @@ function addToCart(product, quantity = 1) {
         return;
     }
 
-    const availableStock = product.stock || 50;
+    const availableStock = (typeof product.stock === 'number') ? product.stock : 50;
     const safeQuantity = Math.max(1, Math.min(quantity, availableStock));
     const existingItem = cartItems.find(item => item.id === product.id);
 
