@@ -77,7 +77,6 @@ window.Save = function (event) {
 
     // Add New Users with Incremental IDs
     UserManager.AddUser(name, email, password);
-    UserManager.AddUser(name, email, password);
 }
 
 window.Login = function (event) {

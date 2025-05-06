@@ -321,9 +321,65 @@ footer {
 }
 
 tbody tr:hover {
-    transform: scale(1.05);    
-    border: 2px solid red;          
+    /* transform: scale(1.05);    
+    border: 2px solid red;           */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: all 0.7s ease-in-out;           
 }
 
+:root{
+  --main-color:#d3ad7f;
+  --black:#13131a;
+  --bg:#010103;
+  --border:.1rem solid rgba(255,255,255,.3);
+}
+
+.review .box-container{
+  font-family: 'Roboto', sans-serif;
+  margin:0; padding:0;
+  box-sizing: border-box;
+  outline: none; border:none;
+  text-decoration: none;
+  text-transform: capitalize;
+  transition: .2s linear;
+  background: var(--bg);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  gap:1.5rem;
+}
+
+.review .box-container .box{
+  border:var(--border);
+  text-align: center;
+  padding:3rem 2rem;
+}
+
+.review .box-container .box p{
+  font-size: 1.5rem;
+  line-height: 1.8;
+  color:#ccc;
+  padding:2rem 0;
+}
+
+.review .box-container .box .user{
+  height: 7rem;
+  width: 7rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.review .box-container .box h3{
+  padding:1rem 0;
+  font-size: 2rem;
+  color:#fff;
+}
+
+.review .box-container .box .stars i{
+  font-size: 1.5rem;
+  color:var(--main-color);
+}
+
+.box {
+  transform: scaleY(1);
+  transition: all 0.5s;
+}
