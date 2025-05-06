@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const itemTotal = productData.price * cartItem.quantity;
             total += itemTotal;
-
+            productData.stock -= cartItem.quantity;
             const productElement = document.createElement("div");
             productElement.classList.add("cart-item");
             productElement.innerHTML = `
@@ -43,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="col">
                         <p>${productData.name} (x${cartItem.quantity})</p>
                         <p>Price: $${itemTotal.toFixed(2)}</p>
+
                     </div>
                 </div>
             `;

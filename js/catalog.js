@@ -1,7 +1,5 @@
 import ProductManager from "../modules/ProductModule.js";
 
-/////////////////////Get All Elements////////////////////
-
 //This is for searchname
 const searchInput = document.getElementById("searchInput");
 
@@ -66,7 +64,8 @@ function SearchProduct(products) {
                 id: ${product.id}, 
                 name: '${product.name}', 
                 price: ${product.price}, 
-                image: '${product.image}'
+                image: '${product.image}',
+                stock: ${product.stock}
               })">
               Add to cart
             </button>
