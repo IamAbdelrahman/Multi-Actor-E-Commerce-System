@@ -833,6 +833,12 @@ function GenerateSecurePassword() {
 /*- ON LOADING
 -----------------------------------------------------------------------*/
 document.addEventListener('DOMContentLoaded', function () {
+  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+  if (!user || user.role !== "admin") {
+  alert("Unauthorized access. Redirecting...");
+  window.location.href = "home.html"; 
+}
+
   // Toggle the Sidebar
   const toggleBtn = document.querySelector(".toggle-btn");
   const toggler = document.querySelector("#icon");
