@@ -69,13 +69,12 @@ export default class Validate {
   }
 
 
-  static isImageValid(value) {
-    if (typeof value !== 'string') return false;
-
-    // Check for image extensions and basic URL structure
-    const pattern = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|svg))$/i;
-    return pattern.test(value.trim());
+  static isImageValid(image) {
+    const base64Pattern = /^data:image\/(png|jpeg|jpg|gif);base64,/;
+    const urlPattern = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif))$/i;
+    return base64Pattern.test(image) || urlPattern.test(image);
   }
+
 
 
   static isOrderIdValid(value) {
