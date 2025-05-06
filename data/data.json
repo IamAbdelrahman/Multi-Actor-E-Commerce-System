@@ -18,15 +18,15 @@
     {
       "id": 1,
       "name": "Hagar Yusuf",
-      "email": "hagar@example.com",
-      "password": "hashedpassword1",
+      "email": "seller@example.com",
+      "password": "sellerpass123",
       "Address": {
         "city": "Cairo",
         "street": "456 Garden Ave",
         "zipCode": "67890"
       },
       "phone": "+201098765432",
-      "role": "customer",
+      "role": "seller",
       "blocked": false,
       "date": ""
     },
