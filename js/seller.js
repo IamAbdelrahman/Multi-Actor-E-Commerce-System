@@ -12,6 +12,7 @@ import CustomerManager from '../modules/CustomerModule.js';
 /*- PRODUCTS FUNCTIONS
 --------------------------------------------------------------------------------*/
 function CreateProductHeader() {
+  assignheader("Manage Products");
   var ProductBtns = CreateModal("Product", "Add");
   var table = createTable();
   var contentdiv = document.querySelector("#mainContent");
@@ -30,7 +31,6 @@ function CreateProductHeader() {
 
 function CreateProductTable(type, ...args) {
   const tr = document.createElement("tr");
-
   for (let i = 0; i < args.length; i++) {
     const td = createCell();
     td.textContent = args[i];
@@ -38,7 +38,6 @@ function CreateProductTable(type, ...args) {
   }
 
   const productId = args[0];
-
   const actionTd = createCell();
   const editBtn = document.createElement("button");
   /////////////Edit
@@ -80,19 +79,29 @@ function ManageProducts() {
     const productId = parseInt(document.getElementById("currentProductId").value);
 
     if (currentAction === 'Add') {
+
+
       if (!imageFile) return alert("Please select an image.");
       const reader = new FileReader();
       reader.onload = function (e) {
-        const base64Image = e.target.result;
-        const success = ProductManager.AddProduct(name, description, price, stock, category, base64Image);
-        if (success) {
-          alert(`Product "${name}" added successfully!`);
-          location.reload();
-        }
+      const base64Image = e.target.result;
+      const success = ProductManager.AddProduct(name, description, price, stock, category, base64Image);
+      if (success) {
+        alert(`Product "${name}" added successfully!`);
+              // Clear old data from inputs
+      document.getElementById('productName').value = '';
+      document.getElementById('productDescription').value = '';
+      document.getElementById('productPrice').value = '';
+      document.getElementById('productStock').value = '';
+      document.getElementById('productCategory').value = '';
+      document.getElementById('productImage').value = '';
+        location.reload();
+      }
       };
       reader.readAsDataURL(imageFile);
 
     } else if (currentAction === 'Edit') {
+      
       const productId = parseInt(document.getElementById("currentProductId").value);
 
       if (imageFile) {
@@ -158,15 +167,10 @@ function ShowProducts() {
 --------------------------------------------------------------------------------*/
 
 function CreateOrdersHeader() {
-  const OrdersBtns = ` 
-    <div class="my-4">
-      <h3 class="fw-bold">Orders Management</h3>
-    </div>
-  `;
-
+  assignheader("Manage Orders");
   const table = createTable();
   const contentdiv = document.querySelector("#mainContent");
-  contentdiv.innerHTML = OrdersBtns + table;
+  contentdiv.innerHTML = table;
 
   const head = document.querySelector("thead");
   const tr = document.createElement("tr");
@@ -267,6 +271,7 @@ function ShowOrders() {
   DisplayNone();
   CreateOrdersHeader();
 
+
   const orders = StorageManager.LoadSection("orders") || [];
   const body = document.querySelector("tbody");
 
@@ -285,6 +290,8 @@ function ShowDashboard() {
 
 }
 function ShowAnalytics() {
+  assignheader("Analytics");
+
   var totalProducts = ProductManager.GetProductCounts();
   var totalCustomers = CustomerManager.GetCustomerCounts();
   var totalSellers = SellerManager.GetSellerCounts();
@@ -445,11 +452,10 @@ function createCell() {
 
 function CreateModal(type, ...actions) {
   var modal = `
-    <div class="my-4">
-      <button class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#${type}ActionModal" data-action="${actions[0]}">
+    <div class="my-4 d-flex justify-content-center">
+      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#${type}ActionModal" data-action="${actions[0]}">
         ${actions[0]} ${type}
       </button>
-    
     </div>
 
     <div class="modal fade" id="${type}ActionModal" tabindex="-1" aria-hidden="true">
@@ -506,30 +512,23 @@ function createDeleteIcon(id, type) {
   return icon;
 }
 
-function GenerateSecurePassword() {
-  const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  const digits = "0123456789";
-  const specialChars = "_()!@#$%^&*";
-  const allChars = letters + digits + specialChars;
-
-  let password = "";
-  password += letters[Math.floor(Math.random() * letters.length)];
-  password += digits[Math.floor(Math.random() * digits.length)];
-  password += specialChars[Math.floor(Math.random() * specialChars.length)];
-
-  const remainingLength = 8 + Math.floor(Math.random() * 4) - 3;
-  for (let i = password.length; i < remainingLength; i++) {
-    password += allChars[Math.floor(Math.random() * allChars.length)];
-  }
-
-  password = password.split('').sort(() => 0.5 - Math.random()).join('');
-  return password;
+function assignheader(title) {
+  const header=document.getElementById("contentheader");
+  header.innerHTML="";
+  const content =document.createElement("h2");
+  content.textContent=`${title}`;
+  content.className = "fw-bold";
+  header.append(content);
 }
-
 
 /*- ON LOADING
 -----------------------------------------------------------------------*/
 document.addEventListener('DOMContentLoaded', function () {
+  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+  if (!user || user.role !== "admin" || user.role !== "seller") {
+  alert("Unauthorized access. Redirecting...");
+  window.location.href = "home.html"; 
+}
   // Toggle the Sidebar
   const toggleBtn = document.querySelector(".toggle-btn");
   const toggler = document.querySelector("#icon");
