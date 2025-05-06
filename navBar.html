@@ -54,8 +54,12 @@
           </ul>
         </div>
 
-        <a href="#" class="text-light" onclick="toggleCart()"><i class="bi bi-cart"></i></a>
-        <a href="#" class="text-light heart-toggle"><i class="bi bi-heart"></i></a>
+        <a href="#" class="text-light position-relative" onclick="toggleCart()">
+          <i class="bi bi-cart"></i>
+          <span id="cartCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6em;">0</span></a>
+          <a href="#" class="text-light heart-toggle position-relative">
+          <i class="bi bi-heart"></i>
+          <span id="wishlistCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6em;">0</span></a>
       </div>
     </div>
   </div>
@@ -89,6 +93,31 @@
   </div>
 </div>
 <!---------------------------------- Cart Slider End----------------------------->
+
+<!---------------------------------- wishList Slider Start----------------------------->
+<div id="wishlistOverlay"></div>
+<div id="wishlistSlider">
+  <div class="d-flex flex-column h-100">
+    <div class="wishlist-header d-flex justify-content-between align-items-center">
+      <h4 class="mb-0"><i class="bi bi-heart-fill"></i> Your Wishlist</h4>
+      <button class="btn btn-close" onclick="toggleWishlist()"></button>
+    </div>
+    <div class="wishlist-body flex-grow-1 overflow-auto">
+      <div id="wishlistItems"></div>
+    </div>
+    <div class="wishlist-footer mt-auto">
+      <button class="btn btn-yellow w-100 rounded-pill mb-2" onclick="moveAllToCart()">
+        <i class="bi bi-cart-plus"></i> Add All to Cart
+      </button>
+      <button class="btn btn-outline-secondary w-100 rounded-pill" onclick="toggleWishlist()">
+        <i class="bi bi-arrow-left"></i> Continue Shopping
+      </button>
+    </div>
+  </div>
+</div>
+
+<!---------------------------------- wishList Slider End----------------------------->
+
 <!------------------------------------ Register/Login Start ------------------------------------>
 <div id="registerModal"
   class="d-none position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex align-items-center justify-content-center"
@@ -154,3 +183,4 @@
   </div>
 </div>
 <!------------------------------------ Register/Login Start ------------------------------------>
+<script src="./js/wishlist.js" type="module"></script>

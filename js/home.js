@@ -1,6 +1,7 @@
 // ------------------------------Register/Login Start------------------------------
 import StorageManager from '../modules/StorageModule.js'
 import UserManager from '../modules/UserModule.js';
+// import { transferGuestCartToUser } from './cart.js';
 
 // Add Static ADMIN in Local Storage in Section Users and whenn open even not there are users will reload local storage with admin
 const users = StorageManager.LoadSection("users") || [];
@@ -100,12 +101,14 @@ window.Login = function (event) {
         switch (LoginUser.role) {
             case "customer":
                 sessionStorage.setItem('userLoggedIn', JSON.stringify(LoginUser));
-                location.reload();
+                sessionStorage.setItem("userId",LoginUser.id)
+                transferGuestCartToUser(LoginUser.id)
                 document.getElementById("Register-Icon").classList.add("d-none");
                 const userDropdown = document.getElementById("userDropdown");
                 if (userDropdown) {
                     userDropdown.classList.remove("d-none");
                 }
+                
 
                 const modal = document.getElementById("registerModal");
                 if (modal) {
@@ -132,32 +135,36 @@ document.getElementById("logout")?.addEventListener("click", () => {
     location.reload();
 });
 
-
 function CreateFeaturedProducts(products) {
     var content = document.getElementById("content");
     for (var i = 1; i <= 8; i++) {
         var product = products[getRandomValues(1, 25)];
         console.log(product.id);
         var cards = `
-        <div class = "col-12 col-sm-6 col-lg-3 mb-4 ">
+        <div class="col-12 col-sm-6 col-lg-3 mb-4">
           <div class="card h-100 position-relative text-center p-3">
 
             <!-- Buttons for heart and eye icons -->
             <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
-              <button class="btn btn-light rounded-circle shadow-sm">
+              <button class="btn btn-light rounded-circle shadow-sm" onclick="addToWishlist({
+                id: ${product.id}, 
+                name: '${product.name}', 
+                price: ${product.price}, 
+                image: '${product.image}'
+              })">
                 <i class="bi bi-heart"></i>
               </button>
               <a href="product-details.html?id=${product.id}" class="text-decoration-none">
-              <button class="btn btn-light rounded-circle shadow-sm">
-                <i class="bi bi-eye"></i>
-              </button>
+                <button class="btn btn-light rounded-circle shadow-sm">
+                  <i class="bi bi-eye"></i>
+                </button>
               </a>
             </div>
             
             <a href="product-details.html?id=${product.id}" class="text-decoration-none">
-              <img src="${product.image}" class="card-img-top  mx-auto" style="max-width: 60%; height:200px">
-                <div class="card-body d-flex flex-column justify-content-between ">
-                <h5 class="card-title fw-semibold mb-2  ">${product.name}</h5>
+              <img src="${product.image}" class="card-img-top mx-auto" style="max-width: 60%; height:200px">
+                <div class="card-body d-flex flex-column justify-content-between">
+                <h5 class="card-title fw-semibold mb-2">${product.name}</h5>
                 <p class="text-muted small">${product.description}</p>
             </div>
             </a>
@@ -182,7 +189,6 @@ function CreateFeaturedProducts(products) {
        `;
        content.innerHTML += cards;
     }
-
 }
 
 window.addEventListener('DOMContentLoaded', () => {

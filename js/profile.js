@@ -6,10 +6,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const userId = userLoggedIn?.id;
 
     if (userId) {
-        if (!sessionStorage.getItem('userId')) {
-            sessionStorage.setItem('userId', userId);
-            sessionStorage.setItem('userLoggedIn', 'true');
+        // Set flag if user was previously a guest
+        if (sessionStorage.getItem('userId') === 'guest') {
+            sessionStorage.setItem('wasGuest', 'true');
         }
+        
+        // Always update session storage with current user ID
+        sessionStorage.setItem('userId', userId);
+        sessionStorage.setItem('userLoggedIn', 'true');
         
         const users = StorageManager.LoadSection("users");
         const currentUser = users.find(user => user.id === userId);
@@ -21,8 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("profileZip").value = currentUser.Address.zipCode || "";
             document.getElementById("profilePhone").value = currentUser.phone || "";
         }
-    } else {
         
+        // Trigger cart migration
+        initCart();
+    } else {
         if (!sessionStorage.getItem('userId')) {
             sessionStorage.setItem('userId', 'guest');
         }
@@ -42,6 +48,5 @@ document.addEventListener("DOMContentLoaded", () => {
         if (updated) {
             alert("Profile updated successfully!");
         }
-        
     };
 });

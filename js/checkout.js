@@ -3,7 +3,6 @@ import StorageManager from "../modules/StorageModule.js";
 import ProductManager from "../modules/ProductModule.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    var total = 0;
     const userLoggedIn = JSON.parse(sessionStorage.getItem("userLoggedIn"));
     const userId = userLoggedIn?.id;
 
@@ -22,47 +21,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const cart = StorageManager.LoadSection("cart");
     const userCart = cart.find(cartItem => cartItem.userId === userId);
+    
     if (userCart && Array.isArray(userCart.products) && userCart.products.length > 0) {
         const cartItemsContainer = document.getElementById("cart-items-container");
-        for (let i = 0; i < userCart.products.length; i++) {
-            const cartItem = userCart.products[i];
-            console.log(cartItem.quantity);
+        let total = 0;
+
+        userCart.products.forEach(cartItem => {
             const productData = ProductManager.GetProductById(cartItem.id);
-            if (!productData) continue;
+            if (!productData) return;
+
+            const itemTotal = productData.price * cartItem.quantity;
+            total += itemTotal;
 
             const productElement = document.createElement("div");
             productElement.classList.add("cart-item");
             productElement.innerHTML = `
                 <div class="row align-items-center mb-4">
                     <div class="col-auto">
-                        <img
-                          src="${productData.image}"
-                          alt="${productData.name}"
-                          class="img-fluid"
-                          style="max-width: 80px;"
-                        >
+                        <img src="${productData.image}" alt="${productData.name}" class="img-fluid" style="max-width: 80px;">
                     </div>
                     <div class="col">
                         <p>${productData.name} (x${cartItem.quantity})</p>
-                        <p>Price: $${(productData.price * cartItem.quantity)}</p>
+                        <p>Price: $${itemTotal.toFixed(2)}</p>
                     </div>
                 </div>
             `;
             cartItemsContainer.appendChild(productElement);
-        }
+        });
 
-        var total = cartItems.reduce((sum, item) => {
-        const itemPrice = typeof item.price === 'number' ? item.price : 0;
-        const itemQuantity = typeof item.quantity === 'number' ? item.quantity : 0;
-        return sum + (itemPrice * itemQuantity);
-    }, 0);
-  
-        // cartTotalElement.textContent = `$${total.toFixed(2)}`;
-        document.getElementById("total-amount").innerHTML = `$${total}`;
-        document.getElementById("subtotal-amount").innerHTML = `$${total}`;
+        document.getElementById("total-amount").innerHTML = `$${total.toFixed(2)}`;
+        document.getElementById("subtotal-amount").innerHTML = `$${total.toFixed(2)}`;
     } else {
         const cartItemsContainer = document.getElementById("cart-items-container");
         cartItemsContainer.innerHTML = "<p class='text-muted'>Your cart is empty.</p>";
+        document.getElementById("total-amount").innerHTML = "$0.00";
+        document.getElementById("subtotal-amount").innerHTML = "$0.00";
     }
 
     const submit = document.getElementById("submit");
@@ -84,12 +77,10 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        const address = { street, city, zip };
-
         const errors = [];
-        if (!Validate.isNameValid(name)) errors.push("Invalid name (must be 3-15 characters long and contain only letters)");
+        if (!Validate.isNameValid(name)) errors.push("Invalid name");
         if (!Validate.isEmailValid(email)) errors.push("Invalid email");
-        if (!Validate.isPhoneValid(phone)) errors.push("Invalid phone (expected format: +20XXXXXXXXXX)");
+        if (!Validate.isPhoneValid(phone)) errors.push("Invalid phone");
         if (!Validate.isCityValid(city)) errors.push("Invalid city");
         if (!Validate.isZipCodeValid(zip)) errors.push("Invalid zipcode");
         if (!Validate.isStreetValid(street)) errors.push("Invalid street");
@@ -100,9 +91,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (!userCart || !Array.isArray(userCart.products) || userCart.products.length === 0) {
-            alert("Your cart is empty. Please add items before placing any order.");
+            alert("Your cart is empty");
             return;
         }
+
+        const total = userCart.products.reduce((sum, item) => {
+            const product = ProductManager.GetProductById(item.id);
+            return sum + (product.price * item.quantity);
+        }, 0);
 
         const newOrder = {
             id: GenerateNextID(),
@@ -112,11 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
             status: "processing",
             orderDate: new Date().toISOString(),
             PaymentMethod: paymentMethod,
-            shippingAddress: {
-                street: street,
-                city: city,
-                zipCode: zip,
-            },
+            shippingAddress: { street, city, zip }
         };
 
         const orders = StorageManager.LoadSection("orders") || [];
