@@ -1,7 +1,5 @@
 import ProductManager from "../modules/ProductModule.js";
 
-/////////////////////Get All Elements////////////////////
-
 //This is for searchname
 const searchInput = document.getElementById("searchInput");
 
@@ -37,9 +35,14 @@ function SearchProduct(products) {
     card.innerHTML = `
       <div class="card h-100 position-relative text-center p-3">
         <div class="position-absolute top-0 end-0 m-2 d-flex flex-column gap-2">
-          <button class="btn btn-light rounded-circle shadow-sm" ">
-            <i class="bi bi-heart"></i>
-          </button>
+              <button class="btn btn-light rounded-circle shadow-sm" onclick="addToWishlist({
+                id: ${product.id}, 
+                name: '${product.name}', 
+                price: ${product.price}, 
+                image: '${product.image}'
+              })">
+                <i class="bi bi-heart"></i>
+              </button>
           <a href="product-details.html?id=${product.id}" class="text-decoration-none">
           <button class="btn btn-light rounded-circle shadow-sm">
                <i class="bi bi-eye"></i>
@@ -61,7 +64,8 @@ function SearchProduct(products) {
                 id: ${product.id}, 
                 name: '${product.name}', 
                 price: ${product.price}, 
-                image: '${product.image}'
+                image: '${product.image}',
+                stock: ${product.stock}
               })">
               Add to cart
             </button>

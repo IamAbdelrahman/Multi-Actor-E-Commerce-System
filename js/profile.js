@@ -4,17 +4,14 @@ import UserManager from "../modules/UserModule.js";
 document.addEventListener("DOMContentLoaded", () => {
     const userLoggedIn = JSON.parse(sessionStorage.getItem("userLoggedIn"));
     const userId = userLoggedIn?.id;
-
+        
     if (userId) {
-        // Set flag if user was previously a guest
-        if (sessionStorage.getItem('userId') === 'guest') {
+        if (userId == "guest") {
             sessionStorage.setItem('wasGuest', 'true');
         }
         
-        // Always update session storage with current user ID
         sessionStorage.setItem('userId', userId);
-        sessionStorage.setItem('userLoggedIn', 'true');
-        
+        sessionStorage.setItem('userLoggedInStatus', 'true');
         const users = StorageManager.LoadSection("users");
         const currentUser = users.find(user => user.id === userId);
         if (currentUser) {
@@ -25,15 +22,9 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("profileZip").value = currentUser.Address.zipCode || "";
             document.getElementById("profilePhone").value = currentUser.phone || "";
         }
-        
-        // Trigger cart migration
-        initCart();
-    } else {
-        if (!sessionStorage.getItem('userId')) {
-            sessionStorage.setItem('userId', 'guest');
-        }
     }
     window.updateProfile = function (event) {
+
         const name = document.getElementById("profileName").value.trim();
         const email = document.getElementById("profileEmail").value.trim();
         const street = document.getElementById("profileStreet").value.trim();
@@ -48,5 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (updated) {
             alert("Profile updated successfully!");
         }
+        // Else: alert already shown inside UpdateUser in case of failure
     };
 });

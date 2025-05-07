@@ -70,14 +70,14 @@ function ManageCustomers() {
 
   document.getElementById('confirmAction').addEventListener('click', () => {
     const customerId = parseInt(document.getElementById('CustomerId').value);
-    if (isNaN(customerId) || customerId < 0 || !customerId){
+    if (isNaN(customerId) || customerId < 0 || !customerId) {
       alert('Please enter a valid ID');
       return;
     }
     const users = StorageManager.LoadSection("users");
     const customers = users.filter(user => user.role === "customer");
     const returnId = customers.find(c => c.id === customerId);
-    if (!returnId){
+    if (!returnId) {
       alert("ID doesn't exist")
       return;
     }
@@ -106,7 +106,7 @@ function ShowCustomers() {
     const status = customer.blocked ? "InActive" : "Active";
     body.appendChild(CreateDataTable("user", customer.id, customer.name, customer.email, customer.password, customer.Address.city, customer.phone, status));
   }
-  
+
 }
 
 /*------------------------------------------------------------------------------*/
@@ -237,7 +237,7 @@ function ManageSellers() {
         }
       };
 
-      if(SellerManager.AddSeller(seller.name, seller.email, seller.password, seller.phone, seller.Address)) {
+      if (SellerManager.AddSeller(seller.name, seller.email, seller.password, seller.phone, seller.Address)) {
         alert("Seller added successfully!");
         var body = document.querySelector("tbody");
         var len = UserManager.GetUsersCount();
@@ -257,7 +257,7 @@ function ManageSellers() {
       const users = StorageManager.LoadSection("users");
       const sellers = users.filter(user => user.role === "seller");
       const returnId = sellers.find(s => s.id === sellerId);
-      if (!returnId){
+      if (!returnId) {
         alert("ID doesn't exist")
         return;
       }
@@ -334,13 +334,13 @@ function ManageProducts() {
 
   document.getElementById('confirmAction').addEventListener('click', () => {
     const productId = parseInt(document.getElementById('ProductId').value);
-    if (isNaN(productId) || productId < 0 || !productId){
+    if (isNaN(productId) || productId < 0 || !productId) {
       alert('Please enter a valid ID');
       return;
     }
     const products = ProductManager.GetAllProducts();
     const returnId = products.find(c => c.id === productId);
-    if (!returnId){
+    if (!returnId) {
       alert("ID doesn't exist")
       return;
     }
@@ -381,11 +381,11 @@ function CreateOrdersHeader() {
       <h3 class="fw-bold">Orders Management</h3>
     </div>
   `;
-  
+
   const table = createTable();
   const contentdiv = document.querySelector("#mainContent");
   contentdiv.innerHTML = OrdersBtns + table;
-  
+
   const head = document.querySelector("thead");
   const tr = document.createElement("tr");
   const attributes = ["Order ID", "Customer Name", "Order Date", "Total Amount", "Status", "Actions"];
@@ -395,7 +395,7 @@ function CreateOrdersHeader() {
     th.textContent = attributes[i];
     tr.appendChild(th);
   }
-  
+
   head.appendChild(tr);
 }
 
@@ -407,7 +407,7 @@ function CreateOrdersTable(orderId, customerName, orderDate, totalAmount, status
     td.textContent = cellContent;
     tr.appendChild(td);
   });
-  
+
   const actionTd = createCell();
   const displayIcon = createDisplayIcon(orderId);
   actionTd.appendChild(displayIcon);
@@ -471,23 +471,18 @@ function ShowOrderDetails(orderId) {
   const contentDiv = document.querySelector("#mainContent");
   contentDiv.innerHTML = cardHtml;
   var closeBtn = document.getElementById("close");
-  closeBtn.addEventListener("click", function(){
+  closeBtn.addEventListener("click", function () {
     ShowOrders();
   })
 }
 
-
-// Close the card
-
-
-
 function ShowOrders() {
   DisplayNone();
   CreateOrdersHeader();
-  
+
   const orders = StorageManager.LoadSection("orders") || [];
   const body = document.querySelector("tbody");
-  
+
   orders.forEach(order => {
     const status = order.completed ? "Completed" : "Pending";
     body.appendChild(CreateOrdersTable(order.id, order.customerName, order.orderDate, order.totalAmount, status));
@@ -549,12 +544,12 @@ function ShowDashboard() {
 function ShowAnalytics() {
   var totalProducts = ProductManager.GetProductCounts();
   var totalCustomers = CustomerManager.GetCustomerCounts();
-  var totalSellers =  SellerManager.GetSellerCounts();
+  var totalSellers = SellerManager.GetSellerCounts();
   var carts = StorageManager.LoadSection("cart");
   var revenue = 0;
   var totalOrders = StorageManager.LoadSection("orders").length;
   for (var i = 0; i < carts.length - 1; i++) {
-      revenue += carts[i].totalAmount;
+    revenue += carts[i].totalAmount;
   }
   const dashboardData = {
     _revenue: revenue,
@@ -653,20 +648,69 @@ function ShowAnalytics() {
 
 /*------------------------------------------------------------------------------*/
 
-/*- NOTIFICATION FUNCTIONS
+/*- MESSAGES FUNCTIONS
 --------------------------------------------------------------------------------*/
-function ShowMessages() {
-  var msgs = StorageManager.LoadSection("messages");
-  if (msgs) {
-    for (var i = 1; msgs.length; i++) {
-
-    }
-  }
-
+function CreateMessageCard(name, description) {
+  var card = `
+    <section class="review row" id="review">
+      <div class="box-container">
+        <div class="box">
+          <img src="images/Others/quote-img.png" alt="" class="quote" />
+          <p>${description}</p>
+          <img src="images/Others/pic-1.png" alt="" class="user" />
+          <h3>${name}</h3>
+        </div>
+      </div>
+    </section>`
+  return card;
 }
 
+function ShowMessages() {
+  DisplayNone();
+  var msgs = StorageManager.LoadSection("messages");
+  const contentDiv = document.querySelector("#mainContent");
+  contentDiv.innerHTML = `<h1 class="heading">customer's<span>review</span></h1>`
+  if (msgs) {
+    for (let i = 0; i < msgs.length; i++) {
+      contentDiv.innerHTML += CreateMessageCard(msgs[i].userName, msgs[i].messageDescription);
+    }
+  }
+}
 
-
+/*- HELP-CENTER FUNCTIONS
+--------------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------*/
+function CreateHelpCenterForm() {
+  var form = `
+    <div class="container py-5">
+      <div class="row align-items-stretch">
+          <div class="col-md-7 order-1 order-md-2 mb-4 mb-md-0 ">
+            <div class="bg-white p-4 shadow-sm rounded">
+                <div class="d-flex flex-column">
+                    <div class="mb-3">
+                        <input type="email" name="contactEmail" class="form-control rounded" placeholder="Email Address" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" name="contactSubject" class="form-control rounded" placeholder="Subject" required>
+                    </div>
+                    <div class="mb-3 flex-grow-1">
+                        <textarea class="form-control rounded" rows="5" name="contactDescription" placeholder="Your Message" required></textarea>
+                    </div>
+                    <div class="d-grid mt-auto">
+                        <button type="submit" id="sendMessage" class="btn btn-warning btn-lg rounded">Send Message</button>
+                    </div>
+                </div>
+            </div>
+          </div>
+      </div>
+    </div>`
+    return form;
+}
+function ShowHelpCenter () {
+  DisplayNone();
+  const contentDiv = document.querySelector("#mainContent");
+  contentDiv.innerHTML = CreateHelpCenterForm();
+}
 /*- HELPER FUNCTIONS
 -----------------------------------------------------------------------*/
 function createTable() {
@@ -705,7 +749,7 @@ function createCell() {
   return cell;
 }
 
-function CreateModal (type, ...actions) {
+function CreateModal(type, ...actions) {
   var modal = `
     <div class="my-4">
       <button class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#${type}ActionModal" data-action="${actions[0]}">
@@ -776,7 +820,7 @@ function GenerateSecurePassword() {
   password += digits[Math.floor(Math.random() * digits.length)];
   password += specialChars[Math.floor(Math.random() * specialChars.length)];
 
-  const remainingLength = 8 + Math.floor(Math.random() * 4) - 3; 
+  const remainingLength = 8 + Math.floor(Math.random() * 4) - 3;
   for (let i = password.length; i < remainingLength; i++) {
     password += allChars[Math.floor(Math.random() * allChars.length)];
   }
@@ -789,6 +833,12 @@ function GenerateSecurePassword() {
 /*- ON LOADING
 -----------------------------------------------------------------------*/
 document.addEventListener('DOMContentLoaded', function () {
+  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+  if (!user || user.role !== "admin") {
+  alert("Unauthorized access. Redirecting...");
+  window.location.href = "home.html"; 
+}
+
   // Toggle the Sidebar
   const toggleBtn = document.querySelector(".toggle-btn");
   const toggler = document.querySelector("#icon");
@@ -818,8 +868,11 @@ document.addEventListener('DOMContentLoaded', function () {
         case "orders":
           ShowOrders();
           break;
-        case "notifications":
+        case "messages":
           ShowMessages();
+          break;
+        case "help":
+          ShowHelpCenter();
           break;
         case "analytics":
           ShowAnalytics();

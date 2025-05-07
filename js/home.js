@@ -77,7 +77,6 @@ window.Save = function (event) {
 
     // Add New Users with Incremental IDs
     UserManager.AddUser(name, email, password);
-    UserManager.AddUser(name, email, password);
 }
 
 window.Login = function (event) {
@@ -108,18 +107,30 @@ window.Login = function (event) {
                 if (userDropdown) {
                     userDropdown.classList.remove("d-none");
                 }
-                
-
+            
                 const modal = document.getElementById("registerModal");
                 if (modal) {
                     modal.classList.add("d-none");
                 }
                 document.getElementById("homeContent");
+                localStorage.setItem("loggedInUser", JSON.stringify({
+                    name: LoginUser.name,
+                    role: LoginUser.role
+                }));
                 break;
             case "admin":
+                localStorage.setItem("loggedInUser", JSON.stringify({
+                    name: LoginUser.name,
+                    role: LoginUser.role
+                }));
+
                 window.location.href = "admin-panel.html";
                 break;
             case "seller":
+                localStorage.setItem("loggedInUser", JSON.stringify({
+                    name: LoginUser.name,
+                    role: LoginUser.role
+                }));
                 window.location.href = "seller-dashboard.html";
                 break;
             default:
@@ -178,7 +189,8 @@ function CreateFeaturedProducts(products) {
                           id: ${product.id}, 
                           name: '${product.name}', 
                           price: ${product.price}, 
-                          image: '${product.image}'
+                          image: '${product.image}',
+                          stock: ${product.stock}
                         })">
                   Add to cart
                 </button>

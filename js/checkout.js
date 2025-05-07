@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const itemTotal = productData.price * cartItem.quantity;
             total += itemTotal;
-
+            productData.stock -= cartItem.quantity;
             const productElement = document.createElement("div");
             productElement.classList.add("cart-item");
             productElement.innerHTML = `
@@ -43,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="col">
                         <p>${productData.name} (x${cartItem.quantity})</p>
                         <p>Price: $${itemTotal.toFixed(2)}</p>
+
                     </div>
                 </div>
             `;
@@ -100,6 +101,13 @@ document.addEventListener("DOMContentLoaded", () => {
             return sum + (product.price * item.quantity);
         }, 0);
 
+        userCart.products.forEach(cartItem => {
+            const product = ProductManager.GetProductById(cartItem.id);
+            if (product) {
+                product.stock -= cartItem.quantity;  
+            }
+        });
+
         const newOrder = {
             id: GenerateNextID(),
             userId: userId,
@@ -114,6 +122,16 @@ document.addEventListener("DOMContentLoaded", () => {
         const orders = StorageManager.LoadSection("orders") || [];
         orders.push(newOrder);
         StorageManager.SaveSection("orders", orders);
+
+        const updatedProducts = StorageManager.LoadSection("products").map(product => {
+            const cartItem = userCart.products.find(item => item.id === product.id);
+            if (cartItem) {
+                const updatedProduct = { ...product, stock: product.stock - cartItem.quantity };
+                return updatedProduct;  
+            }
+            return product;  
+        });
+        StorageManager.SaveSection("products", updatedProducts);
 
         const updatedCart = cart.filter(cartItem => cartItem.userId !== userId);
         StorageManager.SaveSection("cart", updatedCart);
