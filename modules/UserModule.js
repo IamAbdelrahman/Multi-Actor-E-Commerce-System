@@ -2,12 +2,13 @@ import StorageManager from './StorageModule.js'
 import Validate from './ValidationModule.js';
 
 class User {
-  constructor(id, name, email, password, role, address = { street: "", city: "", zipCode: "" }, phone = "", blocked = false) {
+  constructor(id, name, email, password, role, blocked, address = { street: "", city: "", zipCode: "" }, phone = "") {
     this.ID = id;
     this.Name = name;
     this.Email = email;
     this.Pass = password;
     this.Role = role;
+    this.blocked = blocked;
     this.Address = address;
     this.phone = phone;
   }
@@ -80,7 +81,7 @@ class User {
 }
 
 export default class UserManager {
-  static AddUser(name, email, password, role = "customer") {
+  static AddUser(name, email, password, role = "customer", blocked = false) {
     const users = StorageManager.LoadSection("users") || [];
 
     // Trim input values
@@ -138,10 +139,12 @@ export default class UserManager {
     }
 
 
-    const user = new User(GenerateNextID(), name, email, password, role);
+    const user = new User(GenerateNextID(), name, email, password, role, blocked);
     users.push(user);
     StorageManager.SaveSection("users", users);
-    alert("Successfully Registered!");
+    // alert("Successfully Registered!");
+    document.getElementById("signUpForm").style.display = "none";
+    document.getElementById("loginForm").style.display = "block";
     return true;
   }
 
