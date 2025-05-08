@@ -33,16 +33,16 @@ document.addEventListener("DOMContentLoaded", () => {
     order.products.forEach(item => {
       const product = ProductManager.GetProductById(item.id);
       if (product) {
-        const entry = document.createElement("div");
-        entry.className = "order-entry d-flex align-items-center gap-3";
-        entry.innerHTML = `
+        const productCard = document.createElement("div");
+        productCard.className = "order-entry d-flex align-items-center gap-3";
+        productCard.innerHTML = `
           <img src="${product.image}" alt="${product.name}" />
           <div>
             <div class="fs-5 fw-semibold">${product.name}</div>
             <div class="text-muted fs-5 text-center">Quantity: ${item.quantity}</div>
           </div>
         `;
-        productContainer.appendChild(entry);
+        productContainer.appendChild(productCard);
       }
     });
   });
