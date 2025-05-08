@@ -18,8 +18,8 @@
     {
       "id": 1,
       "name": "Hagar Yusuf",
-      "email": "seller@example.com",
-      "password": "sellerpass123",
+      "email": "seller1@example.com",
+      "password": "seller1pass123",
       "Address": {
         "city": "Cairo",
         "street": "456 Garden Ave",
@@ -33,8 +33,8 @@
     {
       "id": 2,
       "name": "Rawan Emad",
-      "email": "rawan@example.com",
-      "password": "sellerpass123",
+      "email": "seller2@example.com",
+      "password": "seller2pass123",
       "Address": {
         "city": "Alexandria",
         "street": "789 Coastal Rd",
@@ -86,7 +86,7 @@
         "zipCode": "11733"
       },
       "phone": "+201443322110",
-      "role": "seller",
+      "role": "customer",
       "blocked": false,
       "date": ""
     },
@@ -116,7 +116,7 @@
         "zipCode": "81524"
       },
       "phone": "+201778899001",
-      "role": "seller",
+      "role": "customer",
       "blocked": false,
       "date": ""
     },
@@ -161,7 +161,7 @@
         "zipCode": "12655"
       },
       "phone": "+201554433221",
-      "role": "seller",
+      "role": "customer",
       "blocked": false,
       "date": ""
     },
@@ -206,7 +206,7 @@
         "zipCode": "11511"
       },
       "phone": "+201778899001",
-      "role": "seller",
+      "role": "customer",
       "blocked": false,
       "date": ""
     },
@@ -251,7 +251,7 @@
         "zipCode": "11733"
       },
       "phone": "+201667788990",
-      "role": "seller",
+      "role": "customer",
       "blocked": false,
       "date": ""
     },
@@ -296,7 +296,7 @@
         "zipCode": "11655"
       },
       "phone": "+201554433221",
-      "role": "seller",
+      "role": "customer",
       "blocked": false,
       "date": ""
     },

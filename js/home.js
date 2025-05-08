@@ -1,24 +1,10 @@
 // ------------------------------Register/Login Start------------------------------
 import StorageManager from '../modules/StorageModule.js'
 import UserManager from '../modules/UserModule.js';
-// import { transferGuestCartToUser } from './cart.js';
 
 // Add Static ADMIN in Local Storage in Section Users and whenn open even not there are users will reload local storage with admin
 const users = StorageManager.LoadSection("users") || [];
 const adminExists = users.some(user => user.id === 0 && user.role === "admin");
-
-// if (!adminExists) {
-//     const staticAdmin = {
-//         id: 0,
-//         name: "Admin User",
-//         email: "admin@gmail.com",
-//         password: "admin123",
-//         role: "admin"
-//     };
-//     users.push(staticAdmin);
-//     StorageManager.SaveSection("users", users);
-//     console.log("Static admin added.");
-// }
 
 // Show and hide modal
 const modal = document.getElementById("registerModal");
@@ -151,10 +137,17 @@ document.getElementById("logout")?.addEventListener("click", () => {
 });
 
 function CreateFeaturedProducts(products) {
+    if (!products || products.length === 0) {
+        console.error("No products available to display.");
+        return;
+    }
+    
+    const shuffledProducts = products.sort(() => Math.random() - 0.5);
+    const featuredProducts = shuffledProducts.slice(0, Math.min(8, shuffledProducts.length));
     var content = document.getElementById("content");
-    for (var i = 1; i <= 8; i++) {
-        var product = products[getRandomValues(1, 25)];
-        console.log(product.id);
+    content.innerHTML = ""; 
+
+    featuredProducts.forEach(product => {
         var cards = `
         <div class="col-12 col-sm-6 col-lg-3 mb-4">
           <div class="card h-100 position-relative text-center p-3">
@@ -177,7 +170,7 @@ function CreateFeaturedProducts(products) {
             </div>
             
             <a href="product-details.html?id=${product.id}" class="text-decoration-none">
-              <img src="${product.image}" class="card-img-top mx-auto" style="max-width: 60%; height:200px">
+              <img src="${product.image}" class="card-img-top mx-auto" style="max-width: 70%; height:180px">
                 <div class="card-body d-flex flex-column justify-content-between">
                 <h5 class="card-title fw-semibold mb-2">${product.name}</h5>
                 <p class="text-muted small">${product.description}</p>
@@ -204,7 +197,7 @@ function CreateFeaturedProducts(products) {
         </div>
        `;
         content.innerHTML += cards;
-    }
+    });
 }
 
 window.addEventListener('DOMContentLoaded', () => {
