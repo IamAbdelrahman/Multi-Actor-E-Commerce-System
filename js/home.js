@@ -77,6 +77,7 @@ window.Save = function (event) {
 
     // Add New Users with Incremental IDs
     UserManager.AddUser(name, email, password);
+
 }
 
 window.Login = function (event) {
@@ -93,6 +94,9 @@ window.Login = function (event) {
     } else if (LoginUser.password !== password) {
         alert("Incorrect password. Please try again.");
     }
+    else if (LoginUser.blocked) {
+        alert("Your account has been blocked by the admin. You cannot log in.");
+    }
     else {
         //repair
         // alert(Welcome back, ${LoginUser.name}! You are logged in as ${LoginUser.role}.);
@@ -100,14 +104,14 @@ window.Login = function (event) {
         switch (LoginUser.role) {
             case "customer":
                 sessionStorage.setItem('userLoggedIn', JSON.stringify(LoginUser));
-                sessionStorage.setItem("userId",LoginUser.id)
+                sessionStorage.setItem("userId", LoginUser.id)
                 transferGuestCartToUser(LoginUser.id)
                 document.getElementById("Register-Icon").classList.add("d-none");
                 const userDropdown = document.getElementById("userDropdown");
                 if (userDropdown) {
                     userDropdown.classList.remove("d-none");
                 }
-            
+
                 const modal = document.getElementById("registerModal");
                 if (modal) {
                     modal.classList.add("d-none");
@@ -143,7 +147,7 @@ window.Login = function (event) {
 
 document.getElementById("logout")?.addEventListener("click", () => {
     sessionStorage.removeItem("userLoggedIn");
-    location.reload();
+    window.location.href = "home.html"; // Redirect to homepage
 });
 
 function CreateFeaturedProducts(products) {
@@ -199,7 +203,7 @@ function CreateFeaturedProducts(products) {
           </div>
         </div>
        `;
-       content.innerHTML += cards;
+        content.innerHTML += cards;
     }
 }
 
