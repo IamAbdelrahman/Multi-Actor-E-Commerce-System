@@ -320,9 +320,9 @@ a,.cursor-pointer{
   border-color: rgb(203, 202, 202);
 }
 .card-img-top{
-  transition: transform 0.3s ease;
+  transition: transform 0.5s ease;
 }
 .card-img-top:hover{
-  transform: scale(1.03);
+  transform: scale(1.05);
 }
 /* ---------------------------------- Products End ---------------------------------- */

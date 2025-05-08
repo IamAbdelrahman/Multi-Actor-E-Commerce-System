@@ -51,7 +51,7 @@ function SearchProduct(products) {
         </div>
             
         <a href="product-details.html?id=${product.id}" class="text-decoration-none">
-        <img src="${product.image}" class="card-img-top  mx-auto" style="max-width: 60%; height:200px">
+        <img src="${product.image}" class="card-img-top  mx-auto" style="max-width: 70%; height:180px">
         <div class="card-body d-flex flex-column justify-content-between">
           <h5 class="card-title fw-semibold mb-2">${product.name}</h5>
           <p class="text-muted small">${product.description}</p>
