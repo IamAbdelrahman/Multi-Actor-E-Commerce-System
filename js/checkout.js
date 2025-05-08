@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const updatedCart = cart.filter(cartItem => cartItem.userId !== userId);
         StorageManager.SaveSection("cart", updatedCart);
 
-        window.location.href = "/home.html";
+        window.location.href = "/orderHistory.html";
     });
 });
 

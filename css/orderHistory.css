@@ -1,0 +1,20 @@
+.order-card {
+    box-shadow: 0 1px 3px #ffc107;
+  }
+  .order-entry {
+    border: 1px solid #e3e3e3;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background-color: white;
+    transition: all 1s;
+  }
+  .order-entry img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    margin: 20px;
+  }
+  .order-entry:hover{
+    transform: scale(1.009);
+  }
+  
