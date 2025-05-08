@@ -147,7 +147,7 @@ window.Login = function (event) {
 
 document.getElementById("logout")?.addEventListener("click", () => {
     sessionStorage.removeItem("userLoggedIn");
-    location.reload();
+    window.location.href = "home.html"; // Redirect to homepage
 });
 
 function CreateFeaturedProducts(products) {
