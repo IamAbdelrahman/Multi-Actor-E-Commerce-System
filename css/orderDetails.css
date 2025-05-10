@@ -1,0 +1,30 @@
+.order-summary {
+  border: 1px solid #e0e0e0;
+  border-radius: 0.5rem;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.order-item {
+  border: 1px solid #e0e0e0;
+  border-radius: 0.5rem;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.order-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin: 20px;
+}
+
+.details-card {
+  border: 1px solid #ffc107;
+  padding: 15px;
+  transition:all 0.8s ease ;
+}
+.details-card:hover{
+    transform: scale(.9);
+}

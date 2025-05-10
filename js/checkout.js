@@ -116,6 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
             status: "processing",
             orderDate: new Date().toISOString(),
             PaymentMethod: paymentMethod,
+            phone:phone,
             shippingAddress: { street, city, zip }
         };
 
