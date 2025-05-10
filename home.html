@@ -35,11 +35,28 @@
       });
   </script>
 
+<header class="hero-section">
+  <video autoplay muted loop playsinline id="heroVideo">
+    <source src="images/Others/seller.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <div class="overlay"></div>
+  <div class="hero-content text-center text-white">
+    <h1 class="display-4 fw-bold ">Build your online store</h1>
+    <p class="fw-bold fs-3" style="color: #d1d7e2; font-weight: bold;">
+      Sell your products easily with our powerful tools.
+    </p>
+
+    <a href="#get-started" class="btn btn-warning btn-lg mt-3">Start Free Trial</a>
+  </div>
+</header>
   <!------------------------------------ NavBar End ------------------------------------>
   <!-- new -->
   <!------------------------------------ Slider Start ------------------------------------>
   <!-- Carousel -->
   <div id="myCarousel" class="carousel slide py-4" data-bs-ride="carousel" data-bs-wrap="true">
+
+    
     <div class="container">
       <div class="carousel-inner py-4 slider">
         <div class="carousel-item active">
@@ -248,7 +265,6 @@
 
   <!------------------------------------ footer Start ------------------------------------>
   <div id="footer"></div>
-
   <script>
     fetch('footer.html')
       .then(response => response.text())
@@ -257,13 +273,14 @@
       });
   </script>
   <!------------------------------------ footer End ------------------------------------>
-
   <!-- Script JS -->
   <script type="module" src="js/home.js"></script>
   <script src="cart.js" type="module"></script>
   <script src="js/checkLogin.js"></script>
   <script type="module" src="js/utils.js"></script>
   <script src="js/navbar.js"></script>
+
+
 
 
 </body>

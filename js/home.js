@@ -212,3 +212,19 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     CreateFeaturedProducts(StorageManager.LoadSection("products"));
 });
+
+// Dark mode toggle button
+const toggleDarkBtn = document.getElementById("toggleDarkMode");
+
+window.addEventListener("load", () => {
+  const isDark = localStorage.getItem("darkMode") === "true";
+  if (isDark) document.body.classList.add("dark-mode");
+});
+
+
+toggleDarkBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");  
+  const isDark = document.body.classList.contains("dark-mode");
+  localStorage.setItem("darkMode", isDark);
+});
+
