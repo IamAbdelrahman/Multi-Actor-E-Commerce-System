@@ -63,7 +63,7 @@ function ManageProducts() {
       currentAction = btn.dataset.action;
       document.getElementById('modalTitle').textContent =
         `${currentAction === 'Add' ? 'Add' : 'Edit'} Product`;
-         ClearForm("Product");
+      ClearForm("Product");
     });
   });
 
@@ -79,15 +79,16 @@ function ManageProducts() {
     const productId = parseInt(document.getElementById("currentProductId").value);
 
     if (currentAction === 'Add') {
+
       if (!imageFile) return alert("Please select an image.");
       const reader = new FileReader();
       reader.onload = function (e) {
-      const base64Image = e.target.result;
-      const success = ProductManager.AddProduct(name, description, price, stock, category, base64Image);
-      if (success) {
-        alert(`Product "${name}" added successfully!`);
-        location.reload();
-      }
+        const base64Image = e.target.result;
+        const success = ProductManager.AddProduct(name, description, price, stock, category, base64Image);
+        if (success) {
+          alert(`Product "${name}" added successfully!`);
+          location.reload();
+        }
       };
       reader.readAsDataURL(imageFile);
 
@@ -466,13 +467,13 @@ function CreateModal(type, ...actions) {
   return modal;
 }
 
-function ClearForm (type) {
+function ClearForm(type) {
   document.getElementById(`${type}Name`).value = "";
   document.getElementById(`${type}Description`).value = "";
   document.getElementById(`${type}Price`).value = "";
   document.getElementById(`${type}Stock`).value = "";
   document.getElementById(`${type}Category`).value = "";
-  document.getElementById(`${type}Image`).value = "";  
+  document.getElementById(`${type}Image`).value = "";
 }
 
 function createDeleteIcon(id, type) {
@@ -498,10 +499,10 @@ function createDeleteIcon(id, type) {
 }
 
 function assignheader(title) {
-  const header=document.getElementById("contentheader");
-  header.innerHTML="";
-  const content =document.createElement("h2");
-  content.textContent=`${title}`;
+  const header = document.getElementById("contentheader");
+  header.innerHTML = "";
+  const content = document.createElement("h2");
+  content.textContent = `${title}`;
   content.className = "fw-bold";
   header.append(content);
 }
@@ -511,9 +512,9 @@ function assignheader(title) {
 document.addEventListener('DOMContentLoaded', function () {
   const user = JSON.parse(localStorage.getItem("loggedInUser"));
   if (!user || user.role !== "seller") {
-  alert("Unauthorized access. Redirecting...");
-  window.location.href = "home.html"; 
-}
+    alert("Unauthorized access. Redirecting...");
+    window.location.href = "home.html";
+  }
   // Toggle the Sidebar
   const toggleBtn = document.querySelector(".toggle-btn");
   const toggler = document.querySelector("#icon");
