@@ -338,7 +338,7 @@ function ManageProducts() {
       alert('Please enter a valid ID');
       return;
     }
-    const products = ProductManager.GetAllProducts();
+    const products = StorageManager.LoadSection("products") || [];
     const returnId = products.find(c => c.id === productId);
     if (!returnId) {
       alert("ID doesn't exist")
@@ -704,9 +704,9 @@ function CreateHelpCenterForm() {
           </div>
       </div>
     </div>`
-    return form;
+  return form;
 }
-function ShowHelpCenter () {
+function ShowHelpCenter() {
   DisplayNone();
   const contentDiv = document.querySelector("#mainContent");
   contentDiv.innerHTML = CreateHelpCenterForm();
@@ -835,9 +835,9 @@ function GenerateSecurePassword() {
 document.addEventListener('DOMContentLoaded', function () {
   const user = JSON.parse(localStorage.getItem("loggedInUser"));
   if (!user || user.role !== "admin") {
-  alert("Unauthorized access. Redirecting...");
-  window.location.href = "home.html"; 
-}
+    alert("Unauthorized access. Redirecting...");
+    window.location.href = "home.html";
+  }
 
   // Toggle the Sidebar
   const toggleBtn = document.querySelector(".toggle-btn");
