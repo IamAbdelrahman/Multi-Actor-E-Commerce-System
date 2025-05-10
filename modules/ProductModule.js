@@ -5,7 +5,7 @@ import Validate from './ValidationModule.js';
 -----------------------------------------------------------------------*/
 
 class Product {
-  constructor(id, name, description, price, stock, category, image) {
+  constructor(id, name, description, price, stock, category, image, status) {
     this.ID = id;
     this.Name = name;
     this.Description = description;
@@ -13,6 +13,7 @@ class Product {
     this.Stock = stock;
     this.Category = category;
     this.Image = image;
+    this.status = status;
 
   }
 
@@ -122,7 +123,7 @@ class Product {
 }
 
 export default class ProductManager {
-  static AddProduct(name, description, price, stock, category, image) {
+  static AddProduct(name, description, price, stock, category, image, status = "approved") {
     const products = StorageManager.LoadSection("products") || [];
 
     // Validate basic input to enter empty
@@ -170,7 +171,7 @@ export default class ProductManager {
       return maxId + 1;
     }
 
-    const newProduct = new Product(GenerateNextID(), name, description, price, stock, category, image);
+    const newProduct = new Product(GenerateNextID(), name, description, price, stock, category, image, status);
 
     // Check for duplicatationn name
     const nameExists = products.some(p => p.Name === name);
@@ -193,7 +194,9 @@ export default class ProductManager {
 
 
   static GetAllProducts() {
-    return StorageManager.LoadSection("products") || [];
+    const products = StorageManager.LoadSection("products") || [];
+    return products.filter(p => p.status == "approved");
+
   }
 
   static GetProductById(id) {
@@ -288,7 +291,7 @@ export default class ProductManager {
   }
 
   static ApproveProduct(id) {
-    const products = ProductManager.GetAllProducts();
+    const products = StorageManager.LoadSection("products") || [];
     const updatedProducts = products.map(p => {
       if (p.id === id) {
         return { ...p, status: "approved" };
@@ -300,7 +303,7 @@ export default class ProductManager {
   }
 
   static RejectProduct(id) {
-    const products = ProductManager.GetAllProducts();
+    const products = StorageManager.LoadSection("products") || [];
     const updatedProducts = products.map(p => {
       if (p.id === id) {
         return { ...p, status: "rejected" };
