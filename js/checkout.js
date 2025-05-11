@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
             userId: userId,
             products: userCart.products,
             totalAmount: total,
-            status: "processing",
+            status: "pending",
             orderDate: new Date().toISOString(),
             PaymentMethod: paymentMethod,
             phone:phone,

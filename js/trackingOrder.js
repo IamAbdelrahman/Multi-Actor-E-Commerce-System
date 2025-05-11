@@ -96,16 +96,28 @@ function readySection(order) {
   const { street, city, zip } = order.shippingAddress;
 
   container.innerHTML = `
-    <h4 class="my-3">Order Summary</h4>
+    <h4 class="my-3 h3">Order Summary</h4>
     <ul class="list-group my-3">
       ${order.products.map(item =>
-        `<li class="list-group-item">Product ID: ${item.id} | Quantity: ${item.quantity}</li>`
+        `<li class="list-group-item">Product ID: ${item.id} | Quantity: ${item.quantity} | Price ${item.price}</li>`
       ).join("")}
     </ul>
-    <p><span class="fw-semibold">Total:</span> $${order.totalAmount.toFixed(2)}</p>
-    <h5>Shipping Info</h5>
-    <p>${street}, ${city}, ${zip}</p>
-    <h5>Payment Method</h5>
+    <p><span class="fw-semibold fs-4">Total:</span> $${order.totalAmount.toFixed(2)}</p>
+    <h4 class="h3 fw-semibold fs-4">Shipping Info</h4>
+     <div class="my-3">
+      <div class="fs-4"> 
+      <span> Street</span> ${street}
+      <br>
+      <span> City</span> ${city}
+      <br>
+      <span> Zip Code</span> ${zip}
+      <br>
+      <span>phone number</span> ${order.phone}
+      <br>
+      <span>E-mail</span> ${order.email}
+      </div>
+    </div>
+    <h4 class="h3 fw-semibold">Payment Method</h4>
     <p>${order.PaymentMethod}</p>
   `;
 }
