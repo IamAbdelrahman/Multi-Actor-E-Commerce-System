@@ -338,7 +338,7 @@ function ManageProducts() {
       alert('Please enter a valid ID');
       return;
     }
-    const products = ProductManager.GetAllProducts();
+    const products = StorageManager.LoadSection("products") || [];
     const returnId = products.find(c => c.id === productId);
     if (!returnId) {
       alert("ID doesn't exist")
@@ -508,145 +508,101 @@ function ShowDashboard() {
               </ul>
             </div>
           </div>
-        </div>
-        <div class="col-12 col-md-4">
-          <div class="card shadow">
-            <div class="card-body py-4">
-                <h3 class="fw-bold fs-4 mb-3">Profile</h3>
-                <p class="fw-bold mb02">
-                  <span id=adminName>Name: </span><br>
-                  <span id=adminRole>Role: </span><br>
-                  <span id=adminEmail>Email: </span><br>
-                  <span id=adminPhone>Phone: </span><br>
-                  <a href="www.linkedin.com"><i class="bi bi-linkedin fs-4 me-3"></i></a>
-                  <a href="www.facebook.com"><i class="bi bi-twitter fs-4 me-3"></i></a>
-                  <a href="www.twitter.com"><i class="bi bi-facebook fs-4 me-3"></i></a>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div> `
-  const adminName = document.getElementById("adminName");
-  const adminRole = document.getElementById("adminRole");
-  const adminEmail = document.getElementById("adminEmail");
-  const adminPhone = document.getElementById("adminPhone");
-  const users = StorageManager.LoadSection("users");
-  const admin = users.find(user => user.role === "admin");
-  if (admin) {
-    adminName.innerText = admin.name;
-    adminRole.innerText = admin.role;
-    adminEmail.innerText = admin.email;
-    adminPhone.innerText = admin.phone;
-  } else {
-    alert("Admin data not found.");
-  }
-}
-function ShowAnalytics() {
-  var totalProducts = ProductManager.GetProductCounts();
-  var totalCustomers = CustomerManager.GetCustomerCounts();
-  var totalSellers = SellerManager.GetSellerCounts();
-  var carts = StorageManager.LoadSection("cart");
-  var revenue = 0;
-  var totalOrders = StorageManager.LoadSection("orders").length;
-  for (var i = 0; i < carts.length - 1; i++) {
-    revenue += carts[i].totalAmount;
-  }
-  const dashboardData = {
-    _revenue: revenue,
-    _revenueChange: 9.0,
-    products: totalProducts,
-    customers: totalCustomers,
-    sellers: totalSellers,
-    orders: totalOrders,
-    _ordersChange: 5.3,
-    visitors: 5243,
-    visitorsChange: 12.5,
-  };
-
-  // Animate numbers counting up
-  function animateValue(id, target, duration = 5000) {
-    const element = document.getElementById(id);
-    const start = 0;
-    const increment = target / (duration / 16); // 60fps
-
-    let current = start;
-    const timer = setInterval(() => {
-      current += increment;
-      if (current >= target) {
-        clearInterval(timer);
-        current = target;
-      }
-      element.textContent =
-        id === "revenue" ? `$${Math.floor(current).toLocaleString()}`
-          : Math.floor(current).toLocaleString();
-    }, 16);
-  }
-  const dashboardContent = document.getElementById("mainContent");
-  dashboardContent.innerHTML = `
-          <div class="col-12 col-md-4">
-            <div class="card shadow">
-              <div class="card-body py-4">
-                <h5 class="mb-2 fw-bold"> TOTAL REVENUE </h5>
-                <p id="revenue" class="fw-bold mb02">$89,1891</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 col-md-4">
-            <div class="card shadow">
-              <div class="card-body py-4">
-                <h5 class="mb-2 fw-bold">WEBSITE VISITORS</h5>
-                <p id = visitors class="fw-bold mb02">1891</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 col-md-4">
-            <div class="card shadow">
-              <div class="card-body py-4">
-                <h5 class="mb-2 fw-bold">TOTAL ORDERS</h5>
-                <p id = orders class="fw-bold mb02">1000</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 col-md-4">
-            <div class="card shadow">
-              <div class="card-body py-4">
-                <h5 class="mb-2 fw-bold">TOTAL CUSTOMERS</h5>
-                <p id = customers class="fw-bold mb02">1000</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 col-md-4">
-            <div class="card shadow">
-              <div class="card-body py-4">
-                <h5 class="mb-2 fw-bold">TOTAL SELLERS</h5>
-                <p id = sellers class="fw-bold mb02">1000</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 col-md-4">
-            <div class="card shadow">
-              <div class="card-body py-4">
-                <h5 class="mb-2 fw-bold">TOTAL PRODUCTS</h5>
-                <p id = products class="fw-bold mb02">1000</p>
-              </div>
-            </div>
-          </div> `
-
-  animateValue("revenue", dashboardData._revenue);
-  animateValue("visitors", dashboardData.visitors);
-  animateValue("orders", dashboardData.orders);
-  animateValue("products", dashboardData.products);
-  animateValue("customers", dashboardData.customers);
-  animateValue("sellers", dashboardData.sellers);
-
+        </div>`
 }
 
 /*------------------------------------------------------------------------------*/
+
+/*- SETTINGS FUNCTIONS
+--------------------------------------------------------------------------------*/
+function ShowAdmin()
+{
+  const dashHeader = document.getElementById("dashHeader");
+  dashHeader.innerHTML = `
+  <div class=" d-flex justify-content-center text-center ">
+      <div class="card shadow">
+        <div class="card-body py-4">
+          <h3 class="fw-bold fs-4 mb-3">Profile</h3>
+          <p class="fw-bold mb02">
+            <span id=adminName>Name: </span><br>
+            <span id=adminRole>Role: </span><br>
+            <span id=adminEmail>Email: </span><br>
+            <span id=adminPhone>Phone: </span><br>
+            <a href="www.linkedin.com"><i class="bi bi-linkedin fs-4 me-3"></i></a>
+            <a href="www.facebook.com"><i class="bi bi-twitter fs-4 me-3"></i></a>
+            <a href="www.twitter.com"><i class="bi bi-facebook fs-4 me-3"></i></a>
+          </p>
+        </div>
+      </div>
+  </div>  
+ `
+  var adminName = document.getElementById("adminName");
+  var adminRole = document.getElementById("adminRole");
+  var adminEmail = document.getElementById("adminEmail");
+  var adminPhone = document.getElementById("adminPhone");
+  var users = StorageManager.LoadSection("users");
+  var admin = users.find(user => user.role === "admin");
+  if (admin) {
+  adminName.innerText = admin.name;
+  adminRole.innerText = admin.role;
+  adminEmail.innerText = admin.email;
+  adminPhone.innerText = admin.phone;
+  } else {
+  alert("Admin data not found.");
+  }
+}
+
+function UpdateAdmin()
+{
+  DisplayNone();
+  ShowAdmin();
+  var _modal = CreateAdminModal();
+  var contentdiv = document.querySelector("#mainContent");
+  contentdiv.innerHTML = _modal;
+  const modal = new bootstrap.Modal(document.getElementById('AdminActionModal'));
+  let currentAction = 'Update';
+  document.querySelectorAll('[data-bs-target="#AdminActionModal"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentAction = btn.dataset.action;
+      document.getElementById('modalTitle').textContent =
+        `${currentAction} Admin`;
+    });
+  });
+
+  document.getElementById('confirmAction').addEventListener('click', () => {
+    const name = document.getElementById("AdminName").value.trim();
+    const email = document.getElementById("AdminEmail").value.trim() ;
+    const phone = document.getElementById("AdminPhone").value.trim() ;
+    const street = document.getElementById("AdminStreet").value.trim() ;
+    const city = document.getElementById("AdminCity").value.trim() ;
+    const zip = document.getElementById("AdminZip").value.trim() ;
+    const currentAction =   document.getElementById("currentAction").value;
+    const adminId = parseInt(document.getElementById("currentAdminId").value);
+    UserManager.UpdateUser(adminId, name, email, street, city, zip, phone);
+    alert(`Admin updated successfully!`);
+    location.reload();
+    modal.hide();
+  });
+
+}
+//Like profile.js to show data before to edit it 
+window.openEditAdminModal = function (adminId) {
+  const users = StorageManager.LoadSection("users") || [];
+  const admin = users.find(u => u.id === adminId);
+  if (!admin) return;
+
+  document.getElementById("AdminName").value = admin.name;
+  document.getElementById("AdminEmail").value = admin.email;
+  document.getElementById("AdminPhone").value = admin.phone;
+  document.getElementById("AdminStreet").value = admin.street;
+  document.getElementById("AdminCity").value = admin.city;
+  document.getElementById("AdminZip").value = admin.zip;
+  document.getElementById("currentAdminId").value = admin.id;
+  document.getElementById("currentAction").value = "Edit";
+
+  const modal = new bootstrap.Modal(document.getElementById("AdminActionModal"));
+  modal.show();
+};
 
 /*- MESSAGES FUNCTIONS
 --------------------------------------------------------------------------------*/
@@ -679,7 +635,6 @@ function ShowMessages() {
 
 /*- HELP-CENTER FUNCTIONS
 --------------------------------------------------------------------------------*/
-/*------------------------------------------------------------------------------*/
 function CreateHelpCenterForm() {
   var form = `
     <div class="container py-5">
@@ -704,9 +659,9 @@ function CreateHelpCenterForm() {
           </div>
       </div>
     </div>`
-    return form;
+  return form;
 }
-function ShowHelpCenter () {
+function ShowHelpCenter() {
   DisplayNone();
   const contentDiv = document.querySelector("#mainContent");
   contentDiv.innerHTML = CreateHelpCenterForm();
@@ -787,6 +742,75 @@ function CreateModal(type, ...actions) {
   return modal;
 }
 
+function CreateAdminModal () {
+  var modal = ` 
+  <div class="d-flex justify-content-center">
+    <button class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#AdminActionModal" data-action="update">
+      Update Admin
+    </button>
+  </div> 
+
+  <div class="modal fade" id="AdminActionModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle">Manage Admin</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <!-- Add Admin Form -->
+          <form id="AdminActionForm" class="d-flex flex-column d-none">
+            <div class="row mb-3">
+              <div class="col">
+                <input type="text" id="name" class="form-control rounded" placeholder="First Name" required 
+                  pattern="[A-Za-z]+" title="Please enter a valid name">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <input type="email" id="email" class="form-control rounded" placeholder="Email Address" required
+                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}"
+                title="Please enter a valid email address">
+            </div>
+
+            <div class="mb-3">
+              <input type="text" id="phone" class="form-control rounded" placeholder="Phone Number" required
+                pattern="^01[0125][0-9]{8}$" title="Please enter a valid phone number">
+            </div>
+
+            <div class="row mb-3">
+              <div class="col">
+                <input type="text" id="street" class="form-control rounded" placeholder="Street" required
+                  pattern="^[A-Za-z0-9\s]{3,50}$">
+              </div>
+              <div class="col">
+                <input type="text" id="city" class="form-control rounded" placeholder="City" required
+                  pattern="^[A-Za-z\\s]{2,30}$">
+              </div>
+              <div class="col">
+                <input type="text" id="zip" class="form-control rounded" placeholder="ZIP Code" required
+                  pattern="\\d{5}">
+              </div>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-warning btn-lg rounded">Save Seller</button>
+            </div>
+          </form>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="confirmAction">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+  return modal;
+}
+
+
 function createDeleteIcon(id, type) {
   const icon = document.createElement("i");
   icon.classList.add("bi", "bi-trash-fill", "text-danger", "fs-5", "ms-2", "cursor-pointer");
@@ -835,9 +859,9 @@ function GenerateSecurePassword() {
 document.addEventListener('DOMContentLoaded', function () {
   const user = JSON.parse(localStorage.getItem("loggedInUser"));
   if (!user || user.role !== "admin") {
-  alert("Unauthorized access. Redirecting...");
-  window.location.href = "home.html"; 
-}
+    alert("Unauthorized access. Redirecting...");
+    window.location.href = "home.html";
+  }
 
   // Toggle the Sidebar
   const toggleBtn = document.querySelector(".toggle-btn");
@@ -850,7 +874,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Show the dashboard by default
   ShowDashboard();
-  ShowAnalytics();
   // Attach event listeners to sidebar buttons
   document.querySelectorAll('[data-section]').forEach(button => {
     button.addEventListener('click', function () {
@@ -870,6 +893,9 @@ document.addEventListener('DOMContentLoaded', function () {
           break;
         case "messages":
           ShowMessages();
+          break;
+        case "settings":
+          UpdateAdmin();
           break;
         case "help":
           ShowHelpCenter();
