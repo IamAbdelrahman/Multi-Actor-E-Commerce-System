@@ -11,7 +11,7 @@ export default class SellerManager {
     return sellers;
   }
 
-  static AddSeller(id = 1, name, email, password, phone, address, role = "seller", blocked = false,) {
+  static AddSeller(id = 2, name, email, password, phone, address, role = "seller", blocked = false,) {
     const sellers = StorageManager.LoadSection("users") || [];
     function NextSellerID() {
       const ids = sellers.map(seller => seller.id);
@@ -179,7 +179,8 @@ export default class SellerManager {
   }
 
   static GetSellerCounts() {
-    const sellers = StorageManager.LoadSection("users") || [];
+    var sellers = StorageManager.LoadSection("users") || [];
+    sellers = sellers.filter(s => s.role == "seller");
     return sellers.length;
   }
 }

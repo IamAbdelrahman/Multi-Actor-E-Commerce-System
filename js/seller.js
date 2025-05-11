@@ -12,7 +12,7 @@ import CustomerManager from '../modules/CustomerModule.js';
 /*- PRODUCTS FUNCTIONS
 --------------------------------------------------------------------------------*/
 function CreateProductHeader() {
-  assignheader("Manage Products");
+  AssignHeader("Manage Products");
   var ProductBtns = CreateModal("Product", "Add");
   var table = createTable();
   var contentdiv = document.querySelector("#mainContent");
@@ -138,12 +138,12 @@ window.openEditProductModal = function (productId) {
   modal.show();
 };
 
-
 function ShowProducts() {
   DisplayNone();
   CreateProductHeader();
   ManageProducts();
-  const productList = StorageManager.LoadSection("products") || [];
+  var sellerId = StorageManager.LoadSellerId();
+  const productList = ProductManager.GetProductBySellerId(sellerId);
   var body = document.querySelector("tbody");
   for (let i = 0; i < productList.length; i++) {
     const product = productList[i];
@@ -157,7 +157,7 @@ function ShowProducts() {
 --------------------------------------------------------------------------------*/
 
 function CreateOrdersHeader() {
-  assignheader("Manage Orders");
+  AssignHeader("Manage Orders");
   const table = createTable();
   const contentdiv = document.querySelector("#mainContent");
   contentdiv.innerHTML = table;
@@ -199,7 +199,6 @@ function createDisplayIcon(orderId) {
   });
   return icon;
 }
-
 
 function ShowOrderDetails(orderId) {
   const orders = StorageManager.LoadSection("orders") || [];
@@ -252,7 +251,6 @@ function ShowOrderDetails(orderId) {
   })
 }
 
-
 function ShowOrders() {
   DisplayNone();
   CreateOrdersHeader();
@@ -273,24 +271,21 @@ function ShowOrders() {
 --------------------------------------------------------------------------------*/
 
 function ShowAnalytics() {
-  assignheader("Analytics");
+  AssignHeader("Analytics");
 
   var totalProducts = ProductManager.GetProductCounts();
   var totalCustomers = CustomerManager.GetCustomerCounts();
   var totalSellers = SellerManager.GetSellerCounts();
-  var carts = StorageManager.LoadSection("cart");
-  var revenue = 0;
-  var totalOrders = StorageManager.LoadSection("orders").length;
-  for (var i = 0; i < carts.length - 1; i++) {
-    revenue += carts[i].totalAmount;
-  }
+  var carts = StorageManager.LoadSection("cart")
+  var totalOrders = StorageManager.LoadSection("orders");
+  var revenue = GetAllRevenue(totalOrders);
   const dashboardData = {
     _revenue: revenue,
     _revenueChange: 9.0,
     products: totalProducts,
     customers: totalCustomers,
     sellers: totalSellers,
-    orders: totalOrders,
+    orders: totalOrders.length,
     _ordersChange: 5.3,
     visitors: 5243,
     visitorsChange: 12.5,
@@ -368,15 +363,158 @@ function ShowAnalytics() {
                 <p id = products class="fw-bold mb02">1000</p>
               </div>
             </div>
-          </div> `
+          </div> 
+  
+          <div class="row">
+            <div class="col-md-6 mb-4">
+              <canvas id="expensiveProductsChart"></canvas>
+            </div>
+
+            <div class="col-md-6 mb-4">
+              <canvas id="salesPerProductChart"></canvas>
+            </div>
+
+            <div class="col-md-12 mb-4">
+              <canvas id="revenueByCategoryChart"></canvas>
+            </div>
+          </div>
+          `
 
   animateValue("revenue", dashboardData._revenue);
   animateValue("visitors", dashboardData.visitors);
-  animateValue("orders", dashboardData._orders);
+  animateValue("orders", dashboardData.orders);
   animateValue("products", dashboardData.products);
   animateValue("customers", dashboardData.customers);
   animateValue("sellers", dashboardData.sellers);
+  ShowCharts();
+}
 
+function ShowCharts() {
+
+  const products = StorageManager.LoadSection("products") || [];
+  const orders = StorageManager.LoadSection("orders") || [];
+
+  // ------------------ Expensive Products Chart ------------------
+  const topExpensive = [...products]
+    .sort((a, b) => b.price - a.price)
+    .slice(0, 5);
+
+  const expensiveNames = topExpensive.map(p => p.name);
+  const expensivePrices = topExpensive.map(p => p.price);
+
+  new Chart(document.getElementById("expensiveProductsChart"), {
+    type: 'bar',
+    data: {
+      labels: expensiveNames,
+      datasets: [{
+        label: "Top Expensive Products",
+        data: expensivePrices,
+        backgroundColor: '#ffc107'
+      }]
+    },
+    options: {
+      responsive: true,
+      animation: {
+        duration: 1000,
+        easing: 'easeOutBounce'
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: 'Top Expensive Products',
+          font: { size: 18 }
+        }
+      }
+    }
+  });
+
+  // ------------------ Sales Per Product Chart ------------------
+  const productSalesMap = {};
+
+  for (var i = 0; i < orders.length; i++) {
+    for (var j = 0; j < orders[i].products.length; j++) {
+      productSalesMap[orders[i].products[j].id] = (productSalesMap[orders[i].products[j].id] || 0) + orders[i].products[j].quantity;
+    }
+  }
+  const productSalesLabels = [];
+  const productSalesData = [];
+
+  for (const [id, quantity] of Object.entries(productSalesMap)) {
+    const product = products.find(p => p.id == id);
+    if (product) {
+      productSalesLabels.push(product.name);
+      productSalesData.push(quantity);
+    }
+  }
+
+  new Chart(document.getElementById("salesPerProductChart"), {
+    type: 'pie',
+    data: {
+      labels: productSalesLabels,
+      datasets: [{
+        label: "Sales",
+        data: productSalesData,
+        backgroundColor: ['#0d6efd', '#198754', '#ffc107', '#dc3545', '#6f42c1']
+      }]
+    },
+    options: {
+      responsive: true,
+      animation: {
+        animateScale: true,
+        animateRotate: true
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: 'Sales Per Product',
+          font: { size: 18 }
+        }
+      }
+    }
+  });
+
+  // ------------------ Revenue by Category Chart ------------------
+  const categoryRevenue = {};
+
+  products.forEach(product => {
+    const totalSales = productSalesMap[product.id] || 0;
+    const revenue = totalSales * product.price;
+
+    if (categoryRevenue[product.category]) {
+      categoryRevenue[product.category] += revenue;
+    } else {
+      categoryRevenue[product.category] = revenue;
+    }
+  });
+
+  const revenueLabels = Object.keys(categoryRevenue);
+  const revenueData = Object.values(categoryRevenue);
+
+  new Chart(document.getElementById("revenueByCategoryChart"), {
+    type: 'bar',
+    data: {
+      labels: revenueLabels,
+      datasets: [{
+        label: "Revenue",
+        data: revenueData,
+        backgroundColor: '#198754'
+      }]
+    },
+    options: {
+      responsive: true,
+      animation: {
+        duration: 1200,
+        easing: 'easeOutElastic'
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: 'Revenue by Category',
+          font: { size: 18 }
+        }
+      }
+    }
+  });
 }
 
 /*------------------------------------------------------------------------------*/
@@ -498,7 +636,7 @@ function createDeleteIcon(id, type) {
   return icon;
 }
 
-function assignheader(title) {
+function AssignHeader(title) {
   const header = document.getElementById("contentheader");
   header.innerHTML = "";
   const content = document.createElement("h2");
@@ -507,6 +645,14 @@ function assignheader(title) {
   header.append(content);
 }
 
+function GetAllRevenue(orders) {
+  var totalRevenue = 0;
+
+  for (var i = 0; i < orders.length; i++) {
+    totalRevenue += orders[i].totalAmount;
+  }
+  return totalRevenue;
+}
 /*- ON LOADING
 -----------------------------------------------------------------------*/
 document.addEventListener('DOMContentLoaded', function () {

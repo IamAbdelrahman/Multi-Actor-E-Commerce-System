@@ -321,10 +321,12 @@ footer {
 }
 
 tbody tr:hover {
-    /* transform: scale(1.05);    
-    border: 2px solid red;           */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: all 0.7s ease-in-out;           
+  background: linear-gradient(90deg, #007bff, #6610f2, #e83e8c)!important;
+  color: white;
+  transform: scale(1.01); 
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); 
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 :root{
