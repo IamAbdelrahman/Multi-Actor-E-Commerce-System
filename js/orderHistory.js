@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="row my-3">
         <div class="col-md-8" id="${cardId}"></div>
         <div class="col-md-4 d-flex flex-column justify-content-center">
-          <a href="#" class="btn my-3 btn-outline-dark p-2">Track Order <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="#" class="btn my-3 btn-outline-dark p-2 trackingOrder" data-order-id="${order.id}">Track Order <i class="fa-solid fa-arrow-right"></i></a>
           <a href="#" class="btn btn-outline-dark p-2 view-details" data-order-id="${order.id}">View Order Details <i class="fa-solid fa-arrow-right"></i></a>
         </div>
       </div>
@@ -55,6 +55,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const orderIdd = e.currentTarget.dataset.orderId;
       sessionStorage.setItem("orderId", orderIdd);
       window.location.href = "orderDetails.html";
+    });
+    const trackingOrder = card.querySelector(".trackingOrder");
+    trackingOrder.addEventListener("click", (e) => {
+      e.preventDefault();
+      const orderIdd = e.currentTarget.dataset.orderId;
+      sessionStorage.setItem("orderId", orderIdd);
+      window.location.href = "trackingOrder.html";
     });
   });
 });
