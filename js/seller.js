@@ -158,13 +158,14 @@ function ShowProducts() {
 
 function CreateOrdersHeader() {
   AssignHeader("Manage Orders");
+  var modal = CreateOrderModal("Orders", "Approve", "Reject");
   const table = createTable();
   const contentdiv = document.querySelector("#mainContent");
-  contentdiv.innerHTML = table;
+  contentdiv.innerHTML = modal + table;
 
   const head = document.querySelector("thead");
   const tr = document.createElement("tr");
-  const attributes = ["Order ID", "Customer Name", "Order Date", "Total Amount", "Status", "Actions"];
+  const attributes = ["Order ID", "Customer Name", "Order Date", "Total Amount", "Status", "Actions", "Accept", "Decline", "Delivered"];
 
   for (let i = 0; i < attributes.length; i++) {
     const th = document.createElement("th");
@@ -188,6 +189,22 @@ function CreateOrdersTable(orderId, customerName, orderDate, totalAmount, status
   const displayIcon = createDisplayIcon(orderId);
   actionTd.appendChild(displayIcon);
   tr.appendChild(actionTd);
+
+  const checkedTd = createCell();
+  const checkedIcon = createCheckedIcon(orderId);
+  checkedTd.appendChild(checkedIcon);
+  tr.appendChild(checkedTd);
+
+  const uncheckedTd = createCell();
+  const uncheckedIcon = createUncheckedIcon(orderId);
+  uncheckedTd.appendChild(uncheckedIcon);
+  tr.appendChild(uncheckedTd);
+
+  const deliveredTd = createCell();
+  const deliveredIcon = createDeliveredIcon(orderId);
+  deliveredTd.appendChild(deliveredIcon);
+  tr.appendChild(deliveredTd);
+  
   return tr;
 }
 
@@ -200,6 +217,50 @@ function createDisplayIcon(orderId) {
   return icon;
 }
 
+function createCheckedIcon (orderId) {
+  const icon = document.createElement("i");
+  icon.classList.add("fas", "fa-check", "text-success", "fs-5", "ms-2", "cursor-pointer");
+  icon.addEventListener("click", () => {
+    var orders = StorageManager.LoadSection("orders");
+    var order = orders.find(o => o.id === orderId);
+    order.status = "processing";
+    StorageManager.SaveSection("orders", orders);
+  });
+  return icon; 
+}
+
+function createUncheckedIcon (orderId) {
+  const icon = document.createElement("i");
+  icon.classList.add("fas", "fa-square", "ext-secondary", "fs-5", "ms-2", "cursor-pointer");
+  icon.addEventListener("click", () => {
+    var orders = StorageManager.LoadSection("orders");
+    var order = orders.find(o => o.id === orderId);
+    order.status = "pending";
+    StorageManager.SaveSection("orders", orders);
+  });
+  return icon; 
+}
+
+function createDeliveredIcon (orderId) {
+  const icon = document.createElement("i");
+  icon.classList.add("fas", "fa-truck", "text-primary", "fs-5", "ms-2", "cursor-pointer");
+  icon.addEventListener("click", () => {
+    var orders = StorageManager.LoadSection("orders");
+    var order = orders.find(o => o.id === orderId);
+    var status = order.status;
+    // status != "delivered" ? "delivered" : order.status; 
+    switch (order.status)
+    {
+      case "ready":
+        order.status = "delivered";
+        break;
+      default:
+        break;
+    }
+    StorageManager.SaveSection("orders", orders);
+  });
+  return icon;
+}
 function ShowOrderDetails(orderId) {
   const orders = StorageManager.LoadSection("orders") || [];
   const order = orders.find(o => o.id === orderId);
@@ -250,6 +311,7 @@ function ShowOrderDetails(orderId) {
     ShowOrders();
   })
 }
+
 
 function ShowOrders() {
   DisplayNone();
@@ -605,6 +667,43 @@ function CreateModal(type, ...actions) {
   return modal;
 }
 
+function CreateOrderModal(type, ...actions) {
+  var modal = `
+    <div class="my-4">
+      <button class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#${type}ActionModal" data-action="${actions[0]}">
+        ${actions[0]} ${type}
+      </button>
+      <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#${type}ActionModal" data-action="${actions[1]}">
+        ${actions[1]} ${type}
+      </button>
+    </div>
+
+      <div class="modal fade" id="${type}ActionModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalTitle">${actions[0]}/${actions[1]} ${type}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <form id="${type}ActionForm">
+              <div class="mb-3">
+                <label for="${type}Id" class="form-label">Enter ${type} ID</label>
+                <input type="number" class="form-control" id="${type}Id" required>
+              </div>
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" id="confirmAction">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>`
+  return modal;
+}
 function ClearForm(type) {
   document.getElementById(`${type}Name`).value = "";
   document.getElementById(`${type}Description`).value = "";

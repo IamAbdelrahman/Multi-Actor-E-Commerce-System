@@ -324,7 +324,7 @@
       "price": 598.1,
       "stock": 10,
       "category": "HeadPhones",
-      "image": "/images/HeadPhones/HeadPhones1.png",
+      "image": "/images/HeadPhones/Headphones1.png",
       "status": "approved",
       "sellerId": 1
     },
@@ -335,7 +335,7 @@
       "price": 724.59,
       "stock": 11,
       "category": "HeadPhones",
-      "image": "/images/HeadPhones/HeadPhones2.png",
+      "image": "/images/HeadPhones/Headphones2.png",
       "status": "approved",
       "sellerId": 2
     },
@@ -346,7 +346,7 @@
       "price": 972.41,
       "stock": 12,
       "category": "HeadPhones",
-      "image": "/images/HeadPhones/HeadPhones3.png",
+      "image": "/images/HeadPhones/Headphones3.png",
       "status": "approved",
       "sellerId": 1
     },
@@ -357,7 +357,7 @@
       "price": 1097.68,
       "stock": 13,
       "category": "HeadPhones",
-      "image": "/images/HeadPhones/HeadPhones4.png",
+      "image": "/images/HeadPhones/Headphones4.png",
       "status": "approved",
       "sellerId": 2
     },
@@ -368,7 +368,7 @@
       "price": 725.67,
       "stock": 14,
       "category": "HeadPhones",
-      "image": "/images/HeadPhones/HeadPhones5.png",
+      "image": "/images/HeadPhones/Headphones5.png",
       "status": "approved",
       "sellerId": 1
     },
