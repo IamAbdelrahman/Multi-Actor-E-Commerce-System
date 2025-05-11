@@ -14,4 +14,13 @@ button:hover{
 ::selection {
     background-color: #ffc107; 
     color: white;              
+}
+
+.gradient-text {
+    font-weight: bold;
+    /* font-size: 3rem; */
+    background: linear-gradient(to right, #007aff, #af52de, #ff2d55, #ff3b30);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
+  

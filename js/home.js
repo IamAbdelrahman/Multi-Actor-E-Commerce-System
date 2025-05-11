@@ -111,7 +111,8 @@ window.Login = function (event) {
             case "admin":
                 localStorage.setItem("loggedInUser", JSON.stringify({
                     name: LoginUser.name,
-                    role: LoginUser.role
+                    role: LoginUser.role,
+                    "id": LoginUser.id
                 }));
 
                 window.location.href = "admin-panel.html";
@@ -119,7 +120,9 @@ window.Login = function (event) {
             case "seller":
                 localStorage.setItem("loggedInUser", JSON.stringify({
                     name: LoginUser.name,
-                    role: LoginUser.role
+                    role: LoginUser.role,
+                    "id": LoginUser.id
+                    
                 }));
                 window.location.href = "seller-dashboard.html";
                 break;
