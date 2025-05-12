@@ -424,7 +424,6 @@ function createDisplayIcon(orderId) {
   return icon;
 }
 
-
 function ShowOrderDetails(orderId) {
   const orders = StorageManager.LoadSection("orders") || [];
   const order = orders.find(o => o.id === orderId);
@@ -482,10 +481,12 @@ function ShowOrders() {
 
   const orders = StorageManager.LoadSection("orders") || [];
   const body = document.querySelector("tbody");
-
+  var products = "", i = 0;
   orders.forEach(order => {
-    const status = order.completed ? "Completed" : "Pending";
-    body.appendChild(CreateOrdersTable(order.id, order.customerName, order.orderDate, order.totalAmount, status));
+    order.forEach(product)
+  });
+  orders.forEach(order => {
+    body.appendChild(CreateOrdersTable(order.id, products, order.orderDate, order.totalAmount, order.status));
   });
 }
 
@@ -494,21 +495,121 @@ function ShowOrders() {
 /*- STATS FUNCTIONS
 --------------------------------------------------------------------------------*/
 
-function ShowDashboard() {
-  const dashHeader = document.getElementById("dashHeader");
-  dashHeader.innerHTML = `
-        <div class="col-12 col-md-4">
-          <div class="card shadow">
-            <div class="card-body py-4">
-              <h3 class="fw-bold fs-4 mb-3">Welcome to Admin Dashboard</h3>
-              <p>Use the sidebar to manage users, products, and orders.</p>
-                <li>👥 Manage Users: view, add, or remove users.</li>
-                <li>📦 Manage Products: create, update, delete inventory.</li>
-                <li>🧾 Manage Orders: track, fulfill, or cancel orders.</li>
-              </ul>
+function ShowAnalytics() {
+
+  var totalProducts = ProductManager.GetProductCounts();
+  var totalCustomers = CustomerManager.GetCustomerCounts();
+  var totalSellers = SellerManager.GetSellerCounts();
+  var carts = StorageManager.LoadSection("cart")
+  var totalOrders = StorageManager.LoadSection("orders");
+  var revenue = GetAllRevenue(totalOrders);
+  const dashboardData = {
+    _revenue: revenue,
+    _revenueChange: 9.0,
+    products: totalProducts,
+    customers: totalCustomers,
+    sellers: totalSellers,
+    orders: totalOrders.length,
+    _ordersChange: 5.3,
+    visitors: 5243,
+    visitorsChange: 12.5,
+  };
+
+  // Animate numbers counting up
+  function animateValue(id, target, duration = 5000) {
+    const element = document.getElementById(id);
+    const start = 0;
+    const increment = target / (duration / 16); // 60fps
+
+    let current = start;
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        clearInterval(timer);
+        current = target;
+      }
+      element.textContent =
+        id === "revenue" ? `$${Math.floor(current).toLocaleString()}`
+          : Math.floor(current).toLocaleString();
+    }, 16);
+  }
+  const dashboardContent = document.getElementById("mainContent");
+  dashboardContent.innerHTML = `
+          <div class="col-12 col-md-4">
+            <div class="card shadow">
+              <div class="card-body py-4">
+                <h5 class="mb-2 fw-bold"> TOTAL REVENUE </h5>
+                <p id="revenue" class="fw-bold mb02">$89,1891</p>
+              </div>
             </div>
           </div>
-        </div>`
+
+          <div class="col-12 col-md-4">
+            <div class="card shadow">
+              <div class="card-body py-4">
+                <h5 class="mb-2 fw-bold">WEBSITE VISITORS</h5>
+                <p id = visitors class="fw-bold mb02">1891</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <div class="card shadow">
+              <div class="card-body py-4">
+                <h5 class="mb-2 fw-bold">TOTAL ORDERS</h5>
+                <p id = orders class="fw-bold mb02">1000</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <div class="card shadow">
+              <div class="card-body py-4">
+                <h5 class="mb-2 fw-bold">TOTAL CUSTOMERS</h5>
+                <p id = customers class="fw-bold mb02">1000</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <div class="card shadow">
+              <div class="card-body py-4">
+                <h5 class="mb-2 fw-bold">TOTAL SELLERS</h5>
+                <p id = sellers class="fw-bold mb02">1000</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <div class="card shadow">
+              <div class="card-body py-4">
+                <h5 class="mb-2 fw-bold">TOTAL PRODUCTS</h5>
+                <p id = products class="fw-bold mb02">1000</p>
+              </div>
+            </div>
+          </div> 
+  
+          <div class="row">
+            <div class="col-md-6 mb-4">
+              <canvas id="expensiveProductsChart"></canvas>
+            </div>
+
+            <div class="col-md-6 mb-4">
+              <canvas id="salesPerProductChart"></canvas>
+            </div>
+
+            <div class="col-md-12 mb-4">
+              <canvas id="revenueByCategoryChart"></canvas>
+            </div>
+          </div>
+          `
+
+  animateValue("revenue", dashboardData._revenue);
+  animateValue("visitors", dashboardData.visitors);
+  animateValue("orders", dashboardData.orders);
+  animateValue("products", dashboardData.products);
+  animateValue("customers", dashboardData.customers);
+  animateValue("sellers", dashboardData.sellers);
 }
 
 /*------------------------------------------------------------------------------*/
@@ -661,6 +762,7 @@ function CreateHelpCenterForm() {
     </div>`
   return form;
 }
+
 function ShowHelpCenter() {
   DisplayNone();
   const contentDiv = document.querySelector("#mainContent");
@@ -852,7 +954,14 @@ function GenerateSecurePassword() {
   password = password.split('').sort(() => 0.5 - Math.random()).join('');
   return password;
 }
+function GetAllRevenue(orders) {
+  var totalRevenue = 0;
 
+  for (var i = 0; i < orders.length; i++) {
+    totalRevenue += orders[i].totalAmount;
+  }
+  return totalRevenue;
+}
 
 /*- ON LOADING
 -----------------------------------------------------------------------*/
@@ -873,7 +982,8 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // Show the dashboard by default
-  ShowDashboard();
+
+  ShowAnalytics();
   // Attach event listeners to sidebar buttons
   document.querySelectorAll('[data-section]').forEach(button => {
     button.addEventListener('click', function () {
@@ -904,7 +1014,7 @@ document.addEventListener('DOMContentLoaded', function () {
           ShowAnalytics();
           break;
         default:
-          ShowDashboard();
+          ShowAnalytics();
           break;
       }
     });

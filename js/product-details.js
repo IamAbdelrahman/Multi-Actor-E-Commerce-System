@@ -15,21 +15,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadProductData(productId) {
     try {
-        const response = ProductManager.GetAllProducts();
+        const data = ProductManager.GetAllProducts();
         // if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         
-        const data = await response;
-        if (!data || !Array.isArray(data)) {
+        const products = await data;
+        if (!products || !Array.isArray(products)) {
             throw new Error('Invalid data structure: products array not found');
         }
-        const product = data.find(p => p.id === productId);
+        const product = products.find(p => p.id === productId);
         if (!product) {
             throw new Error(`Product with ID ${productId} not found`);
         }
 
 
         displayProduct(product);
-        loadRelatedProducts(data.products, product.id, product.category);
+        loadRelatedProducts(products, product.id, product.category);
     } catch (error) {
         console.error('Error loading product:', error);
         showErrorState('Error Loading Product', 'There was a problem loading the product details. Please try again later.');
@@ -39,7 +39,6 @@ async function loadProductData(productId) {
 function displayProduct(product) {
     // Remove loading placeholders
     removeLoadingPlaceholders();
-    
     // Set basic product info
     document.title = `${product.name} - Electronics Store`;
     document.getElementById('productName').textContent = product.name;
@@ -565,7 +564,7 @@ function loadRelatedProducts(allProducts, currentProductId, currentCategory) {
         col.className = 'col-md-3 col-sm-6';
         
         col.innerHTML = `
-            <div class="card related-product-card h-100">
+            <div class="card related-product-card h-100 border">
                 <a href="product-details.html?id=${product.id}" class="text-decoration-none">
                     <img src="${product.image}" class="card-img-top p-3" alt="${product.name}" style="height: 180px; object-fit: contain;">
                     <div class="card-body">

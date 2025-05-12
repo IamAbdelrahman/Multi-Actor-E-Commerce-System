@@ -57,7 +57,8 @@ function CreateProductTable(type, ...args) {
 function ManageProducts() {
   const modal = new bootstrap.Modal('#ProductActionModal');
   let currentAction = '';
-
+  var sellerId = StorageManager.LoadSellerId();
+  console.log(sellerId);
   document.querySelectorAll('[data-bs-target="#ProductActionModal"]').forEach(btn => {
     btn.addEventListener('click', () => {
       currentAction = btn.dataset.action;
@@ -84,7 +85,7 @@ function ManageProducts() {
       const reader = new FileReader();
       reader.onload = function (e) {
         const base64Image = e.target.result;
-        const success = ProductManager.AddProduct(name, description, price, stock, category, base64Image);
+        const success = ProductManager.AddProduct(name, description, price, stock, category, base64Image, "approved", sellerId);
         if (success) {
           alert(`Product "${name}" added successfully!`);
           location.reload();
@@ -109,7 +110,6 @@ function ManageProducts() {
         const products = StorageManager.LoadSection("products") || [];
         const existingProduct = products.find(p => p.id === productId);
         const existingImage = existingProduct ? existingProduct.image : "";
-
         ProductManager.UpdateProduct(productId, name, description, price, stock, category, existingImage);
         alert(`Product updated successfully!`);
         location.reload();
@@ -224,6 +224,7 @@ function createCheckedIcon (orderId) {
     var orders = StorageManager.LoadSection("orders");
     var order = orders.find(o => o.id === orderId);
     order.status = "processing";
+    location.reload();
     StorageManager.SaveSection("orders", orders);
   });
   return icon; 
@@ -237,6 +238,7 @@ function createUncheckedIcon (orderId) {
     var order = orders.find(o => o.id === orderId);
     order.status = "pending";
     StorageManager.SaveSection("orders", orders);
+    location.reload();
   });
   return icon; 
 }
@@ -247,8 +249,6 @@ function createDeliveredIcon (orderId) {
   icon.addEventListener("click", () => {
     var orders = StorageManager.LoadSection("orders");
     var order = orders.find(o => o.id === orderId);
-    var status = order.status;
-    // status != "delivered" ? "delivered" : order.status; 
     switch (order.status)
     {
       case "ready":
@@ -258,6 +258,7 @@ function createDeliveredIcon (orderId) {
         break;
     }
     StorageManager.SaveSection("orders", orders);
+    location.reload();
   });
   return icon;
 }
@@ -312,18 +313,13 @@ function ShowOrderDetails(orderId) {
   })
 }
 
-
 function ShowOrders() {
   DisplayNone();
   CreateOrdersHeader();
-
-
   const orders = StorageManager.LoadSection("orders") || [];
   const body = document.querySelector("tbody");
-
   orders.forEach(order => {
-    const status = order.completed ? "Completed" : "Pending";
-    body.appendChild(CreateOrdersTable(order.id, order.customerName, order.orderDate, order.totalAmount, status));
+    body.appendChild(CreateOrdersTable(order.id, order.customerName, order.orderDate, order.totalAmount, order.status));
   });
 }
 
@@ -640,17 +636,22 @@ function CreateModal(type, ...actions) {
             <form id="${type}ActionForm">
               <input type="hidden" id="currentAction" value="${actions[0]}">
               <input type="hidden" id="currentProductId">
-              <div class="mb-3"><label class="form-label">Product Name</label><input type="text" class="form-control" id="ProductName" required></div>
-              <div class="mb-3"><label class="form-label">Description</label><textarea class="form-control" id="ProductDescription" required></textarea></div>
+              <div class="mb-3">
+                <input type="text" id="ProductName" class="form-control rounded" placeholder="Product Name" required 
+                  pattern="[A-Za-z]+" title="Please enter a valid name">
+              </div>
+  
+              <div class="mb-3"><label class="form-label">Description</label><textarea class="form-control" id="ProductDescription" required>
+              </textarea></div>
               <div class="mb-3"><label class="form-label">Price</label><input type="number" class="form-control" id="ProductPrice" required></div>
               <div class="mb-3"><label class="form-label">Stock</label><input type="number" class="form-control" id="ProductStock" required></div>
               <div class="mb-3"><label class="form-label">Category</label>
-              <select class="form-select" id="ProductCategory" required>
-                <option value="1" selected>Mobiles</option>
-                <option value="2">Laptops</option>
-                <option value="3">HeadPhones</option>
-                <option value="4">Tablets</option>
-                <option value="5">Accessories</option>
+                <select class="form-select" id="ProductCategory" required>
+                  <option value="Mobiles" selected>Mobiles</option>
+                  <option value="Laptops">Laptops</option>
+                  <option value="HeadPhones">HeadPhones</option>
+                  <option value="Tablets">Tablets</option>
+                  <option value="Accessories">Accessories</option>
               </select>
               </div>
               <div class="mb-3"><label class="form-label">Image</label><input type="file" class="form-control" id="ProductImage" accept="image/*" required></div>
@@ -704,6 +705,7 @@ function CreateOrderModal(type, ...actions) {
     </div>`
   return modal;
 }
+
 function ClearForm(type) {
   document.getElementById(`${type}Name`).value = "";
   document.getElementById(`${type}Description`).value = "";

@@ -5,7 +5,7 @@ import Validate from './ValidationModule.js';
 -----------------------------------------------------------------------*/
 
 class Product {
-  constructor(id, name, description, price, stock, category, image, status, sellerId = 2) {
+  constructor(id, name, description, price, stock, category, image, status, sellerId) {
     this.ID = id;
     this.Name = name;
     this.Description = description;
@@ -33,9 +33,9 @@ class Product {
     return this.id;
   }
 
-  set SellerID(id) {
-    if (Validate.isUserIdValid(id)) {
-      this.sellerId = id ;
+  set SellerID(sellerId) {
+    if (Validate.isUserIdValid(sellerId)) {
+      this.sellerId = sellerId;
     } else {
       console.error("Invalid ID: must be a positive number.");
       this.sellerId = 0;
@@ -97,7 +97,7 @@ class Product {
 
   set Category(value) {
     if (Validate.isCategoryValid(value)) {
-      this.category = value.trim().toLowerCase();
+      this.category = value.trim();
     } else {
       alert("Invalid category: must be at least 3 characters.");
       return false;
@@ -138,7 +138,7 @@ class Product {
 }
 
 export default class ProductManager {
-  static AddProduct(name, description, price, stock, category, image, status = "approved", sellerId = 2) {
+  static AddProduct(name, description, price, stock, category, image, status = "approved", sellerId = 1) {
     const products = StorageManager.LoadSection("products") || [];
 
     // Validate basic input to enter empty
@@ -185,13 +185,8 @@ export default class ProductManager {
       const maxId = ids.length > 0 ? Math.max(...ids) : 0;
       return maxId + 1;
     }
-    function GenerateNextSellerID() {
-          const users = StorageManager.LoadSection("users") || [];
-          const ids = users.map(user => user.id);
-          return Math.max(...ids) + 1;
-    }
 
-    const newProduct = new Product(GenerateNextID(), name, description, price, stock, category, image, status, GenerateNextSellerID());
+    const newProduct = new Product(GenerateNextID(), name, description, price, stock, category, image, status = "approved", sellerId = 1);
 
     // Check for duplicatationn name
     const nameExists = products.some(p => p.Name === name);
@@ -222,11 +217,6 @@ export default class ProductManager {
   static GetProductById(id) {
     const products = StorageManager.LoadSection("products") || [];
     return products.find(p => p.id === id);
-  }
-
-  static GetProductBySellerId(id) {
-    const products = StorageManager.LoadSection("products") || [];
-    return products.filter(p => p.sellerId === id);
   }
 
   static GetProductsByCategory(category) {
@@ -275,6 +265,11 @@ export default class ProductManager {
 
     StorageManager.SaveSection("products", products);
     return true;
+  }
+
+  static GetProductBySellerId(id) {
+    const products = StorageManager.LoadSection("products") || [];
+    return products.filter(p => p.sellerId === id);
   }
 
   static DeleteProduct(id) {
