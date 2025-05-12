@@ -210,7 +210,7 @@ export default class ProductManager {
 
   static GetAllProducts() {
     const products = StorageManager.LoadSection("products") || [];
-    return products.filter(p => p.status == "approved");
+    return products.filter(p => p.status == "approved" && p.stock > 0);
 
   }
 
