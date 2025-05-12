@@ -90,7 +90,7 @@ li {
   width: 100%;
   white-space: nowrap;
   background: linear-gradient(to right, black, black); 
-  border: 1px solid red;
+  border: 1px solid #ffc107;
 }
 
 .ticker-text {
@@ -100,7 +100,7 @@ li {
   font-size: 24px;
   font-weight: 600;
   font-weight: bolder;
-  color: #ffc107;
+  color: white;
   letter-spacing: 0.5px;
 }
 
