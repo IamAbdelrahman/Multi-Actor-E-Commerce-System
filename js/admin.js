@@ -658,9 +658,9 @@ function ShowAdmin() {
 function UpdateAdmin() {
   DisplayNone();
   ShowAdmin();
-  var _modal = CreateAdminModal();
-  var contentdiv = document.querySelector("#mainContent");
-  contentdiv.innerHTML = _modal;
+  // var _modal = CreateAdminModal();
+  // var contentdiv = document.querySelector("#mainContent");
+  // contentdiv.innerHTML = _modal;
   const modal = new bootstrap.Modal(document.getElementById('AdminActionModal'));
   let currentAction = 'Update';
   document.querySelectorAll('[data-bs-target="#AdminActionModal"]').forEach(btn => {
@@ -678,12 +678,12 @@ function UpdateAdmin() {
     const street = document.getElementById("AdminStreet").value.trim();
     const city = document.getElementById("AdminCity").value.trim();
     const zip = document.getElementById("AdminZip").value.trim();
-    const currentAction = document.getElementById("currentAction").value;
-    const adminId = parseInt(document.getElementById("currentAdminId").value);
-    UserManager.UpdateUser(adminId, name, email, street, city, zip, phone);
-    alert(`Admin updated successfully!`);
-    location.reload();
-    modal.hide();
+    if(UserManager.UpdateUser(0, name, email, street, city, zip, phone)) {
+      alert(`Admin updated successfully!`);
+      location.reload();
+      modal.hide();
+    }
+
   });
 
 }
@@ -914,7 +914,6 @@ function CreateAdminModal() {
 }
 
 
-
 function createDeleteIcon(id, type) {
   const icon = document.createElement("i");
   icon.classList.add("bi", "bi-trash-fill", "text-danger", "fs-5", "ms-2", "cursor-pointer");
@@ -956,6 +955,7 @@ function GenerateSecurePassword() {
   password = password.split('').sort(() => 0.5 - Math.random()).join('');
   return password;
 }
+
 function GetAllRevenue(orders) {
   var totalRevenue = 0;
 
