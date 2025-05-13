@@ -165,7 +165,8 @@ function CreateOrdersHeader() {
 
   const head = document.querySelector("thead");
   const tr = document.createElement("tr");
-  const attributes = ["Order ID", "Customer Name", "Order Date", "Total Amount", "Status", "Actions", "Accept", "Decline", "Delivered"];
+  const attributes = ["Order ID", "Product ID",
+    "Order Date", "Total Amount", "Status", "Actions", "Accept", "Decline", "Delivered"];
 
   for (let i = 0; i < attributes.length; i++) {
     const th = document.createElement("th");
@@ -176,9 +177,16 @@ function CreateOrdersHeader() {
   head.appendChild(tr);
 }
 
-function CreateOrdersTable(orderId, customerName, orderDate, totalAmount, status) {
+function CreateOrdersTable(orderId, productIds, orderDate, totalAmount, status) {
   const tr = document.createElement("tr");
-  const cells = [orderId, customerName, orderDate, totalAmount, status];
+  const orders = StorageManager.LoadSection("orders") || [];
+  const order = orders.find(o => o.id === orderId);
+
+  if (order.products && Array.isArray(order.products)) {
+    productIds = order.products.map(p => p.id || p.productId).join(", ");
+  }
+
+  const cells = [orderId, productIds, orderDate, totalAmount, status];
   cells.forEach(cellContent => {
     const td = createCell();
     td.textContent = cellContent;
@@ -277,33 +285,31 @@ function ShowOrderDetails(orderId) {
   }
 
   const productListHtml = order.products.map(p => {
-    const product = ProductManager.GetProductById(p.productId);
-    if (!product) return `<li>Unknown product (ID: ${p.productId})</li>`;
+    const productIds = order.products?.map(p => p.id || p.productId).join(", ") || "";
     return `
-      <li>
-        ${product.name} (x${p.quantity}) - $${(product.price * p.quantity).toFixed(2)}
-      </li>
-    `;
+    <li>
+      <strong>Product ID:</strong> ${productIds}  
+    </li>
+  `;
   }).join("");
 
   const cardHtml = `
-    <div class="shadow-lg p-4">
-      <h5 class="card-title">Order Details</h5>
-      <p><strong>Order ID:</strong> ${order.id}</p>
-      <p><strong>Customer:</strong> ${customer.name}</p>
-      <p><strong>Order Date:</strong> ${order.orderDate}</p>
-      <p><strong>Status:</strong> ${order.status}</p>
-      <p><strong>Payment Method:</strong> ${order.PaymentMethod}</p>
-      <p><strong>Total Amount:</strong> $${order.totalAmount.toFixed(2)}</p>
-      <h6>Shipping Address:</h6>
-      <p>${order.shippingAddress.street}, ${order.shippingAddress.city}, ${order.shippingAddress.zipCode}</p>
-      <h6>Products:</h6>
-      <ul>
-        ${productListHtml}
-      </ul>
-      <button id=close class="btn btn-secondary">Close</button>
-    </div>
-  `;
+  <div class="shadow-lg p-4">
+    <h5 class="card-title">Order Details</h5>
+    <p><strong>Order ID:</strong> ${order.id}</p>
+    <p><strong>Order Date:</strong> ${order.orderDate}</p>
+    <p><strong>Status:</strong> ${order.status}</p>
+    <p><strong>Payment Method:</strong> ${order.PaymentMethod}</p>
+    <p><strong>Total Amount:</strong> $${order.totalAmount.toFixed(2)}</p>
+    <h6>Shipping Address:</h6>
+    <p>${order.shippingAddress.street}, ${order.shippingAddress.city},${order.shippingAddress.zip}</p>
+    <h6>Products:</h6>
+    <ul>
+      ${productListHtml}
+    </ul>
+    <button id="close" class="btn btn-secondary">Close</button>
+  </div>
+`;
   const contentDiv = document.querySelector("#mainContent");
   contentDiv.innerHTML = cardHtml;
   var closeBtn = document.getElementById("close");
@@ -318,8 +324,10 @@ function ShowOrders() {
   const orders = StorageManager.LoadSection("orders") || [];
   const body = document.querySelector("tbody");
   orders.forEach(order => {
-    body.appendChild(CreateOrdersTable(order.id, order.customerName, order.orderDate, order.totalAmount, order.status));
+    const productIds = order.products?.map(p => p.id || p.productId).join(", ") || "";
+    body.appendChild(CreateOrdersTable(order.id, productIds, order.orderDate, order.totalAmount, order.status));
   });
+
 }
 
 /*------------------------------------------------------------------------------*/
