@@ -638,7 +638,7 @@ function ShowAdmin() {
         </div>
       </div>
   </div>  
- `
+ `+ CreateAdminModal();
   var adminName = document.getElementById("adminName");
   var adminRole = document.getElementById("adminRole");
   var adminEmail = document.getElementById("adminEmail");
@@ -847,71 +847,72 @@ function CreateModal(type, ...actions) {
 
 function CreateAdminModal() {
   var modal = ` 
-  <div class="d-flex justify-content-center">
-    <button class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#AdminActionModal" data-action="update">
-      Update Admin
-    </button>
-  </div> 
+    <div class="d-flex justify-content-center">
+      <button class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#AdminActionModal" data-action="update">
+        Update Admin
+      </button>
+    </div> 
 
-  <div class="modal fade" id="AdminActionModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalTitle">Manage Admin</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
+    <div class="modal fade" id="AdminActionModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
 
-        <div class="modal-body">
-          <!-- Add Admin Form -->
-          <form id="AdminActionForm" class="d-flex flex-column d-none">
-            <div class="row mb-3">
-              <div class="col">
-                <input type="text" id="name" class="form-control rounded" placeholder="First Name" required 
-                  pattern="[A-Za-z]+" title="Please enter a valid name">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalTitle">Manage Admin</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <form id="AdminActionForm" class="d-flex flex-column">
+              <input type="hidden" id="currentAdminId" />
+
+              <div class="row mb-3">
+                <div class="col">
+                  <input type="text" id="AdminName" class="form-control rounded" placeholder="Name" required 
+                    pattern="[A-Za-z ]+" title="Please enter a valid name">
+                </div>
               </div>
-            </div>
 
-            <div class="mb-3">
-              <input type="email" id="email" class="form-control rounded" placeholder="Email Address" required
-                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}"
-                title="Please enter a valid email address">
-            </div>
-
-            <div class="mb-3">
-              <input type="text" id="phone" class="form-control rounded" placeholder="Phone Number" required
-                pattern="^01[0125][0-9]{8}$" title="Please enter a valid phone number">
-            </div>
-
-            <div class="row mb-3">
-              <div class="col">
-                <input type="text" id="street" class="form-control rounded" placeholder="Street" required
-                  pattern="^[A-Za-z0-9\s]{3,50}$">
+              <div class="mb-3">
+                <input type="email" id="AdminEmail" class="form-control rounded" placeholder="Email Address" required
+                  pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}"
+                  title="Please enter a valid email address">
               </div>
-              <div class="col">
-                <input type="text" id="city" class="form-control rounded" placeholder="City" required
-                  pattern="^[A-Za-z\\s]{2,30}$">
-              </div>
-              <div class="col">
-                <input type="text" id="zip" class="form-control rounded" placeholder="ZIP Code" required
-                  pattern="\\d{5}">
-              </div>
-            </div>
 
-            <div class="d-grid">
-              <button type="submit" class="btn btn-warning btn-lg rounded">Save Seller</button>
-            </div>
-          </form>
+              <div class="mb-3">
+                <input type="text" id="AdminPhone" class="form-control rounded" placeholder="Phone Number" required
+                  pattern="^01[0125][0-9]{8}$" title="Please enter a valid phone number">
+              </div>
 
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" id="confirmAction">Confirm</button>
+              <div class="row mb-3">
+                <div class="col">
+                  <input type="text" id="AdminStreet" class="form-control rounded" placeholder="Street" required
+                    pattern="^[A-Za-z0-9\\s]{3,50}$">
+                </div>
+                <div class="col">
+                  <input type="text" id="AdminCity" class="form-control rounded" placeholder="City" required
+                    pattern="^[A-Za-z\\s]{2,30}$">
+                </div>
+                <div class="col">
+                  <input type="text" id="AdminZip" class="form-control rounded" placeholder="ZIP Code" required
+                    pattern="\\d{5}">
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" id="confirmAction">Confirm</button>
+          </div>
+
         </div>
       </div>
     </div>
-  </div>
-`;
+  `;
   return modal;
 }
+
 
 
 function createDeleteIcon(id, type) {
