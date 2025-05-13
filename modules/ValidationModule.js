@@ -51,8 +51,12 @@ export default class Validate {
     return typeof value === 'string' && value.trim().length >= 15;
   }
 
+  static isProductNameValid(value) {
+    return typeof value === 'string' && /^[A-Za-z\s]{3,15}$/.test(value.trim());
+  }
+
   static isPriceValid(value) {
-    return typeof value === 'number' && value >= 0;
+    return typeof value === 'number' && value >= 100 && value <= 25000;
   }
 
   static isStockValid(value) {

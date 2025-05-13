@@ -204,7 +204,7 @@ function CreateOrdersTable(orderId, customerName, orderDate, totalAmount, status
   const deliveredIcon = createDeliveredIcon(orderId);
   deliveredTd.appendChild(deliveredIcon);
   tr.appendChild(deliveredTd);
-  
+
   return tr;
 }
 
@@ -217,7 +217,7 @@ function createDisplayIcon(orderId) {
   return icon;
 }
 
-function createCheckedIcon (orderId) {
+function createCheckedIcon(orderId) {
   const icon = document.createElement("i");
   icon.classList.add("fas", "fa-check", "text-success", "fs-5", "ms-2", "cursor-pointer");
   icon.addEventListener("click", () => {
@@ -227,10 +227,10 @@ function createCheckedIcon (orderId) {
     location.reload();
     StorageManager.SaveSection("orders", orders);
   });
-  return icon; 
+  return icon;
 }
 
-function createUncheckedIcon (orderId) {
+function createUncheckedIcon(orderId) {
   const icon = document.createElement("i");
   icon.classList.add("fas", "fa-square", "ext-secondary", "fs-5", "ms-2", "cursor-pointer");
   icon.addEventListener("click", () => {
@@ -240,17 +240,16 @@ function createUncheckedIcon (orderId) {
     StorageManager.SaveSection("orders", orders);
     location.reload();
   });
-  return icon; 
+  return icon;
 }
 
-function createDeliveredIcon (orderId) {
+function createDeliveredIcon(orderId) {
   const icon = document.createElement("i");
   icon.classList.add("fas", "fa-truck", "text-primary", "fs-5", "ms-2", "cursor-pointer");
   icon.addEventListener("click", () => {
     var orders = StorageManager.LoadSection("orders");
     var order = orders.find(o => o.id === orderId);
-    switch (order.status)
-    {
+    switch (order.status) {
       case "ready":
         order.status = "delivered";
         break;
@@ -638,13 +637,18 @@ function CreateModal(type, ...actions) {
               <input type="hidden" id="currentProductId">
               <div class="mb-3">
                 <input type="text" id="ProductName" class="form-control rounded" placeholder="Product Name" required 
-                  pattern="[A-Za-z]+" title="Please enter a valid name">
+                   title="Please enter a valid name">
               </div>
   
               <div class="mb-3"><label class="form-label">Description</label><textarea class="form-control" id="ProductDescription" required>
               </textarea></div>
-              <div class="mb-3"><label class="form-label">Price</label><input type="number" class="form-control" id="ProductPrice" required></div>
-              <div class="mb-3"><label class="form-label">Stock</label><input type="number" class="form-control" id="ProductStock" required></div>
+              <div class="mb-3"><label class="form-label">Price</label><input type="number" class="form-control" id="ProductPrice" required 
+              min="100" max="25000"
+              title="Enter a price between 100 and 25000"></div>
+              <div class="mb-3"><label class="form-label">Stock</label><input type="number" class="form-control" id="ProductStock" required
+              min="0" step="1"
+              title="Enter a non-negative integer"
+              ></div>
               <div class="mb-3"><label class="form-label">Category</label>
                 <select class="form-select" id="ProductCategory" required>
                   <option value="Mobiles" selected>Mobiles</option>

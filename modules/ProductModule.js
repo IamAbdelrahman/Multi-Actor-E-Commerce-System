@@ -142,7 +142,7 @@ export default class ProductManager {
     const products = StorageManager.LoadSection("products") || [];
 
     // Validate basic input to enter empty
-    if (!name || !description || !category || price <= 0 || stock < 0 || !image) {
+    if (!name || !description || !category || !price || !stock || !image) {
       console.error("Invalid product data. Please enter valid data!");
       return false;
     }
@@ -158,10 +158,12 @@ export default class ProductManager {
       return false;
     }
 
+
     if (!Validate.isPriceValid(price)) {
-      alert("Invalid price: must be a non-negative number.");
+      alert("Price must be between 100 and 25000.");
       return false;
     }
+
 
     if (!Validate.isStockValid(stock)) {
       alert("Invalid stock: must be a non-negative integer.");
@@ -169,7 +171,7 @@ export default class ProductManager {
     }
 
     if (!Validate.isCategoryValid(category)) {
-      alert("Invalid category: Allowed is one of that [mobiles, tablets, headphones, accessories, laptops");
+      alert("Invalid category: Allowed is one of that [Mobiles, Tablets, Headphones, Accessories, Laptops]");
       return false;
     }
 
