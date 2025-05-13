@@ -162,7 +162,6 @@ export default class UserManager {
       alert("Invalid name. It must be 3–15 letters only.");
       return false;
     }
-
     const emailExists = users.some(user =>
       user.email.toLowerCase() === email.toLowerCase() && user.id !== id
     );
@@ -174,12 +173,10 @@ export default class UserManager {
       alert("Invalid email format. Use example@example.com");
       return false;
     }
-
     if (!Validate.isStreetValid(street)) {
       alert("Street cannot be empty.");
       return false;
     }
-
     if (!Validate.isCityValid(city)) {
       alert("City cannot have numbers.");
       return false;
@@ -188,11 +185,9 @@ export default class UserManager {
       alert("ZIP code must be exactly 5 digits.");
       return false;
     }
-
     if (!Validate.isPhoneValid(phone)) {
       alert("Invalid phone (expected format: +20XXXXXXXXXX)");
       return false;
-
     }
     users = users.map(user => {
       if (user.id === id) {
