@@ -165,7 +165,8 @@ function CreateOrdersHeader() {
 
   const head = document.querySelector("thead");
   const tr = document.createElement("tr");
-  const attributes = ["Order ID", "Customer Name", "Order Date", "Total Amount", "Status", "Actions", "Accept", "Decline", "Delivered"];
+  const attributes = ["Order ID", "Product ID",
+    "Order Date", "Total Amount", "Status", "Actions", "Accept", "Decline", "Delivered"];
 
   for (let i = 0; i < attributes.length; i++) {
     const th = document.createElement("th");
@@ -176,9 +177,16 @@ function CreateOrdersHeader() {
   head.appendChild(tr);
 }
 
-function CreateOrdersTable(orderId, customerName, orderDate, totalAmount, status) {
+function CreateOrdersTable(orderId, productIds, orderDate, totalAmount, status) {
   const tr = document.createElement("tr");
-  const cells = [orderId, customerName, orderDate, totalAmount, status];
+  const orders = StorageManager.LoadSection("orders") || [];
+  const order = orders.find(o => o.id === orderId);
+
+  if (order.products && Array.isArray(order.products)) {
+    productIds = order.products.map(p => p.id || p.productId).join(", ");
+  }
+
+  const cells = [orderId, productIds, orderDate, totalAmount, status];
   cells.forEach(cellContent => {
     const td = createCell();
     td.textContent = cellContent;
@@ -204,7 +212,7 @@ function CreateOrdersTable(orderId, customerName, orderDate, totalAmount, status
   const deliveredIcon = createDeliveredIcon(orderId);
   deliveredTd.appendChild(deliveredIcon);
   tr.appendChild(deliveredTd);
-  
+
   return tr;
 }
 
@@ -217,7 +225,7 @@ function createDisplayIcon(orderId) {
   return icon;
 }
 
-function createCheckedIcon (orderId) {
+function createCheckedIcon(orderId) {
   const icon = document.createElement("i");
   icon.classList.add("fas", "fa-check", "text-success", "fs-5", "ms-2", "cursor-pointer");
   icon.addEventListener("click", () => {
@@ -227,10 +235,10 @@ function createCheckedIcon (orderId) {
     location.reload();
     StorageManager.SaveSection("orders", orders);
   });
-  return icon; 
+  return icon;
 }
 
-function createUncheckedIcon (orderId) {
+function createUncheckedIcon(orderId) {
   const icon = document.createElement("i");
   icon.classList.add("fas", "fa-square", "ext-secondary", "fs-5", "ms-2", "cursor-pointer");
   icon.addEventListener("click", () => {
@@ -240,17 +248,16 @@ function createUncheckedIcon (orderId) {
     StorageManager.SaveSection("orders", orders);
     location.reload();
   });
-  return icon; 
+  return icon;
 }
 
-function createDeliveredIcon (orderId) {
+function createDeliveredIcon(orderId) {
   const icon = document.createElement("i");
   icon.classList.add("fas", "fa-truck", "text-primary", "fs-5", "ms-2", "cursor-pointer");
   icon.addEventListener("click", () => {
     var orders = StorageManager.LoadSection("orders");
     var order = orders.find(o => o.id === orderId);
-    switch (order.status)
-    {
+    switch (order.status) {
       case "ready":
         order.status = "delivered";
         break;
@@ -278,33 +285,31 @@ function ShowOrderDetails(orderId) {
   }
 
   const productListHtml = order.products.map(p => {
-    const product = ProductManager.GetProductById(p.productId);
-    if (!product) return `<li>Unknown product (ID: ${p.productId})</li>`;
+    const productIds = order.products?.map(p => p.id || p.productId).join(", ") || "";
     return `
-      <li>
-        ${product.name} (x${p.quantity}) - $${(product.price * p.quantity).toFixed(2)}
-      </li>
-    `;
+    <li>
+      <strong>Product ID:</strong> ${productIds}  
+    </li>
+  `;
   }).join("");
 
   const cardHtml = `
-    <div class="shadow-lg p-4">
-      <h5 class="card-title">Order Details</h5>
-      <p><strong>Order ID:</strong> ${order.id}</p>
-      <p><strong>Customer:</strong> ${customer.name}</p>
-      <p><strong>Order Date:</strong> ${order.orderDate}</p>
-      <p><strong>Status:</strong> ${order.status}</p>
-      <p><strong>Payment Method:</strong> ${order.PaymentMethod}</p>
-      <p><strong>Total Amount:</strong> $${order.totalAmount.toFixed(2)}</p>
-      <h6>Shipping Address:</h6>
-      <p>${order.shippingAddress.street}, ${order.shippingAddress.city}, ${order.shippingAddress.zipCode}</p>
-      <h6>Products:</h6>
-      <ul>
-        ${productListHtml}
-      </ul>
-      <button id=close class="btn btn-secondary">Close</button>
-    </div>
-  `;
+  <div class="shadow-lg p-4">
+    <h5 class="card-title">Order Details</h5>
+    <p><strong>Order ID:</strong> ${order.id}</p>
+    <p><strong>Order Date:</strong> ${order.orderDate}</p>
+    <p><strong>Status:</strong> ${order.status}</p>
+    <p><strong>Payment Method:</strong> ${order.PaymentMethod}</p>
+    <p><strong>Total Amount:</strong> $${order.totalAmount.toFixed(2)}</p>
+    <h6>Shipping Address:</h6>
+    <p>${order.shippingAddress.street}, ${order.shippingAddress.city},${order.shippingAddress.zip}</p>
+    <h6>Products:</h6>
+    <ul>
+      ${productListHtml}
+    </ul>
+    <button id="close" class="btn btn-secondary">Close</button>
+  </div>
+`;
   const contentDiv = document.querySelector("#mainContent");
   contentDiv.innerHTML = cardHtml;
   var closeBtn = document.getElementById("close");
@@ -319,8 +324,10 @@ function ShowOrders() {
   const orders = StorageManager.LoadSection("orders") || [];
   const body = document.querySelector("tbody");
   orders.forEach(order => {
-    body.appendChild(CreateOrdersTable(order.id, order.customerName, order.orderDate, order.totalAmount, order.status));
+    const productIds = order.products?.map(p => p.id || p.productId).join(", ") || "";
+    body.appendChild(CreateOrdersTable(order.id, productIds, order.orderDate, order.totalAmount, order.status));
   });
+
 }
 
 /*------------------------------------------------------------------------------*/
@@ -638,13 +645,18 @@ function CreateModal(type, ...actions) {
               <input type="hidden" id="currentProductId">
               <div class="mb-3">
                 <input type="text" id="ProductName" class="form-control rounded" placeholder="Product Name" required 
-                  pattern="[A-Za-z]+" title="Please enter a valid name">
+                   title="Please enter a valid name">
               </div>
   
               <div class="mb-3"><label class="form-label">Description</label><textarea class="form-control" id="ProductDescription" required>
               </textarea></div>
-              <div class="mb-3"><label class="form-label">Price</label><input type="number" class="form-control" id="ProductPrice" required></div>
-              <div class="mb-3"><label class="form-label">Stock</label><input type="number" class="form-control" id="ProductStock" required></div>
+              <div class="mb-3"><label class="form-label">Price</label><input type="number" class="form-control" id="ProductPrice" required 
+              min="100" max="25000"
+              title="Enter a price between 100 and 25000"></div>
+              <div class="mb-3"><label class="form-label">Stock</label><input type="number" class="form-control" id="ProductStock" required
+              min="0" step="1"
+              title="Enter a non-negative integer"
+              ></div>
               <div class="mb-3"><label class="form-label">Category</label>
                 <select class="form-select" id="ProductCategory" required>
                   <option value="Mobiles" selected>Mobiles</option>
