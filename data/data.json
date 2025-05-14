@@ -2,8 +2,8 @@
   "users": [
     {
       "id": 0,
-      "name": "Abdelruhman Kamal",
-      "email": "abdokamal@gmail.com",
+      "name": "admin",
+      "email": "admin@gmail.com",
       "password": "admin123",
       "Address": {
         "city": "Cairo",
@@ -18,8 +18,8 @@
     {
       "id": 1,
       "name": "Hagar Yusuf",
-      "email": "seller@example.com",
-      "password": "sellerpass123",
+      "email": "seller1@gmail.com",
+      "password": "seller1pass123",
       "Address": {
         "city": "Cairo",
         "street": "456 Garden Ave",
@@ -33,8 +33,8 @@
     {
       "id": 2,
       "name": "Rawan Emad",
-      "email": "rawan@example.com",
-      "password": "sellerpass123",
+      "email": "seller2@gmail.com",
+      "password": "seller2pass123",
       "Address": {
         "city": "Alexandria",
         "street": "789 Coastal Rd",
@@ -59,551 +59,288 @@
       "role": "customer",
       "blocked": false,
       "date": ""
-    },
-    {
-      "id": 4,
-      "name": "Yasmine Adel",
-      "email": "yasmine@example.com",
-      "password": "yasmine123",
-      "Address": {
-        "city": "Luxor",
-        "street": "202 Nile Blvd",
-        "zipCode": "85123"
-      },
-      "phone": "+201998877665",
-      "role": "customer",
-      "blocked": false,
-      "date": ""
-    },
-    {
-      "id": 5,
-      "name": "Karim Mohamed",
-      "email": "karim.m@example.com",
-      "password": "karimtech",
-      "Address": {
-        "city": "Cairo",
-        "street": "303 Tech Park",
-        "zipCode": "11733"
-      },
-      "phone": "+201443322110",
-      "role": "seller",
-      "blocked": false,
-      "date": ""
-    },
-    {
-      "id": 6,
-      "name": "Nada Ali",
-      "email": "nada.ali@example.com",
-      "password": "nadaali99",
-      "Address": {
-        "city": "Port Said",
-        "street": "404 Canal St",
-        "zipCode": "42510"
-      },
-      "phone": "+201334455667",
-      "role": "customer",
-      "blocked": false,
-      "date": ""
-    },
-    {
-      "id": 7,
-      "name": "Tarek Hussein",
-      "email": "tarek@example.com",
-      "password": "tarekpass",
-      "Address": {
-        "city": "Aswan",
-        "street": "505 Desert Rd",
-        "zipCode": "81524"
-      },
-      "phone": "+201778899001",
-      "role": "seller",
-      "blocked": false,
-      "date": ""
-    },
-    {
-      "id": 8,
-      "name": "Farida Magdy",
-      "email": "farida@example.com",
-      "password": "farida2024",
-      "Address": {
-        "city": "Cairo",
-        "street": "606 Downtown Ave",
-        "zipCode": "11655"
-      },
-      "phone": "+201667788990",
-      "role": "customer",
-      "blocked": false,
-      "date": ""
-    },
-    {
-      "id": 9,
-      "name": "Ahmed Samir",
-      "email": "ahmed.samir@example.com",
-      "password": "ahmeds123",
-      "Address": {
-        "city": "Ismailia",
-        "street": "707 Lakeview St",
-        "zipCode": "41526"
-      },
-      "phone": "+201112233445",
-      "role": "customer",
-      "blocked": false,
-      "date": ""
-    },
-    {
-      "id": 10,
-      "name": "Lina Ashraf",
-      "email": "lina.ashraf@example.com",
-      "password": "lina456",
-      "Address": {
-        "city": "Cairo",
-        "street": "808 University Rd",
-        "zipCode": "12655"
-      },
-      "phone": "+201554433221",
-      "role": "seller",
-      "blocked": false,
-      "date": ""
-    },
-    {
-      "id": 11,
-      "name": "Mohamed Ibrahim",
-      "email": "mohamed@example.com",
-      "password": "mohamedpass",
-      "Address": {
-        "city": "Alexandria",
-        "street": "909 Corniche St",
-        "zipCode": "54321"
-      },
-      "phone": "+201998877665",
-      "role": "customer",
-      "blocked": false,
-      "date": ""
-    },
-    {
-      "id": 12,
-      "name": "Dalia Hassan",
-      "email": "dalia@example.com",
-      "password": "daliapass",
-      "Address": {
-        "city": "Giza",
-        "street": "1010 Sphinx Ave",
-        "zipCode": "12588"
-      },
-      "phone": "+201334455667",
-      "role": "customer",
-      "blocked": false,
-      "date": ""
-    },
-    {
-      "id": 13,
-      "name": "Khaled Mostafa",
-      "email": "khaled@example.com",
-      "password": "khaled123",
-      "Address": {
-        "city": "Cairo",
-        "street": "1111 Business Dist",
-        "zipCode": "11511"
-      },
-      "phone": "+201778899001",
-      "role": "seller",
-      "blocked": false,
-      "date": ""
-    },
-    {
-      "id": 14,
-      "name": "Salma Osama",
-      "email": "salma@example.com",
-      "password": "salma456",
-      "Address": {
-        "city": "Luxor",
-        "street": "1212 Temple Rd",
-        "zipCode": "85123"
-      },
-      "phone": "+201112233445",
-      "role": "customer",
-      "blocked": false,
-      "date": ""
-    },
-    {
-      "id": 15,
-      "name": "Amr Tarek",
-      "email": "amr@example.com",
-      "password": "amrpass",
-      "Address": {
-        "city": "Alexandria",
-        "street": "1313 Beachfront",
-        "zipCode": "54321"
-      },
-      "phone": "+201554433221",
-      "role": "customer",
-      "blocked": false,
-      "date": ""
-    },
-    {
-      "id": 16,
-      "name": "Reem Ahmed",
-      "email": "reem@example.com",
-      "password": "reempass",
-      "Address": {
-        "city": "Cairo",
-        "street": "1414 Green Zone",
-        "zipCode": "11733"
-      },
-      "phone": "+201667788990",
-      "role": "seller",
-      "blocked": false,
-      "date": ""
-    },
-    {
-      "id": 17,
-      "name": "Ziad Mahmoud",
-      "email": "ziad@example.com",
-      "password": "ziad2024",
-      "Address": {
-        "city": "Port Said",
-        "street": "1515 Harbor St",
-        "zipCode": "42510"
-      },
-      "phone": "+201998877665",
-      "role": "customer",
-      "blocked": false,
-      "date": ""
-    },
-    {
-      "id": 18,
-      "name": "Mona Samy",
-      "email": "mona@example.com",
-      "password": "monapass",
-      "Address": {
-        "city": "Aswan",
-        "street": "1616 Riverside",
-        "zipCode": "81524"
-      },
-      "phone": "+201112233445",
-      "role": "customer",
-      "blocked": false,
-      "date": ""
-    },
-    {
-      "id": 19,
-      "name": "Hassan Walid",
-      "email": "hassan@example.com",
-      "password": "hassan123",
-      "Address": {
-        "city": "Cairo",
-        "street": "1717 Downtown",
-        "zipCode": "11655"
-      },
-      "phone": "+201554433221",
-      "role": "seller",
-      "blocked": false,
-      "date": ""
-    },
-    {
-      "id": 20,
-      "name": "Nourhan Karim",
-      "email": "nourhan@example.com",
-      "password": "nourhan456",
-      "Address": {
-        "city": "Giza",
-        "street": "1818 Pyramid View",
-        "zipCode": "12588"
-      },
-      "phone": "+201778899001",
-      "role": "customer",
-      "blocked": false,
-      "date": ""
     }
   ],
   "products": [
     {
       "id": 1,
       "name": "SonicPulse",
-      "description": "High-fidelity headphones with rich bass and noise cancellation for immersive listening.",
-      "price": 120.49,
-      "stock": 11,
+      "description": "SonicPulse - A premium headphones product offering high performance and reliability.",
+      "price": 598.1,
+      "stock": 10,
       "category": "HeadPhones",
       "image": "/images/HeadPhones/Headphones1.png",
-      "status": "approved"
+      "status": "approved",
+      "sellerId": 1
     },
     {
       "id": 2,
       "name": "EchoWave",
-      "description": "High-fidelity headphones with rich bass and noise cancellation for immersive listening.",
-      "price": 140.99,
-      "stock": 12,
+      "description": "EchoWave - A premium headphones product offering high performance and reliability.",
+      "price": 724.59,
+      "stock": 11,
       "category": "HeadPhones",
       "image": "/images/HeadPhones/Headphones2.png",
-      "status": "approved"
+      "status": "approved",
+      "sellerId": 2
     },
     {
       "id": 3,
       "name": "BassNova",
-      "description": "High-fidelity headphones with rich bass and noise cancellation for immersive listening.",
-      "price": 161.49,
-      "stock": 13,
+      "description": "BassNova - A premium headphones product offering high performance and reliability.",
+      "price": 972.41,
+      "stock": 12,
       "category": "HeadPhones",
       "image": "/images/HeadPhones/Headphones3.png",
-      "status": "approved"
+      "status": "approved",
+      "sellerId": 1
     },
     {
       "id": 4,
       "name": "QuietZone",
-      "description": "High-fidelity headphones with rich bass and noise cancellation for immersive listening.",
-      "price": 181.99,
-      "stock": 14,
+      "description": "QuietZone - A premium headphones product offering high performance and reliability.",
+      "price": 1097.68,
+      "stock": 13,
       "category": "HeadPhones",
       "image": "/images/HeadPhones/Headphones4.png",
-      "status": "approved"
+      "status": "approved",
+      "sellerId": 2
     },
     {
       "id": 5,
       "name": "AudioNest",
-      "description": "High-fidelity headphones with rich bass and noise cancellation for immersive listening.",
-      "price": 202.49,
-      "stock": 15,
+      "description": "AudioNest - A premium headphones product offering high performance and reliability.",
+      "price": 725.67,
+      "stock": 14,
       "category": "HeadPhones",
       "image": "/images/HeadPhones/Headphones5.png",
-      "status": "approved"
+      "status": "approved",
+      "sellerId": 1
     },
     {
       "id": 6,
       "name": "GripTech",
-      "description": "Top-quality accessories enhancing device usability, design, and durability.",
-      "price": 120.49,
-      "stock": 11,
+      "description": "GripTech - A premium accessories product offering high performance and reliability.",
+      "price": 108.65,
+      "stock": 10,
       "category": "Accessories",
       "image": "/images/Accessories/Accessories1.png",
-      "status": "approved"
+      "status": "approved",
+      "sellerId": 1
     },
     {
       "id": 7,
       "name": "FlexMount",
-      "description": "Top-quality accessories enhancing device usability, design, and durability.",
-      "price": 140.99,
-      "stock": 12,
+      "description": "FlexMount - A premium accessories product offering high performance and reliability.",
+      "price": 198.13,
+      "stock": 11,
       "category": "Accessories",
       "image": "/images/Accessories/Accessories2.png",
-      "status": "approved"
+      "status": "approved",
+      "sellerId": 2
     },
     {
       "id": 8,
       "name": "PortaPlus",
-      "description": "Top-quality accessories enhancing device usability, design, and durability.",
-      "price": 161.49,
-      "stock": 13,
+      "description": "PortaPlus - A premium accessories product offering high performance and reliability.",
+      "price": 160.82,
+      "stock": 12,
       "category": "Accessories",
       "image": "/images/Accessories/Accessories3.png",
-      "status": "approved"
+      "status": "approved",
+      "sellerId": 1
     },
     {
       "id": 9,
       "name": "CoreConnect",
-      "description": "Top-quality accessories enhancing device usability, design, and durability.",
-      "price": 181.99,
-      "stock": 14,
+      "description": "CoreConnect - A premium accessories product offering high performance and reliability.",
+      "price": 64.05,
+      "stock": 13,
       "category": "Accessories",
       "image": "/images/Accessories/Accessories4.png",
-      "status": "approved"
+      "status": "approved",
+      "sellerId": 2
     },
     {
       "id": 10,
       "name": "NanoHold",
-      "description": "Top-quality accessories enhancing device usability, design, and durability.",
-      "price": 202.49,
-      "stock": 15,
+      "description": "NanoHold - A premium accessories product offering high performance and reliability.",
+      "price": 106.46,
+      "stock": 14,
       "category": "Accessories",
       "image": "/images/Accessories/Accessories5.png",
-      "status": "approved"
+      "status": "approved",
+      "sellerId": 1
     },
     {
       "id": 11,
       "name": "Readmi 12",
-      "description": "Latest smartphones with powerful processors, sharp displays, and long battery life.",
-      "price": 120.49,
-      "stock": 11,
+      "description": "Readmi 12 - A premium mobiles product offering high performance and reliability.",
+      "price": 3948.0,
+      "stock": 10,
       "category": "Mobiles",
       "image": "/images/Mobiles/Mobiles1.png",
-      "status": "approved"
+      "status": "approved",
+      "sellerId": 1
     },
     {
       "id": 12,
       "name": "Galaxy A16",
-      "description": "Latest smartphones with powerful processors, sharp displays, and long battery life.",
-      "price": 140.99,
-      "stock": 12,
+      "description": "Galaxy A16 - A premium mobiles product offering high performance and reliability.",
+      "price": 10474.13,
+      "stock": 11,
       "category": "Mobiles",
       "image": "/images/Mobiles/Mobiles2.png",
-      "status": "approved"
+      "status": "approved",
+      "sellerId": 2
     },
     {
       "id": 13,
       "name": "Galaxy M55",
-      "description": "Latest smartphones with powerful processors, sharp displays, and long battery life.",
-      "price": 161.49,
-      "stock": 13,
+      "description": "Galaxy M55 - A premium mobiles product offering high performance and reliability.",
+      "price": 10401.05,
+      "stock": 12,
       "category": "Mobiles",
       "image": "/images/Mobiles/Mobiles3.png",
-      "status": "approved"
+      "status": "approved",
+      "sellerId": 1
     },
     {
       "id": 14,
       "name": "Pcoco C75",
-      "description": "Latest smartphones with powerful processors, sharp displays, and long battery life.",
-      "price": 181.99,
-      "stock": 14,
+      "description": "Pcoco C75 - A premium mobiles product offering high performance and reliability.",
+      "price": 4248.1,
+      "stock": 13,
       "category": "Mobiles",
       "image": "/images/Mobiles/Mobiles4.png",
-      "status": "approved"
+      "status": "approved",
+      "sellerId": 2
     },
     {
       "id": 15,
       "name": "Galaxy S74",
-      "description": "Latest smartphones with powerful processors, sharp displays, and long battery life.",
-      "price": 202.49,
-      "stock": 15,
+      "description": "Galaxy S74 - A premium mobiles product offering high performance and reliability.",
+      "price": 10131.43,
+      "stock": 14,
       "category": "Mobiles",
       "image": "/images/Mobiles/Mobiles5.png",
-      "status": "approved"
+      "status": "approved",
+      "sellerId": 1
     },
     {
       "id": 16,
       "name": "SamsungTab",
-      "description": "Versatile tablets great for reading, streaming, and productivity on the go.",
-      "price": 120.49,
-      "stock": 11,
+      "description": "SamsungTab - A premium tablets product offering high performance and reliability.",
+      "price": 5293.43,
+      "stock": 10,
       "category": "Tablets",
       "image": "/images/Tablets/Tablets1.png",
-      "status": "approved"
+      "status": "approved",
+      "sellerId": 1
     },
     {
       "id": 17,
       "name": "VisionTab",
-      "description": "Versatile tablets great for reading, streaming, and productivity on the go.",
-      "price": 140.99,
-      "stock": 12,
+      "description": "VisionTab - A premium tablets product offering high performance and reliability.",
+      "price": 3415.35,
+      "stock": 11,
       "category": "Tablets",
       "image": "/images/Tablets/Tablets2.png",
-      "status": "approved"
+      "status": "approved",
+      "sellerId": 2
     },
     {
       "id": 18,
       "name": "ZenSlateTab",
-      "description": "Versatile tablets great for reading, streaming, and productivity on the go.",
-      "price": 161.49,
-      "stock": 13,
+      "description": "ZenSlateTab - A premium tablets product offering high performance and reliability.",
+      "price": 6573.84,
+      "stock": 12,
       "category": "Tablets",
       "image": "/images/Tablets/Tablets3.png",
-      "status": "approved"
+      "status": "approved",
+      "sellerId": 1
     },
     {
       "id": 19,
       "name": "SwiftTab",
-      "description": "Versatile tablets great for reading, streaming, and productivity on the go.",
-      "price": 181.99,
-      "stock": 14,
+      "description": "SwiftTab - A premium tablets product offering high performance and reliability.",
+      "price": 2581.38,
+      "stock": 13,
       "category": "Tablets",
       "image": "/images/Tablets/Tablets4.png",
-      "status": "approved"
+      "status": "approved",
+      "sellerId": 2
     },
     {
       "id": 20,
       "name": "GlideScreenTab",
-      "description": "Versatile tablets great for reading, streaming, and productivity on the go.",
-      "price": 202.49,
-      "stock": 15,
+      "description": "GlideScreenTab - A premium tablets product offering high performance and reliability.",
+      "price": 5275.72,
+      "stock": 14,
       "category": "Tablets",
       "image": "/images/Tablets/Tablets5.png",
-      "status": "approved"
+      "status": "approved",
+      "sellerId": 1
     },
     {
       "id": 21,
       "name": "QuantumBook",
-      "description": "High-performance laptops designed for work, gaming, and multitasking.",
-      "price": 120.49,
-      "stock": 11,
+      "description": "QuantumBook - A premium laptops product offering high performance and reliability.",
+      "price": 24623.84,
+      "stock": 10,
       "category": "Laptops",
       "image": "/images/Laptops/Laptops1.png",
-      "status": "approved"
+      "status": "approved",
+      "sellerId": 1
     },
     {
       "id": 22,
       "name": "CoreSync",
-      "description": "High-performance laptops designed for work, gaming, and multitasking.",
-      "price": 140.99,
-      "stock": 12,
+      "description": "CoreSync - A premium laptops product offering high performance and reliability.",
+      "price": 8653.6,
+      "stock": 11,
       "category": "Laptops",
       "image": "/images/Laptops/Laptops2.png",
-      "status": "approved"
+      "status": "approved",
+      "sellerId": 2
     },
     {
       "id": 23,
       "name": "ByteStorm",
-      "description": "High-performance laptops designed for work, gaming, and multitasking.",
-      "price": 161.49,
-      "stock": 13,
+      "description": "ByteStorm - A premium laptops product offering high performance and reliability.",
+      "price": 12216.3,
+      "stock": 12,
       "category": "Laptops",
       "image": "/images/Laptops/Laptops3.png",
-      "status": "approved"
+      "status": "approved",
+      "sellerId": 1
     },
     {
       "id": 24,
       "name": "PixelForge",
-      "description": "High-performance laptops designed for work, gaming, and multitasking.",
-      "price": 181.99,
-      "stock": 14,
+      "description": "PixelForge - A premium laptops product offering high performance and reliability.",
+      "price": 22682.13,
+      "stock": 13,
       "category": "Laptops",
       "image": "/images/Laptops/Laptops4.png",
-      "status": "approved"
+      "status": "approved",
+      "sellerId": 2
     },
     {
       "id": 25,
       "name": "TurboNote",
-      "description": "High-performance laptops designed for work, gaming, and multitasking.",
-      "price": 202.49,
-      "stock": 15,
+      "description": "TurboNote - A premium laptops product offering high performance and reliability.",
+      "price": 10224.81,
+      "stock": 14,
       "category": "Laptops",
       "image": "/images/Laptops/Laptops5.png",
-      "status": "approved"
+      "status": "approved",
+      "sellerId": 1
     }
   ],
 
-  "orders": [
-    {
-      "id": 1001,
-      "userId": 1,
-      "products": [
-        {
-          "productId": 1,
-          "quantity": 1
-        },
-        {
-          "productId": 2,
-          "quantity": 2
-        }
-      ],
-      "totalAmount": 1798.99,
-      "status": "processing",
-      "orderDate": "2025-04-19",
-      "PaymentMethod": "credit card",
-      "shippingAddress": {
-        "city": "Cairo",
-        "street": "123 Main St",
-        "zipCode": "12345"
-      }
-    }
-  ],
-  "messages":[
-    {
-      "id": 0,
-      "userId": 0,
-      "userName": "Abdelruhman Kamal",
-      "userEmail": "abdokamal@gmail.com",
-      "messageSubject":"Messages",
-      "messageDescription":"our messageDashBoard",
-      "status":true
-    }
-  ],
-  "cart": []
+  "orders": [],
+  "messages": [],
+  "cart": [],
+  "history": []
 }

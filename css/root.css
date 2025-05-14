@@ -14,4 +14,109 @@ button:hover{
 ::selection {
     background-color: #ffc107; 
     color: white;              
+}
+
+.gradient-text {
+    font-weight: bold;
+    /* font-size: 3rem; */
+    background: linear-gradient(to right, #c1121f, #fb8500, #ffc107);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .gradient-tech {
+    font-weight: bold;
+    /* font-size: 3rem; */
+    background: linear-gradient(to right, #ffc107);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* ----------- Custom Dark Mode Enhancements ----------- */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+  }
+  
+  .dark-mode .navbar,
+  .dark-mode .carousel,
+  .dark-mode .footer,
+  .dark-mode .card,
+  .dark-mode #cartSlider,
+  .dark-mode #wishlistSlider {
+    background-color: #1c1c1c !important;
+  }
+  
+  .dark-mode .navbar a,
+  .dark-mode .footer a,
+  .dark-mode p,
+  .dark-mode span,
+  .dark-mode h3,
+  .dark-mode .navbar .dropdown-menu .dropdown-item {
+    color: #ddd !important;
+  }
+  
+  .dark-mode .navbar .dropdown-menu .dropdown-item:hover {
+    color: #ffc107 !important;
+  }
+  
+  .dark-mode .categories .rounded-pill,
+  .dark-mode .offer-box,
+  .dark-mode .form-control,
+  .dark-mode #Featured-Products-Container,
+  .dark-mode .card-footer,
+  .dark-mode .products {
+    background-color: #202020 !important;
+    color: #fff !important;
+    border-color: #333 !important;
+  }
+  
+  .dark-mode .rounded-pill:hover,
+  .dark-mode .offer-box:hover {
+    box-shadow: 0 0 15px rgba(255, 193, 7, 0.2);
+  }
+  
+  .dark-mode .btn-outline-dark {
+    border-color: #888;
+    color: #fff;
+  }
+  
+  .dark-mode .btn-outline-dark:hover {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #000;
+  }
+  
+  .dark-mode .btn-light {
+    background-color: #333 !important;
+    color: #fff;
+    border-color: #555;
+  }
+  
+  .dark-mode .btn-light:hover {
+    background-color: #ffc107 !important;
+    color: #000;
+  }
+  
+  .dark-mode .bi-heart-fill {
+    color: #ff6b6b;
+  }
+  
+  .dark-mode .cart-header,
+  .dark-mode .wishlist-header {
+    background-color: #292929 !important;
+    color: #ffc107 !important;
+  }
+  
+  .dark-mode input,
+  .dark-mode textarea,
+  .dark-mode select {
+    background-color: #2b2b2b;
+    color: #f1f1f1;
+    border: 1px solid #444;
+  }
+  
+  .dark-mode input::placeholder,
+  .dark-mode textarea::placeholder {
+    color: #aaa;
   }

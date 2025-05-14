@@ -2,12 +2,13 @@ import StorageManager from './StorageModule.js'
 import Validate from './ValidationModule.js';
 
 class User {
-  constructor(id, name, email, password, role, address = { street: "", city: "", zipCode: "" }, phone = "", blocked = false) {
+  constructor(id, name, email, password, role, blocked, address = { street: "", city: "", zipCode: "" }, phone = "") {
     this.ID = id;
     this.Name = name;
     this.Email = email;
     this.Pass = password;
     this.Role = role;
+    this.blocked = blocked;
     this.Address = address;
     this.phone = phone;
   }
@@ -80,7 +81,7 @@ class User {
 }
 
 export default class UserManager {
-  static AddUser(name, email, password, role = "customer") {
+  static AddUser(name, email, password, role = "customer", blocked = false) {
     const users = StorageManager.LoadSection("users") || [];
 
     // Trim input values
@@ -138,10 +139,12 @@ export default class UserManager {
     }
 
 
-    const user = new User(GenerateNextID(), name, email, password, role);
+    const user = new User(GenerateNextID(), name, email, password, role, blocked);
     users.push(user);
     StorageManager.SaveSection("users", users);
-    alert("Successfully Registered!");
+    // alert("Successfully Registered!");
+    document.getElementById("signUpForm").style.display = "none";
+    document.getElementById("loginForm").style.display = "block";
     return true;
   }
 
@@ -159,7 +162,6 @@ export default class UserManager {
       alert("Invalid name. It must be 3–15 letters only.");
       return false;
     }
-
     const emailExists = users.some(user =>
       user.email.toLowerCase() === email.toLowerCase() && user.id !== id
     );
@@ -171,12 +173,10 @@ export default class UserManager {
       alert("Invalid email format. Use example@example.com");
       return false;
     }
-
     if (!Validate.isStreetValid(street)) {
       alert("Street cannot be empty.");
       return false;
     }
-
     if (!Validate.isCityValid(city)) {
       alert("City cannot have numbers.");
       return false;
@@ -185,11 +185,9 @@ export default class UserManager {
       alert("ZIP code must be exactly 5 digits.");
       return false;
     }
-
     if (!Validate.isPhoneValid(phone)) {
       alert("Invalid phone (expected format: +20XXXXXXXXXX)");
       return false;
-
     }
     users = users.map(user => {
       if (user.id === id) {

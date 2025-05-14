@@ -22,4 +22,11 @@ export default class StorageManager {
   static Remove(key) {
     localStorage.removeItem(key);
   }
+  
+  static LoadSellerId () {
+    const data = StorageManager.Load("loggedInUser");
+    if (data.role == "seller") {
+      return data.id;
+    }
+  }
 }

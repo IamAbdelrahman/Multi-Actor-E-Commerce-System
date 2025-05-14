@@ -11,23 +11,23 @@ export default class SellerManager {
     return sellers;
   }
 
-  static AddSeller(name, email, password, phone, address, id = 1, role = "seller", blocked = false) {
+  static AddSeller(id = 2, name, email, password, phone, address, role = "seller", blocked = false,) {
     const sellers = StorageManager.LoadSection("users") || [];
     function NextSellerID() {
       const ids = sellers.map(seller => seller.id);
       return Math.max(...ids) + 1;
     }
     const seller = {
+      id: NextSellerID(),
       name: name,
       email: email,
       password: password,
       phone: phone,
       Address: address,
-      id: NextSellerID(),
-      role : "seller",
-      blocked : false
+      role: "seller",
+      blocked: false
     };
-        // Validate basic input to enter empty
+    // Validate basic input to enter empty
     if (!name || !email || !password || !address) {
       console.error("Invalid data. Please enter valid data!");
       return false;
@@ -63,7 +63,7 @@ export default class SellerManager {
 
     }
 
-    
+
     const existingName = sellers.find(s => s.name === seller.name);
     if (existingName) {
       alert("Seller name already exists.");
@@ -107,18 +107,18 @@ export default class SellerManager {
 
   static UpdateSeller(updatedSeller) {
     let sellers = CustomerManager.GetAllSellers();
-  
+
     const id = updatedSeller.id;
     const name = updatedSeller.name;
     const email = updatedSeller.email;
     const phone = updatedSeller.phone;
     const address = updatedSeller.Address || {};
     const { city, street, zipCode } = address;
-  
+
     // Validate input
     const isValid = CustomerManager.DoValidation(name, email, street, city, zipCode);
     if (!isValid) return false;
-  
+
     // Check if email is already used by another customer
     const emailExists = customers.some(c =>
       c.email.toLowerCase() === email.toLowerCase() && c.id !== id
@@ -127,7 +127,7 @@ export default class SellerManager {
       alert("Email is already registered. Please enter a different email.");
       return false;
     }
-  
+
     // Update the matched customer
     sellers = sellers.map(s => {
       if (s.id === id) {
@@ -138,7 +138,7 @@ export default class SellerManager {
       }
       return c;
     });
-  
+
     StorageManager.SaveSection("users", sellers);
     alert("Customer updated successfully.");
     return true;
@@ -179,7 +179,8 @@ export default class SellerManager {
   }
 
   static GetSellerCounts() {
-    const sellers = StorageManager.LoadSection("users") || [];
+    var sellers = StorageManager.LoadSection("users") || [];
+    sellers = sellers.filter(s => s.role == "seller");
     return sellers.length;
   }
 }

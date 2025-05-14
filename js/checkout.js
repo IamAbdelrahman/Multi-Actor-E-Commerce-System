@@ -113,9 +113,11 @@ document.addEventListener("DOMContentLoaded", () => {
             userId: userId,
             products: userCart.products,
             totalAmount: total,
-            status: "processing",
+            status: "pending",
             orderDate: new Date().toISOString(),
             PaymentMethod: paymentMethod,
+            phone:phone,
+            email:email,
             shippingAddress: { street, city, zip }
         };
 
@@ -136,7 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const updatedCart = cart.filter(cartItem => cartItem.userId !== userId);
         StorageManager.SaveSection("cart", updatedCart);
 
-        window.location.href = "/home.html";
+        window.location.href = "/orderHistory.html";
     });
 });
 

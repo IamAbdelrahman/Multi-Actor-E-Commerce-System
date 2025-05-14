@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="css/home.css" />
   <link rel="stylesheet" href="css/root.css" />
   <link rel="stylesheet" href="css/checkout.css" />
- 
+
 
 </head>
 
@@ -35,11 +35,18 @@
       });
   </script>
 
+
+
+
+
+
   <!------------------------------------ NavBar End ------------------------------------>
   <!-- new -->
   <!------------------------------------ Slider Start ------------------------------------>
   <!-- Carousel -->
   <div id="myCarousel" class="carousel slide py-4" data-bs-ride="carousel" data-bs-wrap="true">
+
+
     <div class="container">
       <div class="carousel-inner py-4 slider">
         <div class="carousel-item active">
@@ -191,7 +198,7 @@
     <!------------------------------------ Products Start ------------------------------------>
     <div id=Featured-Products-Container class="products my-5">
       <div class="d-flex justify-content-between align-items-center my-5">
-        <h2 class="fw-bold">Featured Products</h2>
+        <h2 class="fw-bold">New Products</h2>
         <a href="catalog.html" class="btn btn-outline-dark p-3 btn-outline-dark">View All Products
           <i class="fa-solid fa-arrow-right"></i>
         </a>
@@ -208,10 +215,9 @@
           <div class="offer-box toys-bg d-flex flex-column justify-content-end h-100">
             <div class="image"></div>
             <div>
-              <div class="offer-title">New Accessories Collection</div>
-              <div class="discount-text">50 <span class="fs-4">%</span> OFF</div>
-              <a href="catalog.html" class="btn btn-light offer-btn fs-5">View Offer <i
-                  class="fa-solid fa-arrow-right ps-2"></i></a>
+              <div class="offer-title fs-5">New Accessories Collection</div>
+              <a href="#" onclick="window.location.href='catalog.html?category=accessories'"
+                class="btn btn-light offer-btn fs-5">View Category <i class="fa-solid fa-arrow-right ps-2"></i></a>
             </div>
           </div>
         </div>
@@ -220,20 +226,18 @@
           <div class="d-flex flex-column h-100 gap-4">
             <div class="offer-box d-flex justify-content-between align-items-center bg-primary bg-opacity-25">
               <div>
-                <div class="offer-title">New Phones Collection</div>
-                <div class="discount-text">10 <span class="fs-4">%</span> OFF</div>
-                <a href="catalog.html" class="btn btn-light offer-btn fs-5">View Offer <i
-                    class="fa-solid fa-arrow-right ps-2"></i></a>
+                <div class="offer-title fs-5">New Phones Collection</div>
+                <a href="#" onclick="window.location.href='catalog.html?category=mobiles'"
+                  class="btn btn-light offer-btn fs-5">View Category <i class="fa-solid fa-arrow-right ps-2"></i></a>
               </div>
               <img src="images/Mobiles/Mobiles6.png" alt="Shoes" class="img-fluid img-small">
             </div>
 
             <div class="offer-box d-flex justify-content-between align-items-center bg-warning bg-opacity-25">
               <div>
-                <div class="offer-title">New HeadPhones Collection</div>
-                <div class="discount-text">12 <span class="fs-4">%</span> OFF</div>
-                <a href="catalog.html" class="btn btn-light offer-btn fs-5">View Offer <i
-                    class="fa-solid fa-arrow-right ps-2"></i></a>
+                <div class="offer-title fs-5">New HeadPhones Collection</div>
+                <a href="#" onclick="window.location.href='catalog.html?category=headphones'"
+                  class="btn btn-light offer-btn fs-5">View Category <i class="fa-solid fa-arrow-right ps-2"></i></a>
               </div>
               <img src="images/HeadPhones/Headphones6.png" alt="Hat" class="img-fluid img-small">
             </div>
@@ -248,7 +252,6 @@
 
   <!------------------------------------ footer Start ------------------------------------>
   <div id="footer"></div>
-
   <script>
     fetch('footer.html')
       .then(response => response.text())
@@ -257,13 +260,14 @@
       });
   </script>
   <!------------------------------------ footer End ------------------------------------>
-
   <!-- Script JS -->
   <script type="module" src="js/home.js"></script>
   <script src="cart.js" type="module"></script>
   <script src="js/checkLogin.js"></script>
   <script type="module" src="js/utils.js"></script>
   <script src="js/navbar.js"></script>
+
+
 
 
 </body>

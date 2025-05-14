@@ -147,7 +147,8 @@ function CreateSellerHeader() {
 
             <div class="mb-3">
               <input type="email" id="email" class="form-control rounded" placeholder="Email Address" required
-                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}"
+                pattern="/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/"
+                
                 title="Please enter a valid email address">
             </div>
 
@@ -338,7 +339,7 @@ function ManageProducts() {
       alert('Please enter a valid ID');
       return;
     }
-    const products = ProductManager.GetAllProducts();
+    const products = StorageManager.LoadSection("products") || [];
     const returnId = products.find(c => c.id === productId);
     if (!returnId) {
       alert("ID doesn't exist")
@@ -388,7 +389,7 @@ function CreateOrdersHeader() {
 
   const head = document.querySelector("thead");
   const tr = document.createElement("tr");
-  const attributes = ["Order ID", "Customer Name", "Order Date", "Total Amount", "Status", "Actions"];
+  const attributes = ["Order ID", "Product ID", "Order Date", "Total Amount", "Status", "Actions"];
 
   for (let i = 0; i < attributes.length; i++) {
     const th = document.createElement("th");
@@ -399,9 +400,16 @@ function CreateOrdersHeader() {
   head.appendChild(tr);
 }
 
-function CreateOrdersTable(orderId, customerName, orderDate, totalAmount, status) {
+function CreateOrdersTable(orderId, productIds, orderDate, totalAmount, status) {
   const tr = document.createElement("tr");
-  const cells = [orderId, customerName, orderDate, totalAmount, status];
+  const orders = StorageManager.LoadSection("orders") || [];
+  const order = orders.find(o => o.id === orderId);
+
+  if (order.products && Array.isArray(order.products)) {
+    productIds = order.products.map(p => p.id || p.productId).join(", ");
+  }
+
+  const cells = [orderId, productIds, orderDate, totalAmount, status];
   cells.forEach(cellContent => {
     const td = createCell();
     td.textContent = cellContent;
@@ -424,7 +432,6 @@ function createDisplayIcon(orderId) {
   return icon;
 }
 
-
 function ShowOrderDetails(orderId) {
   const orders = StorageManager.LoadSection("orders") || [];
   const order = orders.find(o => o.id === orderId);
@@ -441,33 +448,31 @@ function ShowOrderDetails(orderId) {
   }
 
   const productListHtml = order.products.map(p => {
-    const product = ProductManager.GetProductById(p.productId);
-    if (!product) return `<li>Unknown product (ID: ${p.productId})</li>`;
+    const productIds = order.products?.map(p => p.id || p.productId).join(", ") || "";
     return `
-      <li>
-        ${product.name} (x${p.quantity}) - $${(product.price * p.quantity).toFixed(2)}
-      </li>
-    `;
+    <li>
+      <strong>Product ID:</strong> ${productIds}  
+    </li>
+  `;
   }).join("");
 
   const cardHtml = `
-    <div class="shadow-lg p-4">
-      <h5 class="card-title">Order Details</h5>
-      <p><strong>Order ID:</strong> ${order.id}</p>
-      <p><strong>Customer:</strong> ${customer.name}</p>
-      <p><strong>Order Date:</strong> ${order.orderDate}</p>
-      <p><strong>Status:</strong> ${order.status}</p>
-      <p><strong>Payment Method:</strong> ${order.PaymentMethod}</p>
-      <p><strong>Total Amount:</strong> $${order.totalAmount.toFixed(2)}</p>
-      <h6>Shipping Address:</h6>
-      <p>${order.shippingAddress.street}, ${order.shippingAddress.city}, ${order.shippingAddress.zipCode}</p>
-      <h6>Products:</h6>
-      <ul>
-        ${productListHtml}
-      </ul>
-      <button id=close class="btn btn-secondary">Close</button>
-    </div>
-  `;
+  <div class="shadow-lg p-4">
+    <h5 class="card-title">Order Details</h5>
+    <p><strong>Order ID:</strong> ${order.id}</p>
+    <p><strong>Order Date:</strong> ${order.orderDate}</p>
+    <p><strong>Status:</strong> ${order.status}</p>
+    <p><strong>Payment Method:</strong> ${order.PaymentMethod}</p>
+    <p><strong>Total Amount:</strong> $${order.totalAmount.toFixed(2)}</p>
+    <h6>Shipping Address:</h6>
+    <p>${order.shippingAddress.street}, ${order.shippingAddress.city}, ${order.shippingAddress.zip}</p>
+    <h6>Products:</h6>
+    <ul>
+      ${productListHtml}
+    </ul>
+    <button id="close" class="btn btn-secondary">Close</button>
+  </div>
+`;
   const contentDiv = document.querySelector("#mainContent");
   contentDiv.innerHTML = cardHtml;
   var closeBtn = document.getElementById("close");
@@ -479,85 +484,36 @@ function ShowOrderDetails(orderId) {
 function ShowOrders() {
   DisplayNone();
   CreateOrdersHeader();
-
   const orders = StorageManager.LoadSection("orders") || [];
   const body = document.querySelector("tbody");
-
   orders.forEach(order => {
-    const status = order.completed ? "Completed" : "Pending";
-    body.appendChild(CreateOrdersTable(order.id, order.customerName, order.orderDate, order.totalAmount, status));
+    const productIds = order.products?.map(p => p.id || p.productId).join(", ") || "";
+    body.appendChild(CreateOrdersTable(order.id, productIds, order.orderDate, order.totalAmount, order.status));
   });
+
 }
+
 
 /*------------------------------------------------------------------------------*/
 
 /*- STATS FUNCTIONS
 --------------------------------------------------------------------------------*/
 
-function ShowDashboard() {
-  const dashHeader = document.getElementById("dashHeader");
-  dashHeader.innerHTML = `
-        <div class="col-12 col-md-4">
-          <div class="card shadow">
-            <div class="card-body py-4">
-              <h3 class="fw-bold fs-4 mb-3">Welcome to Admin Dashboard</h3>
-              <p>Use the sidebar to manage users, products, and orders.</p>
-                <li>👥 Manage Users: view, add, or remove users.</li>
-                <li>📦 Manage Products: create, update, delete inventory.</li>
-                <li>🧾 Manage Orders: track, fulfill, or cancel orders.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-4">
-          <div class="card shadow">
-            <div class="card-body py-4">
-                <h3 class="fw-bold fs-4 mb-3">Profile</h3>
-                <p class="fw-bold mb02">
-                  <span id=adminName>Name: </span><br>
-                  <span id=adminRole>Role: </span><br>
-                  <span id=adminEmail>Email: </span><br>
-                  <span id=adminPhone>Phone: </span><br>
-                  <a href="www.linkedin.com"><i class="bi bi-linkedin fs-4 me-3"></i></a>
-                  <a href="www.facebook.com"><i class="bi bi-twitter fs-4 me-3"></i></a>
-                  <a href="www.twitter.com"><i class="bi bi-facebook fs-4 me-3"></i></a>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div> `
-  const adminName = document.getElementById("adminName");
-  const adminRole = document.getElementById("adminRole");
-  const adminEmail = document.getElementById("adminEmail");
-  const adminPhone = document.getElementById("adminPhone");
-  const users = StorageManager.LoadSection("users");
-  const admin = users.find(user => user.role === "admin");
-  if (admin) {
-    adminName.innerText = admin.name;
-    adminRole.innerText = admin.role;
-    adminEmail.innerText = admin.email;
-    adminPhone.innerText = admin.phone;
-  } else {
-    alert("Admin data not found.");
-  }
-}
 function ShowAnalytics() {
+
   var totalProducts = ProductManager.GetProductCounts();
   var totalCustomers = CustomerManager.GetCustomerCounts();
   var totalSellers = SellerManager.GetSellerCounts();
-  var carts = StorageManager.LoadSection("cart");
-  var revenue = 0;
-  var totalOrders = StorageManager.LoadSection("orders").length;
-  for (var i = 0; i < carts.length - 1; i++) {
-    revenue += carts[i].totalAmount;
-  }
+  var carts = StorageManager.LoadSection("cart")
+  var totalOrders = StorageManager.LoadSection("orders");
+  var revenue = GetAllRevenue(totalOrders);
   const dashboardData = {
     _revenue: revenue,
     _revenueChange: 9.0,
     products: totalProducts,
     customers: totalCustomers,
     sellers: totalSellers,
-    orders: totalOrders,
+    orders: totalOrders.length,
     _ordersChange: 5.3,
     visitors: 5243,
     visitorsChange: 12.5,
@@ -635,7 +591,22 @@ function ShowAnalytics() {
                 <p id = products class="fw-bold mb02">1000</p>
               </div>
             </div>
-          </div> `
+          </div> 
+  
+          <div class="row">
+            <div class="col-md-6 mb-4">
+              <canvas id="expensiveProductsChart"></canvas>
+            </div>
+
+            <div class="col-md-6 mb-4">
+              <canvas id="salesPerProductChart"></canvas>
+            </div>
+
+            <div class="col-md-12 mb-4">
+              <canvas id="revenueByCategoryChart"></canvas>
+            </div>
+          </div>
+          `
 
   animateValue("revenue", dashboardData._revenue);
   animateValue("visitors", dashboardData.visitors);
@@ -643,10 +614,98 @@ function ShowAnalytics() {
   animateValue("products", dashboardData.products);
   animateValue("customers", dashboardData.customers);
   animateValue("sellers", dashboardData.sellers);
-
 }
 
 /*------------------------------------------------------------------------------*/
+
+/*- SETTINGS FUNCTIONS
+--------------------------------------------------------------------------------*/
+function ShowAdmin() {
+  const dashHeader = document.getElementById("dashHeader");
+  dashHeader.innerHTML = `
+  <div class=" d-flex justify-content-center text-center ">
+      <div class="card shadow">
+        <div class="card-body py-4">
+          <h3 class="fw-bold fs-4 mb-3">Profile</h3>
+          <p class="fw-bold mb02">
+            <span id=adminName>Name: </span><br>
+            <span id=adminRole>Role: </span><br>
+            <span id=adminEmail>Email: </span><br>
+            <span id=adminPhone>Phone: </span><br>
+            <a href="www.linkedin.com"><i class="bi bi-linkedin fs-4 me-3"></i></a>
+            <a href="www.facebook.com"><i class="bi bi-twitter fs-4 me-3"></i></a>
+            <a href="www.twitter.com"><i class="bi bi-facebook fs-4 me-3"></i></a>
+          </p>
+        </div>
+      </div>
+  </div>  
+ `+ CreateAdminModal();
+  var adminName = document.getElementById("adminName");
+  var adminRole = document.getElementById("adminRole");
+  var adminEmail = document.getElementById("adminEmail");
+  var adminPhone = document.getElementById("adminPhone");
+  var users = StorageManager.LoadSection("users");
+  var admin = users.find(user => user.role === "admin");
+  if (admin) {
+    adminName.innerText = admin.name;
+    adminRole.innerText = admin.role;
+    adminEmail.innerText = admin.email;
+    adminPhone.innerText = admin.phone;
+  } else {
+    alert("Admin data not found.");
+  }
+}
+
+function UpdateAdmin() {
+  DisplayNone();
+  ShowAdmin();
+  // var _modal = CreateAdminModal();
+  // var contentdiv = document.querySelector("#mainContent");
+  // contentdiv.innerHTML = _modal;
+  const modal = new bootstrap.Modal(document.getElementById('AdminActionModal'));
+  let currentAction = 'Update';
+  document.querySelectorAll('[data-bs-target="#AdminActionModal"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentAction = btn.dataset.action;
+      document.getElementById('modalTitle').textContent =
+        `${currentAction} Admin`;
+    });
+  });
+
+  document.getElementById('confirmAction').addEventListener('click', () => {
+    const name = document.getElementById("AdminName").value.trim();
+    const email = document.getElementById("AdminEmail").value.trim();
+    const phone = document.getElementById("AdminPhone").value.trim();
+    const street = document.getElementById("AdminStreet").value.trim();
+    const city = document.getElementById("AdminCity").value.trim();
+    const zip = document.getElementById("AdminZip").value.trim();
+    if(UserManager.UpdateUser(0, name, email, street, city, zip, phone)) {
+      alert(`Admin updated successfully!`);
+      location.reload();
+      modal.hide();
+    }
+
+  });
+
+}
+//Like profile.js to show data before to edit it 
+window.openEditAdminModal = function (adminId) {
+  const users = StorageManager.LoadSection("users") || [];
+  const admin = users.find(u => u.id === adminId);
+  if (!admin) return;
+
+  document.getElementById("AdminName").value = admin.name;
+  document.getElementById("AdminEmail").value = admin.email;
+  document.getElementById("AdminPhone").value = admin.phone;
+  document.getElementById("AdminStreet").value = admin.street;
+  document.getElementById("AdminCity").value = admin.city;
+  document.getElementById("AdminZip").value = admin.zip;
+  document.getElementById("currentAdminId").value = admin.id;
+  document.getElementById("currentAction").value = "Edit";
+
+  const modal = new bootstrap.Modal(document.getElementById("AdminActionModal"));
+  modal.show();
+};
 
 /*- MESSAGES FUNCTIONS
 --------------------------------------------------------------------------------*/
@@ -679,7 +738,6 @@ function ShowMessages() {
 
 /*- HELP-CENTER FUNCTIONS
 --------------------------------------------------------------------------------*/
-/*------------------------------------------------------------------------------*/
 function CreateHelpCenterForm() {
   var form = `
     <div class="container py-5">
@@ -704,9 +762,10 @@ function CreateHelpCenterForm() {
           </div>
       </div>
     </div>`
-    return form;
+  return form;
 }
-function ShowHelpCenter () {
+
+function ShowHelpCenter() {
   DisplayNone();
   const contentDiv = document.querySelector("#mainContent");
   contentDiv.innerHTML = CreateHelpCenterForm();
@@ -718,9 +777,7 @@ function createTable() {
     <div class="container-fluid px-4 mt-4">
       <div class="row">
         <div class="col-12">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <input type="text" class="form-control w-25" placeholder="Search By Id..." id="searchInput">
-          </div>
+
 
           <div class="table-responsive shadow-sm rounded bg-white p-2">
             <table class="table table-striped table-bordered table-hover align-middle text-center">
@@ -787,6 +844,75 @@ function CreateModal(type, ...actions) {
   return modal;
 }
 
+function CreateAdminModal() {
+  var modal = ` 
+    <div class="d-flex justify-content-center">
+      <button class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#AdminActionModal" data-action="update">
+        Update Admin
+      </button>
+    </div> 
+
+    <div class="modal fade" id="AdminActionModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalTitle">Manage Admin</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <form id="AdminActionForm" class="d-flex flex-column">
+              <input type="hidden" id="currentAdminId" />
+
+              <div class="row mb-3">
+                <div class="col">
+                  <input type="text" id="AdminName" class="form-control rounded" placeholder="Name" required 
+                    pattern="[A-Za-z ]+" title="Please enter a valid name">
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <input type="email" id="AdminEmail" class="form-control rounded" placeholder="Email Address" required
+                  pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}"
+                  title="Please enter a valid email address">
+              </div>
+
+              <div class="mb-3">
+                <input type="text" id="AdminPhone" class="form-control rounded" placeholder="Phone Number" required
+                  pattern="^01[0125][0-9]{8}$" title="Please enter a valid phone number">
+              </div>
+
+              <div class="row mb-3">
+                <div class="col">
+                  <input type="text" id="AdminStreet" class="form-control rounded" placeholder="Street" required
+                    pattern="^[A-Za-z0-9\\s]{3,50}$">
+                </div>
+                <div class="col">
+                  <input type="text" id="AdminCity" class="form-control rounded" placeholder="City" required
+                    pattern="^[A-Za-z\\s]{2,30}$">
+                </div>
+                <div class="col">
+                  <input type="text" id="AdminZip" class="form-control rounded" placeholder="ZIP Code" required
+                    pattern="\\d{5}">
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" id="confirmAction">Confirm</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  `;
+  return modal;
+}
+
+
 function createDeleteIcon(id, type) {
   const icon = document.createElement("i");
   icon.classList.add("bi", "bi-trash-fill", "text-danger", "fs-5", "ms-2", "cursor-pointer");
@@ -829,15 +955,23 @@ function GenerateSecurePassword() {
   return password;
 }
 
+function GetAllRevenue(orders) {
+  var totalRevenue = 0;
+
+  for (var i = 0; i < orders.length; i++) {
+    totalRevenue += orders[i].totalAmount;
+  }
+  return totalRevenue;
+}
 
 /*- ON LOADING
 -----------------------------------------------------------------------*/
 document.addEventListener('DOMContentLoaded', function () {
   const user = JSON.parse(localStorage.getItem("loggedInUser"));
   if (!user || user.role !== "admin") {
-  alert("Unauthorized access. Redirecting...");
-  window.location.href = "home.html"; 
-}
+    alert("Unauthorized access. Redirecting...");
+    window.location.href = "home.html";
+  }
 
   // Toggle the Sidebar
   const toggleBtn = document.querySelector(".toggle-btn");
@@ -849,7 +983,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // Show the dashboard by default
-  ShowDashboard();
+
   ShowAnalytics();
   // Attach event listeners to sidebar buttons
   document.querySelectorAll('[data-section]').forEach(button => {
@@ -871,6 +1005,9 @@ document.addEventListener('DOMContentLoaded', function () {
         case "messages":
           ShowMessages();
           break;
+        case "settings":
+          UpdateAdmin();
+          break;
         case "help":
           ShowHelpCenter();
           break;
@@ -878,7 +1015,7 @@ document.addEventListener('DOMContentLoaded', function () {
           ShowAnalytics();
           break;
         default:
-          ShowDashboard();
+          ShowAnalytics();
           break;
       }
     });

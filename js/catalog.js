@@ -51,11 +51,14 @@ function SearchProduct(products) {
         </div>
             
         <a href="product-details.html?id=${product.id}" class="text-decoration-none">
-        <img src="${product.image}" class="card-img-top  mx-auto" style="max-width: 60%; height:200px">
+        <img src="${product.image}" class="card-img-top  mx-auto" style="max-width: 70%; height:180px">
         <div class="card-body d-flex flex-column justify-content-between">
           <h5 class="card-title fw-semibold mb-2">${product.name}</h5>
           <p class="text-muted small">${product.description}</p>
         </div>
+        </a>
+
+                    <!-- Card Footer with Price and Add to Cart Button -->
         <div class="card-footer bg-white border-0">
           <div class="d-flex justify-content-between align-items-center">
             <span class="fw-bold">$${product.price}</span>
@@ -81,31 +84,27 @@ function SearchProduct(products) {
 }
 
 //Use GetProductsBySearchName that filter name from ProductModule
-searchInput.addEventListener("input", () => {
-  const name = searchInput.value.trim();
-  const filteredByName = ProductManager.GetProductsBySearchName(name);
-  SearchProduct(filteredByName);
-});
+searchInput.addEventListener("input", FilterByCategoryAndPriceAndName);
 
 // Extract category from URL
 const urlParams = new URLSearchParams(window.location.search);
 currentCategory = urlParams.get('category') || '';
 
-//Use GetProductByFilters that filter price and category from ProductModule
-function FilterByCategoryAndPrice(filteredProducts = ProductManager.GetAllProducts()) {
-  // Filter the products by the current price and category
-  const filteredProductsByCategoryAndPrice = ProductManager.GetProductByFilters(minPrice, maxPrice, currentCategory);
+//Use GetProductByFilters that filter price and category from ProductModule and apply name filter
+function FilterByCategoryAndPriceAndName() {
+  const name = searchInput.value.trim().toLowerCase();
 
-  // filter also price , name , category
-  if (filteredProducts.length > 0) {
-    const filteredByName = filteredProductsByCategoryAndPrice.filter(product =>
-      product.name.toLowerCase().includes(searchInput.value.trim().toLowerCase())
-    );
-    SearchProduct(filteredByName);
-  } else {
-    SearchProduct(filteredProductsByCategoryAndPrice);
-  }
+  // Get products filtered by price and category meaning here i waill apply filter in specific category
+  const filteredProducts = ProductManager.GetProductByFilters(minPrice, maxPrice, currentCategory);
+
+  // Then apply name filter here i can filter name in soecific category
+  const finalFilteredProducts = filteredProducts.filter(product =>
+    product.name.toLowerCase().includes(name)
+  );
+
+  SearchProduct(finalFilteredProducts);
 }
+
 
 //Validate Range
 function validateRange() {
@@ -124,7 +123,7 @@ function validateRange() {
   minVal.innerHTML = "$" + minPrice;
   maxVal.innerHTML = "$" + maxPrice;
 
-  FilterByCategoryAndPrice();
+  FilterByCategoryAndPriceAndName();
 }
 
 

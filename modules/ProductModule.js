@@ -5,7 +5,7 @@ import Validate from './ValidationModule.js';
 -----------------------------------------------------------------------*/
 
 class Product {
-  constructor(id, name, description, price, stock, category, image) {
+  constructor(id, name, description, price, stock, category, image, status, sellerId) {
     this.ID = id;
     this.Name = name;
     this.Description = description;
@@ -13,6 +13,8 @@ class Product {
     this.Stock = stock;
     this.Category = category;
     this.Image = image;
+    this.status = status;
+    this.SellerID = sellerId;
 
   }
 
@@ -29,6 +31,20 @@ class Product {
 
   get ID() {
     return this.id;
+  }
+
+  set SellerID(sellerId) {
+    if (Validate.isUserIdValid(sellerId)) {
+      this.sellerId = sellerId;
+    } else {
+      console.error("Invalid ID: must be a positive number.");
+      this.sellerId = 0;
+      return false;
+    }
+  }
+
+  get SellerID() {
+    return this.sellerId;
   }
 
   set Name(value) {
@@ -81,7 +97,7 @@ class Product {
 
   set Category(value) {
     if (Validate.isCategoryValid(value)) {
-      this.category = value.trim().toLowerCase();
+      this.category = value.trim();
     } else {
       alert("Invalid category: must be at least 3 characters.");
       return false;
@@ -122,11 +138,11 @@ class Product {
 }
 
 export default class ProductManager {
-  static AddProduct(name, description, price, stock, category, image) {
+  static AddProduct(name, description, price, stock, category, image, status = "approved", sellerId = 1) {
     const products = StorageManager.LoadSection("products") || [];
 
     // Validate basic input to enter empty
-    if (!name || !description || !category || price <= 0 || stock < 0 || !image) {
+    if (!name || !description || !category || !price || !stock || !image) {
       console.error("Invalid product data. Please enter valid data!");
       return false;
     }
@@ -142,10 +158,12 @@ export default class ProductManager {
       return false;
     }
 
+
     if (!Validate.isPriceValid(price)) {
-      alert("Invalid price: must be a non-negative number.");
+      alert("Price must be between 100 and 25000.");
       return false;
     }
+
 
     if (!Validate.isStockValid(stock)) {
       alert("Invalid stock: must be a non-negative integer.");
@@ -153,7 +171,7 @@ export default class ProductManager {
     }
 
     if (!Validate.isCategoryValid(category)) {
-      alert("Invalid category: Allowed is one of that [mobiles, tablets, headphones, accessories, laptops");
+      alert("Invalid category: Allowed is one of that [Mobiles, Tablets, Headphones, Accessories, Laptops]");
       return false;
     }
 
@@ -170,7 +188,7 @@ export default class ProductManager {
       return maxId + 1;
     }
 
-    const newProduct = new Product(GenerateNextID(), name, description, price, stock, category, image);
+    const newProduct = new Product(GenerateNextID(), name, description, price, stock, category, image, status = "approved", sellerId = 1);
 
     // Check for duplicatationn name
     const nameExists = products.some(p => p.Name === name);
@@ -193,7 +211,9 @@ export default class ProductManager {
 
 
   static GetAllProducts() {
-    return StorageManager.LoadSection("products") || [];
+    const products = StorageManager.LoadSection("products") || [];
+    return products.filter(p => p.status == "approved" && p.stock > 0);
+
   }
 
   static GetProductById(id) {
@@ -249,6 +269,11 @@ export default class ProductManager {
     return true;
   }
 
+  static GetProductBySellerId(id) {
+    const products = StorageManager.LoadSection("products") || [];
+    return products.filter(p => p.sellerId === id);
+  }
+
   static DeleteProduct(id) {
     let products = StorageManager.LoadSection("products") || [];
     products = products.filter(p => p.id !== id);
@@ -288,7 +313,7 @@ export default class ProductManager {
   }
 
   static ApproveProduct(id) {
-    const products = ProductManager.GetAllProducts();
+    const products = StorageManager.LoadSection("products") || [];
     const updatedProducts = products.map(p => {
       if (p.id === id) {
         return { ...p, status: "approved" };
@@ -300,7 +325,7 @@ export default class ProductManager {
   }
 
   static RejectProduct(id) {
-    const products = ProductManager.GetAllProducts();
+    const products = StorageManager.LoadSection("products") || [];
     const updatedProducts = products.map(p => {
       if (p.id === id) {
         return { ...p, status: "rejected" };
