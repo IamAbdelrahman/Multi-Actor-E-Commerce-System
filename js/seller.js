@@ -81,14 +81,19 @@ function ManageProducts() {
 
     if (currentAction === 'Add') {
 
-      if (!imageFile) return alert("Please select an image.");
+      if (!imageFile) {
+        showToast("Please select an image.", "warning");
+        return;
+      }
       const reader = new FileReader();
       reader.onload = function (e) {
         const base64Image = e.target.result;
         const success = ProductManager.AddProduct(name, description, price, stock, category, base64Image, "approved", sellerId);
         if (success) {
-          alert(`Product "${name}" added successfully!`);
-          location.reload();
+          const modal = bootstrap.Modal.getInstance(document.getElementById('ProductActionModal'));
+          modal.hide();
+          showToast(`Product "${name}" added successfully!`, "success");
+          ShowProducts();
         }
       };
       reader.readAsDataURL(imageFile);
@@ -101,8 +106,10 @@ function ManageProducts() {
         reader.onload = function (e) {
           const base64Image = e.target.result;
           ProductManager.UpdateProduct(productId, name, description, price, stock, category, base64Image);
-          alert(`Product updated successfully!`);
-          location.reload();
+          const modal = bootstrap.Modal.getInstance(document.getElementById('ProductActionModal'));
+          modal.hide();
+          showToast("Product updated successfully!", "success");
+          ShowProducts();
         };
         reader.readAsDataURL(imageFile);
       } else {
@@ -111,13 +118,15 @@ function ManageProducts() {
         const existingProduct = products.find(p => p.id === productId);
         const existingImage = existingProduct ? existingProduct.image : "";
         ProductManager.UpdateProduct(productId, name, description, price, stock, category, existingImage);
-        alert(`Product updated successfully!`);
-        location.reload();
+        const modal = bootstrap.Modal.getInstance(document.getElementById('ProductActionModal'));
+        modal.hide();
+        showToast("Product updated successfully!", "success");
+        ShowProducts();
+
       }
     }
 
-    const modal = bootstrap.Modal.getInstance(document.getElementById('ProductActionModal'));
-    modal.hide();
+
   });
 }
 //Like profile.js to show data before to edit it 
@@ -160,7 +169,7 @@ function CreateOrdersHeader() {
   AssignHeader("Manage Orders");
   const table = createTable();
   const contentdiv = document.querySelector("#mainContent");
-  contentdiv.innerHTML =  table;
+  contentdiv.innerHTML = table;
 
   const head = document.querySelector("thead");
   const tr = document.createElement("tr");
@@ -273,13 +282,13 @@ function ShowOrderDetails(orderId) {
   const order = orders.find(o => o.id === orderId);
 
   if (!order) {
-    alert("Order not found!");
+    showToast("Order not found!", "warning");
     return;
   }
 
   const customer = CustomerManager.GetCustomerById(order.userId);
   if (!customer) {
-    alert("Customer not found!");
+    showToast("Customer not found!", "warning");
     return;
   }
 
