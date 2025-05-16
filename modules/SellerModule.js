@@ -28,65 +28,65 @@ export default class SellerManager {
       blocked: false
     };
     // Validate basic input to enter empty
-    if (!name || !email || !password || !address) {
-      console.error("Invalid data. Please enter valid data!");
-      return false;
-    }
+    // if (!name || !email || !password || !address) {
+    //   console.error("Invalid data. Please enter valid data!");
+    //   return false;
+    // }
 
-    if (!Validate.isNameValid(name)) {
-      alert("Invalid Name");
-      return false;
-    }
+    // if (!Validate.isNameValid(name)) {
+    //   alert("Invalid Name");
+    //   return false;
+    // }
 
-    if (!Validate.isEmailValid(email)) {
-      alert("Invalid email format. Use example@example.com");
-      return false;
-    }
+    // if (!Validate.isEmailValid(email)) {
+    //   alert("Invalid email format. Use example@example.com");
+    //   return false;
+    // }
 
-    if (!Validate.isStreetValid(address.street)) {
-      alert("Street cannot be empty.");
-      return false;
-    }
+    // if (!Validate.isStreetValid(address.street)) {
+    //   alert("Street cannot be empty.");
+    //   return false;
+    // }
 
-    if (!Validate.isCityValid(address.city)) {
-      alert("City cannot have numbers.");
-      return false;
-    }
-    if (!Validate.isZipCodeValid(address.zipCode)) {
-      alert("ZIP code must be exactly 5 digits.");
-      return false;
-    }
+    // if (!Validate.isCityValid(address.city)) {
+    //   alert("City cannot have numbers.");
+    //   return false;
+    // }
+    // if (!Validate.isZipCodeValid(address.zipCode)) {
+    //   alert("ZIP code must be exactly 5 digits.");
+    //   return false;
+    // }
 
-    if (!Validate.isPhoneValid(phone)) {
-      alert("Invalid phone (expected format: +20XXXXXXXXXX)");
-      return false;
+    // if (!Validate.isPhoneValid(phone)) {
+    //   alert("Invalid phone (expected format: +20XXXXXXXXXX)");
+    //   return false;
 
-    }
+    // }
 
 
-    const existingName = sellers.find(s => s.name === seller.name);
-    if (existingName) {
-      alert("Seller name already exists.");
-      return;
-    }
+    // const existingName = sellers.find(s => s.name === seller.name);
+    // if (existingName) {
+    //   alert("Seller name already exists.");
+    //   return;
+    // }
 
-    const existingEmail = sellers.find(s => s.email === seller.email);
-    if (existingEmail) {
-      alert("Seller email already exists.");
-      return;
-    }
+    // const existingEmail = sellers.find(s => s.email === seller.email);
+    // if (existingEmail) {
+    //   alert("Seller email already exists.");
+    //   return;
+    // }
 
-    const existingPhone = sellers.find(s => s.phone === seller.phone);
-    if (existingPhone) {
-      alert("Seller phone already exists.");
-      return;
-    }
+    // const existingPhone = sellers.find(s => s.phone === seller.phone);
+    // if (existingPhone) {
+    //   alert("Seller phone already exists.");
+    //   return;
+    // }
 
-    const existingAddress = sellers.find(s => JSON.stringify(s.address) === JSON.stringify(seller.Address));
-    if (existingAddress) {
-      alert("Seller address already exists.");
-      return;
-    }
+    // const existingAddress = sellers.find(s => JSON.stringify(s.address) === JSON.stringify(seller.Address));
+    // if (existingAddress) {
+    //   alert("Seller address already exists.");
+    //   return;
+    // }
 
     sellers.push(seller);
     StorageManager.SaveSection('users', sellers);
