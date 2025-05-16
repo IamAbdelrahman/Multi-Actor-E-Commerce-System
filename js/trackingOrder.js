@@ -1,4 +1,5 @@
 import StorageManager from "../modules/StorageModule.js";
+import { showToast } from './toast.js';
 
 document.addEventListener("DOMContentLoaded", () => {
   const orderId = parseInt(sessionStorage.getItem("orderId"));
@@ -14,10 +15,10 @@ document.addEventListener("DOMContentLoaded", () => {
       processingSection(order, orders);
       break;
     case "ready":
-        readySection(order);
+      readySection(order);
       break;
     case "delivered":
-        deliveredSection();
+      deliveredSection();
       break;
   }
 });
@@ -64,9 +65,9 @@ function processingSection(order, orders) {
       <h4><span class="fw-semibold">Payment Method:</span> ${order.PaymentMethod}</h4>
       <div class="mb-3">
         ${order.PaymentMethod.toLowerCase().includes("pay-pal")
-          ? `<label>PayPal Email: <input type="email" class="form-control" id="paypal-email" /></label>`
-          : `<label>Card Number: <input type="text" class="form-control" id="card-number" /></label>`
-        }
+      ? `<label>PayPal Email: <input type="email" class="form-control" id="paypal-email" /></label>`
+      : `<label>Card Number: <input type="text" class="form-control" id="card-number" /></label>`
+    }
       </div>
       <button class="btn btn-success" id="submit-payment">Confirm Payment</button>
     </div>
@@ -74,13 +75,14 @@ function processingSection(order, orders) {
 
   document.getElementById("submit-payment").addEventListener("click", () => {
     const inputId = order.PaymentMethod.toLowerCase();
-    const input = document.getElementById("card-number").value||document.getElementById("paypal-email").value;
+    const input = document.getElementById("card-number").value || document.getElementById("paypal-email").value;
 
-    if (input === ""||!input) {
-      alert("Please enter valid payment information.");
+    if (input === "" || !input) {
+      showToast("Please enter valid payment information.", "warning");
       return;
-    }else if(input.length<16){
-      alert("Invalid number.");
+    } else if (input.length < 16) {
+      showToast("Invalid number.", "warning");
+      return;
     }
 
     order.status = "ready";
@@ -99,8 +101,8 @@ function readySection(order) {
     <h4 class="my-3 h3">Order Summary</h4>
     <ul class="list-group my-3">
       ${order.products.map(item =>
-        `<li class="list-group-item">Product ID: ${item.id} | Quantity: ${item.quantity} | Price ${item.price}</li>`
-      ).join("")}
+    `<li class="list-group-item">Product ID: ${item.id} | Quantity: ${item.quantity} | Price ${item.price}</li>`
+  ).join("")}
     </ul>
     <p><span class="fw-semibold fs-4">Total:</span> $${order.totalAmount.toFixed(2)}</p>
     <h4 class="h3 fw-semibold fs-4">Shipping Info</h4>

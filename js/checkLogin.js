@@ -1,3 +1,5 @@
+import { showToast } from './toast.js';
+
 document.addEventListener("DOMContentLoaded", () => {
     const checkout = document.getElementById("checkout");
     checkout.addEventListener("click", (e) => {
@@ -5,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const userId = sessionStorage.getItem('userId');
 
         if (!userId || userId === 'guest') {
-            alert("You need to log in before checking out.");
+            showToast("You need to log in before checking out.", "danger");
             return;
         }
         else {

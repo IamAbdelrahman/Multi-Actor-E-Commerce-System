@@ -1,6 +1,7 @@
 import Validate from "../modules/ValidationModule.js";
 import StorageManager from "../modules/StorageModule.js";
 import ProductManager from "../modules/ProductModule.js";
+import { showToast } from './toast.js';
 
 document.addEventListener("DOMContentLoaded", () => {
     const userLoggedIn = JSON.parse(sessionStorage.getItem("userLoggedIn"));
@@ -21,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const cart = StorageManager.LoadSection("cart");
     const userCart = cart.find(cartItem => cartItem.userId === userId);
-    
+
     if (userCart && Array.isArray(userCart.products) && userCart.products.length > 0) {
         const cartItemsContainer = document.getElementById("cart-items-container");
         let total = 0;
@@ -74,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const email = document.getElementById("checkout-email").value.trim();
 
         if (!name || !street || !city || !zip || !phone || !email) {
-            alert("Please fill in all fields");
+            showToast("Please fill in all fields.", "warning");
             return;
         }
 
@@ -87,12 +88,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!Validate.isStreetValid(street)) errors.push("Invalid street");
 
         if (errors.length > 0) {
-            alert(errors.join("\n"));
+            showToast(errors.join("\n"), "warning");
             return;
         }
 
         if (!userCart || !Array.isArray(userCart.products) || userCart.products.length === 0) {
-            alert("Your cart is empty");
+            showToast("Your cart is empty", "warning");
             return;
         }
 
@@ -104,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
         userCart.products.forEach(cartItem => {
             const product = ProductManager.GetProductById(cartItem.id);
             if (product) {
-                product.stock -= cartItem.quantity;  
+                product.stock -= cartItem.quantity;
             }
         });
 
@@ -116,8 +117,8 @@ document.addEventListener("DOMContentLoaded", () => {
             status: "pending",
             orderDate: new Date().toISOString(),
             PaymentMethod: paymentMethod,
-            phone:phone,
-            email:email,
+            phone: phone,
+            email: email,
             shippingAddress: { street, city, zip }
         };
 
@@ -129,9 +130,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const cartItem = userCart.products.find(item => item.id === product.id);
             if (cartItem) {
                 const updatedProduct = { ...product, stock: product.stock - cartItem.quantity };
-                return updatedProduct;  
+                return updatedProduct;
             }
-            return product;  
+            return product;
         });
         StorageManager.SaveSection("products", updatedProducts);
 

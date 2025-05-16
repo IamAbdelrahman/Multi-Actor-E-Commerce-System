@@ -1,5 +1,6 @@
 import StorageManager from "../modules/StorageModule.js";
 import Validate from "../modules/ValidationModule.js";
+import { showToast } from './toast.js';
 
 document.addEventListener("DOMContentLoaded", () => {
   const sendBtn = document.getElementById("sendMessage");
@@ -9,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const user = JSON.parse(sessionStorage.getItem("userLoggedIn"));
     if (!user) {
-      alert("Please log in before sending a message.");
+      showToast("Please log in before sending a message.", "warning");
       return;
     }
 
@@ -24,38 +25,38 @@ document.addEventListener("DOMContentLoaded", () => {
     const message = messageInput.value.trim();
 
     if (!name || !email || !subject || !message) {
-      alert("Please fill in all fields.");
+      showToast("Please fill in all fields.", "warning");
       return;
     }
-    
+
     if (!Validate.isNameValid(name)) {
-      alert("Please enter a valid name.");
+      showToast("Invalid name. It must be 3–15 letters only.", "warning");
       return;
     }
 
     if (!Validate.isEmailValid(email)) {
-      alert("Please enter a valid email address.");
+      showToast("Invalid email format. Use example@example.com", "warning");
       return;
     }
 
     if (!Validate.isProductNameValid(subject)) {
-      alert("Please enter a valid subject (min 3 characters).");
+      showToast("Please enter a valid subject (min 3 characters).", "warning");
       return;
     }
 
     if (!Validate.isDescriptionValid(message)) {
-      alert("Please enter a valid message (min 15 characters).");
+      showToast("Please enter a valid message (min 15 characters).", "warning");
       return;
     }
     const messages = StorageManager.LoadSection("messages") || [];
     const newMessage = {
-      id:GenerateNextID(),
+      id: GenerateNextID(),
       userId: user.id,
       userName: name,
       userEmail: email,
       messageSubject: subject,
       messageDescription: message,
-      status:false
+      status: false
     };
 
     messages.push(newMessage);
@@ -67,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 function GenerateNextID() {
-    const messages = StorageManager.LoadSection("messages") || [];
-    const ids = messages.map(messages => messages.id);
-    return Math.max(...ids) + 1;
-    }
+  const messages = StorageManager.LoadSection("messages") || [];
+  const ids = messages.map(messages => messages.id);
+  return Math.max(...ids) + 1;
+}
