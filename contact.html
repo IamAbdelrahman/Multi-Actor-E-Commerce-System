@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="css/home.css" />
     <link rel="stylesheet" href="css/root.css" />
     <link rel="stylesheet" href="css/checkout.css" />
+    <script type="module" src="js/toast.js"></script>
+
 </head>
 
 <body class="bg-light">
@@ -45,20 +47,25 @@
                     <div class="d-flex flex-column">
                         <div class="mb-3">
                             <div class="col">
-                                <input type="text" name="contactName" class="form-control rounded" placeholder="First Name" required>
+                                <input type="text" name="contactName" class="form-control rounded"
+                                    placeholder="First Name" required>
                             </div>
                         </div>
                         <div class="mb-3">
-                            <input type="email" name="contactEmail" class="form-control rounded" placeholder="Email Address" required>
+                            <input type="email" name="contactEmail" class="form-control rounded"
+                                placeholder="Email Address" required>
                         </div>
                         <div class="mb-3">
-                            <input type="text" name="contactSubject" class="form-control rounded" placeholder="Subject" required>
+                            <input type="text" name="contactSubject" class="form-control rounded" placeholder="Subject"
+                                required>
                         </div>
                         <div class="mb-3 flex-grow-1">
-                            <textarea class="form-control rounded" rows="5" name="contactDescription" placeholder="Your Message" required></textarea>
+                            <textarea class="form-control rounded" rows="5" name="contactDescription"
+                                placeholder="Your Message" required></textarea>
                         </div>
                         <div class="d-grid mt-auto">
-                            <button type="submit" id="sendMessage" class="btn btn-warning btn-lg rounded">Send Message</button>
+                            <button type="submit" id="sendMessage" class="btn btn-warning btn-lg rounded">Send
+                                Message</button>
                         </div>
                     </div>
                 </div>
@@ -69,17 +76,17 @@
 
 
 
-<!------------------------------------ footer Start ------------------------------------>
-<div id="footer"></div>
+    <!------------------------------------ footer Start ------------------------------------>
+    <div id="footer"></div>
 
-<script>
-  fetch('footer.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('footer').innerHTML = data;
-    });
-</script>
-<!------------------------------------ footer End ------------------------------------>
+    <script>
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer').innerHTML = data;
+            });
+    </script>
+    <!------------------------------------ footer End ------------------------------------>
 
     <!-- Script JS -->
     <script type="module" src="js/cart.js"></script>
