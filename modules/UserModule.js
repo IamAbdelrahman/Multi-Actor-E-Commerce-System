@@ -45,7 +45,7 @@ class User {
     if (Validate.isEmailValid(email)) {
       this.email = email.toLowerCase();
     } else {
-      showToast("Please enter a valid email address like that example@gmail.com", "warning");
+      showToast("Invalid email format. Use example@example.com", "warning");
       return false;
 
     }

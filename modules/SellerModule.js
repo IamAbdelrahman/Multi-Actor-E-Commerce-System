@@ -1,6 +1,8 @@
 import StorageManager from './StorageModule.js'
 import UserManager from './UserModule.js';
 import Validate from './ValidationModule.js';
+import { showToast } from '../js/toast.js';
+
 
 /*- SELLER MANAGER
 /* -------------------------------------------------------------------------------- */
@@ -34,31 +36,31 @@ export default class SellerManager {
     }
 
     if (!Validate.isNameValid(name)) {
-      alert("Invalid Name");
+      showToast("Name must be at least 3 to maximum 15 characters long and contain only letters", "warning");
       return false;
     }
 
     if (!Validate.isEmailValid(email)) {
-      alert("Invalid email format. Use example@example.com");
+      showToast("Invalid email format. Use example@example.com", "warning");
       return false;
     }
 
     if (!Validate.isStreetValid(address.street)) {
-      alert("Street cannot be empty.");
+      showToast("Invalid street format.", "warning");
       return false;
     }
 
     if (!Validate.isCityValid(address.city)) {
-      alert("City cannot have numbers.");
+      showToast("City cannot have numbers.", "warning");
       return false;
     }
     if (!Validate.isZipCodeValid(address.zipCode)) {
-      alert("ZIP code must be exactly 5 digits.");
+      showToast("ZIP code must be exactly 5 digits.", "warning");
       return false;
     }
 
     if (!Validate.isPhoneValid(phone)) {
-      alert("Invalid phone (expected format: +20XXXXXXXXXX)");
+      showToast("Invalid phone (expected format: +20XXXXXXXXXX)", "warning");
       return false;
 
     }
@@ -66,25 +68,25 @@ export default class SellerManager {
 
     const existingName = sellers.find(s => s.name === seller.name);
     if (existingName) {
-      alert("Seller name already exists.");
+      showToast("Seller name already exists.", "warning");
       return;
     }
 
     const existingEmail = sellers.find(s => s.email === seller.email);
     if (existingEmail) {
-      alert("Seller email already exists.");
+      showToast("Seller email already exists.", "warning");
       return;
     }
 
     const existingPhone = sellers.find(s => s.phone === seller.phone);
     if (existingPhone) {
-      alert("Seller phone already exists.");
+      showToast("Seller phone already exists.", "warning");
       return;
     }
 
     const existingAddress = sellers.find(s => JSON.stringify(s.address) === JSON.stringify(seller.Address));
     if (existingAddress) {
-      alert("Seller address already exists.");
+      showToast("Seller address already exists.", "warning");
       return;
     }
 
@@ -124,7 +126,7 @@ export default class SellerManager {
       c.email.toLowerCase() === email.toLowerCase() && c.id !== id
     );
     if (emailExists) {
-      alert("Email is already registered. Please enter a different email.");
+      showToast("Email is already registered. Please enter a different email.", "warning");
       return false;
     }
 
@@ -140,7 +142,7 @@ export default class SellerManager {
     });
 
     StorageManager.SaveSection("users", sellers);
-    alert("Customer updated successfully.");
+    showToast("Customer updated successfully.", "warning");
     return true;
   }
 

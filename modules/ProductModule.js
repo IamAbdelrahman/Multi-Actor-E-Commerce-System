@@ -1,5 +1,6 @@
 import StorageManager from './StorageModule.js';
 import Validate from './ValidationModule.js';
+import { showToast } from '../js/toast.js';
 
 /*- PRODUCT MANAGER
 -----------------------------------------------------------------------*/
@@ -51,7 +52,7 @@ class Product {
     if (Validate.isProductNameValid(value)) {
       this.name = value.trim().toLowerCase();
     } else {
-      alert("Invalid product name: must be at least 3 characters.");
+      showToast("Invalid product name: must be at least 3 characters.", "warning");
       return false;
     }
   }
@@ -63,7 +64,7 @@ class Product {
     if (Validate.isDescriptionValid(value)) {
       this.description = value.trim().toLowerCase();
     } else {
-      alert("Invalid description: must be at least 15 characters.");
+      showToast("Invalid description: must be at least 15 characters.", "warning");
       return false;
     }
   }
@@ -75,7 +76,7 @@ class Product {
     if (Validate.isPriceValid(value)) {
       this.price = value;
     } else {
-      alert("Invalid price: must be a non-negative number.");
+      showToast("Invalid price: must be a non-negative number.", "warning");
       return false;
     }
   }
@@ -87,7 +88,7 @@ class Product {
     if (Validate.isStockValid(value)) {
       this.stock = value;
     } else {
-      alert("Invalid stock: must be a non-negative integer.");
+      showToast("Invalid stock: must be a non-negative integer.", "warning");
       return false;
     }
   }
@@ -99,7 +100,7 @@ class Product {
     if (Validate.isCategoryValid(value)) {
       this.category = value.trim();
     } else {
-      alert("Invalid category: must be at least 3 characters.");
+      showToast("Invalid category: must be at least 3 characters.", "warning");
       return false;
     }
   }
@@ -127,6 +128,7 @@ class Product {
     if (Validate.isQuantityValid(value)) {
       this.quantity = value;
     } else {
+      showToast("Invalid quantity: must be a positive integer.", "warning");
       console.error("Invalid quantity: must be a positive integer.");
       return false;
     }
@@ -149,35 +151,35 @@ export default class ProductManager {
 
     //validation
     if (!Validate.isProductNameValid(name)) {
-      alert("Invalid product name: must be at least 3 characters.");
+      showToast("Invalid product name: must be at least 3 characters.", "warning");
       return false;
     }
 
     if (!Validate.isDescriptionValid(description)) {
-      alert("Invalid description: must be at least 15 characters.");
+      showToast("Invalid description: must be at least 15 characters.", "warning");
       return false;
     }
 
 
     if (!Validate.isPriceValid(price)) {
-      alert("Price must be between 100 and 25000.");
+      showToast("Price must be between 100 and 25000.", "warning");
       return false;
     }
 
 
     if (!Validate.isStockValid(stock)) {
-      alert("Invalid stock: must be a non-negative integer.");
+      showToast("Invalid stock: must be a non-negative integer.", "warning");
       return false;
     }
 
     if (!Validate.isCategoryValid(category)) {
-      alert("Invalid category: Allowed is one of that [Mobiles, Tablets, Headphones, Accessories, Laptops]");
+      showToast("Invalid category: Allowed is one of that [Mobiles, Tablets, Headphones, Accessories, Laptops]", "warning");
       return false;
     }
 
 
     if (!Validate.isImageValid(image)) {
-      alert("Invalid image: must be a valid image URL.");
+      showToast("Invalid image: must be a valid image URL.", "warning");
       return false;
     }
     //Newwwwwwwwwww For Make ID for each user
