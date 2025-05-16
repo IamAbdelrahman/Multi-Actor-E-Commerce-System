@@ -1,5 +1,7 @@
 import StorageManager from './StorageModule.js'
 import Validate from './ValidationModule.js';
+import { showToast } from '../js/toast.js';
+
 
 class User {
   constructor(id, name, email, password, role, blocked, address = { street: "", city: "", zipCode: "" }, phone = "") {
@@ -31,7 +33,7 @@ class User {
     if (Validate.isNameValid(name)) {
       this.name = name.trim();
     } else {
-      alert("Name must be at least 3 to maximum 15 characters long and contain only letters");
+      showToast("Name must be at least 3 to maximum 15 characters long and contain only letters", "warning");
       return false;
     }
   }
@@ -43,7 +45,7 @@ class User {
     if (Validate.isEmailValid(email)) {
       this.email = email.toLowerCase();
     } else {
-      alert("Please enter a valid email address like that example@gmail.com");
+      showToast("Invalid email format. Use example@example.com", "warning");
       return false;
 
     }
@@ -56,7 +58,7 @@ class User {
     if (Validate.isPasswordValid(password)) {
       this.password = password.trim();
     } else {
-      alert("Password must be at least 8 characters long and contain uppercase or lowercase, a number, and a special character");
+      showToast("Password must be at least 8 characters long and contain uppercase or lowercase, a number, and a special character", "warning");
       return false;
 
     }
@@ -91,43 +93,43 @@ export default class UserManager {
 
     // Input empty checks
     if (!name && !password && !email) {
-      alert("Please fill in all fields");
+      showToast("Please fill in all fields", "warning");
       return false;
     }
     if (!name) {
-      alert("Please enter a name");
+      showToast("Please enter a name", "warning");
       return false;
     }
 
     if (!email) {
-      alert("Please enter an email");
+      showToast("Please enter an email", "warning");
       return false;
     }
 
     if (!password) {
-      alert("Please enter a password");
+      showToast("Please enter a password", "warning");
       return false;
     }
 
     // Duplicate check
     const emailExists = users.some(user => user.email.toLowerCase() === email.toLowerCase());
     if (emailExists) {
-      alert("Email is already registered. Please enter a different email.");
+      showToast("Email is already registered. Please enter a different email.", "warning");
       return false;
     }
     // Validation using Validate module
     if (!Validate.isNameValid(name)) {
-      alert("Invalid name. It must be 3–15 letters only.");
+      showToast("Invalid name. It must be 3–15 letters only.", "warning");
       return false;
     }
 
     if (!Validate.isEmailValid(email)) {
-      alert("Invalid email format. Use example@example.com");
+      showToast("Invalid email format. Use example@example.com.", "warning");
       return false;
     }
 
     if (!Validate.isPasswordValid(password)) {
-      alert("Invalid password. It must include uppercase/lowercase, a number, and a special character, with at least 8 characters.");
+      showToast("Invalid password. It must include uppercase/lowercase, a number, and a special character, with at least 8 characters.", "warning");
       return false;
     }
 
@@ -142,7 +144,6 @@ export default class UserManager {
     const user = new User(GenerateNextID(), name, email, password, role, blocked);
     users.push(user);
     StorageManager.SaveSection("users", users);
-    // alert("Successfully Registered!");
     document.getElementById("signUpForm").style.display = "none";
     document.getElementById("loginForm").style.display = "block";
     return true;
@@ -159,34 +160,34 @@ export default class UserManager {
 
     // Validation using Validate module
     if (!Validate.isNameValid(name)) {
-      alert("Invalid name. It must be 3–15 letters only.");
+      showToast("Invalid name. It must be 3–15 letters only.", "warning");
       return false;
     }
     const emailExists = users.some(user =>
       user.email.toLowerCase() === email.toLowerCase() && user.id !== id
     );
     if (emailExists) {
-      alert("Email is already registered. Please enter a different email.");
+      showToast("Email is already registered. Please enter a different email.", "warning");
       return false;
     }
     if (!Validate.isEmailValid(email)) {
-      alert("Invalid email format. Use example@example.com");
+      showToast("Invalid email format. Use example@example.com", "warning");
       return false;
     }
     if (!Validate.isStreetValid(street)) {
-      alert("Street cannot be empty.");
+      showToast("Invalid street format.", "warning");
       return false;
     }
     if (!Validate.isCityValid(city)) {
-      alert("City cannot have numbers.");
+      showToast("City cannot have numbers.", "warning");
       return false;
     }
     if (!Validate.isZipCodeValid(zipCode)) {
-      alert("ZIP code must be exactly 5 digits.");
+      showToast("ZIP code must be exactly 5 digits.", "warning");
       return false;
     }
     if (!Validate.isPhoneValid(phone)) {
-      alert("Invalid phone (expected format: +20XXXXXXXXXX)");
+      showToast("Invalid phone (expected format: +20XXXXXXXXXX)", "warning");
       return false;
     }
     users = users.map(user => {

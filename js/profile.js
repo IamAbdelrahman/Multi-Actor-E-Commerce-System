@@ -1,15 +1,16 @@
 import StorageManager from "../modules/StorageModule.js";
 import UserManager from "../modules/UserModule.js";
+import { showToast } from './toast.js';
 
 document.addEventListener("DOMContentLoaded", () => {
     const userLoggedIn = JSON.parse(sessionStorage.getItem("userLoggedIn"));
     const userId = userLoggedIn?.id;
-        
+
     if (userId) {
         if (userId == "guest") {
             sessionStorage.setItem('wasGuest', 'true');
         }
-        
+
         sessionStorage.setItem('userId', userId);
         sessionStorage.setItem('userLoggedInStatus', 'true');
         const users = StorageManager.LoadSection("users");
@@ -24,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     window.updateProfile = function (event) {
+        event.preventDefault();
 
         const name = document.getElementById("profileName").value.trim();
         const email = document.getElementById("profileEmail").value.trim();
@@ -32,13 +34,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const zipCode = document.getElementById("profileZip").value.trim();
         const phone = document.getElementById("profilePhone").value.trim();
 
-        if (!userId) return alert("No user logged in");
-
+        if (!userId) {
+            showToast("No user logged in", "warning");
+            return;
+        }
         const updated = UserManager.UpdateUser(userId, name, email, street, city, zipCode, phone);
 
         if (updated) {
-            alert("Profile updated successfully!");
+            showToast("Profile updated successfully!", "success");
         }
-        // Else: alert already shown inside UpdateUser in case of failure
     };
 });

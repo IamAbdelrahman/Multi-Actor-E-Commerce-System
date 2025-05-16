@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Order Tracking</title>
 
   <!-- Bootstrap & Icons -->
@@ -18,7 +19,10 @@
   <link rel="stylesheet" href="css/orderHistory.css" />
   <link rel="stylesheet" href="css/orderDetails.css" />
   <link rel="stylesheet" href="css/trackingOrder.css">
+  <script type="module" src="js/toast.js"></script>
+
 </head>
+
 <body>
   <div id="navBar"></div>
   <script>
@@ -28,7 +32,7 @@
         document.getElementById('navBar').innerHTML = data;
       });
   </script>
-  
+
 
   <div class="container my-5">
     <h2 class=" fw-bold my-4">Order Tracking</h2>
@@ -70,4 +74,5 @@
   <script type="module" src="js/orderDetails.js"></script>
   <script type="module" src="js/trackingOrder.js"></script>
 </body>
+
 </html>

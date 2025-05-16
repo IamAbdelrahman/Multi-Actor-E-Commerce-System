@@ -1,173 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Checkout</title>
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-    <link rel="stylesheet" href="css/home.css" />
-    <link rel="stylesheet" href="css/root.css" />
-    <link rel="stylesheet" href="css/checkout.css" />
-    <script src="js/cart.js"></script>
-  </head>
-  <body>
-    <!------------------------------------ NavBar Start ------------------------------------>
-    <div id="navBar"></div>
-    <script>
-      fetch("navBar.html")
-        .then((response) => response.text())
-        .then((data) => {
-          document.getElementById("navBar").innerHTML = data;
-        });
-    </script>
-    <!------------------------------------ NavBar End ------------------------------------>
 
-    <!------------------------------------ Checkout Start ------------------------------------>
-    <div class="container py-5">
-      <h2 class="my-4 fw-bolder">Checkout</h2>
-      <div class="row">
-        <div class="col-lg-7">
-          <h5 class="fw-semibold">1- Contact Information</h5>
-          <form class="row g-3">
-            <div class="col-md-12">
-              <label for="name" class="form-label">Name*</label>
-              <input type="text" class="form-control" id="checkout-name" required />
-            </div>
-            <div class="col-12">
-              <label for="streetAddress" class="form-label"
-                >Street address *</label
-              >
-              <input
-                type="text"
-                class="form-control mb-2"
-                id="checkout-streetAddress"
-                required
-              />
-            </div>
-            <div class="col-md-6">
-              <label for="city" class="form-label">Town / City *</label>
-              <input type="text" class="form-control" id="checkout-city" required />
-            </div>
-            <div class="col-md-6">
-              <label for="zip" class="form-label">ZIP Code *</label>
-              <input type="number" class="form-control" id="checkout-zip" required />
-            </div>
-            <div class="col-md-12">
-              <label for="phone" class="form-label">Phone *</label>
-              <input type="tel" class="form-control" id="checkout-phone" required />
-            </div>
-            <div class="col-12">
-              <label for="email" class="form-label">Email address *</label>
-              <input type="email" class="form-control" id="checkout-email" required />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/home.css" />
+  <link rel="stylesheet" href="css/root.css" />
+  <link rel="stylesheet" href="css/checkout.css" />
+  <script src="js/cart.js"></script>
+  <script type="module" src="js/toast.js"></script>
+
+</head>
+
+<body>
+  <!------------------------------------ NavBar Start ------------------------------------>
+  <div id="navBar"></div>
+  <script>
+    fetch("navBar.html")
+      .then((response) => response.text())
+      .then((data) => {
+        document.getElementById("navBar").innerHTML = data;
+      });
+  </script>
+  <!------------------------------------ NavBar End ------------------------------------>
+
+  <!------------------------------------ Checkout Start ------------------------------------>
+  <div class="container py-5">
+    <h2 class="my-4 fw-bolder">Checkout</h2>
+    <div class="row">
+      <div class="col-lg-7">
+        <h5 class="fw-semibold">1- Contact Information</h5>
+        <form class="row g-3">
+          <div class="col-md-12">
+            <label for="name" class="form-label">Name*</label>
+            <input type="text" class="form-control" id="checkout-name" required />
+          </div>
+          <div class="col-12">
+            <label for="streetAddress" class="form-label">Street address *</label>
+            <input type="text" class="form-control mb-2" id="checkout-streetAddress" required />
+          </div>
+          <div class="col-md-6">
+            <label for="city" class="form-label">Town / City *</label>
+            <input type="text" class="form-control" id="checkout-city" required />
+          </div>
+          <div class="col-md-6">
+            <label for="zip" class="form-label">ZIP Code *</label>
+            <input type="number" class="form-control" id="checkout-zip" required />
+          </div>
+          <div class="col-md-12">
+            <label for="phone" class="form-label">Phone *</label>
+            <input type="tel" class="form-control" id="checkout-phone" required />
+          </div>
+          <div class="col-12">
+            <label for="email" class="form-label">Email address *</label>
+            <input type="email" class="form-control" id="checkout-email" required />
+          </div>
+
+          <h5 class="mb-3 fw-semibold">2- Payment Method</h5>
+          <div class="d-flex gap-2">
+            <div class="col-4">
+              <input type="radio" class="btn-check" name="payment" id="masterCard" autocomplete="off" checked />
+              <label class="payment-option" for="masterCard">
+                MasterCard
+              </label>
             </div>
 
-            <h5 class="mb-3 fw-semibold">2- Payment Method</h5>
-            <div class="d-flex gap-2">
-              <div class="col-4">
-                <input
-                  type="radio"
-                  class="btn-check"
-                  name="payment"
-                  id="masterCard"
-                  autocomplete="off"
-                  checked
-                />
-                <label class="payment-option" for="masterCard">
-                  MasterCard
-                </label>
-              </div>
-
-              <div class="col-4">
-                <input
-                  type="radio"
-                  class="btn-check"
-                  name="payment"
-                  id="visa"
-                  autocomplete="off"
-                />
-                <label class="payment-option" for="visa">
-                  Visa
-                </label>
-              </div>
-
-              <div class="col-4">
-                <input
-                  type="radio"
-                  class="btn-check"
-                  name="payment"
-                  id="pay-pal"
-                  autocomplete="off"
-                />
-                <label class="payment-option" for="pay-pal">
-                  PayPal
-                </label>
-              </div>
-            </div>
-          </form>
-        </div>
-
-        <div class="col-lg-5">
-          <div class="card p-4 my-4">
-            <h5 class="my-4 fw-semibold">Your order</h5>
-            <div class="row fw-bold mb-2">
-              <div class="col">Product</div>
-              <div class="col text-end">Subtotal</div>
-            </div>
-            <hr>
-
-            <div id="cart-items-container"></div>
-
-            <hr class="dotted-line">
-
-            <div class="row my-2 fw-semibold">
-              <div class="col">Subtotal</div>
-              <div class="col text-end" id="subtotal-amount"></div>
-            </div>
-            <hr class="dotted-line">
-
-            <div class="row fw-semibold mb-4">
-              <div class="col">Total</div>
-              <div class="col text-end" id="total-amount"></div>
+            <div class="col-4">
+              <input type="radio" class="btn-check" name="payment" id="visa" autocomplete="off" />
+              <label class="payment-option" for="visa">
+                Visa
+              </label>
             </div>
 
-            <div class="text-center">
-              <button class="btn btn-dark w-100" id="submit">Place order</button>
+            <div class="col-4">
+              <input type="radio" class="btn-check" name="payment" id="pay-pal" autocomplete="off" />
+              <label class="payment-option" for="pay-pal">
+                PayPal
+              </label>
             </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="card p-4 my-4">
+          <h5 class="my-4 fw-semibold">Your order</h5>
+          <div class="row fw-bold mb-2">
+            <div class="col">Product</div>
+            <div class="col text-end">Subtotal</div>
+          </div>
+          <hr>
+
+          <div id="cart-items-container"></div>
+
+          <hr class="dotted-line">
+
+          <div class="row my-2 fw-semibold">
+            <div class="col">Subtotal</div>
+            <div class="col text-end" id="subtotal-amount"></div>
+          </div>
+          <hr class="dotted-line">
+
+          <div class="row fw-semibold mb-4">
+            <div class="col">Total</div>
+            <div class="col text-end" id="total-amount"></div>
+          </div>
+
+          <div class="text-center">
+            <button class="btn btn-dark w-100" id="submit">Place order</button>
           </div>
         </div>
       </div>
     </div>
-    <!------------------------------------ Checkout End ------------------------------------>
+  </div>
+  <!------------------------------------ Checkout End ------------------------------------>
 
-    <!------------------------------------ Footer Start ------------------------------------>
-    <div id="footer"></div>
+  <!------------------------------------ Footer Start ------------------------------------>
+  <div id="footer"></div>
 
-    <script>
-      fetch("footer.html")
-        .then((response) => response.text())
-        .then((data) => {
-          document.getElementById("footer").innerHTML = data;
-        });
-    </script>
-    <!------------------------------------ Footer End ------------------------------------>
+  <script>
+    fetch("footer.html")
+      .then((response) => response.text())
+      .then((data) => {
+        document.getElementById("footer").innerHTML = data;
+      });
+  </script>
+  <!------------------------------------ Footer End ------------------------------------>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="module" src="js/utils.js"></script>
-    <script src="js/checkLogin.js"></script>
-    <script type="module" src="js/checkout.js"></script>
-    <script src="js/navbar.js"></script>
-    <script type="module" src="js/home.js"></script>
-  </body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="js/utils.js"></script>
+  <script src="js/checkLogin.js"></script>
+  <script type="module" src="js/checkout.js"></script>
+  <script src="js/navbar.js"></script>
+  <script type="module" src="js/home.js"></script>
+</body>
+
 </html>
