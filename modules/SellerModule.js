@@ -13,7 +13,7 @@ export default class SellerManager {
     return sellers;
   }
 
-  static AddSeller(id = 2, name, email, password, phone, address, role = "seller", blocked = false,) {
+  static AddSeller(Name, Email, Password, Phone, address, role = "seller", blocked = false) {
     const sellers = StorageManager.LoadSection("users") || [];
     function NextSellerID() {
       const ids = sellers.map(seller => seller.id);
@@ -21,35 +21,30 @@ export default class SellerManager {
     }
     const seller = {
       id: NextSellerID(),
-      name: name,
-      email: email,
-      password: password,
-      phone: phone,
+      name: Name,
+      email: Email,
+      password: Password,
+      phone: Phone,
       Address: address,
       role: "seller",
       blocked: false
     };
-    // Validate basic input to enter empty
-    if (!name || !email || !password || !address) {
-      console.error("Invalid data. Please enter valid data!");
+    if (!Name || !Email || !Password || !address) {
+      showToast("Invalid data. Please enter valid data!");
       return false;
     }
-
-    if (!Validate.isNameValid(name)) {
+    if (!Validate.isNameValid(Name)) {
       showToast("Name must be at least 3 to maximum 15 characters long and contain only letters", "warning");
       return false;
     }
-
-    if (!Validate.isEmailValid(email)) {
+    if (!Validate.isEmailValid(Email)) {
       showToast("Invalid email format. Use example@example.com", "warning");
       return false;
     }
-
     if (!Validate.isStreetValid(address.street)) {
       showToast("Invalid street format.", "warning");
       return false;
     }
-
     if (!Validate.isCityValid(address.city)) {
       showToast("City cannot have numbers.", "warning");
       return false;
@@ -58,37 +53,30 @@ export default class SellerManager {
       showToast("ZIP code must be exactly 5 digits.", "warning");
       return false;
     }
-
-    if (!Validate.isPhoneValid(phone)) {
+    if (!Validate.isPhoneValid(Phone)) {
       showToast("Invalid phone (expected format: +20XXXXXXXXXX)", "warning");
       return false;
 
     }
 
-
     const existingName = sellers.find(s => s.name === seller.name);
     if (existingName) {
       showToast("Seller name already exists.", "warning");
-      return;
+      return false;
     }
 
     const existingEmail = sellers.find(s => s.email === seller.email);
     if (existingEmail) {
       showToast("Seller email already exists.", "warning");
-      return;
+      return false;
     }
 
     const existingPhone = sellers.find(s => s.phone === seller.phone);
     if (existingPhone) {
       showToast("Seller phone already exists.", "warning");
-      return;
+      return false;
     }
 
-    const existingAddress = sellers.find(s => JSON.stringify(s.address) === JSON.stringify(seller.Address));
-    if (existingAddress) {
-      showToast("Seller address already exists.", "warning");
-      return;
-    }
 
     sellers.push(seller);
     StorageManager.SaveSection('users', sellers);
@@ -117,9 +105,6 @@ export default class SellerManager {
     const address = updatedSeller.Address || {};
     const { city, street, zipCode } = address;
 
-    // Validate input
-    const isValid = CustomerManager.DoValidation(name, email, street, city, zipCode);
-    if (!isValid) return false;
 
     // Check if email is already used by another customer
     const emailExists = customers.some(c =>

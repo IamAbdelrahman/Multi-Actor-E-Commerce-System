@@ -120,3 +120,13 @@ body.dark-mode {
   .dark-mode textarea::placeholder {
     color: #aaa;
   }
+
+  .liveToast {
+    position: fixed;
+    top: 80px;
+    left: 40%;
+    transform: translateX(-50%);
+    z-index: 1100;
+    width: auto;
+    max-width: 100%;
+}

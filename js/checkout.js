@@ -1,7 +1,7 @@
 import Validate from "../modules/ValidationModule.js";
 import StorageManager from "../modules/StorageModule.js";
 import ProductManager from "../modules/ProductModule.js";
-
+import { showToast } from './toast.js';
 document.addEventListener("DOMContentLoaded", () => {
     const userLoggedIn = JSON.parse(sessionStorage.getItem("userLoggedIn"));
     const userId = userLoggedIn?.id;
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const email = document.getElementById("checkout-email").value.trim();
 
         if (!name || !street || !city || !zip || !phone || !email) {
-            alert("Please fill in all fields");
+            showToast("Please fill in all fields");
             return;
         }
 
@@ -87,12 +87,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!Validate.isStreetValid(street)) errors.push("Invalid street");
 
         if (errors.length > 0) {
-            alert(errors.join("\n"));
+            showToast(errors.join("\n"));
             return;
         }
 
         if (!userCart || !Array.isArray(userCart.products) || userCart.products.length === 0) {
-            alert("Your cart is empty");
+            showToast("Your cart is empty");
             return;
         }
 

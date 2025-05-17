@@ -24,6 +24,7 @@ import UserManager from '../modules/UserModule.js'
 import ProductManager from '../modules/ProductModule.js'
 import SellerManager from '../modules/SellerModule.js';
 import CustomerManager from '../modules/CustomerModule.js';
+import { showToast } from './toast.js';
 /*------------------------------------------------------------------------------*/
 
 /*- CUSTOMER FUNCTIONS
@@ -71,23 +72,23 @@ function ManageCustomers() {
   document.getElementById('confirmAction').addEventListener('click', () => {
     const customerId = parseInt(document.getElementById('CustomerId').value);
     if (isNaN(customerId) || customerId < 0 || !customerId) {
-      alert('Please enter a valid ID');
+      showToast('Please enter a valid ID');
       return;
     }
     const users = StorageManager.LoadSection("users");
     const customers = users.filter(user => user.role === "customer");
     const returnId = customers.find(c => c.id === customerId);
     if (!returnId) {
-      alert("ID doesn't exist")
+      showToast("ID doesn't exist")
       return;
     }
     if (currentAction === 'Block') {
       CustomerManager.BlockCustomer(customerId);
-      alert(`Customer #${customerId} blocked successfully!`);
+      showToast(`Customer #${customerId} blocked successfully!`);
       location.reload();
     } else {
       CustomerManager.UnblockCustomer(customerId);
-      alert(`Customer #${customerId} unblocked successfully!`);
+      showToast(`Customer #${customerId} unblocked successfully!`);
       location.reload();
     }
     modal.hide();
@@ -140,35 +141,27 @@ function CreateSellerHeader() {
           <form id="sellerForm" class="d-flex flex-column d-none">
             <div class="row mb-3">
               <div class="col">
-                <input type="text" id="name" class="form-control rounded" placeholder="First Name" required 
-                  pattern="[A-Za-z]+" title="Please enter a valid name">
+                <input type="text" id="name" class="form-control rounded" placeholder="First Name" required >
               </div>
             </div>
 
             <div class="mb-3">
-              <input type="email" id="email" class="form-control rounded" placeholder="Email Address" required
-                pattern="/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/"
-                
-                title="Please enter a valid email address">
+              <input type="email" id="email" class="form-control rounded" placeholder="Email Address" required>
             </div>
 
             <div class="mb-3">
-              <input type="text" id="phone" class="form-control rounded" placeholder="Phone Number" required
-                pattern="^01[0125][0-9]{8}$" title="Please enter a valid phone number">
+              <input type="text" id="phone" class="form-control rounded" placeholder="Phone Number" required>
             </div>
 
             <div class="row mb-3">
               <div class="col">
-                <input type="text" id="street" class="form-control rounded" placeholder="Street" required
-                  pattern="^[A-Za-z0-9\s]{3,50}$">
+                <input type="text" id="street" class="form-control rounded" placeholder="Street" required>
               </div>
               <div class="col">
-                <input type="text" id="city" class="form-control rounded" placeholder="City" required
-                  pattern="^[A-Za-z\\s]{2,30}$">
+                <input type="text" id="city" class="form-control rounded" placeholder="City" required>
               </div>
               <div class="col">
-                <input type="text" id="zip" class="form-control rounded" placeholder="ZIP Code" required
-                  pattern="\\d{5}">
+                <input type="text" id="zip" class="form-control rounded" placeholder="ZIP Code" required>
               </div>
             </div>
 
@@ -207,7 +200,7 @@ function CreateSellerHeader() {
 }
 
 function ManageSellers() {
-  const modal = new bootstrap.Modal(document.getElementById('sellerActionModal'));
+  const modal = new bootstrap.Modal('#sellerActionModal');
   let currentAction = '';
 
   document.querySelectorAll('[data-bs-target="#sellerActionModal"]').forEach(btn => {
@@ -237,41 +230,41 @@ function ManageSellers() {
           zipCode: document.getElementById("zip").value
         }
       };
-
       if (SellerManager.AddSeller(seller.name, seller.email, seller.password, seller.phone, seller.Address)) {
-        alert("Seller added successfully!");
+        showToast("Seller added successfully!");
         var body = document.querySelector("tbody");
         var len = UserManager.GetUsersCount();
         var s = SellerManager.GetSellerById(len - 1);
         const status = seller.blocked ? "InActive" : "Active";
         body.appendChild(CreateDataTable("user", s.id, s.name, s.email, s.password, s.Address.city, s.phone, status));
-        location.reload();
+        setTimeout(() => {
+          location.reload();
+      }, 3000); // Reload after 3 seconds (matches toast duration)
       }
 
 
     } else {
       const sellerId = parseInt(document.getElementById('sellerId').value);
       if (isNaN(sellerId) || sellerId < 0 || !sellerId) {
-        alert("Please enter a valid Seller ID.");
+        showToast("Please enter a valid Seller ID.");
         return;
       }
       const users = StorageManager.LoadSection("users");
       const sellers = users.filter(user => user.role === "seller");
       const returnId = sellers.find(s => s.id === sellerId);
       if (!returnId) {
-        alert("ID doesn't exist")
+        showToast("ID doesn't exist")
         return;
       }
       if (currentAction === 'block') {
         SellerManager.BlockSeller(sellerId);
-        alert(`Seller #${sellerId} blocked.`);
-        location.reload();
+        showToast(`Seller #${sellerId} blocked.`);
       } else if (currentAction === 'unblock') {
         SellerManager.UnblockSeller(sellerId);
-        alert(`Seller #${sellerId} unblocked.`);
-        location.reload();
+        showToast(`Seller #${sellerId} unblocked.`);
       }
     }
+    document.getElementById('sellerForm').reset();
     modal.hide();
     document.getElementById('sellerId').value = '';
   });
@@ -336,22 +329,22 @@ function ManageProducts() {
   document.getElementById('confirmAction').addEventListener('click', () => {
     const productId = parseInt(document.getElementById('ProductId').value);
     if (isNaN(productId) || productId < 0 || !productId) {
-      alert('Please enter a valid ID');
+      showToast('Please enter a valid ID');
       return;
     }
     const products = StorageManager.LoadSection("products") || [];
     const returnId = products.find(c => c.id === productId);
     if (!returnId) {
-      alert("ID doesn't exist")
+      showToast("ID doesn't exist")
       return;
     }
     if (currentAction === 'Approve') {
       ProductManager.ApproveProduct(productId)
-      alert(`Product #${productId} approved successfully!`);
+      showToast(`Product #${productId} approved successfully!`);
       location.reload();
     } else {
       ProductManager.RejectProduct(productId)
-      alert(`Product #${productId} rejected successfully!`);
+      showToast(`Product #${productId} rejected successfully!`);
       location.reload();
     }
     modal.hide();
@@ -437,13 +430,13 @@ function ShowOrderDetails(orderId) {
   const order = orders.find(o => o.id === orderId);
 
   if (!order) {
-    alert("Order not found!");
+    showToast("Order not found!");
     return;
   }
 
   const customer = CustomerManager.GetCustomerById(order.userId);
   if (!customer) {
-    alert("Customer not found!");
+    showToast("Customer not found!");
     return;
   }
 
@@ -652,7 +645,7 @@ function ShowAdmin() {
     adminEmail.innerText = admin.email;
     adminPhone.innerText = admin.phone;
   } else {
-    alert("Admin data not found.");
+    showToast("Admin data not found.");
   }
 }
 
@@ -680,7 +673,7 @@ function UpdateAdmin() {
     const city = document.getElementById("AdminCity").value.trim();
     const zip = document.getElementById("AdminZip").value.trim();
     if(UserManager.UpdateUser(0, name, email, street, city, zip, phone)) {
-      alert(`Admin updated successfully!`);
+      showToast(`Admin updated successfully!`);
       location.reload();
       modal.hide();
     }
@@ -969,7 +962,7 @@ function GetAllRevenue(orders) {
 document.addEventListener('DOMContentLoaded', function () {
   const user = JSON.parse(localStorage.getItem("loggedInUser"));
   if (!user || user.role !== "admin") {
-    alert("Unauthorized access. Redirecting...");
+    showToast("Unauthorized access. Redirecting...");
     window.location.href = "home.html";
   }
 

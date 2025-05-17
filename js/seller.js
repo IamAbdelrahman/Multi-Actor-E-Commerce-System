@@ -771,7 +771,7 @@ function GetAllRevenue(orders) {
 document.addEventListener('DOMContentLoaded', function () {
   const user = JSON.parse(localStorage.getItem("loggedInUser"));
   if (!user || user.role !== "seller") {
-    alert("Unauthorized access. Redirecting...");
+    showToast("Unauthorized access. Redirecting...");
     window.location.href = "home.html";
   }
   // Toggle the Sidebar

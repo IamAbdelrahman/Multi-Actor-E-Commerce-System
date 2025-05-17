@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const userId = sessionStorage.getItem('userId');
 
         if (!userId || userId === 'guest') {
-            alert("You need to log in before checking out.");
+            showToast("You need to log in before checking out.");
             return;
         }
         else {

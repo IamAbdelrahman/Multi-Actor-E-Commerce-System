@@ -49,7 +49,7 @@ function pendingSection(order) {
       <span class="fw-semibold">E-mail</span> ${order.email}
       </div>
     </div>
-    <div class="alert alert-success p-3 fs-5 text-center">
+    <div class="showToast showToast-success p-3 fs-5 text-center">
       <span class="fw-semibold">Order Summary:</span> ${totalProducts} products Total: $${order.totalAmount}
     </div>
   `;
@@ -77,10 +77,10 @@ function processingSection(order, orders) {
     const input = document.getElementById("card-number").value||document.getElementById("paypal-email").value;
 
     if (input === ""||!input) {
-      alert("Please enter valid payment information.");
+      showToast("Please enter valid payment information.");
       return;
     }else if(input.length<16){
-      alert("Invalid number.");
+      showToast("Invalid number.");
     }
 
     order.status = "ready";

@@ -18,7 +18,14 @@
 </head>
 
 <body class="bg-light">
-
+    <div id="toastContainer" class="liveToast"></div>
+    <script>
+      fetch("toast.html")
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById("toastContainer").innerHTML = data;
+        });
+    </script>
     <!------------------------------------ NavBar Start ------------------------------------>
     <div id="navBar"></div>
     <script>

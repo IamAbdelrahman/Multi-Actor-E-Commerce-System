@@ -21,6 +21,14 @@
 </head>
 
 <body>
+  <div id="toastContainer" class="liveToast"></div>
+  <script>
+    fetch("toast.html")
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById("toastContainer").innerHTML = data;
+      });
+  </script>
   <!------------------------------------ Wrapper Start ------------------------------------>
   <div class="wrapper">
     <!------------------------------------ Sidebar Start ------------------------------------>

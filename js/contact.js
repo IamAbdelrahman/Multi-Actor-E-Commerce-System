@@ -1,6 +1,6 @@
 import StorageManager from "../modules/StorageModule.js";
 import Validate from "../modules/ValidationModule.js";
-
+import { showToast } from './toast.js';
 document.addEventListener("DOMContentLoaded", () => {
   const sendBtn = document.getElementById("sendMessage");
 
@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const user = JSON.parse(sessionStorage.getItem("userLoggedIn"));
     if (!user) {
-      alert("Please log in before sending a message.");
+      showToast("Please log in before sending a message.");
       return;
     }
 
@@ -24,27 +24,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const message = messageInput.value.trim();
 
     if (!name || !email || !subject || !message) {
-      alert("Please fill in all fields.");
+      showToast("Please fill in all fields.");
       return;
     }
     
     if (!Validate.isNameValid(name)) {
-      alert("Please enter a valid name.");
+      showToast("Please enter a valid name.");
       return;
     }
 
     if (!Validate.isEmailValid(email)) {
-      alert("Please enter a valid email address.");
+      showToast("Please enter a valid email address.");
       return;
     }
 
     if (!Validate.isProductNameValid(subject)) {
-      alert("Please enter a valid subject (min 3 characters).");
+      showToast("Please enter a valid subject (min 3 characters).");
       return;
     }
 
     if (!Validate.isDescriptionValid(message)) {
-      alert("Please enter a valid message (min 15 characters).");
+      showToast("Please enter a valid message (min 15 characters).");
       return;
     }
     const messages = StorageManager.LoadSection("messages") || [];

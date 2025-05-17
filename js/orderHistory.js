@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const historyContainer = document.getElementById("order-history");
 
   if (!userOrders.length) {
-    historyContainer.innerHTML = `<p class="alert alert-success fs-4 text-center">No orders.</p>`;
+    historyContainer.innerHTML = `<p class="showToast showToast-success fs-4 text-center">No orders.</p>`;
     return;
   }
 
