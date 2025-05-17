@@ -1,6 +1,8 @@
 // ------------------------------Register/Login Start------------------------------
 import StorageManager from '../modules/StorageModule.js'
 import UserManager from '../modules/UserModule.js';
+import { showToast } from './toast.js';
+
 
 // Add Static ADMIN in Local Storage in Section Users and whenn open even not there are users will reload local storage with admin
 const users = StorageManager.LoadSection("users") || [];
@@ -76,17 +78,14 @@ window.Login = function (event) {
 
     const LoginUser = users.find(user => user.email === email);
     if (!LoginUser) {
-        alert("Email does not exist. Please register first.");
+        showToast("Email does not exist. Please register first.", "warning");
     } else if (LoginUser.password !== password) {
-        alert("Incorrect password. Please try again.");
+        showToast("Incorrect password. Please try again.", "warning");
     }
     else if (LoginUser.blocked) {
-        alert("Your account has been blocked by the admin. You cannot log in.");
+        showToast("Your account has been blocked by the admin. You cannot log in.", "danger");
     }
     else {
-        //repair
-        // alert(Welcome back, ${LoginUser.name}! You are logged in as ${LoginUser.role}.);
-
         switch (LoginUser.role) {
             case "customer":
                 sessionStorage.setItem('userLoggedIn', JSON.stringify(LoginUser));
@@ -122,12 +121,12 @@ window.Login = function (event) {
                     name: LoginUser.name,
                     role: LoginUser.role,
                     "id": LoginUser.id
-                    
+
                 }));
                 window.location.href = "seller-dashboard.html";
                 break;
             default:
-                alert("Invalid role. Please try again.");
+                showToast("Invalid role. Please try again.", "danger");
         }
     }
 
@@ -144,11 +143,11 @@ function CreateFeaturedProducts(products) {
         console.error("No products available to display.");
         return;
     }
-    
+
     const shuffledProducts = products.sort(() => Math.random() - 0.5);
     const featuredProducts = shuffledProducts.slice(0, Math.min(8, shuffledProducts.length));
     var content = document.getElementById("content");
-    content.innerHTML = ""; 
+    content.innerHTML = "";
 
     featuredProducts.forEach(product => {
         var cards = `
@@ -220,14 +219,14 @@ window.addEventListener('DOMContentLoaded', () => {
 const toggleDarkBtn = document.getElementById("toggleDarkMode");
 
 window.addEventListener("load", () => {
-  const isDark = localStorage.getItem("darkMode") === "true";
-  if (isDark) document.body.classList.add("dark-mode");
+    const isDark = localStorage.getItem("darkMode") === "true";
+    if (isDark) document.body.classList.add("dark-mode");
 });
 
 
 toggleDarkBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark-mode");  
-  const isDark = document.body.classList.contains("dark-mode");
-  localStorage.setItem("darkMode", isDark);
+    document.body.classList.toggle("dark-mode");
+    const isDark = document.body.classList.contains("dark-mode");
+    localStorage.setItem("darkMode", isDark);
 });
 

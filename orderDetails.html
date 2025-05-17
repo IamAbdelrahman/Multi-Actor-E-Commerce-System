@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Order Details</title>
 
   <!-- Bootstrap & Icons -->
@@ -17,63 +18,66 @@
   <link rel="stylesheet" href="css/checkout.css" />
   <link rel="stylesheet" href="css/orderHistory.css" />
   <link rel="stylesheet" href="css/orderDetails.css" />
+  <script type="module" src="js/toast.js"></script>
+
 </head>
+
 <body>
-    <!------------------------------------ NavBar Start ------------------------------------>
+  <!------------------------------------ NavBar Start ------------------------------------>
 
 
-    <div id="navBar"></div>
-    <script>
-      fetch('navBar.html')
-        .then(response => response.text())
-        .then(data => {
-          document.getElementById('navBar').innerHTML = data;
-        });
-    </script>
-  
-    <!------------------------------------ NavBar End ------------------------------------>
-    <div class="container my-5">
-      <div class="d-flex justify-content-between align-items-center my-5">
-        <h2 class="fw-bold my-4">Order Details</h2>
-        <a href="orderHistory.html" class="btn btn-outline-dark p-3 btn-outline-dark">Order History
-          <i class="fa-solid fa-arrow-right"></i>
-        </a>
+  <div id="navBar"></div>
+  <script>
+    fetch('navBar.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('navBar').innerHTML = data;
+      });
+  </script>
+
+  <!------------------------------------ NavBar End ------------------------------------>
+  <div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center my-5">
+      <h2 class="fw-bold my-4">Order Details</h2>
+      <a href="orderHistory.html" class="btn btn-outline-dark p-3 btn-outline-dark">Order History
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+
+    <div class="row text-center my-4 p-3">
+      <div class="col-md-3 details-card">
+        <p class="fw-bold fs-5">Order Date</p>
+        <span id="orderDate"></span>
       </div>
-  
-      <div class="row text-center my-4 p-3">
-        <div class="col-md-3 details-card">
-          <p class="fw-bold fs-5">Order Date</p>
-          <span id="orderDate"></span>
-        </div>
-        <div class="col-md-3 details-card">
-          <p class="fw-bold fs-5">Order Status</p>
-          <span id="orderStatus"></span>
-        </div>
-        <div class="col-md-3 details-card">
-          <p class="fw-bold fs-5">Order ID</p>
-          <span id="id"></span>
-        </div>
-        <div class="col-md-3 details-card">
-          <p class="fw-bold fs-5">Payment Method</p>
-          <span id="paymentMethod">-</span>
-        </div>
+      <div class="col-md-3 details-card">
+        <p class="fw-bold fs-5">Order Status</p>
+        <span id="orderStatus"></span>
       </div>
-  
-      <div class="row">
-        <div class="col-md-6" id="orderItemsContainer"></div>
-  
-        <div class="col-md-6">
-          <div class="order-summary">
-            <h4 class="m-2 fw-bold">Payment Summary</h4>
-            <div class="m-2" id="paymentSummary"></div>
-          </div>
-          <div class="order-summary">
-            <h4 class="m-2 fw-bold">Shipping Address</h4>
-            <p class="m-2" id="shippingAddress"></p>
-          </div>
+      <div class="col-md-3 details-card">
+        <p class="fw-bold fs-5">Order ID</p>
+        <span id="id"></span>
+      </div>
+      <div class="col-md-3 details-card">
+        <p class="fw-bold fs-5">Payment Method</p>
+        <span id="paymentMethod">-</span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6" id="orderItemsContainer"></div>
+
+      <div class="col-md-6">
+        <div class="order-summary">
+          <h4 class="m-2 fw-bold">Payment Summary</h4>
+          <div class="m-2" id="paymentSummary"></div>
+        </div>
+        <div class="order-summary">
+          <h4 class="m-2 fw-bold">Shipping Address</h4>
+          <p class="m-2" id="shippingAddress"></p>
         </div>
       </div>
     </div>
+  </div>
 
   <!------------------------------------ footer Start ------------------------------------>
   <div id="footer"></div>
@@ -96,4 +100,5 @@
   <script src="js/navbar.js"></script>
   <script type="module" src="js/orderDetails.js"></script>
 </body>
+
 </html>

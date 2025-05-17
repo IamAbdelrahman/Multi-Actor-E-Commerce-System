@@ -17,15 +17,13 @@
   <link rel="stylesheet" href="css/home.css" />
   <link rel="stylesheet" href="css/root.css" />
   <link rel="stylesheet" href="css/checkout.css" />
-
+  <script type="module" src="js/toast.js"></script>
 
 </head>
 
 <body>
 
   <!------------------------------------ NavBar Start ------------------------------------>
-
-
   <div id="navBar"></div>
   <script>
     fetch('navBar.html')
@@ -34,19 +32,11 @@
         document.getElementById('navBar').innerHTML = data;
       });
   </script>
-
-
-
-
-
-
   <!------------------------------------ NavBar End ------------------------------------>
   <!-- new -->
   <!------------------------------------ Slider Start ------------------------------------>
   <!-- Carousel -->
   <div id="myCarousel" class="carousel slide py-4" data-bs-ride="carousel" data-bs-wrap="true">
-
-
     <div class="container">
       <div class="carousel-inner py-4 slider">
         <div class="carousel-item active">
